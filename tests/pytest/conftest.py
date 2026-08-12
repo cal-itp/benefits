@@ -212,6 +212,7 @@ def model_LittlepayConfig(model_TransitAgency):
         client_id="client_id",
         client_secret_name="client_secret_name",
         audience="audience",
+        portal_url="https://www.transit-processor.com/littlepay",
     )
     model_TransitAgency.transit_processor_config = littlepay_config
     model_TransitAgency.save()
@@ -225,6 +226,7 @@ def model_SwitchioConfig(model_TransitAgency):
         environment=Environment.DEV,
         tokenization_api_key="api_key",
         tokenization_api_secret_name="apisecret",
+        portal_url="https://www.transit-processor.com/switchio",
     )
 
     model_TransitAgency.transit_processor_config = switchio_config

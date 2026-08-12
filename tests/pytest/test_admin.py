@@ -40,7 +40,23 @@ def model_SuperUser(model_User):
 
 
 @pytest.mark.django_db
-def test_admin_override_agency_user_customer_service(model_AgencyCustomerServiceUser, model_TransitAgency, client):
+@pytest.mark.parametrize(
+    "processor_fixture_name,expected_text",
+    [("model_LittlepayConfig", "Littlepay Control Portal"), ("model_SwitchioConfig", "Switchio Control Portal")],
+)
+def test_admin_agency_customer_service_user(
+    request,
+    model_AgencyCustomerServiceUser,
+    model_TransitAgency,
+    client,
+    processor_fixture_name,
+    expected_text,
+):
+    # request here is the built-in pytest fixture FixtureRequest
+    # https://docs.pytest.org/en/latest/reference/reference.html#request
+    # use .getfixturevalue(processor_fixture_name) to "Dynamically run a named fixture function." (see above reference page)
+    processor_fixture = request.getfixturevalue(processor_fixture_name)
+
     url = reverse(routes.ADMIN_INDEX)
     client.force_login(model_AgencyCustomerServiceUser)
 
@@ -54,6 +70,8 @@ def test_admin_override_agency_user_customer_service(model_AgencyCustomerService
     assert response.status_code == 200
     assert response.template_name == "admin/agency-dashboard-index.html"
     assert response.context_data["has_permission_for_in_person"] is True
+    assert response.context_data["transit_processor_portal_url"] == processor_fixture.portal_url
+    assert response.context_data["transit_processor_portal_text"] == expected_text
 
 
 @pytest.mark.django_db
