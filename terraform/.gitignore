@@ -8,6 +8,7 @@
 *.tfstate.*
 
 # Crash log files
+core
 crash.log
 crash.*.log
 

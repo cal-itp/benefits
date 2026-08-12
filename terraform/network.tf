@@ -43,7 +43,13 @@ resource "azurerm_subnet" "main" {
   virtual_network_name = azurerm_virtual_network.main.name
   resource_group_name  = data.azurerm_resource_group.main.name
   address_prefixes     = each.value.prefix
-  service_endpoints    = each.value.service_endpoints
+
+  dynamic "service_endpoint" {
+    for_each = each.value.service_endpoints != null ? each.value.service_endpoints : []
+    content {
+      service = service_endpoint.value
+    }
+  }
 
   delegation {
     name = "delegation-${lower(each.key)}"
@@ -67,10 +73,9 @@ resource "azurerm_private_dns_zone" "db" {
 }
 
 resource "azurerm_private_dns_zone_virtual_network_link" "db" {
-  name                  = "db-link-${lower(local.env_letter)}"
-  resource_group_name   = data.azurerm_resource_group.main.name
-  private_dns_zone_name = azurerm_private_dns_zone.db.name
-  virtual_network_id    = azurerm_virtual_network.main.id
+  name                = "db-link-${lower(local.env_letter)}"
+  private_dns_zone_id = azurerm_private_dns_zone.db.id
+  virtual_network_id  = azurerm_virtual_network.main.id
 
   lifecycle {
     ignore_changes = [tags]

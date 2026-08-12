@@ -3,6 +3,7 @@ resource "azurerm_container_app_environment" "main" {
   name                           = "CAE-CDT-PUB-VIP-CALITP-${var.env_letter}-001"
   location                       = var.location
   resource_group_name            = var.resource_group_name
+  logs_destination               = "log-analytics"
   log_analytics_workspace_id     = var.log_analytics_workspace_id
   infrastructure_subnet_id       = var.subnet_ca_id
   internal_load_balancer_enabled = false

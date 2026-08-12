@@ -48,12 +48,13 @@ locals {
 }
 
 resource "azurerm_key_vault" "main" {
-  name                     = local.key_vault_name
-  location                 = data.azurerm_resource_group.main.location
-  resource_group_name      = data.azurerm_resource_group.main.name
-  sku_name                 = "standard"
-  tenant_id                = data.azurerm_client_config.current.tenant_id
-  purge_protection_enabled = true
+  name                       = local.key_vault_name
+  location                   = data.azurerm_resource_group.main.location
+  resource_group_name        = data.azurerm_resource_group.main.name
+  sku_name                   = "standard"
+  tenant_id                  = data.azurerm_client_config.current.tenant_id
+  purge_protection_enabled   = true
+  rbac_authorization_enabled = false
 
   lifecycle {
     prevent_destroy = true
