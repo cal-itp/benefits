@@ -9,7 +9,11 @@ from locust import HttpUser, constant_pacing, events, task
 USER_EMAIL = os.environ["LOCUST_LOGIN_GOV_OLDER_ADULT_USER_EMAIL"]
 USER_PASSWORD = os.environ["LOCUST_LOGIN_GOV_OLDER_ADULT_USER_PASSWORD"]
 TOTP_SECRET = os.environ["LOCUST_LOGIN_GOV_OLDER_ADULT_AUTHENTICATOR_SECRET"]
-CARD_TOKEN = os.environ["LOCUST_CARD_TOKEN"]
+CARD_TOKENS = {
+    "mst": os.environ["LOCUST_CARD_TOKEN_MST"],
+    "sbmtd": os.environ["LOCUST_CARD_TOKEN_SBMTD"],
+    "nevco": os.environ["LOCUST_CARD_TOKEN_NEVCO"],
+}
 
 # Experiment design
 # -----------------
@@ -45,7 +49,7 @@ class BenefitsUser(HttpUser):
     @task(93)
     def eligible_flow(self):
         try:
-            agencies = ["mst", "sbmtd", "sacrt"]
+            agencies = ["mst", "sbmtd", "nevco"]
             start_agency = random.choice(agencies)
 
             # /
@@ -196,13 +200,13 @@ class BenefitsUser(HttpUser):
                         name_attribute_value="csrfmiddlewaretoken",
                         csrf_value_attribute_name="value",
                     ),
-                    "card_token": CARD_TOKEN,
+                    "card_token": CARD_TOKENS[start_agency],
                 },
                 allow_redirects=True,
                 catch_response=True,
             ) as enrollment_response:
                 if enrollment_response.status_code != 200:
-                    enrollment_response.failure(f"Littlepay failed: {enrollment_response.status_code}")
+                    enrollment_response.failure(f"Littlepay failed for {start_agency}: {enrollment_response.status_code}")
                     return
 
             # Success
@@ -218,7 +222,7 @@ class BenefitsUser(HttpUser):
     @task(7)
     def ineligible_flow(self):
         try:
-            agencies = ["mst", "sbmtd", "sacrt"]
+            agencies = ["mst", "sbmtd", "nevco"]
             start_agency = random.choice(agencies)
 
             # /
