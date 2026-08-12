@@ -17,8 +17,8 @@ CARD_TOKEN = os.environ["LOCUST_CARD_TOKEN"]
 # User distribution
 # https://docs.locust.io/en/stable/writing-a-locustfile.html#weight-and-fixed-count-attributes
 # Use weight to create eligible vs ineligible users
-# EligibleUser gets 93% of the total users (93/100, weight=93)
-# IneligibleUser gets 7% of the total users (7/100, weight=7)
+# eligible users get 93% of the total users (93/100, weight=93)
+# ineligible users get 7% of the total users (7/100, weight=7)
 # Based on Amplitude data (last 90 days)
 #
 # Load distribution
@@ -40,11 +40,10 @@ def page_title(response) -> str:
     return title_tag.text.strip() if title_tag else "No Title Found"
 
 
-class EligibleUser(HttpUser):
-    weight = 93
+class BenefitsUser(HttpUser):
 
-    @task
-    def complete_entire_flow(self):
+    @task(93)
+    def eligible_flow(self):
         try:
             agencies = ["mst", "sbmtd", "sacrt"]
             start_agency = random.choice(agencies)
@@ -207,12 +206,8 @@ class EligibleUser(HttpUser):
             # Reset cookies on client for the next time this user spawns
             self.client.cookies.clear()
 
-
-class IneligibleUser(HttpUser):
-    weight = 7
-
-    @task
-    def complete_entire_flow(self):
+    @task(7)
+    def ineligible_flow(self):
         try:
             agencies = ["mst", "sbmtd", "sacrt"]
             start_agency = random.choice(agencies)
@@ -370,6 +365,5 @@ def on_locust_init(environment, **kwargs):
     print(f"Dynamic Pacing set to {pacing_seconds:.1f} seconds.")
     print("---")
 
-    # Inject the calculated wait time into the User classes
-    EligibleUser.wait_time = constant_pacing(pacing_seconds)
-    IneligibleUser.wait_time = constant_pacing(pacing_seconds)
+    # Inject the calculated wait time into the User class
+    BenefitsUser.wait_time = constant_pacing(pacing_seconds)
