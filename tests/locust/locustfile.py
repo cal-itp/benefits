@@ -213,13 +213,137 @@ class IneligibleUser(HttpUser):
 
     @task
     def complete_entire_flow(self):
-        start_agency = "vctc"
+        try:
+            agencies = ["mst", "sbmtd", "sacrt"]
+            start_agency = random.choice(agencies)
 
-        # STEP 1: Start the journey
-        response = self.client.get(f"/{start_agency}")
+            # /
+            with self.client.get("/", catch_response=True) as index:
+                print(f"index: {page_title(index)}")
 
-        # (Sequential form steps will go here)
-        print(response)
+            # Select agency
+            with self.client.post(
+                "/",
+                data={
+                    "csrfmiddlewaretoken": csrf_token(
+                        index, element="input", name_attribute_value="csrfmiddlewaretoken", csrf_value_attribute_name="value"
+                    ),
+                    "select_transit_agency": start_agency,
+                },
+                catch_response=True,
+            ) as eligibility:
+                if eligibility.status_code != 200:
+                    eligibility.failure(f"Failed to select agency. Status code: {eligibility.status_code}")
+                    return
+                print(f"eligibility: {page_title(eligibility)}")
+
+            # Select enrollment flow
+            with self.client.post(
+                "/eligibility/",
+                data={
+                    "csrfmiddlewaretoken": csrf_token(
+                        eligibility,
+                        element="input",
+                        name_attribute_value="csrfmiddlewaretoken",
+                        csrf_value_attribute_name="value",
+                    ),
+                    "flow": "2",
+                },
+                catch_response=True,
+            ) as start:
+                print(f"start: {page_title(start)}")
+
+            # Get started with Login.gov
+            with self.client.get("/oauth/login", allow_redirects=True, catch_response=True) as login_response:
+                print(f"login: {page_title(login_response)}")
+            soup = BeautifulSoup(login_response.text, "html.parser")
+            form = soup.find("form")
+            if not form or not form.get("action"):
+                print("Could not find login form action")
+                return
+            login_post_url = urljoin(login_response.url, form["action"])
+            print(f"posturl: {login_post_url}")
+
+            # Login.gov sign in
+            login_gov = self.client.post(
+                login_post_url,
+                data={
+                    "authenticity_token": csrf_token(
+                        login_response, element="meta", name_attribute_value="csrf-token", csrf_value_attribute_name="content"
+                    ),
+                    "user[email]": USER_EMAIL,
+                    "user[password]": USER_PASSWORD,
+                },
+            )
+            print(f"login: {page_title(login_gov)}")
+
+            # Multi-factor authentication
+            current_totp_code = pyotp.TOTP(TOTP_SECRET).now()
+            mfa_response = self.client.post(
+                login_gov.url,
+                data={
+                    "authenticity_token": csrf_token(
+                        login_gov, element="meta", name_attribute_value="csrf-token", csrf_value_attribute_name="content"
+                    ),
+                    "code": current_totp_code,
+                },
+                allow_redirects=True,
+            )
+            print(f"mfa: {page_title(mfa_response)}")
+
+            # login.gov <> IdG <> Benefits
+            # LLM assisted code
+            # Handle any JavaScript "auto-submit" forms which implement the redirect behavior
+            # This is required since locust does not run JavaScript or drive a real browser
+            current_response = mfa_response
+            while True:
+                soup = BeautifulSoup(current_response.text, "html.parser")
+                title_tag = soup.find("title")
+                title_text = title_tag.text if title_tag else ""
+
+                form = soup.find("form")
+
+                # 1. Is there an auto-submit form? (Used by Login.gov and IdG)
+                if form and (
+                    "Redirect" in title_text
+                    or "Submit" in title_text
+                    or "Working" in title_text
+                    or "/external/callback" in current_response.url
+                ):
+                    action_url = form.get("action")
+                    action_url = urljoin(current_response.url, action_url) if action_url else current_response.url
+
+                    # Extract all hidden security tokens (code, state, etc.)
+                    payload = {
+                        inp.get("name"): inp.get("value") for inp in form.find_all("input", type="hidden") if inp.get("name")
+                    }
+                    print(f"Auto-submitting form to: {action_url}")
+
+                    current_response = self.client.post(action_url, data=payload, allow_redirects=True)
+                    print(f"Landed on: {current_response.status_code} | {current_response.url}")
+
+                # 2. Is there a fallback 'Click Here' link?
+                elif "Redirect" in title_text and soup.find("a"):
+                    action_url = urljoin(current_response.url, soup.find("a").get("href"))
+
+                    print(f"Following fallback link to: {action_url}")
+                    current_response = self.client.get(action_url, allow_redirects=True)
+                    print(f"Landed on: {current_response.status_code} | {current_response.url}")
+
+                else:
+                    # We have reached a normal page (or are completely stuck)
+                    if "Redirect" in title_text:
+                        # If we are stuck on a redirect page, print the HTML so you can see exactly why
+                        print("Stuck! Found 'Redirecting' page but no form, meta, or link. HTML Dump:")
+                        print(current_response.text)
+                    break
+            print(f"ineligible: {page_title(current_response)}")
+        finally:
+            # Log out of Login.gov (via Benefits)
+            # to avoid having to conditionally skip the MFA page the next time the user runs and is still logged in
+            self.client.get("/oauth/logout", catch_response=True)
+            # Reset cookies on client for the next time this user spawns
+            self.client.cookies.clear()
 
 
 @events.init_command_line_parser.add_listener
