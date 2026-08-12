@@ -59,13 +59,20 @@ class BenefitsAdminSite(AdminSite):
 
                 if agency.transit_processor_config is not None:
                     transit_processor_portal_url = agency.transit_processor_config.portal_url
+                    transit_processor_portal_text = "Control Portal"
+                    if agency.littlepay_config:
+                        transit_processor_portal_text = "Littlepay " + transit_processor_portal_text
+                    elif agency.switchio_config:
+                        transit_processor_portal_text = "Switchio " + transit_processor_portal_text
                 else:
                     transit_processor_portal_url = ""
+                    transit_processor_portal_text = ""
 
                 context.update(
                     {
                         "has_permission_for_in_person": has_permission_for_in_person,
                         "transit_processor_portal_url": transit_processor_portal_url,
+                        "transit_processor_portal_text": transit_processor_portal_text,
                         "title": f"{agency.long_name} | {self.index_title} | {self.site_title}",
                         "start_url": (
                             routes.IN_PERSON_ADDITIONAL_AGENCIES
