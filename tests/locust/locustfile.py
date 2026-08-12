@@ -86,7 +86,12 @@ class BenefitsUser(HttpUser):
 
             # Get started with Login.gov
             with self.client.get("/oauth/login", allow_redirects=True, catch_response=True) as login_response:
-                print(f"login: {page_title(login_response)}")
+                title = page_title(login_response)
+                print(f"login: {title}")
+                if "Sign in" not in title and "Login.gov" not in title:
+                    login_response.failure(f"Expected Login.gov, but landed on: {title}")
+                    return
+
             soup = BeautifulSoup(login_response.text, "html.parser")
             form = soup.find("form")
             if not form or not form.get("action"):
@@ -182,7 +187,7 @@ class BenefitsUser(HttpUser):
             action_url = success_form.get("action")
             action_url = urljoin(current_response.url, action_url)
             # POST the hidden form to complete the enrollment
-            enrollment_response = self.client.post(
+            with self.client.post(
                 action_url,
                 data={
                     "csrfmiddlewaretoken": csrf_token(
@@ -194,7 +199,11 @@ class BenefitsUser(HttpUser):
                     "card_token": CARD_TOKEN,
                 },
                 allow_redirects=True,
-            )
+                catch_response=True,
+            ) as enrollment_response:
+                if enrollment_response.status_code != 200:
+                    enrollment_response.failure(f"Littlepay failed: {enrollment_response.status_code}")
+                    return
 
             # Success
             print(f"Enrollment submission returned: {enrollment_response.status_code}")
@@ -250,7 +259,11 @@ class BenefitsUser(HttpUser):
 
             # Get started with Login.gov
             with self.client.get("/oauth/login", allow_redirects=True, catch_response=True) as login_response:
-                print(f"login: {page_title(login_response)}")
+                title = page_title(login_response)
+                print(f"login: {title}")
+                if "Sign in" not in title and "Login.gov" not in title:
+                    login_response.failure(f"Expected Login.gov, but landed on: {title}")
+                    return
             soup = BeautifulSoup(login_response.text, "html.parser")
             form = soup.find("form")
             if not form or not form.get("action"):
