@@ -45,7 +45,7 @@ resource "azurerm_subnet" "main" {
   address_prefixes     = each.value.prefix
 
   dynamic "service_endpoint" {
-    for_each = each.value.service_endpoints != null ? each.value.service_endpoints : []
+    for_each = coalesce(each.value.service_endpoints, [])
     content {
       service = service_endpoint.value
     }
