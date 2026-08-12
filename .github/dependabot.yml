@@ -38,3 +38,12 @@ updates:
       include: "scope"
     labels:
       - "dependencies"
+  - package-ecosystem: "terraform"
+    directory: "/terraform"
+    schedule:
+      interval: "daily"
+    commit-message:
+      prefix: "chore"
+      include: "scope"
+    labels:
+      - "dependencies"
