@@ -16,11 +16,10 @@ CARD_TOKEN = os.environ["LOCUST_CARD_TOKEN"]
 #
 # User distribution
 # https://docs.locust.io/en/stable/writing-a-locustfile.html#weight-and-fixed-count-attributes
-# Use weight to uniformly distribute users across all agencies
-# SingleAgencyUser gets 75% of the total users (3/4, weight=3)
-#  mst, sbmtd, and sacrt split the 75%, each gets 25% of the total site traffic
-# RegionalAgencyUser gets 25% of the total users (1/4, weight=1)
-#  vctc gets 25% of the total site traffic
+# Use weight to create eligible vs ineligible users
+# EligibleUser gets 93% of the total users (93/100, weight=93)
+# IneligibleUser gets 7% of the total users (7/100, weight=7)
+# Based on Amplitude data (last 90 days)
 #
 # Load distribution
 # https://docs.locust.io/en/stable/writing-a-locustfile.html#wait-time-attribute
@@ -41,9 +40,8 @@ def page_title(response) -> str:
     return title_tag.text.strip() if title_tag else "No Title Found"
 
 
-class SingleAgencyUser(HttpUser):
-    # Weight of 3 so each agency gets 25% of the total site traffic
-    weight = 3
+class EligibleUser(HttpUser):
+    weight = 93
 
     @task
     def complete_entire_flow(self):
@@ -210,9 +208,8 @@ class SingleAgencyUser(HttpUser):
             self.client.cookies.clear()
 
 
-class RegionalAgencyUser(HttpUser):
-    # Weight of 1 so the regional agency gets 25% of the total site traffic
-    weight = 1
+class IneligibleUser(HttpUser):
+    weight = 7
 
     @task
     def complete_entire_flow(self):
@@ -250,5 +247,5 @@ def on_locust_init(environment, **kwargs):
     print("---")
 
     # Inject the calculated wait time into the User classes
-    SingleAgencyUser.wait_time = constant_pacing(pacing_seconds)
-    RegionalAgencyUser.wait_time = constant_pacing(pacing_seconds)
+    EligibleUser.wait_time = constant_pacing(pacing_seconds)
+    IneligibleUser.wait_time = constant_pacing(pacing_seconds)
