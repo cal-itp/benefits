@@ -149,14 +149,6 @@ jobs:
           push: true
           tags: ghcr.io/${{ github.repository }}:${{ github.sha }}
 
-      # deploy application service
-      - name: Deploy to Azure Web App
-        uses: azure/webapps-deploy@v2
-        with:
-          app-name: ${{ vars.AZURE_WEBAPP_NAME }}
-          images: ghcr.io/${{ github.repository }}:${{ github.sha }}
-          publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
-
       # begin setup to deploy container app
       - name: Log in to azure using federated identity credentials
         uses: azure/login@f5d393ae46f8fde4be8b75f32e3fc50e654ad0ca # v3
