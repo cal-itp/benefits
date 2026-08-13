@@ -75,13 +75,4 @@ A common problem that causes Littlepay API failures is that the certificate expi
 
 ### Eligibility Server
 
-If the Benefits application gets a 403 error when trying to make API calls to the [Eligibility Server](https://docs.calitp.org/eligibility-server/), it may be because the outbound IP addresses changed, and the Eligibility Server firewall is still restricting access to the old IP ranges.
-
-1. Grab the `outbound_ip_ranges` `output` values from the most recent Benefit [deployment](https://calenterprise.visualstudio.com/CDT.OET.CAL-ITP/_build?definitionId=828) to the relevant environment.
-1. Update the IP ranges
-   1. Go to the [Eligibility Server Pipeline](https://dev.azure.com/mstransit/courtesy-cards/_build?definitionId=1&_a=summary)
-   1. Click `Edit`
-   1. Click `Variables`
-   1. Update the relevant variable with the new list of CIDRs
-
-Note there is nightly downtime as the Eligibility Server restarts and loads new data.
+Note there is nightly downtime as the [Eligibility Servers](https://docs.calitp.org/eligibility-server/) restart and load new data.

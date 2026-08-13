@@ -197,30 +197,6 @@ Boolean:
 - `true`: the `DATABASES` Django setting is configured to use Postgres (see [`Django database (Postgres)`](#django-database-postgresql))
 - `false` (default): the `DATABASES` Django setting is configured to use SQLite (see [`Django database (SQLite)`](#django-database-sqlite))
 
-## Django database (SQLite)
-
-### `DJANGO_DB_FILE`
-
-!!! info "Local configuration"
-
-    This setting only affects the app running on localhost
-
-The name of the Django database file to use locally (during both normal app startup and for resetting the database).
-
-By default, `django.db`.
-
-### `DJANGO_DB_RESET`
-
-!!! info "Local configuration"
-
-    This setting only affects the app running on localhost
-
-Boolean:
-
-- `true`: deletes the existing database file and runs fresh Django migrations.
-- `false` (default): Django uses the existing database file.
-  (Note: Fixtures will still be loaded, updating any values on those objects if they have changed.)
-
 ## Django database (PostgreSQL)
 
 ### `DJANGO_DB_NAME`

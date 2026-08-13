@@ -21,10 +21,10 @@ To manage backups, use the app container's `web-storage` mounted volume.
 
 ```bash
 # copy a backup into the mounted volume
-cp db_data.json /home/calitp/app/data/db_data_YYY_MM_DD.json
+cp /calitp/app/db_data.json /calitp/app/data/db_data_YYY_MM_DD.json
 
 # copy a backup from the mounted volume
-cp /home/calitp/app/data/db_data_YYY_MM_DD.json db_data.json
+cp /calitp/app/data/db_data_YYY_MM_DD.json /calitp/app/db_data.json
 ```
 
 You can view the files in the mounted volume (and upload new ones) by navigating to Azure > Storage account > Data storage > Classic file shares > `web-storage` > Browse.
