@@ -65,6 +65,11 @@ variable "container_tag" {
   type        = string
 }
 # Key Vault
+variable "key_vault_id" {
+  description = "The ID of the Key Vault."
+  type        = string
+}
+
 variable "key_vault_secret_uri_prefix" {
   description = "The base URI for Key Vault secrets (e.g., 'https://myvault.vault.azure.net/secrets')."
   type        = string
@@ -103,6 +108,7 @@ variable "pgadmin_admin_password_secret_name" {
   description = "The secret name for the pgAdmin admin's password."
   type        = string
 }
+
 variable "pgadmin_config_db_uri_secret_name" {
   description = "The secret name of the connection string URI for pgAdmin's configuration DB."
   type        = string

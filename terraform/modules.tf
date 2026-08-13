@@ -31,7 +31,8 @@ module "application" {
 
   # App Config
   azure_communication_connection_string_name = local.azure_communication_connection_string_name
-  django_db_password_secret_name             = azurerm_key_vault_secret.django_db_password.name
+  key_vault_id                               = azurerm_key_vault.main.id
+  django_db_password_secret_name             = local.postgres_admin_password_secret_name
   postgres_admin_password_secret_name        = azurerm_key_vault_secret.postgres_admin_password.name
   sender_email                               = local.sender_email
   postgres_fqdn                              = azurerm_postgresql_flexible_server.main.fqdn
