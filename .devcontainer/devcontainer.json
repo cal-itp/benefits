@@ -27,6 +27,7 @@
         "eamodio.gitlens",
         "esbenp.prettier-vscode",
         "hashicorp.terraform",
+        "humao.rest-client",
         "mhutchie.git-graph",
         "monosans.djlint",
         "mrorz.language-gettext",
