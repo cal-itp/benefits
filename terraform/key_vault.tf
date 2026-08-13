@@ -79,21 +79,6 @@ resource "azurerm_key_vault_access_policy" "engineering" {
   depends_on = [azurerm_key_vault.main]
 }
 
-# this access policy below can be removed when the ADO pipeline has been deprecated
-
-# Standalone Access Policy for DevSecOps
-resource "azurerm_key_vault_access_policy" "devsecops" {
-  key_vault_id = azurerm_key_vault.main.id
-  tenant_id    = data.azurerm_client_config.current.tenant_id
-  object_id    = var.DEVSECOPS_OBJECT_ID
-
-  key_permissions    = local.all_key_permissions
-  secret_permissions = local.all_secret_permissions
-
-  # This ensures the Key Vault itself is created before trying to attach a policy.
-  depends_on = [azurerm_key_vault.main]
-}
-
 # Standalone Access Policies for GH Actions Service Principals
 
 resource "azurerm_key_vault_access_policy" "devsecops_apply" {
@@ -119,18 +104,6 @@ resource "azurerm_key_vault_access_policy" "devsecops_plan" {
 }
 
 # https://learn.microsoft.com/en-us/azure/app-service/app-service-key-vault-references?tabs=azure-cli#granting-your-app-access-to-key-vault
-# Standalone Access Policy for App Service Managed Identity
-resource "azurerm_key_vault_access_policy" "webapp" {
-  key_vault_id = azurerm_key_vault.main.id
-  tenant_id    = data.azurerm_client_config.current.tenant_id
-  object_id    = azurerm_linux_web_app.main.identity.0.principal_id
-
-  secret_permissions = ["Get"]
-
-  # This ensures the Key Vault itself is created before trying to attach a policy.
-  depends_on = [azurerm_key_vault.main]
-}
-
 # Standalone Access Policy for the Benefits (web) Container App's Managed Identity
 resource "azurerm_key_vault_access_policy" "web_container_app" {
   key_vault_id = azurerm_key_vault.main.id

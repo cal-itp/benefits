@@ -5,6 +5,7 @@ locals {
   pgadmin_admin_password_secret_name  = "pgadmin-admin-password"
   pgadmin_config_db                   = "pgadmin_config"
   pgadmin_config_db_uri_secret_name   = "pgadmin-config-db-uri"
+  django_db_password_secret_name      = "django-db-password"
 }
 
 # Manage an Azure Database for PostgreSQL Flexible Server
@@ -95,5 +96,28 @@ resource "azurerm_key_vault_secret" "pgadmin_config_db_uri" {
   content_type = "password"
   depends_on = [
     random_password.postgres_admin_password
+  ]
+}
+
+# the resources below feel a little out of place here, but i don't have a better suggestion (yet)
+
+# Generate a random password for PostgreSQL's Django database user
+resource "random_password" "django_db_password" {
+  length      = 32
+  min_lower   = 4
+  min_upper   = 4
+  min_numeric = 4
+  min_special = 4
+  special     = true
+}
+
+# Create the secret for PostgreSQL's Django database user password using the generated password
+resource "azurerm_key_vault_secret" "django_db_password" {
+  name         = local.django_db_password_secret_name
+  value        = random_password.django_db_password.result
+  key_vault_id = azurerm_key_vault.main.id
+  content_type = "password"
+  depends_on = [
+    random_password.django_db_password # Ensure password is generated first
   ]
 }
