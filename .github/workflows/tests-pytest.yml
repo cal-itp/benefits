@@ -41,7 +41,7 @@ jobs:
 
       - name: Run setup
         run: |
-          # python manage.py migrate --settings=tests.pytest.settings
+          python manage.py migrate --settings=tests.pytest.settings
           python manage.py compilemessages
           python manage.py collectstatic --no-input
 
