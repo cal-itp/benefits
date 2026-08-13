@@ -26,7 +26,7 @@ class TransitAgencyPathConverter:
     """Path converter to parse valid TransitAgency objects from URL paths."""
 
     # used to test the url fragment, determines if this PathConverter is used
-    regex = "[a-zA-Z]{3,}"
+    regex = "[a-zA-Z-]{3,}"
 
     def to_python(self, value):
         """Determine if the matched fragment corresponds to an active Agency."""
