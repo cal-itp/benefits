@@ -216,7 +216,7 @@ jobs:
           SENTRY_PROJECT: ${{ vars.SENTRY_PROJECT }}
         with:
           environment: ${{ needs.setup.outputs.env_name }}
-          release: ${{ github.ref_name }}
+          release: benefits@${{ github.ref_name }}
 
   release:
     needs: deploy
