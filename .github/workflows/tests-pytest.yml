@@ -13,29 +13,6 @@ jobs:
   pytest:
     runs-on: ubuntu-latest
 
-    # 1. Define the Postgres service
-    services:
-      postgres:
-        image: postgres:17
-        env:
-          POSTGRES_DB: django
-          POSTGRES_USER: django
-          POSTGRES_PASSWORD: django_password
-        ports:
-          - 5432:5432
-        # Wait until Postgres is healthy before running the job steps
-        options: >-
-          --health-cmd pg_isready
-          --health-interval 10s
-          --health-timeout 5s
-          --health-retries 5
-
-    # 2. Pass connection settings to your test step
-    env:
-      DJANGO_DB_PASSWORD: django_password
-      POSTGRES_HOSTNAME: 127.0.0.1
-      POSTGRES_SSLMODE: disable
-
     permissions:
       # Gives the action the necessary permissions for publishing new
       # comments in pull requests.
@@ -64,7 +41,7 @@ jobs:
 
       - name: Run setup
         run: |
-          python manage.py migrate
+          # python manage.py migrate --settings=tests.pytest.settings
           python manage.py compilemessages
           python manage.py collectstatic --no-input
 
