@@ -1,2 +1,7 @@
-GET {{$dotenv psta_init_enrollment_api_base_url}}/api/farecategories HTTP/1.1
-Authorization: {{$dotenv psta_init_enrollment_api_authorization_header }}
+@baseUrl = {{$dotenv psta_init_enrollment_api_base_url}}
+@authHeader = {{$dotenv psta_init_enrollment_api_authorization_header }}
+
+###
+
+GET {{baseUrl}}/api/farecategories HTTP/1.1
+Authorization: {{authHeader}}
