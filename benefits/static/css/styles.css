@@ -432,7 +432,7 @@ footer .footer-links li a.footer-link:visited {
 .login {
   cursor: pointer;
   font-size: var(--login-gov-button-font-size) !important;
-  font-family: "Public Sans", Roboto, system-ui;
+  font-family: "Public Sans", "Noto Sans", system-ui;
   line-height: var(--login-gov-button-line-height);
   text-transform: none;
   text-decoration: none;
