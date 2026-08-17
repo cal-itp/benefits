@@ -108,15 +108,6 @@ class EligibilityApiVerificationRequest(models.Model):
         return self.api_public_key.data
 
 
-SUPPORTED_IN_PERSON_FLOWS = (
-    SystemName.COURTESY_CARD,
-    SystemName.MEDICARE,
-    SystemName.OLDER_ADULT,
-    SystemName.REDUCED_FARE_MOBILITY_ID,
-    SystemName.GCTD_CARD,
-)
-
-
 class EnrollmentFlow(models.Model):
     """Represents a user journey through the Benefits app for a single eligibility type."""
 
@@ -245,18 +236,12 @@ class EnrollmentFlow(models.Model):
         errors = []
 
         supports_self_service = EnrollmentMethods.SELF_SERVICE in self.supported_enrollment_methods
-        supports_in_person = EnrollmentMethods.IN_PERSON in self.supported_enrollment_methods
         t = self.selection_label_template
 
         if supports_self_service and not template_path(t):
             # we can't add a field-level validation error
             # because the actual template for the self-service flow is derived from a pattern
             errors.append(ValidationError(f"Template not found: {t}"))
-
-        if supports_in_person and self.system_name not in SUPPORTED_IN_PERSON_FLOWS:
-            errors.append(
-                ValidationError(f"{self.system_name} not configured for in-person enrollment. Please uncheck to continue.")
-            )
 
         if errors:
             raise ValidationError(errors)

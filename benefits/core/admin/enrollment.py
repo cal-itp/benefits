@@ -63,6 +63,17 @@ class EnrollmentFlowForm(forms.ModelForm):
             message = "Must configure either claims verification or Eligibility API verification."
             non_field_errors.append(ValidationError(message))
 
+        supports_in_person = (
+            supported_enrollment_methods and models.EnrollmentMethods.IN_PERSON in supported_enrollment_methods
+        )
+        in_person_policy = self.get(cleaned_data, "in_person_policy")
+        if supports_in_person and not in_person_policy:
+            field_errors.update(
+                in_person_policy=ValidationError(
+                    "If the flow intends to support In-person Enrollment, it must be configured with associated policy language."  # noqa: E501
+                )
+            )
+
         for field_name, validation_error in field_errors.items():
             self.add_error(field_name, validation_error)
         for validation_error in non_field_errors:

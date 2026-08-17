@@ -1,7 +1,6 @@
 from datetime import timedelta
 
 import pytest
-from django.core.exceptions import ValidationError
 from django.utils import timezone
 
 from benefits.core.models import EligibilityApiVerificationRequest, EnrollmentEvent, EnrollmentFlow, EnrollmentMethods
@@ -111,17 +110,6 @@ def test_EnrollmentFlow_template_eligibility_api(model_EnrollmentFlow_with_eligi
         model_EnrollmentFlow_with_eligibility_api.selection_label_template
         == f"eligibility/includes/selection-label--{model_EnrollmentFlow_with_eligibility_api.system_name}.html"
     )
-
-
-@pytest.mark.django_db
-def test_EnrollmentFlow_clean_in_person_eligibility_context_not_found(model_EnrollmentFlow):
-    model_EnrollmentFlow.system_name = "nonexistent_system_name"
-
-    with pytest.raises(
-        ValidationError,
-        match=f"{model_EnrollmentFlow.system_name} not configured for in-person enrollment. Please uncheck to continue.",
-    ):
-        model_EnrollmentFlow.clean()
 
 
 @pytest.mark.django_db

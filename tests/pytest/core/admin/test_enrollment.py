@@ -59,6 +59,36 @@ class TestEnrollmentFlowAdmin:
         error_dict = form.errors
         assert "Must configure either claims verification or Eligibility API verification." in error_dict["__all__"]
 
+    def test_supports_in_person_with_policy(self, admin_user_request):
+        request = admin_user_request()
+
+        request.POST = dict(
+            system_name="senior",  # use value that will map to existing templates
+            supported_enrollment_methods=[models.EnrollmentMethods.IN_PERSON],
+            in_person_policy="In-person policy language",
+        )
+
+        form_class = self.model_admin.get_form(request)
+        form = form_class(request.POST)
+
+        assert form.is_valid()
+
+    def test_supports_in_person_without_policy(self, admin_user_request):
+        request = admin_user_request()
+
+        request.POST = dict(
+            system_name="senior",  # use value that will map to existing templates
+            supported_enrollment_methods=[models.EnrollmentMethods.IN_PERSON],
+            in_person_policy="",
+        )
+
+        form_class = self.model_admin.get_form(request)
+        form = form_class(request.POST)
+
+        assert not form.is_valid()
+        error_dict = form.errors
+        assert "in_person_policy" in error_dict
+
     def test_EnrollmentFlowForm_supports_expiration(
         self, admin_user_request, model_IdentityGatewayConfig, model_ClaimsVerificationRequest
     ):
