@@ -2,6 +2,33 @@
 
 from django.db import migrations, models
 
+from benefits.core.models import EnrollmentMethods, SystemName
+
+
+def update_in_person_policy(apps, schema_editor):
+    """Update models that support in-person to store their policy language."""
+    EnrollmentFlow = apps.get_model("core", "EnrollmentFlow")
+
+    for flow in EnrollmentFlow.objects.all():
+        if EnrollmentMethods.IN_PERSON in flow.supported_enrollment_methods:
+            match flow.system_name:
+                case SystemName.COURTESY_CARD:
+                    flow.in_person_policy = "I confirmed this rider’s identity using a government-issued ID and verified they "
+                    "possess an MST Courtesy Card."
+                case SystemName.MEDICARE:
+                    flow.in_person_policy = "I confirmed this rider’s identity using a government-issued ID and verified they "
+                    "possess a valid Medicare card."
+                case SystemName.OLDER_ADULT:
+                    flow.in_person_policy = "I confirmed this rider’s identity using a government-issued ID and verified they "
+                    "are age 65 or older."
+                case SystemName.REDUCED_FARE_MOBILITY_ID:
+                    flow.in_person_policy = "I confirmed this rider’s identity using a government-issued ID and verified they "
+                    "possess an SBMTD Reduced Fare Mobility ID."
+                case SystemName.GCTD_CARD:
+                    flow.in_person_policy = "I confirmed this rider’s identity using a government-issued ID and verified they "
+                    "possess a GCTD Reduced Fare ID."
+            flow.save()
+
 
 class Migration(migrations.Migration):
 
@@ -18,5 +45,6 @@ class Migration(migrations.Migration):
                 default="",
                 help_text="The policy language used by transit agency staff to verify a user's eligibility in-person.",
             ),
-        )
+        ),
+        migrations.RunPython(update_in_person_policy),
     ]
