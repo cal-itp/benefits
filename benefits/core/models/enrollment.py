@@ -137,6 +137,11 @@ class EnrollmentFlow(models.Model):
         default=[EnrollmentMethods.SELF_SERVICE, EnrollmentMethods.IN_PERSON],
         help_text="If the flow is supported by self-service enrollment, in-person enrollment, or both",
     )
+    in_person_policy = models.TextField(
+        default="",
+        blank=True,
+        help_text="The policy language used by transit agency staff to verify a user's eligibility in-person.",
+    )
     sign_out_button_template = models.TextField(default="", blank=True, help_text="Template that renders sign-out button")
     sign_out_link_template = models.TextField(default="", blank=True, help_text="Template that renders sign-out link")
     oauth_config = models.ForeignKey(
