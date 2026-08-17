@@ -1,14 +1,5 @@
 @import "variables.css";
 
-@font-face {
-  font-family: "Public Sans";
-  font-weight: var(--bold-font-weight);
-  font-style: normal;
-  src:
-    local("PublicSans"),
-    url("../fonts/PublicSans-Bold.woff") format("woff");
-}
-
 html {
   overflow-y: auto;
   scroll-padding-top: 101px; /* Header Height (80px) + Skip Nav Height (21px) = 101px */
@@ -416,14 +407,12 @@ footer .footer-links li a.footer-link:visited {
 /* Used on Eligibility Start */
 
 :root {
-  --login-gov-button-font-size: var(--font-size-20px);
   --login-gov-button-padding: 0.5rem;
   --login-gov-button-line-height: 1;
 }
 
 @media (min-width: 992px) {
   :root {
-    --login-gov-button-font-size: var(--font-size-16px);
     --login-gov-button-padding: 1rem;
     --login-gov-button-line-height: 1.5;
   }
@@ -431,9 +420,6 @@ footer .footer-links li a.footer-link:visited {
 
 .login {
   cursor: pointer;
-  font-size: var(--login-gov-button-font-size) !important;
-  font-family: "Public Sans", "Noto Sans", system-ui;
-  line-height: var(--login-gov-button-line-height);
   text-transform: none;
   text-decoration: none;
 }
@@ -731,6 +717,8 @@ footer .footer-links li a.footer-link:visited {
   width: 22px;
   height: 22px;
   vertical-align: text-bottom;
+  position: relative;
+  top: -2px;
 }
 
 [data-bs-toggle="modal"]:not(.btn):hover::after {
