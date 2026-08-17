@@ -44,7 +44,6 @@ span,
 li {
   font-size: var(--bs-body-font-size);
   font-weight: var(--bs-body-font-weight);
-  letter-spacing: calc(var(--bs-body-font-size) * var(--letter-spacing-5));
   line-height: var(--bs-body-line-height);
   margin: 0;
 }
@@ -69,10 +68,6 @@ li {
 
 .fs-base {
   font-size: var(--bs-body-font-size);
-}
-
-.ls-base {
-  letter-spacing: calc(var(--bs-body-font-size) * var(--letter-spacing-5));
 }
 
 .list-disc {
@@ -156,13 +151,11 @@ h4,
 /* Screen width above 992px - 35px (35rem/16 = 2.1875rem) and centered */
 :root {
   --h1-font-size: var(--font-size-24px);
-  --h1-letter-spacing-percent: var(--letter-spacing-3);
 }
 
 @media (min-width: 992px) {
   :root {
     --h1-font-size: var(--font-size-35px);
-    --h1-letter-spacing-percent: var(--letter-spacing-5);
     --font-size-35px: 2.1875rem;
   }
 }
@@ -172,7 +165,6 @@ h1,
   font-size: var(--h1-font-size);
   padding-top: calc(72rem / 16);
   line-height: var(--heading-line-height);
-  letter-spacing: calc(var(--h1-font-size) * var(--h1-letter-spacing-percent));
 }
 
 /* H2 */
@@ -182,7 +174,6 @@ h2,
 .h2 {
   font-size: var(--font-size-24px);
   line-height: var(--heading-line-height);
-  letter-spacing: calc(var(--font-size-24px) * var(--letter-spacing-3));
 }
 
 @media (max-width: 992px) {
@@ -191,7 +182,6 @@ h2,
   .h2-sm {
     font-size: var(--font-size-20px);
     line-height: var(--heading-line-height);
-    letter-spacing: calc(var(--font-size-20px) * var(--letter-spacing-5));
   }
 
   /* H2: 18px, up to Small width */
@@ -200,7 +190,6 @@ h2,
     font-size: var(--bs-body-font-size);
     font-weight: var(--bs-body-font-weight);
     line-height: var(--heading-line-height);
-    letter-spacing: calc(var(--bs-body-font-size) * var(--letter-spacing-5));
     margin: 0;
   }
 }
@@ -212,29 +201,23 @@ h3,
 .h3 {
   font-size: var(--h3-font-size);
   line-height: var(--heading-line-height);
-  letter-spacing: calc(var(--h3-font-size) * var(--letter-spacing-5));
 }
 
 /* H4 */
 /* Used for Agency Selector card, agency name */
 :root {
   --h4-font-size: var(--font-size-18px);
-  --h4-letter-spacing-percent: var(--letter-spacing-3);
 }
 
 @media (min-width: 992px) {
   :root {
     --h4-font-size: var(--font-size-20px);
-    --h4-letter-spacing-percent: var(--letter-spacing-5);
   }
 }
 
 h4,
 .h4 {
   font-size: var(--h4-font-size) !important; /* override Bootstrap class */
-  letter-spacing: calc(
-    var(--h4-font-size) * var(--h4-letter-spacing-percent)
-  ) !important;
   line-height: var(--h4-line-height) !important;
 }
 
@@ -306,7 +289,6 @@ footer .footer-links li a.footer-link {
   font-weight: var(--footer-link-font-weight);
   font-size: var(--bs-body-font-size);
   text-decoration: underline;
-  letter-spacing: calc(var(--bs-body-font-size) * var(--letter-spacing-5));
   line-height: 50px;
 }
 
@@ -352,7 +334,6 @@ footer .footer-links li a.footer-link:visited {
   border-width: 2px;
   font-weight: var(--medium-font-weight);
   font-size: var(--font-size-20px);
-  letter-spacing: calc(var(--font-size-20px) * var(--letter-spacing-2));
   width: 100%;
   padding: var(--primary-button-padding);
 }
@@ -383,7 +364,6 @@ footer .footer-links li a.footer-link:visited {
 .btn-text {
   font-weight: var(--medium-font-weight);
   font-size: var(--font-size-20px);
-  letter-spacing: calc(var(--font-size-20px) * var(--letter-spacing-2));
 }
 
 /* Previous Button, Language Button */
@@ -489,7 +469,6 @@ footer .footer-links li a.footer-link:visited {
   padding: 2px 4px;
   border-radius: var(--border-radius);
   border: var(--border-width) solid var(--primary-color);
-  letter-spacing: calc(var(--bs-body-font-size) * var(--letter-spacing-2));
   font-weight: 500 !important;
   text-decoration: none !important;
 }
@@ -499,7 +478,6 @@ footer .footer-links li a.footer-link:visited {
   .signout-link:visited {
     font-size: var(--font-size-12px);
     text-decoration: underline !important;
-    letter-spacing: calc(var(--font-size-12px) * var(--letter-spacing-5));
     border: none;
   }
 }
@@ -511,7 +489,6 @@ footer .footer-links li a.footer-link:visited {
   color: var(--text-primary-color);
   font-weight: var(--medium-font-weight);
   font-size: var(--font-size-14px);
-  letter-spacing: calc(var(--font-size-14px) * var(--letter-spacing-5));
   padding: 3.5px 2.35px; /* button dimensions are 130 x 32 */
 }
 
@@ -532,7 +509,6 @@ footer .footer-links li a.footer-link:visited {
   font-size: var(--font-size-14px);
   font-weight: unset;
   line-height: var(--form-field-text-line-height);
-  letter-spacing: calc(var(--font-size-14px) * var(--letter-spacing-5));
 }
 
 /* Forms: Text Inputs */
@@ -543,7 +519,6 @@ footer .footer-links li a.footer-link:visited {
   font-size: var(--font-size-16px);
   font-weight: var(--medium-font-weight);
   line-height: var(--form-field-text-line-height);
-  letter-spacing: calc(var(--font-size-16px) * var(--letter-spacing-5));
   padding-bottom: calc(12rem / 16);
 }
 
@@ -591,7 +566,6 @@ footer .footer-links li a.footer-link:visited {
 #form-agency-selection label {
   font-size: var(--font-size-20px);
   line-height: var(--bs-body-line-height);
-  letter-spacing: calc(var(--font-size-20px) * var(--letter-spacing-2));
 }
 
 #form-agency-selection .btn.btn-lg.btn-primary:focus,
