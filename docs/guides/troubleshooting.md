@@ -75,4 +75,13 @@ A common problem that causes Littlepay API failures is that the certificate expi
 
 ### Eligibility Server
 
+It would be unexpected, but a <kbd>403</kbd> error calling the [Eligibility Server](https://docs.calitp.org/eligibility-server/) would indicate that the outbound IP address has changed, and that the new IP is not on the Eligibility Server firewall's allowlist.
+
+1. Retrieve the _IP address_ value from the _Public IP address_ resource in the Azure Portal for the relevant environment.
+1. Update the IP address:
+   1. Go to the [Eligibility Server Pipeline](https://dev.azure.com/mstransit/courtesy-cards/_build?definitionId=2&_a=summary)
+   1. Click `Edit`
+   1. Click `Variables`
+   1. Update the relevant variable with the new public IP address
+
 Note there is nightly downtime as the [Eligibility Servers](https://docs.calitp.org/eligibility-server/) restart and load new data.
