@@ -9,6 +9,7 @@
   --bs-body-text-align: left;
   --bs-body-font-weight: 400;
   --medium-font-weight: 500;
+  --semi-bold-font-weight: 600;
   --bold-font-weight: 700;
   --bs-body-font-size: calc(18rem / 16);
   --bs-font-sans-serif: "Noto Sans", system-ui;

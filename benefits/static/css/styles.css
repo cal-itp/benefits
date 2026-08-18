@@ -80,7 +80,7 @@ a:not(.btn):not(.card) {
   color: var(--primary-color);
   text-decoration: underline;
   text-decoration-style: solid;
-  font-weight: var(--bold-font-weight);
+  font-weight: var(--semi-bold-font-weight);
   border-radius: var(--focus-border-radius);
 }
 
@@ -229,6 +229,7 @@ h4,
 /* Language button */
 #header-container .btn-outline-light {
   --bs-btn-font-size: var(--bs-body-font-size);
+  --bs-btn-font-weight: var(--semi-bold-font-weight);
   --bs-btn-padding-y: 3.5px;
   --bs-btn-padding-x: 29.01px;
 }
@@ -257,7 +258,7 @@ main {
 #skip-to-content:focus span {
   outline: var(--focus-style-dark) !important;
   outline-offset: var(--focus-outline-offset) !important;
-  font-weight: var(--bold-font-weight);
+  font-weight: var(--medium-font-weight);
   border-radius: var(--focus-border-radius);
 }
 
@@ -267,7 +268,7 @@ main {
   --footer-link-color: #73b3e7;
   --footer-link-hover-color: #0062ff;
   --footer-link-visited-color: #9b74d7;
-  --footer-link-font-weight: var(--bold-font-weight);
+  --footer-link-font-weight: var(--semi-bold-font-weight);
   --main-content-min-height: calc(100vh - 246px);
   /* 246px = Header Height (80px) + (Footer Link (50px) * Number of Links (2)) + Underline Height (2px) + Footer Margin Top (64px) */
 }
@@ -332,7 +333,7 @@ footer .footer-links li a.footer-link:visited {
   background-color: var(--primary-color);
   border-color: var(--primary-color);
   border-width: 2px;
-  font-weight: var(--medium-font-weight);
+  font-weight: var(--semi-bold-font-weight);
   font-size: var(--font-size-20px);
   width: 100%;
   padding: var(--primary-button-padding);
@@ -362,7 +363,7 @@ footer .footer-links li a.footer-link:visited {
 }
 
 .btn-text {
-  font-weight: var(--medium-font-weight);
+  font-weight: var(--semi-bold-font-weight);
   font-size: var(--font-size-20px);
 }
 
@@ -416,7 +417,7 @@ footer .footer-links li a.footer-link:visited {
   padding-top: 1px;
   color: transparent;
   font-size: var(--font-size-16px);
-  font-weight: var(--bold-font-weight);
+  font-weight: var(--semi-bold-font-weight);
   line-height: 1;
 }
 
@@ -469,7 +470,7 @@ footer .footer-links li a.footer-link:visited {
   padding: 2px 4px;
   border-radius: var(--border-radius);
   border: var(--border-width) solid var(--primary-color);
-  font-weight: 500 !important;
+  font-weight: var(--medium-font-weight) !important;
   text-decoration: none !important;
 }
 
@@ -517,7 +518,7 @@ footer .footer-links li a.footer-link:visited {
 .form-field-container .form-control-label,
 .form-field-container .required-label {
   font-size: var(--font-size-16px);
-  font-weight: var(--medium-font-weight);
+  font-weight: var(--semi-bold-font-weight);
   line-height: var(--form-field-text-line-height);
   padding-bottom: calc(12rem / 16);
 }
@@ -565,6 +566,7 @@ footer .footer-links li a.footer-link:visited {
 
 #form-agency-selection label {
   font-size: var(--font-size-20px);
+  font-weight: var(--semi-bold-font-weight);
   line-height: var(--bs-body-line-height);
 }
 
@@ -797,7 +799,6 @@ footer .footer-links li a.footer-link:visited {
 
 .landing .box .btn.btn-lg.btn-primary {
   font-size: var(--font-size-18px);
-  font-weight: unset;
   padding: var(--grid-spacer) 0;
 }
 
