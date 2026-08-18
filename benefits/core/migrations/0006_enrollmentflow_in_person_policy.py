@@ -13,20 +13,30 @@ def update_in_person_policy(apps, schema_editor):
         if EnrollmentMethods.IN_PERSON in flow.supported_enrollment_methods:
             match flow.system_name:
                 case SystemName.COURTESY_CARD:
-                    flow.in_person_policy = "I confirmed this rider’s identity using a government-issued ID and verified they "
-                    "possess an MST Courtesy Card."
+                    flow.in_person_policy = (
+                        "I confirmed this rider’s identity using a government-issued ID and verified they "
+                        "possess an MST Courtesy Card."
+                    )
                 case SystemName.MEDICARE:
-                    flow.in_person_policy = "I confirmed this rider’s identity using a government-issued ID and verified they "
-                    "possess a valid Medicare card."
+                    flow.in_person_policy = (
+                        "I confirmed this rider’s identity using a government-issued ID and verified they "
+                        "possess a valid Medicare card."
+                    )
                 case SystemName.OLDER_ADULT:
-                    flow.in_person_policy = "I confirmed this rider’s identity using a government-issued ID and verified they "
-                    "are age 65 or older."
+                    flow.in_person_policy = (
+                        "I confirmed this rider’s identity using a government-issued ID and verified they "
+                        "are age 65 or older."
+                    )
                 case SystemName.REDUCED_FARE_MOBILITY_ID:
-                    flow.in_person_policy = "I confirmed this rider’s identity using a government-issued ID and verified they "
-                    "possess an SBMTD Reduced Fare Mobility ID."
+                    flow.in_person_policy = (
+                        "I confirmed this rider’s identity using a government-issued ID and verified they "
+                        "possess an SBMTD Reduced Fare Mobility ID."
+                    )
                 case SystemName.GCTD_CARD:
-                    flow.in_person_policy = "I confirmed this rider’s identity using a government-issued ID and verified they "
-                    "possess a GCTD Reduced Fare ID."
+                    flow.in_person_policy = (
+                        "I confirmed this rider’s identity using a government-issued ID and verified they "
+                        "possess a GCTD Reduced Fare ID."
+                    )
             flow.save()
 
 
