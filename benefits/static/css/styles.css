@@ -401,6 +401,7 @@ footer .footer-links li a.footer-link:visited {
 
 .login {
   cursor: pointer;
+  line-height: var(--login-gov-button-line-height);
   text-transform: none;
   text-decoration: none;
 }
