@@ -1,5 +1,6 @@
 import pytest
 from django.contrib import admin
+from django.core.exceptions import NON_FIELD_ERRORS
 
 from benefits.core import models
 from benefits.core.admin.enrollment import EnrollmentEventAdmin, SortableEnrollmentFlowAdmin
@@ -113,3 +114,21 @@ class TestEnrollmentFlowAdmin:
         error_dict = form.errors
         assert "expiration_days" in error_dict
         assert "expiration_reenrollment_days" in error_dict
+
+    def test_without_selection_label_template(self, admin_user_request):
+        request = admin_user_request()
+
+        request.POST = dict(
+            system_name="unknown-system-name",  # use value that does not map to existing templates
+            supported_enrollment_methods=[models.EnrollmentMethods.SELF_SERVICE],
+        )
+
+        form_class = self.model_admin.get_form(request)
+        form = form_class(request.POST)
+
+        assert not form.is_valid()
+        error_dict = form.errors
+        assert any(
+            error.startswith("Template not found: eligibility/includes/selection-label--")
+            for error in error_dict[NON_FIELD_ERRORS]
+        )

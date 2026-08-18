@@ -2,12 +2,11 @@ import logging
 import uuid
 
 from cdt_identity.models import ClaimsVerificationRequest, IdentityGatewayConfig
-from django.core.exceptions import ValidationError
 from django.db import models
 from django.utils import timezone
 from multiselectfield import MultiSelectField
 
-from .common import PemData, SecretNameField, template_path
+from .common import PemData, SecretNameField
 
 logger = logging.getLogger(__name__)
 
@@ -229,22 +228,6 @@ class EnrollmentFlow(models.Model):
     @property
     def supports_sign_out(self):
         return bool(self.sign_out_button_template) or bool(self.sign_out_link_template)
-
-    # until we can make time to consolidate, additional validation logic can be found in EnrollmentFlow.clean()
-    # see https://cal-itp.slack.com/archives/C037Y3UE71P/p1779234784673319?thread_ts=1779231543.096499&cid=C037Y3UE71P
-    def clean(self):
-        errors = []
-
-        supports_self_service = EnrollmentMethods.SELF_SERVICE in self.supported_enrollment_methods
-        t = self.selection_label_template
-
-        if supports_self_service and not template_path(t):
-            # we can't add a field-level validation error
-            # because the actual template for the self-service flow is derived from a pattern
-            errors.append(ValidationError(f"Template not found: {t}"))
-
-        if errors:
-            raise ValidationError(errors)
 
     @staticmethod
     def by_id(id):
