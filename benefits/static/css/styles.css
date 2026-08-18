@@ -1,14 +1,5 @@
 @import "variables.css";
 
-@font-face {
-  font-family: "Public Sans";
-  font-weight: var(--bold-font-weight);
-  font-style: normal;
-  src:
-    local("PublicSans"),
-    url("../fonts/PublicSans-Bold.woff") format("woff");
-}
-
 html {
   overflow-y: auto;
   scroll-padding-top: 101px; /* Header Height (80px) + Skip Nav Height (21px) = 101px */
@@ -53,7 +44,6 @@ span,
 li {
   font-size: var(--bs-body-font-size);
   font-weight: var(--bs-body-font-weight);
-  letter-spacing: calc(var(--bs-body-font-size) * var(--letter-spacing-5));
   line-height: var(--bs-body-line-height);
   margin: 0;
 }
@@ -80,10 +70,6 @@ li {
   font-size: var(--bs-body-font-size);
 }
 
-.ls-base {
-  letter-spacing: calc(var(--bs-body-font-size) * var(--letter-spacing-5));
-}
-
 .list-disc {
   list-style-type: disc;
 }
@@ -94,7 +80,7 @@ a:not(.btn):not(.card) {
   color: var(--primary-color);
   text-decoration: underline;
   text-decoration-style: solid;
-  font-weight: var(--bold-font-weight);
+  font-weight: var(--semi-bold-font-weight);
   border-radius: var(--focus-border-radius);
 }
 
@@ -165,13 +151,11 @@ h4,
 /* Screen width above 992px - 35px (35rem/16 = 2.1875rem) and centered */
 :root {
   --h1-font-size: var(--font-size-24px);
-  --h1-letter-spacing-percent: var(--letter-spacing-3);
 }
 
 @media (min-width: 992px) {
   :root {
     --h1-font-size: var(--font-size-35px);
-    --h1-letter-spacing-percent: var(--letter-spacing-5);
     --font-size-35px: 2.1875rem;
   }
 }
@@ -181,7 +165,6 @@ h1,
   font-size: var(--h1-font-size);
   padding-top: calc(72rem / 16);
   line-height: var(--heading-line-height);
-  letter-spacing: calc(var(--h1-font-size) * var(--h1-letter-spacing-percent));
 }
 
 /* H2 */
@@ -191,7 +174,6 @@ h2,
 .h2 {
   font-size: var(--font-size-24px);
   line-height: var(--heading-line-height);
-  letter-spacing: calc(var(--font-size-24px) * var(--letter-spacing-3));
 }
 
 @media (max-width: 992px) {
@@ -200,7 +182,6 @@ h2,
   .h2-sm {
     font-size: var(--font-size-20px);
     line-height: var(--heading-line-height);
-    letter-spacing: calc(var(--font-size-20px) * var(--letter-spacing-5));
   }
 
   /* H2: 18px, up to Small width */
@@ -209,7 +190,6 @@ h2,
     font-size: var(--bs-body-font-size);
     font-weight: var(--bs-body-font-weight);
     line-height: var(--heading-line-height);
-    letter-spacing: calc(var(--bs-body-font-size) * var(--letter-spacing-5));
     margin: 0;
   }
 }
@@ -221,29 +201,23 @@ h3,
 .h3 {
   font-size: var(--h3-font-size);
   line-height: var(--heading-line-height);
-  letter-spacing: calc(var(--h3-font-size) * var(--letter-spacing-5));
 }
 
 /* H4 */
 /* Used for Agency Selector card, agency name */
 :root {
   --h4-font-size: var(--font-size-18px);
-  --h4-letter-spacing-percent: var(--letter-spacing-3);
 }
 
 @media (min-width: 992px) {
   :root {
     --h4-font-size: var(--font-size-20px);
-    --h4-letter-spacing-percent: var(--letter-spacing-5);
   }
 }
 
 h4,
 .h4 {
   font-size: var(--h4-font-size) !important; /* override Bootstrap class */
-  letter-spacing: calc(
-    var(--h4-font-size) * var(--h4-letter-spacing-percent)
-  ) !important;
   line-height: var(--h4-line-height) !important;
 }
 
@@ -255,6 +229,7 @@ h4,
 /* Language button */
 #header-container .btn-outline-light {
   --bs-btn-font-size: var(--bs-body-font-size);
+  --bs-btn-font-weight: var(--semi-bold-font-weight);
   --bs-btn-padding-y: 3.5px;
   --bs-btn-padding-x: 29.01px;
 }
@@ -283,7 +258,7 @@ main {
 #skip-to-content:focus span {
   outline: var(--focus-style-dark) !important;
   outline-offset: var(--focus-outline-offset) !important;
-  font-weight: var(--bold-font-weight);
+  font-weight: var(--medium-font-weight);
   border-radius: var(--focus-border-radius);
 }
 
@@ -293,7 +268,7 @@ main {
   --footer-link-color: #73b3e7;
   --footer-link-hover-color: #0062ff;
   --footer-link-visited-color: #9b74d7;
-  --footer-link-font-weight: var(--bold-font-weight);
+  --footer-link-font-weight: var(--semi-bold-font-weight);
   --main-content-min-height: calc(100vh - 246px);
   /* 246px = Header Height (80px) + (Footer Link (50px) * Number of Links (2)) + Underline Height (2px) + Footer Margin Top (64px) */
 }
@@ -315,7 +290,6 @@ footer .footer-links li a.footer-link {
   font-weight: var(--footer-link-font-weight);
   font-size: var(--bs-body-font-size);
   text-decoration: underline;
-  letter-spacing: calc(var(--bs-body-font-size) * var(--letter-spacing-5));
   line-height: 50px;
 }
 
@@ -359,9 +333,8 @@ footer .footer-links li a.footer-link:visited {
   background-color: var(--primary-color);
   border-color: var(--primary-color);
   border-width: 2px;
-  font-weight: var(--medium-font-weight);
+  font-weight: var(--semi-bold-font-weight);
   font-size: var(--font-size-20px);
-  letter-spacing: calc(var(--font-size-20px) * var(--letter-spacing-2));
   width: 100%;
   padding: var(--primary-button-padding);
 }
@@ -390,9 +363,8 @@ footer .footer-links li a.footer-link:visited {
 }
 
 .btn-text {
-  font-weight: var(--medium-font-weight);
+  font-weight: var(--semi-bold-font-weight);
   font-size: var(--font-size-20px);
-  letter-spacing: calc(var(--font-size-20px) * var(--letter-spacing-2));
 }
 
 /* Previous Button, Language Button */
@@ -416,14 +388,12 @@ footer .footer-links li a.footer-link:visited {
 /* Used on Eligibility Start */
 
 :root {
-  --login-gov-button-font-size: var(--font-size-20px);
   --login-gov-button-padding: 0.5rem;
   --login-gov-button-line-height: 1;
 }
 
 @media (min-width: 992px) {
   :root {
-    --login-gov-button-font-size: var(--font-size-16px);
     --login-gov-button-padding: 1rem;
     --login-gov-button-line-height: 1.5;
   }
@@ -431,8 +401,6 @@ footer .footer-links li a.footer-link:visited {
 
 .login {
   cursor: pointer;
-  font-size: var(--login-gov-button-font-size) !important;
-  font-family: "Public Sans", Roboto, system-ui;
   line-height: var(--login-gov-button-line-height);
   text-transform: none;
   text-decoration: none;
@@ -450,7 +418,7 @@ footer .footer-links li a.footer-link:visited {
   padding-top: 1px;
   color: transparent;
   font-size: var(--font-size-16px);
-  font-weight: var(--bold-font-weight);
+  font-weight: var(--semi-bold-font-weight);
   line-height: 1;
 }
 
@@ -503,8 +471,7 @@ footer .footer-links li a.footer-link:visited {
   padding: 2px 4px;
   border-radius: var(--border-radius);
   border: var(--border-width) solid var(--primary-color);
-  letter-spacing: calc(var(--bs-body-font-size) * var(--letter-spacing-2));
-  font-weight: 500 !important;
+  font-weight: var(--medium-font-weight) !important;
   text-decoration: none !important;
 }
 
@@ -513,7 +480,6 @@ footer .footer-links li a.footer-link:visited {
   .signout-link:visited {
     font-size: var(--font-size-12px);
     text-decoration: underline !important;
-    letter-spacing: calc(var(--font-size-12px) * var(--letter-spacing-5));
     border: none;
   }
 }
@@ -525,7 +491,6 @@ footer .footer-links li a.footer-link:visited {
   color: var(--text-primary-color);
   font-weight: var(--medium-font-weight);
   font-size: var(--font-size-14px);
-  letter-spacing: calc(var(--font-size-14px) * var(--letter-spacing-5));
   padding: 3.5px 2.35px; /* button dimensions are 130 x 32 */
 }
 
@@ -546,7 +511,6 @@ footer .footer-links li a.footer-link:visited {
   font-size: var(--font-size-14px);
   font-weight: unset;
   line-height: var(--form-field-text-line-height);
-  letter-spacing: calc(var(--font-size-14px) * var(--letter-spacing-5));
 }
 
 /* Forms: Text Inputs */
@@ -555,9 +519,8 @@ footer .footer-links li a.footer-link:visited {
 .form-field-container .form-control-label,
 .form-field-container .required-label {
   font-size: var(--font-size-16px);
-  font-weight: var(--medium-font-weight);
+  font-weight: var(--semi-bold-font-weight);
   line-height: var(--form-field-text-line-height);
-  letter-spacing: calc(var(--font-size-16px) * var(--letter-spacing-5));
   padding-bottom: calc(12rem / 16);
 }
 
@@ -604,8 +567,8 @@ footer .footer-links li a.footer-link:visited {
 
 #form-agency-selection label {
   font-size: var(--font-size-20px);
+  font-weight: var(--semi-bold-font-weight);
   line-height: var(--bs-body-line-height);
-  letter-spacing: calc(var(--font-size-20px) * var(--letter-spacing-2));
 }
 
 #form-agency-selection .btn.btn-lg.btn-primary:focus,
@@ -731,6 +694,8 @@ footer .footer-links li a.footer-link:visited {
   width: 22px;
   height: 22px;
   vertical-align: text-bottom;
+  position: relative;
+  top: -2px;
 }
 
 [data-bs-toggle="modal"]:not(.btn):hover::after {
@@ -835,7 +800,6 @@ footer .footer-links li a.footer-link:visited {
 
 .landing .box .btn.btn-lg.btn-primary {
   font-size: var(--font-size-18px);
-  font-weight: unset;
   padding: var(--grid-spacer) 0;
 }
 
