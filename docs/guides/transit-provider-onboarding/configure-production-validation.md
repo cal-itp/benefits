@@ -38,7 +38,7 @@ _Typically performed by a Cal-ITP developer._
       - Return to the `TransitAgency` and associate the new `LittlepayConfig` as its 'Transit processor config'.
       - Retrieve Audience and Client ID values for the **production** config from shared LastPass note.
       - Client Secret Name: `${agency_slug}-payment-processor-client-secret`
-      --8<-- "./inc/create-secret.md"
+      - [Create the corresponding secret in the Azure Key Vault](../../../tutorials/secrets/) for the environment
     1. Cal-ITP returns to the `TransitAgency` instance and selects the `LittlepayConfig` above as the agency's transit processor config and checks the **Active** box.
 
 === "Switchio"
@@ -49,7 +49,7 @@ _Typically performed by a Cal-ITP developer._
       - Label: `${agency_short_name}`
       - Tokenization api key: from LastPass
       - Tokenization api secret name: `${agency_slug}-switchio-api-secret`
-      --8<-- "./inc/create-secret.md"
+      - [Create the corresponding secret in the Azure Key Vault](../../../tutorials/secrets/) for the environment
       - Pto id: from LastPass
 
     1. Cal-ITP creates a new `SwitchioGroup` in the Benefits test environment for each enrollment flow:

@@ -34,4 +34,4 @@ To verify the value of a secret, you can use the helper script named `read.sh`.
 
 ## Refreshing secrets
 
-Container apps pick up new key vault values [within 30 minutes](https://learn.microsoft.com/en-us/azure/container-apps/manage-secrets?tabs=azure-portal#key-vault-secret-uri-and-secret-rotation) without intervention. You can trigger an immediate reevaluation by deploying a new revision or stopping and restarting the container app.
+Container Apps pick up new key vault values [within 30 minutes](https://learn.microsoft.com/en-us/azure/container-apps/manage-secrets?tabs=azure-portal#key-vault-secret-uri-and-secret-rotation) without intervention. You can trigger an immediate reevaluation by saving a new revision (Azure > Container App > Application < Containers > Save as a new revision) or stopping and restarting the container app.

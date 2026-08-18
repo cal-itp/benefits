@@ -3,7 +3,7 @@
 The first steps of the Getting Started guide mention [creating an `.env` file][getting-started_create-env].
 
 The sections below outline in more detail the application environment variables that you may want to override, and their purpose.
-In Azure App Services, this is more generally called the ["configuration"][app-service-config].
+In Azure Container Apps, this is more generally called the ["configuration"][container-app-config].
 
 !!! warning "Multiline environment variables"
 
@@ -512,6 +512,7 @@ Control the volume of transactions sent to Sentry. Value must be a float in the 
 The default is `0.0` (i.e. no transactions are tracked).
 
 [app-service-config]: https://docs.microsoft.com/en-us/azure/app-service/configure-common?tabs=portal
+[container-app-config]: https://learn.microsoft.com/en-us/azure/container-apps/environment-variables?tabs=portal
 [getting-started_create-env]: ../guides/getting-started.md#create-an-environment-file
 [django-csp-config]: https://django-csp.readthedocs.io/en/latest/configuration.html#configuring-django-csp
 [mdn-csp]: https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy

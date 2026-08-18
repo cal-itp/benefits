@@ -82,7 +82,7 @@ resource "azurerm_private_dns_zone_virtual_network_link" "db" {
   }
 }
 
-# NAT Gateway for the App Service's outbound connectivity (IdG, Sentry, Google SSO)
+# NAT Gateway for the Container App's outbound connectivity (IdG, Sentry, Google SSO)
 resource "azurerm_nat_gateway" "main" {
   name                = "NAT-CDT-PUB-VIP-CALITP-${local.env_letter}"
   location            = data.azurerm_resource_group.main.location

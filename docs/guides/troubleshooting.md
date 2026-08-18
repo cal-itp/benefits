@@ -8,33 +8,29 @@ We have [ping tests](https://docs.microsoft.com/en-us/azure/azure-monitor/app/mo
 
 ### Logs
 
-#### Azure App Service Logs
+#### Azure Container App Logs
 
 [Open the `Logs` for the environment you are interested in.](https://docs.google.com/document/d/11EPDIROBvg7cRtU2V42c6VBxcW_o8HhcyORALNtL_XY/edit#heading=h.6pxjhslhxwvj) The following tables are likely of interest:
 
 - `AppServiceConsoleLogs`: `stdout` and `stderr` coming from the container
-- `AppServiceHTTPLogs`: requests coming through App Service
+- `AppServiceHTTPLogs`: requests coming through Container App
 - `AppServicePlatformLogs`: deployment information
 
 For some pre-defined queries, click `Queries`, then `Group by: Query type`, and look under `Query pack queries`.
 
 #### Live tail
 
-After [setting up the Azure CLI](../explanation/infrastructure.md#making-changes), you can use the following command to [stream live logs](https://docs.microsoft.com/en-us/azure/app-service/troubleshoot-diagnostic-logs#in-local-terminal):
+After [setting up the Azure CLI](../explanation/infrastructure.md#making-changes), you can use the following command to [stream live logs](https://learn.microsoft.com/en-us/azure/container-apps/log-streaming?tabs=bash):
 
 ```sh
-az webapp log tail --resource-group RG-CDT-PUB-VIP-CALITP-P-001 --name AS-CDT-PUB-VIP-CALITP-P-001 2>&1 | grep -v /healthcheck
+az containerapp logs show --resource-group RG-CDT-PUB-VIP-CALITP-P-001 --name ca-cdt-pub-vip-calitp-p-web --tail 10 >&1 | grep -v /healthcheck
 ```
-
-#### SCM
-
-<https://as-cdt-pub-vip-calitp-p-001-dev.scm.azurewebsites.net/api/logs/docker>
 
 ### Sentry
 
 Cal-ITP's Sentry instance collects both [errors ("Issues")](https://sentry.calitp.org/organizations/sentry/issues/?project=3) and app [performance info](https://sentry.calitp.org/organizations/sentry/performance/?project=3).
 
-[Alerts are sent to #benefits-notify in Slack.](https://sentry.calitp.org/organizations/sentry/alerts/rules/benefits/9/details/) [Others can be configured.](https://sentry.calitp.org/organizations/sentry/alerts/rules/)
+[Alerts are sent to `#benefits-notify` in Slack.](https://sentry.calitp.org/organizations/sentry/alerts/rules/benefits/9/details/) [Others can be configured.](https://sentry.calitp.org/organizations/sentry/alerts/rules/)
 
 You can troubleshoot Sentry itself by [turning on debug mode](../reference/environment-variables.md#django_debug) and visiting `/error/`.
 
