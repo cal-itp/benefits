@@ -38,6 +38,7 @@ urlpatterns = [
     path("in_person/", include("benefits.in_person.urls")),
     path("littlepay/", include("benefits.enrollment_littlepay.urls")),
     path("switchio/", include("benefits.enrollment_switchio.urls")),
+    path("metro-mobility-wallet/", include("benefits.metro_mobility_wallet.urls")),
 ]
 
 if settings.RUNTIME_ENVIRONMENT() == settings.RUNTIME_ENVS.LOCAL:
