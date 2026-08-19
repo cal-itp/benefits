@@ -68,6 +68,7 @@ INSTALLED_APPS = [
     "benefits.eligibility",
     "benefits.oauth",
     "benefits.in_person",
+    "benefits.metro_mobility_wallet",
 ]
 
 GOOGLE_SSO_CLIENT_ID = os.environ.get("GOOGLE_SSO_CLIENT_ID", "secret")
