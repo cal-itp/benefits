@@ -25,11 +25,12 @@ SUPPORTED_METHODS = (
 class SystemName(models.TextChoices):
     CALFRESH = "calfresh"
     COURTESY_CARD = "courtesy_card"
+    GCTD_CARD = "gctd_card"
     MEDICARE = "medicare"
     OLDER_ADULT = "senior"
     REDUCED_FARE_MOBILITY_ID = "mobility_pass"
+    SCMETRO_CARD = "scmetro_card"
     VETERAN = "veteran"
-    GCTD_CARD = "gctd_card"
 
 
 class EligibilityApiVerificationRequest(models.Model):
