@@ -8,6 +8,6 @@ from . import views
 
 app_name = "metro_mobility_wallet"
 urlpatterns = [
-    # /metro-mobility-wallet
+    # /metro-mobility-wallet/
     path("", views.IndexView.as_view(), name="index"),
 ]
