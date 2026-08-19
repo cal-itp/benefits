@@ -32,28 +32,6 @@ class InPersonEligibilityForm(forms.Form):
     flow_field_error_message = "Choose an eligibility type"
     verified_field_error_message = "Check the box to verify you have confirmed eligibility"
 
-    eligibility_policies = {
-        models.SystemName.COURTESY_CARD.value: EligibilityPolicy(
-            details="I confirmed this rider’s identity using a government-issued ID and verified they possess an MST "
-            "Courtesy Card."
-        ),
-        models.SystemName.MEDICARE.value: EligibilityPolicy(
-            details="I confirmed this rider’s identity using a government-issued ID and verified they possess a valid "
-            "Medicare card."
-        ),
-        models.SystemName.OLDER_ADULT.value: EligibilityPolicy(
-            details="I confirmed this rider’s identity using a government-issued ID and verified they are age 65 or older."
-        ),
-        models.SystemName.REDUCED_FARE_MOBILITY_ID.value: EligibilityPolicy(
-            details="I confirmed this rider’s identity using a government-issued ID and verified they possess an SBMTD "
-            "Reduced Fare Mobility ID."
-        ),
-        models.SystemName.GCTD_CARD.value: EligibilityPolicy(
-            details="I confirmed this rider’s identity using a government-issued ID and verified they possess a GCTD Reduced "
-            " Fare ID."
-        ),
-    }
-
     def __init__(self, agency: models.TransitAgency, *args, **kwargs):
         super().__init__(*args, **kwargs)
         flows = agency.enrollment_flows.filter(supported_enrollment_methods__contains=models.EnrollmentMethods.IN_PERSON)
@@ -68,7 +46,7 @@ class InPersonEligibilityForm(forms.Form):
             field_id = f"verified_{flow.id}"
             self.fields[field_id] = forms.BooleanField(
                 required=False,  # `clean()` will handle requiring the specific field
-                label=self.get_policy_details(flow),
+                label=flow.in_person_policy,
                 widget=forms.widgets.CheckboxInput(attrs={"class": "d-none"}),  # start out hidden
             )
             field = self.fields[field_id]
@@ -76,10 +54,6 @@ class InPersonEligibilityForm(forms.Form):
             field.widget.attrs.update({"data-custom-validity": self.verified_field_error_message})
 
         self.use_custom_validity = True
-
-    def get_policy_details(self, flow: models.EnrollmentFlow):
-        policy = self.eligibility_policies.get(flow.system_name, None)
-        return policy.details if policy else None
 
     def clean(self):
         cleaned_data = super().clean()

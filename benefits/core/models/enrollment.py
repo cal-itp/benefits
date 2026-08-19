@@ -2,12 +2,11 @@ import logging
 import uuid
 
 from cdt_identity.models import ClaimsVerificationRequest, IdentityGatewayConfig
-from django.core.exceptions import ValidationError
 from django.db import models
 from django.utils import timezone
 from multiselectfield import MultiSelectField
 
-from .common import PemData, SecretNameField, template_path
+from .common import PemData, SecretNameField
 
 logger = logging.getLogger(__name__)
 
@@ -108,15 +107,6 @@ class EligibilityApiVerificationRequest(models.Model):
         return self.api_public_key.data
 
 
-SUPPORTED_IN_PERSON_FLOWS = (
-    SystemName.COURTESY_CARD,
-    SystemName.MEDICARE,
-    SystemName.OLDER_ADULT,
-    SystemName.REDUCED_FARE_MOBILITY_ID,
-    SystemName.GCTD_CARD,
-)
-
-
 class EnrollmentFlow(models.Model):
     """Represents a user journey through the Benefits app for a single eligibility type."""
 
@@ -136,6 +126,11 @@ class EnrollmentFlow(models.Model):
         max_length=50,
         default=[EnrollmentMethods.SELF_SERVICE, EnrollmentMethods.IN_PERSON],
         help_text="If the flow is supported by self-service enrollment, in-person enrollment, or both",
+    )
+    in_person_policy = models.TextField(
+        default="",
+        blank=True,
+        help_text="The policy language used by transit agency staff to verify a user's eligibility in-person.",
     )
     sign_out_button_template = models.TextField(default="", blank=True, help_text="Template that renders sign-out button")
     sign_out_link_template = models.TextField(default="", blank=True, help_text="Template that renders sign-out link")
@@ -233,28 +228,6 @@ class EnrollmentFlow(models.Model):
     @property
     def supports_sign_out(self):
         return bool(self.sign_out_button_template) or bool(self.sign_out_link_template)
-
-    # until we can make time to consolidate, additional validation logic can be found in EnrollmentFlow.clean()
-    # see https://cal-itp.slack.com/archives/C037Y3UE71P/p1779234784673319?thread_ts=1779231543.096499&cid=C037Y3UE71P
-    def clean(self):
-        errors = []
-
-        supports_self_service = EnrollmentMethods.SELF_SERVICE in self.supported_enrollment_methods
-        supports_in_person = EnrollmentMethods.IN_PERSON in self.supported_enrollment_methods
-        t = self.selection_label_template
-
-        if supports_self_service and not template_path(t):
-            # we can't add a field-level validation error
-            # because the actual template for the self-service flow is derived from a pattern
-            errors.append(ValidationError(f"Template not found: {t}"))
-
-        if supports_in_person and self.system_name not in SUPPORTED_IN_PERSON_FLOWS:
-            errors.append(
-                ValidationError(f"{self.system_name} not configured for in-person enrollment. Please uncheck to continue.")
-            )
-
-        if errors:
-            raise ValidationError(errors)
 
     @staticmethod
     def by_id(id):
