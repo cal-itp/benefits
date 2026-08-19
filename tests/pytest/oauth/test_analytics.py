@@ -1,6 +1,12 @@
 import pytest
 
-from benefits.oauth.analytics import FinishedSignInEvent, OAuthErrorEvent, OAuthEvent
+import benefits.core.analytics
+from benefits.oauth.analytics import FailureToProofEvent, FinishedSignInEvent, OAuthErrorEvent, OAuthEvent, failure_to_proof
+
+
+@pytest.fixture
+def spy_send_event(mocker):
+    return mocker.spy(benefits.core.analytics, "send_event")
 
 
 @pytest.mark.django_db
@@ -42,3 +48,15 @@ def test_FinishedSignInEvent_with_error(app_request):
 def test_FinishedSignInEvent_without_error(app_request):
     event = FinishedSignInEvent(app_request)
     assert "error_code" not in event.event_properties
+
+
+@pytest.mark.django_db
+def test_failure_to_proof(app_request, spy_send_event):
+    failure_to_proof(app_request)
+
+    # event should have been sent
+    spy_send_event.assert_called_once()
+    # the first arg of the first (and only) call
+    call_arg = spy_send_event.call_args[0][0]
+    assert isinstance(call_arg, FailureToProofEvent)
+    assert call_arg.event_type == "failure to proof"
