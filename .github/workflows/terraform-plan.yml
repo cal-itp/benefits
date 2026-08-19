@@ -49,7 +49,6 @@ jobs:
       - name: Terraform Plan
         env:
           TF_VAR_CONTAINER_TAG: ${{ steps.get_main_sha.outputs.sha }}
-          TF_VAR_DEVSECOPS_OBJECT_ID: ${{ secrets.TF_VAR_DEVSECOPS_OBJECT_ID }}
           TF_VAR_ENGINEERING_GROUP_OBJECT_ID: ${{ secrets.TF_VAR_ENGINEERING_GROUP_OBJECT_ID }}
           TF_VAR_sp_apply_object_id: ${{ secrets.AZURE_SP_DEV_OBJECT_ID }}
           TF_VAR_sp_plan_object_id: ${{ secrets.AZURE_SP_PLAN_OBJECT_ID }}

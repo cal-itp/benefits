@@ -170,7 +170,6 @@ jobs:
         working-directory: terraform
         env:
           TF_VAR_CONTAINER_TAG: ${{ github.sha }}
-          TF_VAR_DEVSECOPS_OBJECT_ID: ${{ secrets.TF_VAR_DEVSECOPS_OBJECT_ID }}
           TF_VAR_ENGINEERING_GROUP_OBJECT_ID: ${{ secrets.TF_VAR_ENGINEERING_GROUP_OBJECT_ID }}
           TF_VAR_sp_apply_object_id: ${{ secrets.AZURE_SP_OBJECT_ID }}
           TF_VAR_sp_plan_object_id: ${{ secrets.AZURE_SP_PLAN_OBJECT_ID }}
