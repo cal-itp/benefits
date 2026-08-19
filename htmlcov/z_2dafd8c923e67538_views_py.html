@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <title>Coverage for benefits/locale/es/formats.py: 100%</title>
+    <title>Coverage for benefits/metro_mobility_wallet/views.py: 100%</title>
     <link rel="icon" sizes="32x32" href="favicon_32_cb_c827f16f.png">
     <link rel="stylesheet" href="style_cb_4667309f.css" type="text/css">
     <script src="coverage_html_cb_dd2e7eb5.js" defer></script>
@@ -11,7 +11,7 @@
 <header>
     <div class="content">
         <h1>
-            <span class="text">Coverage for </span><b>benefits<span class="sep">/</span>locale<span class="sep">/</span>es<span class="sep">/</span>formats.py</b>:
+            <span class="text">Coverage for </span><b>benefits<span class="sep">/</span>metro_mobility_wallet<span class="sep">/</span>views.py</b>:
             <span class="pc_cov">100%</span>
         </h1>
         <aside id="help_panel_wrapper">
@@ -55,16 +55,16 @@
             </div>
         </aside>
         <h2>
-            <span class="text">1 statements &nbsp;</span>
-            <button type="button" class="run button_toggle_run" value="run" data-shortcut="r" title="Toggle lines run">1<span class="text"> run</span></button>
+            <span class="text">3 statements &nbsp;</span>
+            <button type="button" class="run button_toggle_run" value="run" data-shortcut="r" title="Toggle lines run">3<span class="text"> run</span></button>
             <button type="button" class="mis show_mis button_toggle_mis" value="mis" data-shortcut="m" title="Toggle lines missing">0<span class="text"> missing</span></button>
             <button type="button" class="exc show_exc button_toggle_exc" value="exc" data-shortcut="x" title="Toggle lines excluded">0<span class="text"> excluded</span></button>
             <button type="button" class="par run show_par button_toggle_par" value="par" data-shortcut="p" title="Toggle lines partially run">0<span class="text"> partial</span></button>
         </h2>
         <p class="text">
-            <a id="prevFileLink" class="nav" href="z_9a5e1802ee124b46_formats_py.html">&#xab; prev</a> &nbsp; &nbsp;
+            <a id="prevFileLink" class="nav" href="z_2dafd8c923e67538_urls_py.html">&#xab; prev</a> &nbsp; &nbsp;
             <a id="indexLink" class="nav" href="index.html">&Hat; index</a> &nbsp; &nbsp;
-            <a id="nextFileLink" class="nav" href="z_2dafd8c923e67538_apps_py.html">&#xbb; next</a>
+            <a id="nextFileLink" class="nav" href="z_7435199c01eb52ab_analytics_py.html">&#xbb; next</a>
             &nbsp; &nbsp; &nbsp;
             <a class="nav" href="https://coverage.readthedocs.io/en/7.15.4">coverage.py v7.15.4</a>,
             created at 2026-08-19 19:27 +0000
@@ -82,18 +82,20 @@
     </div>
 </header>
 <main id="source">
-    <p class="pln"><span class="n"><a id="t1" href="#t1">1</a></span><span class="t"><span class="com"># Both &#8220;d&#8221; and &#8220;e&#8221; are backslash-escaped, because otherwise each is a format string</span>&nbsp;</span><span class="r"></span></p>
-    <p class="pln"><span class="n"><a id="t2" href="#t2">2</a></span><span class="t"><span class="com"># that displays the day and the timezone name, respectively.</span>&nbsp;</span><span class="r"></span></p>
-    <p class="pln"><span class="n"><a id="t3" href="#t3">3</a></span><span class="t"><span class="com"># Instead we want the literal word &quot;de&quot;</span>&nbsp;</span><span class="r"></span></p>
-    <p class="pln"><span class="n"><a id="t4" href="#t4">4</a></span><span class="t"><span class="com"># https://docs.djangoproject.com/en/stable/ref/templates/builtins/#date-and-time-formatting-specifiers</span>&nbsp;</span><span class="r"></span></p>
-    <p class="run"><span class="n"><a id="t5" href="#t5">5</a></span><span class="t"><span class="nam">DATE_FORMAT</span> <span class="op">=</span> <span class="str">r&quot;j \d\e F \d\e Y&quot;</span>&nbsp;</span><span class="r"></span></p>
+    <p class="run"><span class="n"><a id="t1" href="#t1">1</a></span><span class="t"><span class="key">from</span> <span class="nam">django</span><span class="op">.</span><span class="nam">views</span><span class="op">.</span><span class="nam">generic</span> <span class="key">import</span> <span class="nam">TemplateView</span>&nbsp;</span><span class="r"></span></p>
+    <p class="pln"><span class="n"><a id="t2" href="#t2">2</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
+    <p class="pln"><span class="n"><a id="t3" href="#t3">3</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
+    <p class="run"><span class="n"><a id="t4" href="#t4">4</a></span><span class="t"><span class="key">class</span> <span class="nam">IndexView</span><span class="op">(</span><span class="nam">TemplateView</span><span class="op">)</span><span class="op">:</span>&nbsp;</span><span class="r"></span></p>
+    <p class="pln"><span class="n"><a id="t5" href="#t5">5</a></span><span class="t">    <span class="str">&quot;&quot;&quot;View for the Metro Mobility Wallet landing page.&quot;&quot;&quot;</span>&nbsp;</span><span class="r"></span></p>
+    <p class="pln"><span class="n"><a id="t6" href="#t6">6</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
+    <p class="run"><span class="n"><a id="t7" href="#t7">7</a></span><span class="t">    <span class="nam">template_name</span> <span class="op">=</span> <span class="str">&quot;metro_mobility_wallet/index.html&quot;</span>&nbsp;</span><span class="r"></span></p>
 </main>
 <footer>
     <div class="content">
         <p>
-            <a class="nav" href="z_9a5e1802ee124b46_formats_py.html">&#xab; prev</a> &nbsp; &nbsp;
+            <a class="nav" href="z_2dafd8c923e67538_urls_py.html">&#xab; prev</a> &nbsp; &nbsp;
             <a class="nav" href="index.html">&Hat; index</a> &nbsp; &nbsp;
-            <a class="nav" href="z_2dafd8c923e67538_apps_py.html">&#xbb; next</a>
+            <a class="nav" href="z_7435199c01eb52ab_analytics_py.html">&#xbb; next</a>
             &nbsp; &nbsp; &nbsp;
             <a class="nav" href="https://coverage.readthedocs.io/en/7.15.4">coverage.py v7.15.4</a>,
             created at 2026-08-19 19:27 +0000

@@ -81,6 +81,10 @@
 | benefits/locale/en/formats.py                                                            |        1 |        0 |        0 |        0 |    100% |           |
 | benefits/locale/es/\_\_init\_\_.py                                                       |        0 |        0 |        0 |        0 |    100% |           |
 | benefits/locale/es/formats.py                                                            |        1 |        0 |        0 |        0 |    100% |           |
+| benefits/metro\_mobility\_wallet/\_\_init\_\_.py                                         |        0 |        0 |        0 |        0 |    100% |           |
+| benefits/metro\_mobility\_wallet/apps.py                                                 |        4 |        0 |        0 |        0 |    100% |           |
+| benefits/metro\_mobility\_wallet/urls.py                                                 |        4 |        0 |        0 |        0 |    100% |           |
+| benefits/metro\_mobility\_wallet/views.py                                                |        3 |        0 |        0 |        0 |    100% |           |
 | benefits/oauth/\_\_init\_\_.py                                                           |        0 |        0 |        0 |        0 |    100% |           |
 | benefits/oauth/analytics.py                                                              |       41 |       11 |        4 |        0 |     76% |30, 37, 53, 60-61, 66, 71, 76, 81, 86, 91 |
 | benefits/oauth/apps.py                                                                   |        5 |        0 |        0 |        0 |    100% |           |
@@ -91,11 +95,11 @@
 | benefits/routes.py                                                                       |      119 |        0 |        0 |        0 |    100% |           |
 | benefits/secrets.py                                                                      |       48 |        8 |       10 |        1 |     81% |     90-99 |
 | benefits/sentry.py                                                                       |       55 |       12 |       10 |        1 |     80% |16, 21-22, 27, 31-32, 60-61, 93-118 |
-| benefits/settings.py                                                                     |      140 |       12 |       28 |       11 |     86% |108, 113-116, 140-\>145, 156-\>159, 176, 203, 393, 403, 409, 418, 442-443 |
-| benefits/urls.py                                                                         |       49 |       11 |        8 |        3 |     72% |43-\>82, 57, 60, 63, 66, 69-71, 83-85, 88-\>100, 94-96 |
+| benefits/settings.py                                                                     |      140 |       12 |       28 |       11 |     86% |109, 114-117, 141-\>146, 157-\>160, 177, 204, 394, 404, 410, 419, 443-444 |
+| benefits/urls.py                                                                         |       49 |       11 |        8 |        3 |     72% |44-\>83, 58, 61, 64, 67, 70-72, 84-86, 89-\>101, 95-97 |
 | benefits/views.py                                                                        |       33 |        0 |        0 |        0 |    100% |           |
 | benefits/wsgi.py                                                                         |        4 |        4 |        0 |        0 |      0% |     10-16 |
-| **TOTAL**                                                                                | **3398** |  **157** |  **580** |   **58** | **94%** |           |
+| **TOTAL**                                                                                | **3409** |  **157** |  **580** |   **58** | **94%** |           |
 
 
 ## Setup coverage badge
