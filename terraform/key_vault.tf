@@ -127,3 +127,8 @@ resource "azurerm_key_vault_access_policy" "pgadmin_container_app" {
   # This ensures the Key Vault itself is created before trying to attach a policy.
   depends_on = [azurerm_key_vault.main]
 }
+
+moved {
+  from = random_password.django_db_password
+  to   = module.application.random_password.django_db_password
+}
