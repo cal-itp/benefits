@@ -1,6 +1,6 @@
 # Deployment
 
-The Benefits app is currently deployed into a Microsoft Azure account provided by [California Department of Technology (CDT)'s Office of Enterprise Technology (OET)][oet], a.k.a. the "DevSecOps" team. More specifically, [Azure Container Apps][container-apps]. [More about the infrastructure.](infrastructure.md)
+The Benefits app is currently deployed into a Microsoft Azure account provided by [California Department of Technology (CDT)'s Office of Enterprise Technology (OET)][oet], a.k.a. the "DevSecOps" team. More specifically, it uses [Azure Container Apps][container-apps]. [More about the infrastructure.](infrastructure.md)
 
 ## Deployment process
 

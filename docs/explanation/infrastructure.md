@@ -121,22 +121,23 @@ The DevSecOps team sets the following naming convention for Resources:
 ### Sample Names
 
 - `RG-CDT-PUB-VIP-BNSCN-E-D-001`
-- `ASP-CDT-PUB-VIP-BNSCN-EL-P-001`
-- `AS-CDT-PUB-VIP-BNSCN-EL-D-001`
+- `CAE-CDT-PUB-VIP-BNSCN-EL-P-001`
+- `CA-CDT-PUB-VIP-BNSCN-EL-D-001`
 
 ### Resource Types
 
 Use the following shorthand for conveying the Resource Type as part of the Resource Name:
 
-| Resource        | Convention |
-| --------------- | ---------- |
-| Container App   | `CA`       |
-| Virtual Network | `VNET`     |
-| Resource Group  | `RG`       |
-| Virtual Machine | `VM`       |
-| Database        | `DB`       |
-| Subnet          | `SNET`     |
-| Front Door      | `FD`       |
+| Resource                   | Convention |
+| -------------------------- | ---------- |
+| Container Apps Environment | `CAE`      |
+| Container App              | `CA`       |
+| Virtual Network            | `VNET`     |
+| Resource Group             | `RG`       |
+| Virtual Machine            | `VM`       |
+| Database                   | `DB`       |
+| Subnet                     | `SNET`     |
+| Front Door                 | `FD`       |
 
 ## Making changes
 

@@ -10,11 +10,7 @@ We have [ping tests](https://docs.microsoft.com/en-us/azure/azure-monitor/app/mo
 
 #### Azure Container App Logs
 
-[Open the `Logs` for the environment you are interested in.](https://docs.google.com/document/d/11EPDIROBvg7cRtU2V42c6VBxcW_o8HhcyORALNtL_XY/edit#heading=h.6pxjhslhxwvj) The following tables are likely of interest:
-
-- `AppServiceConsoleLogs`: `stdout` and `stderr` coming from the container
-- `AppServiceHTTPLogs`: requests coming through Container App
-- `AppServicePlatformLogs`: deployment information
+In the Azure Portal, in the Container App, you can find real time logs under Monitoring > Log stream and historical logs under Monitoring > Logs
 
 For some pre-defined queries, click `Queries`, then `Group by: Query type`, and look under `Query pack queries`.
 

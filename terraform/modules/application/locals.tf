@@ -42,7 +42,6 @@ locals {
     # Django settings
     "DJANGO_STORAGE_DIR" = local.django_storage_dir_path,
     # Database settings
-    "USE_POSTGRES"      = "true",
     "POSTGRES_HOSTNAME" = var.postgres_fqdn,
     "POSTGRES_DB"       = var.postgres_admin_db,
     "POSTGRES_USER"     = var.postgres_admin_login,
