@@ -128,7 +128,13 @@ resource "azurerm_key_vault_access_policy" "pgadmin_container_app" {
   depends_on = [azurerm_key_vault.main]
 }
 
+# these declarations can be removed as soon as the application service has been torn down in the production env
 moved {
   from = random_password.django_db_password
   to   = module.application.random_password.django_db_password
+}
+
+moved {
+  from = azurerm_key_vault_secret.django_db_password
+  to   = module.application.azurerm_key_vault_secret.django_db_password
 }
