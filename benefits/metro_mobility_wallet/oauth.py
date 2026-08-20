@@ -1,12 +1,14 @@
 import sentry_sdk
 from cdt_identity.hooks import DefaultHooks
 from django.shortcuts import redirect
-# from django.utils.decorators import decorator_from_middleware, method_decorator
 
 # from benefits.core import session
 # from benefits.core.middleware import FlowSessionRequired
 from benefits.eligibility.views import analytics as eligibility_analytics
 from benefits.oauth import analytics
+
+# from django.utils.decorators import decorator_from_middleware, method_decorator
+
 
 
 class OAuthHooks(DefaultHooks):
