@@ -1,21 +1,21 @@
 import sentry_sdk
 from cdt_identity.hooks import DefaultHooks
 from django.shortcuts import redirect
-from django.utils.decorators import decorator_from_middleware, method_decorator
 
-from benefits.core import session
-from benefits.core.middleware import FlowSessionRequired
+# from benefits.core import session
+# from benefits.core.middleware import FlowSessionRequired
 from benefits.eligibility.views import analytics as eligibility_analytics
 from benefits.oauth import analytics
-from benefits.oauth.hooks import OAuthHooks as core_hooks
+
+# from django.utils.decorators import decorator_from_middleware, method_decorator
+
 
 
 class OAuthHooks(DefaultHooks):
-    # @classmethod
-    # def pre_login(cls, request):
-    #     super().pre_login(request)
-    #     analytics.started_sign_in(request)
-    pre_login = core_hooks.pre_login
+    @classmethod
+    def pre_login(cls, request):
+        super().pre_login(request)
+        analytics.started_sign_in(request)
 
     @classmethod
     def cancel_login(cls, request):
@@ -23,30 +23,28 @@ class OAuthHooks(DefaultHooks):
         analytics.canceled_sign_in(request)
         return redirect("metro_mobility_wallet:eligbility_unverified")
 
-    # @classmethod
-    # def pre_logout(cls, request):
-    #     super().pre_logout(request)
-    #     analytics.started_sign_out(request)
+    @classmethod
+    def pre_logout(cls, request):
+        super().pre_logout(request)
+        analytics.started_sign_out(request)
 
-    #     # the user is signed out of the app
-    #     session.logout(request)
-    pre_logout = core_hooks.pre_logout
-
-    # @classmethod
-    # def post_logout(cls, request):
-    #     super().post_logout(request)
-    #     analytics.finished_sign_out(request)
-
-    #     origin = session.origin(request)
-    #     return redirect(origin)
-    post_logout = core_hooks.post_logout
+        # the user is signed out of the app
+        session.logout(request)
 
     @classmethod
-    @method_decorator(
-        [
-            decorator_from_middleware(FlowSessionRequired),
-        ]
-    )
+    def post_logout(cls, request):
+        super().post_logout(request)
+        analytics.finished_sign_out(request)
+
+        origin = session.origin(request)
+        return redirect(origin)
+
+    @classmethod
+    # @method_decorator(
+    #     [
+    #         decorator_from_middleware(FlowSessionRequired),
+    #     ]
+    # )
     def failure_to_proof(cls, request):
         super().failure_to_proof(request)
         session.update(request, logged_in=True)  # QUESTION: Are they still considered "logged in" if they failed to prove?
@@ -60,12 +58,12 @@ class OAuthHooks(DefaultHooks):
         return redirect("metro_mobility_wallet:failure_to_proof")
 
     @classmethod
-    @method_decorator(
-        [
-            # decorator_from_middleware(AgencySessionRequired),
-            decorator_from_middleware(FlowSessionRequired),
-        ]
-    )
+    # @method_decorator(
+    #     [
+    #         # decorator_from_middleware(AgencySessionRequired),
+    #         decorator_from_middleware(FlowSessionRequired),
+    #     ]
+    # )
     def claims_verified_eligible(cls, request, claims_request, claims_result):
         super().claims_verified_eligible(request, claims_request, claims_result)
         session.update(request, logged_in=True)
@@ -80,12 +78,12 @@ class OAuthHooks(DefaultHooks):
         return redirect("metro_mobility_wallet:enrollment_index")
 
     @classmethod
-    @method_decorator(
-        [
-            # decorator_from_middleware(AgencySessionRequired),
-            decorator_from_middleware(FlowSessionRequired),
-        ]
-    )
+    # @method_decorator(
+    #     [
+    #         # decorator_from_middleware(AgencySessionRequired),
+    #         decorator_from_middleware(FlowSessionRequired),
+    #     ]
+    # )
     def claims_verified_not_eligible(cls, request, claims_request, claims_result):
         super().claims_verified_not_eligible(request, claims_request, claims_result)
         session.update(request, logged_in=True)
