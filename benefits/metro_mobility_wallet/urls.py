@@ -8,7 +8,6 @@ from django.urls import path
 from django.utils.decorators import decorator_from_middleware
 
 from benefits.oauth.middleware import FlowUsesClaimsVerificationSessionRequired
-from benefits.oauth.views import SystemErrorView
 from benefits.routes import routes
 
 from . import oauth, views
@@ -32,5 +31,5 @@ urlpatterns = [
     ),
     path(f"oauth/{Routes.logout}", decorator(cdt_identity_views.logout), kwargs, name=Routes.logout),
     path(f"oauth/{Routes.post_logout}", decorator(cdt_identity_views.post_logout), kwargs, name=Routes.post_logout),
-    path("oauth/error", SystemErrorView.as_view(), name=routes.name(routes.OAUTH_SYSTEM_ERROR)),
+    path("oauth/error", views.SystemErrorView.as_view(), name=routes.name(routes.OAUTH_SYSTEM_ERROR)),
 ]
