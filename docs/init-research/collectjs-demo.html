@@ -39,7 +39,7 @@
       <div id="demoCcexp"></div>
     </div>
     <div class="input">
-      <span>CVV</span>
+      <span>Security Code</span>
       <div id="demoCvv"></div>
     </div>
     <!-- Submit the form to your server -->
@@ -133,9 +133,11 @@
         },
         timeoutDuration: 10000,
         timeoutCallback: function () {
-          console.log(
-            "The tokenization didn't respond in the expected timeframe.  This could be due to an invalid or incomplete field or poor connectivity"
-          );
+          message = "The tokenization didn't respond in the expected timeframe.  This could be due to an invalid or incomplete field or poor connectivity";
+          console.log(message);
+
+          let messageBox = document.querySelector("#message-box");
+          messageBox.innerHTML += `<p>${message}</p>`;
         },
         fieldsAvailableCallback: function () {
           console.log("Collect.js loaded the fields onto the form");
