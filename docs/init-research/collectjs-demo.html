@@ -112,7 +112,7 @@
           console.log("Collect.js loaded the fields onto the form");
         },
         callback: function (response) {
-          alert(response.token);
+          alert(JSON.stringify(response));
           var input = document.createElement("input");
           input.type = "hidden";
           input.name = "payment_token";
