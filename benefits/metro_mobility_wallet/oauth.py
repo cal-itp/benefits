@@ -6,7 +6,8 @@ from django.utils.decorators import decorator_from_middleware, method_decorator
 from benefits.core import session
 from benefits.core.middleware import FlowSessionRequired
 from benefits.eligibility.views import analytics as eligibility_analytics
-from benefits.oauth import analytics, hooks as core_hooks
+from benefits.oauth import analytics
+from benefits.oauth.hooks import OAuthHooks as core_hooks
 
 
 class OAuthHooks(DefaultHooks):
