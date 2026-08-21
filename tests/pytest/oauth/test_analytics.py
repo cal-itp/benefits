@@ -1,6 +1,28 @@
 import pytest
 
-from benefits.oauth.analytics import FinishedSignInEvent, OAuthErrorEvent, OAuthEvent
+import benefits.core.analytics
+from benefits.oauth.analytics import (
+    CanceledSignInEvent,
+    FailureToProofEvent,
+    FinishedSignInEvent,
+    FinishedSignOutEvent,
+    OAuthErrorEvent,
+    OAuthEvent,
+    StartedSignInEvent,
+    StartedSignOutEvent,
+    canceled_sign_in,
+    error,
+    failure_to_proof,
+    finished_sign_in,
+    finished_sign_out,
+    started_sign_in,
+    started_sign_out,
+)
+
+
+@pytest.fixture
+def spy_send_event(mocker):
+    return mocker.spy(benefits.core.analytics, "send_event")
 
 
 @pytest.mark.django_db
@@ -42,3 +64,89 @@ def test_FinishedSignInEvent_with_error(app_request):
 def test_FinishedSignInEvent_without_error(app_request):
     event = FinishedSignInEvent(app_request)
     assert "error_code" not in event.event_properties
+
+
+@pytest.mark.django_db
+def test_error(app_request, spy_send_event):
+    error(app_request, "the message", "the operation")
+
+    # event should have been sent
+    spy_send_event.assert_called_once()
+    # the first arg of the first (and only) call
+    call_arg = spy_send_event.call_args[0][0]
+    assert isinstance(call_arg, OAuthErrorEvent)
+    assert call_arg.event_type == "oauth error"
+    assert call_arg.event_properties["message"] == "the message"
+    assert call_arg.event_properties["operation"] == "the operation"
+
+
+@pytest.mark.django_db
+def test_started_sign_in(app_request, spy_send_event):
+    started_sign_in(app_request)
+
+    # event should have been sent
+    spy_send_event.assert_called_once()
+    # the first arg of the first (and only) call
+    call_arg = spy_send_event.call_args[0][0]
+    assert isinstance(call_arg, StartedSignInEvent)
+    assert call_arg.event_type == "started sign in"
+
+
+@pytest.mark.django_db
+def test_canceled_sign_in(app_request, spy_send_event):
+    canceled_sign_in(app_request)
+
+    # event should have been sent
+    spy_send_event.assert_called_once()
+    # the first arg of the first (and only) call
+    call_arg = spy_send_event.call_args[0][0]
+    assert isinstance(call_arg, CanceledSignInEvent)
+    assert call_arg.event_type == "canceled sign in"
+
+
+@pytest.mark.django_db
+def test_finished_sign_in(app_request, spy_send_event):
+    finished_sign_in(app_request)
+
+    # event should have been sent
+    spy_send_event.assert_called_once()
+    # the first arg of the first (and only) call
+    call_arg = spy_send_event.call_args[0][0]
+    assert isinstance(call_arg, FinishedSignInEvent)
+    assert call_arg.event_type == "finished sign in"
+
+
+@pytest.mark.django_db
+def test_started_sign_out(app_request, spy_send_event):
+    started_sign_out(app_request)
+
+    # event should have been sent
+    spy_send_event.assert_called_once()
+    # the first arg of the first (and only) call
+    call_arg = spy_send_event.call_args[0][0]
+    assert isinstance(call_arg, StartedSignOutEvent)
+    assert call_arg.event_type == "started sign out"
+
+
+@pytest.mark.django_db
+def test_finished_sign_out(app_request, spy_send_event):
+    finished_sign_out(app_request)
+
+    # event should have been sent
+    spy_send_event.assert_called_once()
+    # the first arg of the first (and only) call
+    call_arg = spy_send_event.call_args[0][0]
+    assert isinstance(call_arg, FinishedSignOutEvent)
+    assert call_arg.event_type == "finished sign out"
+
+
+@pytest.mark.django_db
+def test_failure_to_proof(app_request, spy_send_event):
+    failure_to_proof(app_request)
+
+    # event should have been sent
+    spy_send_event.assert_called_once()
+    # the first arg of the first (and only) call
+    call_arg = spy_send_event.call_args[0][0]
+    assert isinstance(call_arg, FailureToProofEvent)
+    assert call_arg.event_type == "failure to proof"

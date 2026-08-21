@@ -61,6 +61,13 @@ class FinishedSignOutEvent(OAuthEvent):
         self.update_event_properties(origin=session.origin(request))
 
 
+class FailureToProofEvent(OAuthEvent):
+    """Analytics event representing a failure to proof during identitity verification."""
+
+    def __init__(self, request):
+        super().__init__(request, "failure to proof")
+
+
 def error(request, message, operation):
     """Send the "oauth error" analytics event, specifying the message and operation"""
     core.send_event(OAuthErrorEvent(request, message, operation))
@@ -89,3 +96,8 @@ def started_sign_out(request):
 def finished_sign_out(request):
     """Send the "finished sign out" analytics event."""
     core.send_event(FinishedSignOutEvent(request))
+
+
+def failure_to_proof(request):
+    """Send the "failure to proof" analytics event."""
+    core.send_event(FailureToProofEvent(request))
