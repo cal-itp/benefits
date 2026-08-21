@@ -3,7 +3,7 @@
 The first steps of the Getting Started guide mention [creating an `.env` file][getting-started_create-env].
 
 The sections below outline in more detail the application environment variables that you may want to override, and their purpose.
-In Azure App Services, this is more generally called the ["configuration"][app-service-config].
+In Azure Container Apps, this is more generally called the ["configuration"][container-app-config].
 
 !!! warning "Multiline environment variables"
 
@@ -183,45 +183,6 @@ Comma-separated list of hosts which are trusted origins for unsafe requests (e.g
 Comma-separated list of User-Agent strings which, when present as an HTTP header, should only receive healthcheck responses. Used by our `HealthcheckUserAgents` middleware.
 
 ## Django database
-
-### `USE_POSTGRES`
-
-!!! tldr "Django docs"
-
-    [Settings: `DATABASES`](https://docs.djangoproject.com/en/6.0/ref/settings/#databases)
-
-Feature flag to enable using Postgres as the database.
-
-Boolean:
-
-- `true`: the `DATABASES` Django setting is configured to use Postgres (see [`Django database (Postgres)`](#django-database-postgresql))
-- `false` (default): the `DATABASES` Django setting is configured to use SQLite (see [`Django database (SQLite)`](#django-database-sqlite))
-
-## Django database (SQLite)
-
-### `DJANGO_DB_FILE`
-
-!!! info "Local configuration"
-
-    This setting only affects the app running on localhost
-
-The name of the Django database file to use locally (during both normal app startup and for resetting the database).
-
-By default, `django.db`.
-
-### `DJANGO_DB_RESET`
-
-!!! info "Local configuration"
-
-    This setting only affects the app running on localhost
-
-Boolean:
-
-- `true`: deletes the existing database file and runs fresh Django migrations.
-- `false` (default): Django uses the existing database file.
-  (Note: Fixtures will still be loaded, updating any values on those objects if they have changed.)
-
-## Django database (PostgreSQL)
 
 ### `DJANGO_DB_NAME`
 
@@ -536,6 +497,7 @@ Control the volume of transactions sent to Sentry. Value must be a float in the 
 The default is `0.0` (i.e. no transactions are tracked).
 
 [app-service-config]: https://docs.microsoft.com/en-us/azure/app-service/configure-common?tabs=portal
+[container-app-config]: https://learn.microsoft.com/en-us/azure/container-apps/environment-variables?tabs=portal
 [getting-started_create-env]: ../guides/getting-started.md#create-an-environment-file
 [django-csp-config]: https://django-csp.readthedocs.io/en/latest/configuration.html#configuring-django-csp
 [mdn-csp]: https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy

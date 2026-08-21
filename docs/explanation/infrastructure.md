@@ -59,11 +59,9 @@ flowchart LR
     subgraph Azure
         frontdoor --> NGINX
 
-        subgraph App Service
-            subgraph Custom container
-                direction TB
-                NGINX --> django
-            end
+        subgraph Container App
+            direction TB
+            NGINX --> django
         end
     end
 ```
@@ -123,23 +121,23 @@ The DevSecOps team sets the following naming convention for Resources:
 ### Sample Names
 
 - `RG-CDT-PUB-VIP-BNSCN-E-D-001`
-- `ASP-CDT-PUB-VIP-BNSCN-EL-P-001`
-- `AS-CDT-PUB-VIP-BNSCN-EL-D-001`
+- `CAE-CDT-PUB-VIP-BNSCN-EL-P-001`
+- `CA-CDT-PUB-VIP-BNSCN-EL-D-001`
 
 ### Resource Types
 
 Use the following shorthand for conveying the Resource Type as part of the Resource Name:
 
-| Resource         | Convention |
-| ---------------- | ---------- |
-| App Service      | `AS`       |
-| App Service Plan | `ASP`      |
-| Virtual Network  | `VNET`     |
-| Resource Group   | `RG`       |
-| Virtual Machine  | `VM`       |
-| Database         | `DB`       |
-| Subnet           | `SNET`     |
-| Front Door       | `FD`       |
+| Resource                   | Convention |
+| -------------------------- | ---------- |
+| Container Apps Environment | `CAE`      |
+| Container App              | `CA`       |
+| Virtual Network            | `VNET`     |
+| Resource Group             | `RG`       |
+| Virtual Machine            | `VM`       |
+| Database                   | `DB`       |
+| Subnet                     | `SNET`     |
+| Front Door                 | `FD`       |
 
 ## Making changes
 
@@ -199,6 +197,6 @@ These steps were followed when setting up our Azure deployment for the first tim
 - CDT team creates the [resources that they own](#ownership)
 - `terraform apply`
 - Set up Slack notifications by [creating a Slack email](https://slack.com/help/articles/206819278-Send-emails-to-Slack) for the [#notify-benefits](https://cal-itp.slack.com/archives/C022HHSEE3F) channel, then [setting it as a Secret in the Key Vault](https://learn.microsoft.com/en-us/azure/key-vault/secrets/quick-create-portal#add-a-secret-to-key-vault) named `slack-benefits-notify-email`
-- Set required [App Service configuration](../reference/environment-variables.md) and [configuration](../tutorials/load-sample-data.md) by setting values in Key Vault (the mapping is defined in [app_service.tf](https://github.com/cal-itp/benefits/blob/main/terraform/app_service.tf))
+- Set required [Container App configuration](../reference/environment-variables.md) and [configuration](../tutorials/load-sample-data.md) by setting values in Key Vault (the mapping is defined in [app_service.tf](https://github.com/cal-itp/benefits/blob/main/terraform/app_service.tf))
 
 This is not a complete step-by-step guide; more a list of things to remember. This may be useful as part of [incident response](https://docs.google.com/document/d/1qtev8qItPiTB4Tp9FQ87XsLtWZ4HlNXqoe9vF2VuGcY/edit#).

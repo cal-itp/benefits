@@ -128,11 +128,11 @@ Compiler developers, be sure to follow the instructions in the [Django Admin upd
 
 If you have a need to maintain some test data that you've added via the Django Admin across multiple development sessions:
 
-1. Set `DJANGO_DB_RESET=false` in your `.env` file
 1. Create a new set of temporary fixtures:
    ```bash
    python manage.py dumpdata --indent 2 --output benefits/core/migrations/temp_fixtures.json
    ```
+
    - It's important that the filename end in `fixtures.json` so that it's ignored by Git.
 1. Set `DJANGO_DB_FIXTURES` to the path of the new file you just created in `.env`
 1. Rebuild the devcontainer

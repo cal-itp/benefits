@@ -1,5 +1,5 @@
 locals {
-  django_storage_dir_path  = "/home/calitp/app/data"
+  django_storage_dir_path  = "/calitp/app/data"
   pgadmin_storage_dir_path = "/var/lib/pgadmin"
   app_config_secrets = {
     # Amplitude
@@ -42,7 +42,6 @@ locals {
     # Django settings
     "DJANGO_STORAGE_DIR" = local.django_storage_dir_path,
     # Database settings
-    "USE_POSTGRES"      = "true",
     "POSTGRES_HOSTNAME" = var.postgres_fqdn,
     "POSTGRES_DB"       = var.postgres_admin_db,
     "POSTGRES_USER"     = var.postgres_admin_login,

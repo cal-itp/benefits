@@ -93,3 +93,24 @@ resource "azurerm_container_app" "web" {
     azurerm_container_app_environment_storage.web
   ]
 }
+
+# Generate a random password for PostgreSQL's Django database user
+resource "random_password" "django_db_password" {
+  length      = 32
+  min_lower   = 4
+  min_upper   = 4
+  min_numeric = 4
+  min_special = 4
+  special     = true
+}
+
+# Create the secret for PostgreSQL's Django database user password using the generated password
+resource "azurerm_key_vault_secret" "django_db_password" {
+  name         = var.django_db_password_secret_name
+  value        = random_password.django_db_password.result
+  key_vault_id = var.key_vault_id
+  content_type = "password"
+  depends_on = [
+    random_password.django_db_password # Ensure password is generated first
+  ]
+}

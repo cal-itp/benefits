@@ -1,17 +1,17 @@
 # Deployment
 
-The Benefits app is currently deployed into a Microsoft Azure account provided by [California Department of Technology (CDT)'s Office of Enterprise Technology (OET)][oet], a.k.a. the "DevSecOps" team. More specifically, it uses [custom containers][app-service-containers] on [Azure App Service][app-service]. [More about the infrastructure.](infrastructure.md)
+The Benefits app is currently deployed into a Microsoft Azure account provided by [California Department of Technology (CDT)'s Office of Enterprise Technology (OET)][oet], a.k.a. the "DevSecOps" team. More specifically, it uses [Azure Container Apps][container-apps]. [More about the infrastructure.](infrastructure.md)
 
 ## Deployment process
 
 The Django application gets built into a [Docker image][dockerfile] with [NGINX](https://www.nginx.com/) and
 [Gunicorn](https://gunicorn.org/). SQLite is used within that same container to store configuration data; there is no external database.
 
-The application is deployed to an [Azure Web App Container][az-webapp] using three separate environments for `dev`, `test`,
+The application is deployed to an [Azure Container App][container-apps] using three separate environments for `dev`, `test`,
 and `prod`.
 
 The [Deploy][deploy-workflow] workflow is responsible for building that branch's image and pushing to [GitHub Container
-Registry (GHCR)][ghcr]. It also deploys to the Azure Web App, telling Azure to restart the app and pull the latest image.
+Registry (GHCR)][ghcr]. It also deploys to the Azure Container App, telling Azure to restart the app and pull the latest image.
 
 You can view what Git commit is deployed for a given environment by visiting the URL path `/static/sha.txt`.
 
@@ -42,9 +42,9 @@ Build the root [`Dockerfile`][dockerfile], tagging with the SHA from the HEAD co
 
 Push this image:tag into [GHCR][ghcr].
 
-### 4. App Service deploy
+### 4. Container App deploy
 
-Push the new image:tag to the Azure App Service instance.
+Push the new image:tag to the Azure Container App.
 
 ## Configuration
 
@@ -59,10 +59,8 @@ Docker images for each of the deploy branches are available from GitHub Containe
 - Image path: `ghcr.io/cal-itp/benefits`
 
 [oet]: https://techblog.cdt.ca.gov/2020/06/cdt-taking-the-lead-in-digital-transformation/
-[app-service-containers]: https://docs.microsoft.com/en-us/azure/app-service/configure-custom-container
-[app-service]: https://docs.microsoft.com/en-us/azure/app-service/overview
+[container-apps]: https://learn.microsoft.com/en-us/azure/container-apps/overview
 [deploy-workflow]: https://github.com/cal-itp/benefits/blob/main/.github/workflows/deploy.yml
-[az-webapp]: https://azure.microsoft.com/en-us/services/app-service/containers/
 [ghcr]: https://github.com/features/packages
 [deploy]: https://github.com/cal-itp/benefits/blob/main/.github/workflows/deploy.yml
 [dockerfile]: https://github.com/cal-itp/benefits/blob/main/appcontainer/Dockerfile

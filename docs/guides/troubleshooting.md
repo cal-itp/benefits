@@ -8,33 +8,25 @@ We have [ping tests](https://docs.microsoft.com/en-us/azure/azure-monitor/app/mo
 
 ### Logs
 
-#### Azure App Service Logs
+#### Azure Container App Logs
 
-[Open the `Logs` for the environment you are interested in.](https://docs.google.com/document/d/11EPDIROBvg7cRtU2V42c6VBxcW_o8HhcyORALNtL_XY/edit#heading=h.6pxjhslhxwvj) The following tables are likely of interest:
-
-- `AppServiceConsoleLogs`: `stdout` and `stderr` coming from the container
-- `AppServiceHTTPLogs`: requests coming through App Service
-- `AppServicePlatformLogs`: deployment information
+In the Azure Portal, in the Container App, you can find real time logs under Monitoring > Log stream and historical logs under Monitoring > Logs
 
 For some pre-defined queries, click `Queries`, then `Group by: Query type`, and look under `Query pack queries`.
 
 #### Live tail
 
-After [setting up the Azure CLI](../explanation/infrastructure.md#making-changes), you can use the following command to [stream live logs](https://docs.microsoft.com/en-us/azure/app-service/troubleshoot-diagnostic-logs#in-local-terminal):
+After [setting up the Azure CLI](../explanation/infrastructure.md#making-changes), you can use the following command to [stream live logs](https://learn.microsoft.com/en-us/azure/container-apps/log-streaming?tabs=bash):
 
 ```sh
-az webapp log tail --resource-group RG-CDT-PUB-VIP-CALITP-P-001 --name AS-CDT-PUB-VIP-CALITP-P-001 2>&1 | grep -v /healthcheck
+az containerapp logs show --resource-group RG-CDT-PUB-VIP-CALITP-P-001 --name ca-cdt-pub-vip-calitp-p-web --tail 10 >&1 | grep -v /healthcheck
 ```
-
-#### SCM
-
-<https://as-cdt-pub-vip-calitp-p-001-dev.scm.azurewebsites.net/api/logs/docker>
 
 ### Sentry
 
 Cal-ITP's Sentry instance collects both [errors ("Issues")](https://sentry.calitp.org/organizations/sentry/issues/?project=3) and app [performance info](https://sentry.calitp.org/organizations/sentry/performance/?project=3).
 
-[Alerts are sent to #benefits-notify in Slack.](https://sentry.calitp.org/organizations/sentry/alerts/rules/benefits/9/details/) [Others can be configured.](https://sentry.calitp.org/organizations/sentry/alerts/rules/)
+[Alerts are sent to `#benefits-notify` in Slack.](https://sentry.calitp.org/organizations/sentry/alerts/rules/benefits/9/details/) [Others can be configured.](https://sentry.calitp.org/organizations/sentry/alerts/rules/)
 
 You can troubleshoot Sentry itself by [turning on debug mode](../reference/environment-variables.md#django_debug) and visiting `/error/`.
 
@@ -75,13 +67,13 @@ A common problem that causes Littlepay API failures is that the certificate expi
 
 ### Eligibility Server
 
-If the Benefits application gets a 403 error when trying to make API calls to the [Eligibility Server](https://docs.calitp.org/eligibility-server/), it may be because the outbound IP addresses changed, and the Eligibility Server firewall is still restricting access to the old IP ranges.
+It would be unexpected, but a <kbd>403</kbd> error calling the [Eligibility Server](https://docs.calitp.org/eligibility-server/) would indicate that the outbound IP address has changed, and that the new IP is not on the Eligibility Server firewall's allowlist.
 
-1. Grab the `outbound_ip_ranges` `output` values from the most recent Benefit [deployment](https://calenterprise.visualstudio.com/CDT.OET.CAL-ITP/_build?definitionId=828) to the relevant environment.
-1. Update the IP ranges
-   1. Go to the [Eligibility Server Pipeline](https://dev.azure.com/mstransit/courtesy-cards/_build?definitionId=1&_a=summary)
+1. Retrieve the _IP address_ value from the _Public IP address_ resource in the Azure Portal for the relevant environment.
+1. Update the IP address:
+   1. Go to the [Eligibility Server Pipeline](https://dev.azure.com/mstransit/courtesy-cards/_build?definitionId=2&_a=summary)
    1. Click `Edit`
    1. Click `Variables`
-   1. Update the relevant variable with the new list of CIDRs
+   1. Update the relevant variable with the new public IP address
 
-Note there is nightly downtime as the Eligibility Server restarts and loads new data.
+Note there is nightly downtime as the [Eligibility Servers](https://docs.calitp.org/eligibility-server/) restart and load new data.

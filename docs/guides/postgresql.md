@@ -4,7 +4,7 @@
 
 When Benefits was hosted as an Application service, we downloaded a copy of the `django.db` SQLite file to backup the database prior to deploying new migrations. Now we generate a .json export from PostgreSQL.
 
-The command (and all other commands in this guide) are run from the `-web` suffixed Container app console. It is accessible via Azure > Container App > Monitoring > Console > /bin/bash.
+The command (and all other commands in this guide) are run from the `-web` suffixed Container App console. It is accessible via Azure > Container App > Monitoring > Console > /bin/bash.
 
 ```bash
 # writes the file to /calitp/app
@@ -21,17 +21,17 @@ To manage backups, use the app container's `web-storage` mounted volume.
 
 ```bash
 # copy a backup into the mounted volume
-cp db_data.json /home/calitp/app/data/db_data_YYY_MM_DD.json
+cp /calitp/app/db_data.json /calitp/app/data/db_data_YYY_MM_DD.json
 
 # copy a backup from the mounted volume
-cp /home/calitp/app/data/db_data_YYY_MM_DD.json db_data.json
+cp /calitp/app/data/db_data_YYY_MM_DD.json /calitp/app/db_data.json
 ```
 
 You can view the files in the mounted volume (and upload new ones) by navigating to Azure > Storage account > Data storage > Classic file shares > `web-storage` > Browse.
 
 ## Restore from a backup
 
-In order to restore from a .json backup, run the commands below from the Container app console.
+In order to restore from a .json backup, run the commands below from the Container App console.
 
 ```bash
 # nuke existing data and rerun migrations
