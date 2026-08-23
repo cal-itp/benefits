@@ -10,7 +10,6 @@ from benefits.oauth import analytics
 # from django.utils.decorators import decorator_from_middleware, method_decorator
 
 
-
 class OAuthHooks(DefaultHooks):
     @classmethod
     def pre_login(cls, request):
