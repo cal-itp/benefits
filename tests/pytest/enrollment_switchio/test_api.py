@@ -44,7 +44,7 @@ class TestRegistration:
         response_json = {"regId": "1234", "gtwUrl": "https://example.com", "unexpectedField": "value"}
 
         # this test will fail if any error occurs from instantiating the class
-        Registration(**response_json)
+        Registration.from_kwargs(**response_json)
 
 
 class TestRegistrationStatus:
@@ -62,7 +62,7 @@ class TestRegistrationStatus:
         }
 
         # this test will fail if any error occurs from instantiating the class
-        RegistrationStatus(**response_json)
+        RegistrationStatus.from_kwargs(**response_json)
 
 
 @pytest.mark.django_db
@@ -203,7 +203,7 @@ class TestGroup:
         }
 
         # this test will fail if any error occurs from instantiating the class
-        Group(**response_json)
+        Group.from_kwargs(**response_json)
 
 
 class TestGroupExpiry:
@@ -221,7 +221,7 @@ class TestGroupExpiry:
         response_json = {"group": "group", "expiresAt": "2025-09-12T00:00:00Z", "unexpectedField": "value"}
 
         # this test will fail if any error occurs from instantiating the class
-        GroupExpiry(**response_json)
+        GroupExpiry.from_kwargs(**response_json)
 
 
 class TestEnrollmentClient:
