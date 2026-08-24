@@ -18,144 +18,130 @@ from benefits.enrollment_switchio.api import (
 )
 
 
-@pytest.fixture
-def tokenization_client():
-    return TokenizationClient(
-        api_url="https://example.com",
-        api_key="api key",
-        api_secret="api secret",
-        private_key="private key contents",
-        client_certificate="client cert contents",
-        ca_certificate="ca cert contents",
-    )
-
-
-@pytest.fixture
-def enrollment_client():
-    return EnrollmentClient(
-        api_url="https://example.com",
-        authorization_header_value="Basic abc123",
-        private_key="private key contents",
-        client_certificate="client cert contents",
-        ca_certificate="ca cert contents",
-    )
-
-
 @pytest.mark.django_db
-def test_client_cert_request(mocker):
-    temp_file = mocker.patch("benefits.enrollment_switchio.api.NamedTemporaryFile")
-    request_func = mocker.Mock()
+class TestClient:
+    def test_cert_request(self, mocker):
+        temp_file = mocker.patch("benefits.enrollment_switchio.api.NamedTemporaryFile")
+        request_func = mocker.Mock()
 
-    client = Client(
-        private_key="private key contents",
-        client_certificate="client cert contents",
-        ca_certificate="ca cert contents",
-    )
-    client._cert_request(request_func)
+        client = Client(
+            private_key="private key contents",
+            client_certificate="client cert contents",
+            ca_certificate="ca cert contents",
+        )
+        client._cert_request(request_func)
 
-    temp_file.assert_called()
-    request_func.assert_called_once()
-    assert "verify" in request_func.call_args.kwargs
-    assert "cert" in request_func.call_args.kwargs
-
-
-@pytest.mark.parametrize("method", ["GET", "POST"])
-@pytest.mark.parametrize("body", ['{"exampleProperty": "blah"}', None, ""])
-def test_tokenization_client_signature_input_string(tokenization_client, method, body):
-    timestamp = str(int(datetime.now().timestamp()))
-    request_path = "/api/example"
-
-    input_string = tokenization_client._signature_input_string(
-        timestamp=timestamp, method=method, request_path=request_path, body=body
-    )
-
-    if body is None:
-        expected = f"{timestamp}{method}{request_path}"
-    else:
-        expected = f"{timestamp}{method}{request_path}{body}"
-
-    assert input_string == expected
+        temp_file.assert_called()
+        request_func.assert_called_once()
+        assert "verify" in request_func.call_args.kwargs
+        assert "cert" in request_func.call_args.kwargs
 
 
-def test_tokenization_client_stp_signature(tokenization_client):
-    timestamp = "1748637999"
-    method = "GET"
-    request_path = "/api/example"
-    body = '{"exampleProperty": "blah"}'
+class TestTokenizationClient:
+    @pytest.fixture(autouse=True)
+    def setup(self):
+        self.tokenization_client = TokenizationClient(
+            api_url="https://example.com",
+            api_key="api key",
+            api_secret="api secret",
+            private_key="private key contents",
+            client_certificate="client cert contents",
+            ca_certificate="ca cert contents",
+        )
 
-    stp_signature = tokenization_client._stp_signature(
-        timestamp=timestamp, method=method, request_path=request_path, body=body
-    )
+    @pytest.mark.parametrize("method", ["GET", "POST"])
+    @pytest.mark.parametrize("body", ['{"exampleProperty": "blah"}', None, ""])
+    def test_signature_input_string(self, method, body):
+        timestamp = str(int(datetime.now().timestamp()))
+        request_path = "/api/example"
 
-    # the expected STP-SIGNATURE value based on those inputs
-    expected = "7da3dd8dad6af77d4f0d5b96ff250399f2ffe1dac2fdfbdbfae0c22a86366426"
+        input_string = self.tokenization_client._signature_input_string(
+            timestamp=timestamp, method=method, request_path=request_path, body=body
+        )
 
-    assert stp_signature == expected
+        if body is None:
+            expected = f"{timestamp}{method}{request_path}"
+        else:
+            expected = f"{timestamp}{method}{request_path}{body}"
 
+        assert input_string == expected
 
-@pytest.mark.parametrize("method", ["GET", "POST"])
-@pytest.mark.parametrize("body", [{"exampleProperty": "blah"}, None])
-def test_tokenization_client_get_headers(mocker, tokenization_client, method, body):
-    timestamp = 1516867520
+    def test_stp_signature(self):
+        timestamp = "1748637999"
+        method = "GET"
+        request_path = "/api/example"
+        body = '{"exampleProperty": "blah"}'
 
-    # mock datetime.now()
-    datetime_mock = mocker.Mock()
-    datetime_mock.now.return_value = datetime.fromtimestamp(timestamp)
-    mocker.patch.object(benefits.enrollment_switchio.api, "datetime", datetime_mock)
+        stp_signature = self.tokenization_client._stp_signature(
+            timestamp=timestamp, method=method, request_path=request_path, body=body
+        )
 
-    request_path = "/api/example"
+        # the expected STP-SIGNATURE value based on those inputs
+        expected = "7da3dd8dad6af77d4f0d5b96ff250399f2ffe1dac2fdfbdbfae0c22a86366426"
 
-    headers = tokenization_client._get_headers(method=method, request_path=request_path, request_body=body)
+        assert stp_signature == expected
 
-    # calculate the expected value
-    timestamp = str(timestamp)
-    expected = {
-        "STP-APIKEY": tokenization_client.api_key,
-        "STP-TIMESTAMP": timestamp,
-        "STP-SIGNATURE": tokenization_client._stp_signature(
-            timestamp=timestamp,
-            method=method,
-            request_path=request_path,
-            body=json.dumps(body) if body else None,
-        ),
-    }
+    @pytest.mark.parametrize("method", ["GET", "POST"])
+    @pytest.mark.parametrize("body", [{"exampleProperty": "blah"}, None])
+    def test_get_headers(self, mocker, method, body):
+        timestamp = 1516867520
 
-    assert headers == expected
+        # mock datetime.now()
+        datetime_mock = mocker.Mock()
+        datetime_mock.now.return_value = datetime.fromtimestamp(timestamp)
+        mocker.patch.object(benefits.enrollment_switchio.api, "datetime", datetime_mock)
 
+        request_path = "/api/example"
 
-def test_tokenization_client_request_registration(mocker, tokenization_client):
-    mock_response = mocker.Mock()
-    mock_json = dict(regId="1234", gtwUrl="https://example.com/cst/?regId=1234")
-    mock_response.json.return_value = mock_json
-    mocker.patch("benefits.enrollment_switchio.api.TokenizationClient._cert_request", return_value=mock_response)
+        headers = self.tokenization_client._get_headers(method=method, request_path=request_path, request_body=body)
 
-    registration = tokenization_client.request_registration(
-        eshopRedirectUrl="https://localhost/enrollment",
-        mode=RegistrationMode.REGISTER,
-        eshopResponseMode=EshopResponseMode.FORM_POST,
-    )
+        # calculate the expected value
+        timestamp = str(timestamp)
+        expected = {
+            "STP-APIKEY": self.tokenization_client.api_key,
+            "STP-TIMESTAMP": timestamp,
+            "STP-SIGNATURE": self.tokenization_client._stp_signature(
+                timestamp=timestamp,
+                method=method,
+                request_path=request_path,
+                body=json.dumps(body) if body else None,
+            ),
+        }
 
-    assert registration == Registration(**mock_json)
+        assert headers == expected
 
+    def test_request_registration(self, mocker):
+        mock_response = mocker.Mock()
+        mock_json = dict(regId="1234", gtwUrl="https://example.com/cst/?regId=1234")
+        mock_response.json.return_value = mock_json
+        mocker.patch("benefits.enrollment_switchio.api.TokenizationClient._cert_request", return_value=mock_response)
 
-def test_tokenization_client_get_registration_status(mocker, tokenization_client):
-    mock_response = mocker.Mock()
-    mock_json = dict(
-        regState="created",
-        created="2025-05-28T18:26:03.353",
-        mode="register",
-        tokens=[],
-        eshopResponseMode="form_post",
-        identType="BPK",
-        maskCln="412501****1234",
-        cardExp="1119",
-    )
-    mock_response.json.return_value = mock_json
-    mocker.patch("benefits.enrollment_switchio.api.TokenizationClient._cert_request", return_value=mock_response)
+        registration = self.tokenization_client.request_registration(
+            eshopRedirectUrl="https://localhost/enrollment",
+            mode=RegistrationMode.REGISTER,
+            eshopResponseMode=EshopResponseMode.FORM_POST,
+        )
 
-    registration_status = tokenization_client.get_registration_status(registration_id="1234")
+        assert registration == Registration(**mock_json)
 
-    assert registration_status == RegistrationStatus(**mock_json)
+    def test_get_registration_status(self, mocker):
+        mock_response = mocker.Mock()
+        mock_json = dict(
+            regState="created",
+            created="2025-05-28T18:26:03.353",
+            mode="register",
+            tokens=[],
+            eshopResponseMode="form_post",
+            identType="BPK",
+            maskCln="412501****1234",
+            cardExp="1119",
+        )
+        mock_response.json.return_value = mock_json
+        mocker.patch("benefits.enrollment_switchio.api.TokenizationClient._cert_request", return_value=mock_response)
+
+        registration_status = self.tokenization_client.get_registration_status(registration_id="1234")
+
+        assert registration_status == RegistrationStatus(**mock_json)
 
 
 class TestGroupExpiry:
@@ -170,107 +156,112 @@ class TestGroupExpiry:
         assert group.expiresAt is None
 
 
-@pytest.mark.parametrize(
-    "expiry_datetime",
-    [
-        datetime(2025, 9, 12, 19, 15, 0, tzinfo=timezone.utc),
-        datetime(2025, 9, 12, 19, 15, 0, tzinfo=None),
-        datetime(2025, 9, 12, 12, 15, 0, tzinfo=tz.get_fixed_timezone(timedelta(hours=-7))),
-    ],
-)
-def test_enrollment_client_format_expiry(enrollment_client, expiry_datetime):
-    expected_format = "2025-09-12T19:15:00Z"
-    formatted = enrollment_client._format_expiry(expiry_datetime)
+class TestEnrollmentClient:
+    @pytest.fixture(autouse=True)
+    def setup(self):
+        self.enrollment_client = EnrollmentClient(
+            api_url="https://example.com",
+            authorization_header_value="Basic abc123",
+            private_key="private key contents",
+            client_certificate="client cert contents",
+            ca_certificate="ca cert contents",
+        )
 
-    assert formatted == expected_format
-
-
-def test_enrollment_client_get_headers(enrollment_client):
-    headers = enrollment_client._get_headers()
-
-    assert headers == {"Authorization": "Basic abc123"}
-
-
-def test_enrollment_client_healthcheck(mocker, enrollment_client):
-    mock_response = mocker.Mock()
-    mock_response.text.return_value = "Egibility is alive!"
-    mocker.patch("benefits.enrollment_switchio.api.EnrollmentClient._cert_request", return_value=mock_response)
-
-    response = enrollment_client.healthcheck()
-
-    assert response == mock_response.text
-
-
-def test_enrollment_client_get_groups(mocker, enrollment_client):
-    mock_response = mocker.Mock()
-    mock_json = dict(
-        id=1,
-        operatorId=123,
-        name="Veteran Discount",
-        code="veteran-discount",
-        value=10,
+    @pytest.mark.parametrize(
+        "expiry_datetime",
+        [
+            datetime(2025, 9, 12, 19, 15, 0, tzinfo=timezone.utc),
+            datetime(2025, 9, 12, 19, 15, 0, tzinfo=None),
+            datetime(2025, 9, 12, 12, 15, 0, tzinfo=tz.get_fixed_timezone(timedelta(hours=-7))),
+        ],
     )
-    mock_response.json.return_value = [mock_json]
-    mocker.patch("benefits.enrollment_switchio.api.EnrollmentClient._cert_request", return_value=mock_response)
+    def test_format_expiry(self, expiry_datetime):
+        expected_format = "2025-09-12T19:15:00Z"
+        formatted = self.enrollment_client._format_expiry(expiry_datetime)
 
-    groups = enrollment_client.get_groups(pto_id="123")
+        assert formatted == expected_format
 
-    assert groups == [Group(**mock_json)]
+    def test_get_headers(self):
+        headers = self.enrollment_client._get_headers()
 
+        assert headers == {"Authorization": "Basic abc123"}
 
-def test_enrollment_client_get_groups_for_token(mocker, enrollment_client):
-    mock_response = mocker.Mock()
-    mock_json = dict(group="veteran-discount", expiresAt=None)
-    mock_response.json.return_value = [mock_json]
-    mocker.patch("benefits.enrollment_switchio.api.EnrollmentClient._cert_request", return_value=mock_response)
+    def test_healthcheck(self, mocker):
+        mock_response = mocker.Mock()
+        mock_response.text.return_value = "Egibility is alive!"
+        mocker.patch("benefits.enrollment_switchio.api.EnrollmentClient._cert_request", return_value=mock_response)
 
-    groups = enrollment_client.get_groups_for_token(pto_id="123", token="abcde12345")
+        response = self.enrollment_client.healthcheck()
 
-    assert groups == [GroupExpiry(**mock_json)]
+        assert response == mock_response.text
 
+    def test_get_groups(self, mocker):
+        mock_response = mocker.Mock()
+        mock_json = dict(
+            id=1,
+            operatorId=123,
+            name="Veteran Discount",
+            code="veteran-discount",
+            value=10,
+        )
+        mock_response.json.return_value = [mock_json]
+        mocker.patch("benefits.enrollment_switchio.api.EnrollmentClient._cert_request", return_value=mock_response)
 
-@pytest.mark.parametrize(
-    "expiry, expected_expires_at",
-    [
-        (None, None),
-        (datetime(2025, 9, 12, 19, 15, 0, tzinfo=timezone.utc), "2025-09-12T19:15:00Z"),
-    ],
-)
-def test_enrollment_client_add_group_to_token(mocker, enrollment_client, expiry, expected_expires_at):
-    mock_post = mocker.patch("benefits.enrollment_switchio.api.requests.post")
+        groups = self.enrollment_client.get_groups(pto_id="123")
 
-    def cert_request_spy(request_func):
-        # the original `_cert_request` adds `verify` and `cert` kwargs.
-        # pass dummy values here to satisfy the lambda's signature.
-        return request_func(verify="dummy_ca_path", cert=("dummy_cert_path", "dummy_key_path"))
+        assert groups == [Group(**mock_json)]
 
-    mocker.patch.object(enrollment_client, "_cert_request", side_effect=cert_request_spy)
+    def test_get_groups_for_token(self, mocker):
+        mock_response = mocker.Mock()
+        mock_json = dict(group="veteran-discount", expiresAt=None)
+        mock_response.json.return_value = [mock_json]
+        mocker.patch("benefits.enrollment_switchio.api.EnrollmentClient._cert_request", return_value=mock_response)
 
-    pto_id = "123"
-    group_id = "test-group"
-    token = "test-token"
+        groups = self.enrollment_client.get_groups_for_token(pto_id="123", token="abcde12345")
 
-    enrollment_client.add_group_to_token(pto_id, group_id, token, expiry=expiry)
+        assert groups == [GroupExpiry(**mock_json)]
 
-    expected_body = {"group": group_id}
-    if expected_expires_at:
-        expected_body["expiresAt"] = expected_expires_at
+    @pytest.mark.parametrize(
+        "expiry, expected_expires_at",
+        [
+            (None, None),
+            (datetime(2025, 9, 12, 19, 15, 0, tzinfo=timezone.utc), "2025-09-12T19:15:00Z"),
+        ],
+    )
+    def test_add_group_to_token(self, mocker, expiry, expected_expires_at):
+        mock_post = mocker.patch("benefits.enrollment_switchio.api.requests.post")
 
-    # Assert that `requests.post` was called with the correct URL and body.
-    expected_url = f"{enrollment_client.api_url}/api/external/discount/{pto_id}/token/{token}/add"
-    mock_post.assert_called_once()
-    assert mock_post.call_args.args == (expected_url,)
-    assert mock_post.call_args.kwargs["json"] == expected_body
+        def cert_request_spy(request_func):
+            # the original `_cert_request` adds `verify` and `cert` kwargs.
+            # pass dummy values here to satisfy the lambda's signature.
+            return request_func(verify="dummy_ca_path", cert=("dummy_cert_path", "dummy_key_path"))
 
+        mocker.patch.object(self.enrollment_client, "_cert_request", side_effect=cert_request_spy)
 
-def test_enrollment_client_remove_group_from_token(mocker, enrollment_client):
-    group_code = "veteran-discount"
-    token = "abcde12345"
+        pto_id = "123"
+        group_id = "test-group"
+        token = "test-token"
 
-    mock_response = mocker.Mock()
-    mock_response.text.return_value = f"Discount {group_code} removed successfully for token {token}"
-    mocker.patch("benefits.enrollment_switchio.api.EnrollmentClient._cert_request", return_value=mock_response)
+        self.enrollment_client.add_group_to_token(pto_id, group_id, token, expiry=expiry)
 
-    response = enrollment_client.remove_group_from_token("123", group_code, token)
+        expected_body = {"group": group_id}
+        if expected_expires_at:
+            expected_body["expiresAt"] = expected_expires_at
 
-    assert response == mock_response.text
+        # Assert that `requests.post` was called with the correct URL and body.
+        expected_url = f"{self.enrollment_client.api_url}/api/external/discount/{pto_id}/token/{token}/add"
+        mock_post.assert_called_once()
+        assert mock_post.call_args.args == (expected_url,)
+        assert mock_post.call_args.kwargs["json"] == expected_body
+
+    def test_remove_group_from_token(self, mocker):
+        group_code = "veteran-discount"
+        token = "abcde12345"
+
+        mock_response = mocker.Mock()
+        mock_response.text.return_value = f"Discount {group_code} removed successfully for token {token}"
+        mocker.patch("benefits.enrollment_switchio.api.EnrollmentClient._cert_request", return_value=mock_response)
+
+        response = self.enrollment_client.remove_group_from_token("123", group_code, token)
+
+        assert response == mock_response.text
