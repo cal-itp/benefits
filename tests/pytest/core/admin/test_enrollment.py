@@ -95,6 +95,25 @@ class TestEnrollmentFlowAdmin:
         error_dict = form.errors
         assert "Must configure either claims verification or Eligibility API verification." in error_dict[NON_FIELD_ERRORS]
 
+    def test_selection_label_template_validation_passes(self, admin_user_request):
+        request = admin_user_request()
+
+        request.POST = dict(
+            # value that maps to an existing template at eligibility/includes/selection-label--<system_name>.html
+            system_name="senior",
+            supported_enrollment_methods=[models.EnrollmentMethods.SELF_SERVICE],
+        )
+
+        form_class = self.model_admin.get_form(request)
+        form = form_class(request.POST)
+
+        assert not form.is_valid()
+        error_dict = form.errors
+        assert not any(
+            error.startswith("Template not found: eligibility/includes/selection-label--")
+            for error in error_dict[NON_FIELD_ERRORS]
+        )
+
     def test_without_selection_label_template(self, admin_user_request):
         request = admin_user_request()
 
