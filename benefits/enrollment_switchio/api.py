@@ -1,16 +1,50 @@
 import hashlib
 import hmac
 import json
+import logging
 from dataclasses import dataclass
 from datetime import datetime, timezone
 from enum import Enum
+from inspect import signature
 from tempfile import NamedTemporaryFile
 
 import requests
 
+logger = logging.getLogger(__name__)
+
+
+class BaseDataClass:
+
+    @classmethod
+    def from_kwargs(cls, **kwargs):
+        """
+        @classmethod for instantiating a dataclass that allows unexpected fields
+
+        See https://stackoverflow.com/a/55101438
+        """
+        # fetch the constructor's signature
+        class_fields = {field for field in signature(cls).parameters}
+
+        # split the kwargs into native ones and new ones
+        native_args, new_args = {}, {}
+        for name, val in kwargs.items():
+            if name in class_fields:
+                native_args[name] = val
+            else:
+                new_args[name] = val
+
+        # use the native ones to create the class ...
+        instance = cls(**native_args)
+
+        # ... and log any unexpected args
+        for new_name, new_val in new_args.items():
+            logger.info(f"Unexpected arg parsing response for {cls}: {new_name} = {new_val}")
+
+        return instance
+
 
 @dataclass
-class Registration:
+class Registration(BaseDataClass):
     regId: str
     gtwUrl: str
 
@@ -28,7 +62,7 @@ class EshopResponseMode(Enum):
 
 
 @dataclass
-class RegistrationStatus:
+class RegistrationStatus(BaseDataClass):
     regState: str
     created: datetime
     mode: str
@@ -147,7 +181,7 @@ class TokenizationClient(Client):
 
         response.raise_for_status()
 
-        return Registration(**response.json())
+        return Registration.from_kwargs(**response.json())
 
     def get_registration_status(self, registration_id, timeout=5) -> RegistrationStatus:
         request_path = f"/api/v1/registration/{registration_id}"
@@ -164,11 +198,11 @@ class TokenizationClient(Client):
 
         response.raise_for_status()
 
-        return RegistrationStatus(**response.json())
+        return RegistrationStatus.from_kwargs(**response.json())
 
 
 @dataclass
-class Group:
+class Group(BaseDataClass):
     id: int
     operatorId: int
     name: str
@@ -177,7 +211,7 @@ class Group:
 
 
 @dataclass
-class GroupExpiry:
+class GroupExpiry(BaseDataClass):
     group: str
     expiresAt: datetime | None = None
 
@@ -257,7 +291,7 @@ class EnrollmentClient(Client):
 
         response.raise_for_status()
 
-        return [Group(**discount_group) for discount_group in response.json()]
+        return [Group.from_kwargs(**discount_group) for discount_group in response.json()]
 
     def get_groups_for_token(self, pto_id, token, timeout=5):
         request_path = f"/api/external/discount/{pto_id}/token/{token}"
@@ -274,7 +308,7 @@ class EnrollmentClient(Client):
 
         response.raise_for_status()
 
-        return [GroupExpiry(**group_expiry) for group_expiry in response.json()]
+        return [GroupExpiry.from_kwargs(**group_expiry) for group_expiry in response.json()]
 
     def add_group_to_token(self, pto_id, group_id, token, expiry: datetime = None, timeout=5):
         request_path = f"/api/external/discount/{pto_id}/token/{token}/add"
