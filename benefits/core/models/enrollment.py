@@ -27,6 +27,7 @@ class SystemName(models.TextChoices):
     COURTESY_CARD = "courtesy_card"
     GCTD_CARD = "gctd_card"
     MEDICARE = "medicare"
+    METRO_MOBILITY_WALLET = "metro_mobility_wallet"
     OLDER_ADULT = "senior"
     REDUCED_FARE_MOBILITY_ID = "mobility_pass"
     SCMETRO_CARD = "scmetro_card"
