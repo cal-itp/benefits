@@ -5,6 +5,7 @@ from django.core.exceptions import ValidationError
 
 from benefits.core import models
 from benefits.core.models.common import template_path
+from benefits.core.models.enrollment import EnrollmentFlow
 
 from .mixins import ProdReadOnlyPermissionMixin, StaffPermissionMixin, SuperuserPermissionMixin
 
@@ -64,10 +65,12 @@ class EnrollmentFlowForm(forms.ModelForm):
             message = "Must configure either claims verification or Eligibility API verification."
             non_field_errors.append(ValidationError(message))
 
-        if supports_self_service and not template_path(self.instance.selection_label_template):
+        system_name = self.get(cleaned_data, "system_name")
+        selection_label_template_path = EnrollmentFlow.get_selection_label_template(system_name)
+        if supports_self_service and not template_path(selection_label_template_path):
             # we can't add a field-level validation error
             # because the actual template for the self-service flow is derived from a pattern
-            non_field_errors.append(ValidationError(f"Template not found: {self.instance.selection_label_template}"))
+            non_field_errors.append(ValidationError(f"Template not found: {selection_label_template_path}"))
 
         supports_in_person = (
             supported_enrollment_methods and models.EnrollmentMethods.IN_PERSON in supported_enrollment_methods

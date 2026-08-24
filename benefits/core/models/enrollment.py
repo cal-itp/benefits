@@ -193,7 +193,7 @@ class EnrollmentFlow(models.Model):
 
     @property
     def selection_label_template(self):
-        return f"eligibility/includes/selection-label--{self.system_name}.html"
+        return self.get_selection_label_template(self.system_name)
 
     @property
     def uses_claims_verification(self):
@@ -236,6 +236,10 @@ class EnrollmentFlow(models.Model):
         """Get an EnrollmentFlow instance by its ID."""
         logger.debug(f"Get {EnrollmentFlow.__name__} by id: {id}")
         return EnrollmentFlow.objects.get(id=id)
+
+    @staticmethod
+    def get_selection_label_template(system_name):
+        return f"eligibility/includes/selection-label--{system_name}.html"
 
 
 class EnrollmentGroup(models.Model):

@@ -112,6 +112,12 @@ def test_EnrollmentFlow_template_eligibility_api(model_EnrollmentFlow_with_eligi
     )
 
 
+def test_EnrollmentFlow_get_selection_label_template():
+    assert (
+        EnrollmentFlow.get_selection_label_template("system_name") == "eligibility/includes/selection-label--system_name.html"
+    )
+
+
 @pytest.mark.django_db
 def test_EnrollmentGroup_str(model_LittlepayGroup):
     assert str(model_LittlepayGroup) == f"{model_LittlepayGroup.enrollment_flow} ({model_LittlepayGroup.transit_agency.slug})"
