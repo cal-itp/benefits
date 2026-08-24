@@ -18,6 +18,32 @@ from benefits.enrollment_switchio.api import (
 )
 
 
+class TestRegistration:
+    def test_unexpected_fields(self):
+        response_json = {"regId": "1234", "gtwUrl": "https://example.com", "unexpectedField": "value"}
+
+        # this test will fail if any error occurs from instantiating the class
+        Registration(**response_json)
+
+
+class TestRegistrationStatus:
+    def test_unexpected_fields(self):
+        response_json = {
+            "regState": "state",
+            "created": datetime(2026, 8, 24, 11, 30, 0),
+            "mode": RegistrationMode.REGISTER,
+            "tokens": [{"token": "1234"}],
+            "eshopResponseMode": EshopResponseMode.FORM_POST,
+            "identType": "ident",
+            "maskCln": "cln",
+            "cardExp": "08/26",
+            "unexpectedField": "value",
+        }
+
+        # this test will fail if any error occurs from instantiating the class
+        RegistrationStatus(**response_json)
+
+
 @pytest.mark.django_db
 class TestClient:
     def test_cert_request(self, mocker):
@@ -144,6 +170,21 @@ class TestTokenizationClient:
         assert registration_status == RegistrationStatus(**mock_json)
 
 
+class TestGroup:
+    def test_unexpected_fields(self):
+        response_json = {
+            "id": 1,
+            "operatorId": 1,
+            "name": "Group 1",
+            "code": "group",
+            "value": 1,
+            "unexpectedField": "value",
+        }
+
+        # this test will fail if any error occurs from instantiating the class
+        Group(**response_json)
+
+
 class TestGroupExpiry:
     def test_expiresAt(self):
         group = GroupExpiry(group="group", expiresAt="2025-09-12T00:00:00Z")
@@ -154,6 +195,12 @@ class TestGroupExpiry:
         group = GroupExpiry(group="group", expiresAt=None)
 
         assert group.expiresAt is None
+
+    def test_unexpected_fields(self):
+        response_json = {"group": "group", "expiresAt": "2025-09-12T00:00:00Z", "unexpectedField": "value"}
+
+        # this test will fail if any error occurs from instantiating the class
+        GroupExpiry(**response_json)
 
 
 class TestEnrollmentClient:
