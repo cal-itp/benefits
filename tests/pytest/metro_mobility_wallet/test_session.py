@@ -13,6 +13,13 @@ class TestSession:
         request.session = {"session_id": 123}
         return request
 
+    @pytest.fixture
+    def model_metro_EnrollmentFlow(self):
+        flow = EnrollmentFlow.objects.create(system_name=SystemName.METRO_MOBILITY_WALLET)
+        flow.save()
+
+        return flow
+
     def test_init(self, mock_request):
         session = Session(mock_request)
         assert session.request == mock_request
@@ -26,17 +33,9 @@ class TestSession:
 
         assert flow is None
 
+    @pytest.mark.usefixtures("model_metro_EnrollmentFlow")
     def test_flow_metro_flow_exists(self, mock_request):
-        # setup
-        flow = EnrollmentFlow.objects.create(system_name=SystemName.METRO_MOBILITY_WALLET)
-        flow.save()
-
-        # the actual test
         session = Session(mock_request)
         flow = session.flow
 
         assert flow is not None
-
-        # teardown
-        flow.delete()
-        flow.save()
