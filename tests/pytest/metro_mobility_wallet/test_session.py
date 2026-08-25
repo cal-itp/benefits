@@ -30,9 +30,8 @@ class TestSession:
 
         assert flow is None
 
-    @pytest.mark.usefixtures("model_metro_EnrollmentFlow")
-    def test_flow_metro_flow_exists(self, mock_request):
+    def test_flow_metro_flow_exists(self, mock_request, model_metro_EnrollmentFlow):
         session = Session(mock_request)
         flow = session.flow
 
-        assert flow is not None
+        assert flow == model_metro_EnrollmentFlow
