@@ -15,10 +15,7 @@ class TestSession:
 
     @pytest.fixture
     def model_metro_EnrollmentFlow(self):
-        flow = EnrollmentFlow.objects.create(system_name=SystemName.METRO_MOBILITY_WALLET)
-        flow.save()
-
-        return flow
+        return EnrollmentFlow.objects.create(system_name=SystemName.METRO_MOBILITY_WALLET)
 
     def test_init(self, mock_request):
         session = Session(mock_request)
