@@ -13,11 +13,7 @@ class Session:
 
         self.request = request
         self.session = request.session
-        self._flow = None
 
     @property
     def flow(self) -> EnrollmentFlow:
-        if self._flow is None:
-            self._flow = EnrollmentFlow.objects.filter(system_name=SystemName.METRO_MOBILITY_WALLET).first()
-
-        return self._flow
+        return EnrollmentFlow.objects.filter(system_name=SystemName.METRO_MOBILITY_WALLET).first()
