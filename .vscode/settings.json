@@ -21,7 +21,7 @@
     "editor.codeActionsOnSave": { "source.organizeImports": "explicit" }
   },
   "python.languageServer": "Pylance",
-  "python.testing.pytestArgs": ["tests/pytest"],
+  "python.testing.pytestArgs": ["tests/pytest", "-s"],
   "python.testing.pytestEnabled": true,
   "python.testing.unittestEnabled": false,
   "[terraform]": {
