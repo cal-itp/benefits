@@ -35,7 +35,8 @@ def test_pre_login(app_request, mocked_oauth_analytics_module):
     mocked_oauth_analytics_module.started_sign_in.assert_called_once()
 
 
-def test_cancel_login(app_request, mocked_oauth_analytics_module):
+def test_cancel_login_user_initiated(rf, mocked_oauth_analytics_module):
+    app_request = rf.get("/oauth/cancel", {"error": "access_denied"})
     result = OAuthHooks.cancel_login(app_request)
 
     assert result.status_code == 302
