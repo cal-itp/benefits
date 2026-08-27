@@ -44,6 +44,15 @@ def test_cancel_login_user_initiated(rf, mocked_oauth_analytics_module):
     mocked_oauth_analytics_module.canceled_sign_in.assert_called_once_with(app_request)
 
 
+def test_cancel_login_anomaly(rf, mocked_oauth_analytics_module):
+    app_request = rf.get("/oauth/cancel", data={"another_error": "a_different_error"})
+    result = OAuthHooks.cancel_login(app_request)
+
+    assert result.status_code == 302
+    assert result.url == reverse(routes.ELIGIBILITY_UNVERIFIED)
+    mocked_oauth_analytics_module.canceled_sign_in_anomaly.assert_called_once_with(app_request)
+
+
 def test_pre_logout(app_request, mocked_oauth_analytics_module):
     session.update(app_request, logged_in=True)
     assert session.logged_in(app_request)

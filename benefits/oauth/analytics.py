@@ -37,6 +37,15 @@ class CanceledSignInEvent(OAuthEvent):
         super().__init__(request, "canceled sign in")
 
 
+class CanceledSignInAnomalyEvent(OAuthEvent):
+    """Analytics event representing the anomalous canceling of application sign in."""
+
+    def __init__(self, request):
+        super().__init__(request, "canceled sign in anomaly")
+        details = dict(request.GET.lists())
+        self.update_event_properties(cancel_sign_in_anomaly=details)
+
+
 class FinishedSignInEvent(OAuthEvent):
     """Analytics event representing the end of the OAuth sign in flow."""
 
@@ -81,6 +90,11 @@ def started_sign_in(request):
 def canceled_sign_in(request):
     """Send the "canceled sign in" analytics event."""
     core.send_event(CanceledSignInEvent(request))
+
+
+def canceled_sign_in_anomaly(request):
+    """Send the "canceled sign in anomaly" analytics event."""
+    core.send_event(CanceledSignInAnomalyEvent(request))
 
 
 def finished_sign_in(request, error=None):

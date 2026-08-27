@@ -23,6 +23,8 @@ class OAuthHooks(DefaultHooks):
         # getlist() returns [] if "error" is missing
         if "access_denied" in request.GET.getlist("error"):
             analytics.canceled_sign_in(request)
+        else:
+            analytics.canceled_sign_in_anomaly(request)
         return redirect(routes.ELIGIBILITY_UNVERIFIED)
 
     @classmethod
