@@ -83,6 +83,7 @@
 | benefits/locale/es/formats.py                                                            |        1 |        0 |        0 |        0 |    100% |           |
 | benefits/metro\_mobility\_wallet/\_\_init\_\_.py                                         |        0 |        0 |        0 |        0 |    100% |           |
 | benefits/metro\_mobility\_wallet/apps.py                                                 |        4 |        0 |        0 |        0 |    100% |           |
+| benefits/metro\_mobility\_wallet/session.py                                              |       11 |        0 |        0 |        0 |    100% |           |
 | benefits/metro\_mobility\_wallet/urls.py                                                 |        4 |        0 |        0 |        0 |    100% |           |
 | benefits/metro\_mobility\_wallet/views.py                                                |        3 |        0 |        0 |        0 |    100% |           |
 | benefits/oauth/\_\_init\_\_.py                                                           |        0 |        0 |        0 |        0 |    100% |           |
@@ -99,7 +100,7 @@
 | benefits/urls.py                                                                         |       51 |       11 |       10 |        4 |     72% |45-\>48, 48-\>87, 62, 65, 68, 71, 74-76, 88-90, 93-\>105, 99-101 |
 | benefits/views.py                                                                        |       33 |        0 |        0 |        0 |    100% |           |
 | benefits/wsgi.py                                                                         |        4 |        4 |        0 |        0 |      0% |     10-16 |
-| **TOTAL**                                                                                | **3436** |  **145** |  **586** |   **58** | **94%** |           |
+| **TOTAL**                                                                                | **3447** |  **145** |  **586** |   **58** | **94%** |           |
 
 
 ## Setup coverage badge
