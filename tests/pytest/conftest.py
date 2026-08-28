@@ -26,14 +26,10 @@ def pytest_runtest_setup():
     disable_socket()
 
 
-@pytest.fixture
-def app_request(rf):
+def _setup_request_middleware_session(app_request):
     """
-    Fixture creates and initializes a new Django request object similar to a real application request.
+    Helper function to apply middleware and initialize session for mock requests.
     """
-    # create a request for the path, initialize
-    app_request = rf.get("/some/arbitrary/path")
-
     # https://stackoverflow.com/a/55530933/358804
     middleware = [SessionMiddleware(lambda x: x), LocaleMiddleware(lambda x: x)]
     for m in middleware:
@@ -43,6 +39,15 @@ def app_request(rf):
     session.reset(app_request)
 
     return app_request
+
+
+@pytest.fixture
+def app_request(rf):
+    """
+    Fixture creates and initializes a new Django request object similar to a real application request.
+    """
+    request = rf.get("/some/arbitrary/path")
+    return _setup_request_middleware_session(request)
 
 
 @pytest.fixture
@@ -50,18 +55,8 @@ def app_request_post(rf):
     """
     Fixture creates and initializes a new Django POST request object similar to a real application request.
     """
-    # create a request for the path, initialize
-    app_request = rf.post("/some/arbitrary/path")
-
-    # https://stackoverflow.com/a/55530933/358804
-    middleware = [SessionMiddleware(lambda x: x), LocaleMiddleware(lambda x: x)]
-    for m in middleware:
-        m.process_request(app_request)
-
-    app_request.session.save()
-    session.reset(app_request)
-
-    return app_request
+    request = rf.post("/some/arbitrary/path")
+    return _setup_request_middleware_session(request)
 
 
 @pytest.fixture
@@ -69,18 +64,8 @@ def app_request_query(rf):
     """
     Fixture creates and initializes a new Django request object similar to a real application request with a URI query.
     """
-    # create a request for the path, initialize
-    app_request = rf.get("/some/arbitrary/path", data={"tag": ["tag_1", "tag_2"], "property_2": "key_2"})
-
-    # https://stackoverflow.com/a/55530933/358804
-    middleware = [SessionMiddleware(lambda x: x), LocaleMiddleware(lambda x: x)]
-    for m in middleware:
-        m.process_request(app_request)
-
-    app_request.session.save()
-    session.reset(app_request)
-
-    return app_request
+    request = rf.get("/some/arbitrary/path", data={"tag": ["tag_1", "tag_2"], "property_2": "key_2"})
+    return _setup_request_middleware_session(request)
 
 
 @pytest.fixture
