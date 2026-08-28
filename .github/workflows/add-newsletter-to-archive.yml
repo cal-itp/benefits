@@ -1,0 +1,113 @@
+name: "Add Newsletter to Archive"
+
+on:
+  workflow_dispatch:
+    inputs:
+      marketing_email_id:
+        description: "The unique identifier in HubSpot for the email you want to import. Find it at the end of a single email's URL or in its details panel."
+        required: true
+        type: string
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  add-newsletter:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # 7.0.1
+
+      - name: Set up Python
+        uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # 7.0.0
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: pip install "hubspot-api-client==12.0.0" "requests==2.34.2" "beautifulsoup4==4.15.0"
+
+      - name: Export HTML and images from Hubspot
+        env:
+          HUBSPOT_ACCESS_TOKEN: ${{ secrets.HUBSPOT_EXPORT_ACCESS_TOKEN }}
+          HUBSPOT_INSTANCE_ID: ${{ secrets.HUBSPOT_INSTANCE_ID }}
+        run: python .github/workflows/add-newsletter-to-archive/fetch-from-hubspot.py ${{ inputs.marketing_email_id }}
+
+      - name: Create Markdown file and replace placeholder strings
+        run: |
+          NEW_FILE="docs/reference/newsletter-archive/${NEWSLETTER_SLUG}.md"
+          cp .github/workflows/add-newsletter-to-archive/shell-page-template.md $NEW_FILE
+          sed -i "s/{{NEWSLETTER_NICENAME}}/${NEWSLETTER_NICENAME}/g" $NEW_FILE
+          sed -i "s/{{NEWSLETTER_SLUG}}/${NEWSLETTER_SLUG}/g" $NEW_FILE
+          sed -i "s/{{NEWSLETTER_YEAR}}/${NEWSLETTER_YEAR}/g" $NEW_FILE
+
+      - name: Add card to index
+        uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # 9.0.0
+        with:
+          script: |
+            const fs = require("fs")
+            const { NEWSLETTER_NICENAME, NEWSLETTER_SLUG } = process.env;
+
+            // Read the current index file
+            const filePath = "docs/reference/newsletter-archive/index.md";
+            let content = fs.readFileSync(filePath, "utf8");
+
+            // Create the new card lines
+            newCard = `
+                -   ### :material-email-newsletter: ${NEWSLETTER_NICENAME}
+
+                      *Subtitle TKTKTK*
+
+                      ---
+
+                      Summary TKTKTK
+
+                    [Read full newsletter →](${NEWSLETTER_SLUG}/)`;
+
+            // Find the current year's section
+            const lines = content.split("\n");
+            let currentYearIdx = -1;
+
+            for (let i = 0; i < lines.length; i++) {
+              if (lines[i].includes(".insertion-point")) {
+                currentYearIdx = i;
+                break;
+              }
+            }
+
+            // Insert the new card at the top of the current year section
+            if (currentYearIdx !== -1) {
+              lines.splice(currentYearIdx + 1, 0, newCard);
+              content = lines.join("\n");
+            } else {
+              core.error("Newsletter index insertion point not found.");
+              core.setFailed();
+            }
+
+            // Update the file
+            try {
+              fs.writeFileSync(filePath, content);
+            } catch (err) {
+              core.error("Error updating newsletter index:", err);
+              core.setFailed();
+            }
+
+      - name: Commit changes and open PR
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git switch -c "docs/add-newsletter-${NEWSLETTER_SLUG}"
+          git add .
+          git commit -m "docs(newsletter): add ${NEWSLETTER_NICENAME} to archive"
+          git push --set-upstream origin "docs/add-newsletter-${NEWSLETTER_SLUG}"
+          PR_BODY=.github/workflows/add-newsletter-to-archive/pr-body-template.md
+          sed -i "s/{{NEWSLETTER_NICENAME}}/${NEWSLETTER_NICENAME}/g" $PR_BODY
+          sed -i "s/{{NEWSLETTER_SLUG}}/${NEWSLETTER_SLUG}/g" $PR_BODY
+          gh pr create \
+            --title "docs: adds ${NEWSLETTER_NICENAME} to newsletter archive" \
+            --body-file $PR_BODY \
+            --label "documentation" \
+            --assignee indexing \
+            --draft
