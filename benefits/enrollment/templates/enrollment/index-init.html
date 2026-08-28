@@ -1,0 +1,50 @@
+{% extends "core/base.html" %}{% comment %} replace index-base with this template (eventually) {% endcomment %}
+
+{% load i18n %}
+
+{% block page-title %}
+  {% translate "Eligibility confirmation" %}
+{% endblock page-title %}
+
+{% block nav-buttons %}
+  {% if authentication and authentication.sign_out_link_template %}
+    {% include authentication.sign_out_link_template %}
+  {% endif %}
+{% endblock nav-buttons %}
+
+{% block headline %}
+  <div class="d-flex flex-column gap-3 align-items-start pb-4">
+    <h2 class="p fw-semibold eyebrow-raising">{{ flow }}</h2>
+    <h1 class="pt-0">{{ headline }}</h1>
+  </div>
+{% endblock headline %}
+
+{% block inner-content %}
+  {% block paragraphs %}
+    <p>{{ next_step }}</p>
+    <p class="mt-3">
+      {% translate "You won't be charged, and we don't store your information. Your card details will be sent to our payment partner " %}
+      <!-- djlint:off --><a href="modal--transit-processor" class="{{ classes }}" data-bs-toggle="modal" data-bs-target="#modal--transit-processor">{{ transit_processor.name }}</a><!-- djlint:on -->
+      .
+    </p>
+    <div class="mt-3">
+      {% if alert_include %}
+        {% include alert_include %}
+      {% else %}
+        <p>{% translate "Please use a contactless debit or credit card by:" %}</p>
+        {% include "core/includes/list--card-schemes.html" %}
+        <!-- djlint:off --><a href="modal--transit-processor" class="{{ classes }}" data-bs-toggle="modal" data-bs-target="#modal--transit-processor">Learn more about the bank cards we accept.</a><!-- djlint:on -->
+      {% endif %}
+    </div>
+    {% include "enrollment/includes/modal--transit-processor.html" with id="modal--transit-processor" size="modal-md" header="p-md-2 p-3" body="pb-md-3 mb-md-3 mx-md-3 py-0 pt-0 absolute-top" transit_processor=transit_processor %}
+  {% endblock paragraphs %}
+
+  {% block enrollment-form %}
+  {% endblock enrollment-form %}
+{% endblock inner-content %}
+
+{% block call-to-action-button %}
+  <a id="{{ cta_button }}" href="{% url cta_button %}" class="btn btn-lg btn-primary" role="button">
+    {% translate "Register your card" %}
+  </a>
+{% endblock call-to-action-button %}

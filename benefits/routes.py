@@ -100,6 +100,21 @@ class Routes:
         return "switchio:index"
 
     @property
+    def ENROLLMENT_INIT_INDEX(self):
+        """Start of the enrollment phase, using Init."""
+        return "init:index"
+
+    @property
+    def ENROLLMENT_INIT_START(self):
+        """Gather card details to tokenize, using Init."""
+        return "init:start"
+
+    @property
+    def ENROLLMENT_INIT_SUCCESS(self):
+        """Tokenization complete, using Init."""
+        return "init:success"
+
+    @property
     def ENROLLMENT_SWITCHIO_GATEWAY_URL(self):
         """Establish a registration request and receive back a tokenization gateway URL."""
         return "switchio:gateway_url"
