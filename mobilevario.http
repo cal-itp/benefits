@@ -28,3 +28,26 @@ Content-Type: application/json
   "FareMediaTypeId": 1727934,
   "SalesChannelId": 420,
 }
+
+###
+
+GET {{baseUrl}}/api/TransitAccounts?FareMediaId=133713370
+Authorization: {{authHeader}}
+
+###
+
+POST {{baseUrl}}/api/Cardholders
+Authorization: {{authHeader}}
+Content-Type: application/json
+
+{
+    "FareCategory": "7",
+    "TransitAccountId": "17718",
+    "FirstName": "Kim",
+    "LastName": "Possible"
+}
+
+###
+
+GET {{baseUrl}}/api/Cardholders/12002
+Authorization: {{authHeader}}
