@@ -3,5 +3,28 @@
 
 ###
 
-GET {{baseUrl}}/api/farecategories HTTP/1.1
+GET {{baseUrl}}/api/FareCategories HTTP/1.1
 Authorization: {{authHeader}}
+
+###
+
+GET {{baseUrl}}/api/SalesChannels
+Authorization: {{authHeader}}
+
+###
+
+GET {{baseUrl}}/api/FareMedia?SaleschannelId=420
+Authorization: {{authHeader}}
+
+###
+
+POST {{baseUrl}}/api/TransitAccounts
+Authorization: {{authHeader}}
+Content-Type: application/json
+
+{
+  "FareMediaId": "133713370",
+  "PrintedNumber": "133713370",
+  "FareMediaTypeId": 1727934,
+  "SalesChannelId": 420,
+}
