@@ -90,7 +90,7 @@ The following California transit providers have adopted Cal-ITP Benefits. The be
 | **Santa Barbara Metropolitan Transit District**     | 10/2023             | ✅           | ✅                   | ―             | ―                    | ✅          |
 | **Sacramento Regional Transit District**            | 10/2024             | ✅           | ✅                   | ✅            | ―                    | ―           |
 | **Nevada County Connects**                          | 03/2025             | ✅           | ✅                   | ✅            | ―                    | ―           |
-| **Ventura County Transportation Commission**        | 10/2025             | ✅           | ✅                   | ―             | ―                    | ―           |
+| **Ventura County Transportation Commission**        | 10/2025             | ✅           | ✅                   | ✅            | ―                    | ―           |
 | **San Luis Obispo Regional Transit**                | 12/2025             | ✅           | ✅                   | ―             | ―                    | ―           |
 | **El Dorado Transit Authority**                     | 01/2026             | ✅           | ✅                   | ―             | ―                    | ―           |
 | **Redding Area Bus Authority**                      | 02/2026             | ✅           | ✅                   | ✅            | ✅                   | ―           |
