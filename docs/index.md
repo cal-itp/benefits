@@ -95,11 +95,11 @@ The following California transit providers have adopted Cal-ITP Benefits. The be
 | **El Dorado Transit Authority**                     | 01/2026             | ✅           | ✅                   | ―             | ―                    | ―           |
 | **Redding Area Bus Authority**                      | 02/2026             | ✅           | ✅                   | ✅            | ✅                   | ―           |
 | **City of San Luis Obispo**                         | 04/2026             | ✅           | ✅                   | ―             | ―                    | ―           |
-| **City of Camarillo**                               | 08/2026 (target)    | \*           | \*                   | \*            | \*                   | \*          |
-| **City of Simi Valley**                             | 08/2026 (target)    | \*           | \*                   | \*            | \*                   | \*          |
-| **City of Thousand Oaks**                           | 08/2026 (target)    | \*           | \*                   | \*            | \*                   | \*          |
-| **Gold Coast Transit Distict**                      | 08/2026 (target)    | \*           | \*                   | \*            | \*                   | \*          |
-| **Valley Express**                                  | 08/2026 (target)    | \*           | \*                   | \*            | \*                   | \*          |
+| **City of Camarillo**                               | 08/2026             | ✅           | ✅                   | ✅            | ―                    | ―           |
+| **City of Simi Valley**                             | 08/2026             | ✅           | ✅                   | ✅            | ―                    | ―           |
+| **City of Thousand Oaks**                           | 08/2026             | ✅           | ✅                   | ✅            | ―                    | ―           |
+| **Gold Coast Transit Distict**                      | 08/2026             | ✅           | ✅                   | ✅            | ―                    | ―           |
+| **Valley Express**                                  | 08/2026             | ✅           | ✅                   | ✅            | ―                    | ―           |
 | **City of Roseville**                               | 09/2026 (target)    | \*           | \*                   | \*            | \*                   | \*          |
 | **City of Wasco**                                   | 09/2026 (target)    | \*           | \*                   | \*            | \*                   | \*          |
 | **Santa Cruz Metropolitan Transit District**        | 09/2026 (target)    | \*           | \*                   | \*            | \*                   | \*          |
