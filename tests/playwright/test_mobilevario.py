@@ -41,14 +41,20 @@ def generate_month_year_codes():
     return dates
 
 
-def generate_3digit_codes():
-    return [f"{i:03d}" for i in range(411, 501)]
+def generate_3digit_codes(start, end):
+    """
+    Generates an array of 3-digit codes.
+
+    :param start: starting 3-digit value, inclusive.
+    :param end: ending 3-digit value, exclusive.
+    """
+    return [f"{i:03d}" for i in range(start, end)]
 
 
-def my_params():
+def generate_test_cases():
     card_numbers = ["4111 1111 1111 1111", "4242 4242 4242 4242"]
     expiration_dates = generate_month_year_codes()
-    cvvs = generate_3digit_codes()
+    cvvs = generate_3digit_codes(400, 501)
 
     card_details = []
     for c in card_numbers:
@@ -58,10 +64,10 @@ def my_params():
     return card_details
 
 
-TEST_CASES = my_params()
+TEST_CASES = generate_test_cases()
 
 
-@pytest.mark.parametrize("card_details", TEST_CASES, ids=lambda tc: tc)
+@pytest.mark.parametrize("card_details", TEST_CASES)
 def test_get_TransitAccount(page: Page, card_details: CardDetails):
     page.context.set_extra_http_headers(
         {
