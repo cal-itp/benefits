@@ -10,7 +10,7 @@ Most months we send a newsletter to share product updates, adoption metrics, and
 
     <div class="grid cards" id="newsletter-cards-2026" markdown>
 
-    ## 2026 {.sr-only}
+    ## 2026 {.sr-only .insertion-point}
 
     -   ### :material-email-newsletter: July 2026
 
