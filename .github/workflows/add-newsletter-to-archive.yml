@@ -29,7 +29,7 @@ jobs:
 
       - name: Export HTML and images from Hubspot
         env:
-          HUBSPOT_ACCESS_TOKEN: ${{ secrets.HUBSPOT_EXPORT_ACCESS_TOKEN }}
+          HUBSPOT_EXPORT_ACCESS_TOKEN: ${{ secrets.HUBSPOT_EXPORT_ACCESS_TOKEN }}
           HUBSPOT_INSTANCE_ID: ${{ secrets.HUBSPOT_INSTANCE_ID }}
         run: python .github/workflows/add-newsletter-to-archive/fetch-from-hubspot.py ${{ inputs.marketing_email_id }}
 

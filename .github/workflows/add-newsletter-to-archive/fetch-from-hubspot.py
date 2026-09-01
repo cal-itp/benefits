@@ -9,7 +9,7 @@ import requests
 from bs4 import BeautifulSoup
 from hubspot import HubSpot
 
-ACCESS_TOKEN = os.environ["HUBSPOT_ACCESS_TOKEN"]
+ACCESS_TOKEN = os.environ["HUBSPOT_EXPORT_ACCESS_TOKEN"]
 
 hubspot = HubSpot(access_token=ACCESS_TOKEN)
 
