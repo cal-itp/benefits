@@ -45,52 +45,8 @@ jobs:
         uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # 9.0.0
         with:
           script: |
-            const fs = require("fs")
-            const { NEWSLETTER_NICENAME, NEWSLETTER_SLUG } = process.env;
-
-            // Read the current index file
-            const filePath = "docs/reference/newsletter-archive/index.md";
-            let content = fs.readFileSync(filePath, "utf8");
-
-            // Create the new card lines
-            newCard = `
-                -   ### :material-email-newsletter: ${NEWSLETTER_NICENAME}
-
-                      *Subtitle TKTKTK*
-
-                      ---
-
-                      Summary TKTKTK
-
-                    [Read full newsletter →](${NEWSLETTER_SLUG}/)`;
-
-            // Find the current year's section
-            const lines = content.split("\n");
-            let currentYearIdx = -1;
-
-            for (let i = 0; i < lines.length; i++) {
-              if (lines[i].includes(".insertion-point")) {
-                currentYearIdx = i;
-                break;
-              }
-            }
-
-            // Insert the new card at the top of the current year section
-            if (currentYearIdx !== -1) {
-              lines.splice(currentYearIdx + 1, 0, newCard);
-              content = lines.join("\n");
-            } else {
-              core.error("Newsletter index insertion point not found.");
-              core.setFailed();
-            }
-
-            // Update the file
-            try {
-              fs.writeFileSync(filePath, content);
-            } catch (err) {
-              core.error("Error updating newsletter index:", err);
-              core.setFailed();
-            }
+            const { addCardToIndex } = await import('${{ github.workspace }}/.github/workflows/add-newsletter-to-archive/add-card-to-index.js');
+            addCardToIndex({core});
 
       - name: Commit changes and open PR
         env:
