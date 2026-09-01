@@ -27,6 +27,7 @@
         "eamodio.gitlens",
         "esbenp.prettier-vscode",
         "hashicorp.terraform",
+        "humao.rest-client",
         "mhutchie.git-graph",
         "monosans.djlint",
         "mrorz.language-gettext",
@@ -34,6 +35,7 @@
         "ms-python.isort",
         "ms-python.flake8",
         "ms-python.python",
+        "ms-vscode.live-server",
         "qwtel.sqlite-viewer",
         "tamasfe.even-better-toml"
       ]
