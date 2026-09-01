@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Report-Msgid-Bugs-To: https://github.com/cal-itp/benefits/issues \n"
-"POT-Creation-Date: 2026-03-24 11:51-0700\n"
+"POT-Creation-Date: 2026-09-01 14:58-0700\n"
 "Language: Español\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -914,6 +914,19 @@ msgstr "Espere por favor..."
 msgid "Enroll"
 msgstr "Inscribir"
 
+msgid ""
+"You won't be charged, and we don't store your information. Your card details "
+"will be sent to our payment partner "
+msgstr ""
+
+#, fuzzy
+#| msgid "Please use a debit or credit card by:"
+msgid "Please use a contactless debit or credit card by:"
+msgstr "Utilice una tarjeta de débito o crédito de:"
+
+msgid "Register your card"
+msgstr ""
+
 msgid "Enrollment error"
 msgstr "Error de inscripción"
 
@@ -1028,6 +1041,14 @@ msgstr ""
 "No se le ha cobrado nada hoy. Al subir al transporte público proporcionado "
 "por {short_name}, toque para pagar con esta tarjeta y se le cobrará una "
 "tarifa reducida."
+
+msgid "You are eligible for a reduced fare!"
+msgstr ""
+
+msgid ""
+"The last step is to register a bank card so you get a reduced fare when you "
+"tap."
+msgstr ""
 
 msgid "Service is down"
 msgstr "El servicio está inactivo"
