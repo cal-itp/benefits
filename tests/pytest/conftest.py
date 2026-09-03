@@ -64,7 +64,7 @@ def app_request_query(rf):
     """
     Fixture creates and initializes a new Django request object similar to a real application request with a URI query.
     """
-    request = rf.get("/some/arbitrary/path", data={"tag": ["tag_1", "tag_2"], "property_2": "key_2"})
+    request = rf.get("/some/arbitrary/path", data={"error": "error_code", "message": "error_description", "cid": "123"})
     return _setup_request_middleware_session(request)
 
 

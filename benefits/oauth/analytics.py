@@ -42,8 +42,10 @@ class CanceledSignInAnomalyEvent(OAuthEvent):
 
     def __init__(self, request):
         super().__init__(request, "canceled sign in anomaly")
-        details = dict(request.GET.lists())
-        self.update_event_properties(cancel_sign_in_anomaly=details)
+        error = request.GET.get("error")
+        message = request.GET.get("message")
+        cid = request.GET.get("cid")
+        self.update_event_properties(error=error, message=message, cid=cid)
 
 
 class FinishedSignInEvent(OAuthEvent):
