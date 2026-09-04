@@ -63,6 +63,7 @@ INSTALLED_APPS = [
     "django_google_sso",
     "benefits.core",
     "benefits.enrollment",
+    "benefits.enrollment_init",
     "benefits.enrollment_littlepay",
     "benefits.enrollment_switchio",
     "benefits.eligibility",
