@@ -12,6 +12,16 @@ Most months we send a newsletter to share product updates, adoption metrics, and
 
     ## 2026 {.sr-only .insertion-point}
 
+    -   ### :material-email-newsletter: August 2026
+
+          *Ventura County region launches*
+
+          ---
+
+          Five new agencies launched in August: Camarillo Area Transit, City of Thousand Oaks Transit Services, Gold Coast Transit District, Simi Valley Transit, and Valley Express. They join VCTC to form the Ventura County region, the largest multi-operator region on Cal-ITP Benefits to date. Eligible riders enroll for transit benefits  once and automatically receive reduced fares at all six agencies when they tap-to-pay. These six independent operators now function as a unified system for people riding transit in Ventura County—a microcosm that reflects Cal-ITP’s vision for the state.
+
+        [Read full newsletter →](2026-08/)
+
     -   ### :material-email-newsletter: July 2026
 
           *Cal-ITP Benefits goes national*
