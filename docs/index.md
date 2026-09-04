@@ -101,9 +101,9 @@ The following California transit providers have adopted Cal-ITP Benefits. The be
 | **Gold Coast Transit Distict**                      | 08/2026             | ✅           | ✅                   | ✅            | ―                    | ―           |
 | **Valley Express**                                  | 08/2026             | ✅           | ✅                   | ✅            | ―                    | ―           |
 | **Yolo County Transportation District**             | 09/2026             | ✅           | ✅                   | ―             | ―                    | ―           |
-| **City of Roseville**                               | 09/2026 (target)    | \*           | \*                   | \*            | \*                   | \*          |
-| **City of Wasco**                                   | 09/2026 (target)    | \*           | \*                   | \*            | \*                   | \*          |
 | **Santa Cruz Metropolitan Transit District**        | 09/2026 (target)    | \*           | \*                   | \*            | \*                   | \*          |
+| **City of Wasco**                                   | 10/2026 (target)    | \*           | \*                   | \*            | \*                   | \*          |
+| **City of Roseville**                               | 11/2026 (target)    | \*           | \*                   | \*            | \*                   | \*          |
 | **Santa Barbara County Association of Governments** | Planned             | \*           | \*                   | \*            | \*                   | \*          |
 
 ## Supported enrollment pathways
