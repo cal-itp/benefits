@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
     inputs:
       marketing_email_id:
-        description: "The unique identifier in HubSpot for the email you want to import. Find it at the end of a single email's URL or in its details panel."
+        description: "The 'Marketing email ID' in HubSpot for the email you want to import, as shown in its details panel."
         required: true
         type: string
 
