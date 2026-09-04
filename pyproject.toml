@@ -16,7 +16,7 @@ dependencies = [
     "Django==5.2.17",
     "django-admin-sortable2==2.3.1",
     "django-azure-communication-email==1.6.0",
-    "django-cdt-identity @ git+https://github.com/Office-of-Digital-Services/django-cdt-identity.git@c635773a75e7f184a9382748afcef6d5a705b2d6",
+    "django-cdt-identity @ git+https://github.com/Office-of-Digital-Services/django-cdt-identity.git@756eac783eeaa670f5211d5de161b8760ded35ca",
     "django-csp==4.0",
     "django-google-sso==10.0.0",
     "django-multiselectfield==1.0.1",
