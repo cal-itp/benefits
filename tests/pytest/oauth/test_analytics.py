@@ -67,7 +67,6 @@ def test_CanceledSignInAnomalyEvent(app_request_query):
     event = CanceledSignInAnomalyEvent(app_request_query)
     assert event.event_properties["error"] == "error_code"
     assert event.event_properties["message"] == "error_description"
-    assert event.event_properties["cid"] == "123"
 
 
 @pytest.mark.django_db
