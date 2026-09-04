@@ -4,7 +4,7 @@ Django settings for benefits project.
 
 import os
 
-from csp.constants import NONCE, NONE, SELF
+from csp.constants import NONCE, NONE, SELF, UNSAFE_INLINE
 from django.conf import settings
 
 from benefits import sentry
@@ -63,6 +63,7 @@ INSTALLED_APPS = [
     "django_google_sso",
     "benefits.core",
     "benefits.enrollment",
+    "benefits.enrollment_init",
     "benefits.enrollment_littlepay",
     "benefits.enrollment_switchio",
     "benefits.eligibility",
@@ -355,11 +356,12 @@ CONTENT_SECURITY_POLICY = {
             "https://cdn.jsdelivr.net/npm/@switchio",
             "https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/",
             "https://cdn.jsdelivr.net/npm/jquery",
+            "https://secure.nmi.com",
         ],
         "default-src": [SELF],
-        "font-src": [SELF, "https://fonts.gstatic.com/"],
+        "font-src": [SELF, "https://applepay.cdn-apple.com", "https://fonts.gstatic.com/"],
         "frame-ancestors": [NONE],
-        "frame-src": ["*.littlepay.com"],
+        "frame-src": ["*.littlepay.com", "https://secure.nmi.com"],
         "img-src": [SELF, "data:", "*.googleusercontent.com"],
         "object-src": [NONE],
         "script-src": [
@@ -369,6 +371,8 @@ CONTENT_SECURITY_POLICY = {
             "https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/",
             "https://cdn.jsdelivr.net/npm/jquery",
             "*.littlepay.com",
+            "https://secure.nmi.com",
+            "https://applepay.cdn-apple.com",
             NONCE,  # https://django-csp.readthedocs.io/en/latest/nonce.html
         ],
         "style-src": [
@@ -376,6 +380,9 @@ CONTENT_SECURITY_POLICY = {
             "https://fonts.googleapis.com/css",
             "https://fonts.googleapis.com/css2",
             "https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/",
+            "https://secure.nmi.com",
+            "https://applepay.cdn-apple.com",
+            UNSAFE_INLINE,  # ??
         ],
     }
 }

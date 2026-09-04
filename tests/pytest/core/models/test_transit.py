@@ -152,7 +152,7 @@ class TestTransitAgency:
 
         non_field_errors = errors[NON_FIELD_ERRORS]
         assert len(non_field_errors) == 1
-        assert non_field_errors[0].message == "Must fill out configuration for either Littlepay or Switchio."
+        assert non_field_errors[0].message == "Must fill out configuration for either INIT, Littlepay or Switchio."
 
     def test_clean_short_name_change_requires_group(self, model_TransitAgency_inactive):
         group = Group.objects.create(name="Existing Customer Service Group")
