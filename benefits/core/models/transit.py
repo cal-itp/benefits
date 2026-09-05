@@ -42,15 +42,15 @@ class TransitProcessorConfig(models.Model):
         choices=Environment,
         help_text="A label to indicate which environment this configuration is for.",
     )
-    label = models.TextField(
+    label = models.CharField(
         default="",
         blank=True,
         help_text="A label for internal use.",
     )
-    portal_url = models.TextField(
+    portal_url = models.URLField(
         default="",
         blank=True,
-        help_text="The absolute base URL for the TransitProcessor's control portal, including https://.",
+        help_text="The absolute base URL for the TransitProcessor's control portal.",
     )
 
     def __str__(self):
