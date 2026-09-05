@@ -36,12 +36,12 @@ class InitConfig(TransitProcessorConfig):
     def clean(self):
         field_errors = {}
 
-        if self.pk and self.transitagency_set and any([agency.active for agency in self.transitagency_set.all()]):
-            message = "This field is required when this configuration is referenced by an active transit agency."
-            needed = dict(
-                tokenization_api_key=self.tokenization_api_key,
-            )
-            field_errors.update({k: ValidationError(message) for k, v in needed.items() if not v})
+        # TODO: verify the presence of an active transit agency when we're ready to associate the two
+        message = "This field is required when this configuration is referenced by an active transit agency."
+        needed = dict(
+            tokenization_api_key=self.tokenization_api_key,
+        )
+        field_errors.update({k: ValidationError(message) for k, v in needed.items() if not v})
 
         if field_errors:
             raise ValidationError(field_errors)
