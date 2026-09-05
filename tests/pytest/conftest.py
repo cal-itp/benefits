@@ -18,6 +18,7 @@ from benefits.core.models import (
     TransitAgency,
     TransitAgencyGroup,
 )
+from benefits.enrollment_init.models import InitConfig
 from benefits.enrollment_littlepay.models import LittlepayConfig, LittlepayGroup
 from benefits.enrollment_switchio.models import SwitchioConfig, SwitchioGroup
 
@@ -203,6 +204,21 @@ def model_EnrollmentFlow_supports_sign_out(model_EnrollmentFlow):
     model_EnrollmentFlow.save()
 
     return model_EnrollmentFlow
+
+
+@pytest.fixture
+def model_InitConfig():
+    init_config = InitConfig.objects.create(
+        environment=Environment.DEV,
+        tokenization_api_key="api_key",
+        registration_password_secret_name="agency-init-registration-password",
+    )
+
+    # TK
+    # model_TransitAgency.transit_processor_config = init_config
+    # model_TransitAgency.save()
+
+    return init_config
 
 
 @pytest.fixture
