@@ -1,7 +1,7 @@
 from django.core.exceptions import ValidationError
 from django.db import models
 
-from benefits.core.models import SecretNameField, TransitProcessorConfig
+from benefits.core.models import EnrollmentGroup, SecretNameField, TransitProcessorConfig
 
 
 class InitConfig(TransitProcessorConfig):
@@ -50,3 +50,12 @@ class InitConfig(TransitProcessorConfig):
 
     class Meta:
         verbose_name = "INIT config"
+
+
+class InitGroup(EnrollmentGroup):
+    group_id = models.PositiveIntegerField(
+        default=None, blank=True, help_text="The ID of the INIT FareCategory for user enrollment."
+    )
+
+    class Meta:
+        verbose_name = "INIT group"
