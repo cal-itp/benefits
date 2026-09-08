@@ -117,7 +117,7 @@ class EnrollmentFlow(models.Model):
         choices=SystemName,
         help_text="Primary internal system name for this EnrollmentFlow instance, e.g. in analytics and Eligibility API requests.",  # noqa: 501
     )
-    label = models.TextField(
+    label = models.CharField(
         blank=True,
         default="",
         help_text="A human readable label, used as the display text in Admin.",
@@ -134,8 +134,8 @@ class EnrollmentFlow(models.Model):
         blank=True,
         help_text="The policy language used by transit agency staff to verify a user's eligibility in-person.",
     )
-    sign_out_button_template = models.TextField(default="", blank=True, help_text="Template that renders sign-out button")
-    sign_out_link_template = models.TextField(default="", blank=True, help_text="Template that renders sign-out link")
+    sign_out_button_template = models.CharField(default="", blank=True, help_text="Template that renders sign-out button")
+    sign_out_link_template = models.CharField(default="", blank=True, help_text="Template that renders sign-out link")
     oauth_config = models.ForeignKey(
         IdentityGatewayConfig,
         on_delete=models.PROTECT,
@@ -265,16 +265,16 @@ class EnrollmentEvent(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4)
     transit_agency = models.ForeignKey("core.TransitAgency", on_delete=models.PROTECT)
     enrollment_flow = models.ForeignKey(EnrollmentFlow, on_delete=models.PROTECT)
-    enrollment_method = models.TextField(
+    enrollment_method = models.CharField(
         choices={
             EnrollmentMethods.SELF_SERVICE: EnrollmentMethods.SELF_SERVICE,
             EnrollmentMethods.IN_PERSON: EnrollmentMethods.IN_PERSON,
         }
     )
-    verified_by = models.TextField()
+    verified_by = models.CharField()
     enrollment_datetime = models.DateTimeField(default=timezone.now)
     expiration_datetime = models.DateTimeField(blank=True, null=True)
-    extra_claims = models.TextField(blank=True, default="")
+    extra_claims = models.CharField(blank=True, default="")
 
     def __str__(self):
         dt = timezone.localtime(self.enrollment_datetime)

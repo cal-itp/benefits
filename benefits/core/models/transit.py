@@ -38,7 +38,7 @@ def agency_logo(instance, filename):
 
 class TransitProcessorConfig(models.Model):
     id = models.AutoField(primary_key=True)
-    environment = models.TextField(
+    environment = models.CharField(
         choices=Environment,
         help_text="A label to indicate which environment this configuration is for.",
     )
@@ -70,10 +70,10 @@ class TransitAgency(models.Model):
         unique=True,
         help_text="Used for URL navigation for this agency, e.g. the agency homepage url is /{slug}",
     )
-    short_name = models.TextField(
+    short_name = models.CharField(
         default="", help_text="The user-facing short name for this agency. Often an uppercase acronym."
     )
-    long_name = models.TextField(
+    long_name = models.CharField(
         default="",
         blank=True,
         help_text="The user-facing long name for this agency. Often the short_name acronym, spelled out.",
@@ -83,7 +83,7 @@ class TransitAgency(models.Model):
         blank=True,
         help_text="URL of a website/page with more information about the agency's discounts",
     )
-    phone = models.TextField(default="", blank=True, help_text="Agency customer support phone number")
+    phone = models.CharField(default="", blank=True, help_text="Agency customer support phone number")
     enrollment_flows = models.ManyToManyField(
         EnrollmentFlow,
         help_text="Select the enrollment flows this agency supports.",
@@ -95,7 +95,7 @@ class TransitAgency(models.Model):
         default=[CardSchemes.VISA, CardSchemes.MASTERCARD],
         help_text="The contactless card schemes this agency supports.",
     )
-    sso_domain = models.TextField(
+    sso_domain = models.CharField(
         blank=True,
         default="",
         help_text="The email domain of users to automatically add to this agency's staff group upon login.",
@@ -315,7 +315,7 @@ class TransitAgency(models.Model):
 
 class TransitAgencyGroup(models.Model):
     id = models.AutoField(primary_key=True)
-    label = models.TextField(
+    label = models.CharField(
         help_text="A human readable label, used as the display text in Admin.",
     )
     transit_agencies = models.ManyToManyField(

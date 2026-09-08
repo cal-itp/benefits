@@ -12,10 +12,10 @@ logger = logging.getLogger(__name__)
 class LittlepayConfig(TransitProcessorConfig):
     """Configuration for connecting to Littlepay, an entity that applies transit agency fare rules to rider transactions."""
 
-    audience = models.TextField(
+    audience = models.CharField(
         help_text="This agency's audience value used to access the TransitProcessor's API.", default="", blank=True
     )
-    client_id = models.TextField(
+    client_id = models.CharField(
         help_text="This agency's client_id value used to access the TransitProcessor's API.", default="", blank=True
     )
     client_secret_name = SecretNameField(

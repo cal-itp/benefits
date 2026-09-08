@@ -67,11 +67,11 @@ class PemData(models.Model):
     """API Certificate or Key in PEM format."""
 
     id = models.AutoField(primary_key=True)
-    label = models.TextField(help_text="Human description of the PEM data")
+    label = models.CharField(help_text="Human description of the PEM data")
     text_secret_name = SecretNameField(
         default="", blank=True, help_text="The name of a secret with data in utf-8 encoded PEM text format"
     )
-    remote_url = models.TextField(default="", blank=True, help_text="Public URL hosting the utf-8 encoded PEM text")
+    remote_url = models.URLField(default="", blank=True, help_text="Public URL hosting the utf-8 encoded PEM text")
 
     def __str__(self):
         return self.label

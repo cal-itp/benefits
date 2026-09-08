@@ -21,7 +21,7 @@ class SwitchioGroupIDs:
 class SwitchioConfig(TransitProcessorConfig):
     """Configuration for connecting to Switchio, an entity that applies transit agency fare rules to rider transactions."""
 
-    tokenization_api_key = models.TextField(
+    tokenization_api_key = models.CharField(
         help_text="The API key used to access the Switchio API for tokenization.", default="", blank=True
     )
     tokenization_api_secret_name = SecretNameField(
