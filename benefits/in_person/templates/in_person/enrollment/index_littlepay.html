@@ -15,7 +15,7 @@
     <div class="invisible">
       <h3 class="h5 mb-3">Card details</h3>
       <p>Provide the rider's contactless debit or credit card details.</p>
-      <iframe class="card-collection" name="card-collection-iframe"></iframe>
+      <iframe title="Card collection iframe" class="card-collection" name="card-collection-iframe"></iframe>
     </div>
     <div class="row d-flex justify-content-start p-3 pt-8">
       <div class="col-12">
@@ -30,7 +30,11 @@
         The iframe's source isn't set until the button is clicked.
     -->
   <div class="d-none">
-    <button id="{{ cta_button }}" href="#{{ cta_button }}" class="btn btn-lg btn-primary" role="button">Enroll</button>
+    <button id="{{ cta_button }}"
+            href="#{{ cta_button }}"
+            class="btn btn-lg btn-primary"
+            role="button"
+            type="button">Enroll</button>
   </div>
 
   {% include "enrollment/includes/jquery.html" %}
