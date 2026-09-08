@@ -151,7 +151,7 @@ jobs:
 
       # begin setup to deploy container app
       - name: Log in to azure using federated identity credentials
-        uses: azure/login@f5d393ae46f8fde4be8b75f32e3fc50e654ad0ca # v3
+        uses: azure/login@7ddb5af1ef8758cf1353cf3b42f940aee27ba21c # v3
         with:
           client-id: ${{ secrets.AZURE_SP_CLIENT_ID }}
           tenant-id: ${{ secrets.AZURE_TENANT_ID }}
