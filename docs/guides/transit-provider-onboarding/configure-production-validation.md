@@ -28,10 +28,6 @@ _Typically performed by a Cal-ITP developer._
         ```
 
     1.  Cal-ITP [creates a `TransitAgency`](./add-transit-provider.md#add-the-transit-provider-to-the-application) in the test environment
-    1. Cal-ITP creates a new `LittlepayGroup` in the Benefits test environment:
-      - Associate the new `LittlepayGroup` with the correct transit provider and enrollment flow using the dropdowns.
-      - Set the 'Group id' to the corresponding **production** group ID (from production Littlepay) for production validation.
-        - This will be set back to the QA group value after final production configuration is complete.
     1. Cal-ITP creates a new `LittlepayConfig` in the Benefits test environment:
       - Set Environment to **Production** for production validation.
         - This will be set back to **Testing** after final production configuration is complete.
@@ -39,6 +35,10 @@ _Typically performed by a Cal-ITP developer._
       - Retrieve Audience and Client ID values for the **production** config from shared LastPass note.
       - Client Secret Name: `${agency_slug}-payment-processor-client-secret`
       - [Create the corresponding secret in the Azure Key Vault](../../../tutorials/secrets/) for the environment
+    1. Cal-ITP creates a new `LittlepayGroup` in the Benefits test environment:
+      - Associate the new `LittlepayGroup` with the correct transit provider and enrollment flow using the dropdowns.
+      - Set the 'Group id' to the corresponding **production** group ID (from production Littlepay) for production validation.
+        - This will be set back to the QA group value after final production configuration is complete.
     1. Cal-ITP returns to the `TransitAgency` instance and selects the `LittlepayConfig` above as the agency's transit processor config and checks the **Active** box.
 
 === "Switchio"
