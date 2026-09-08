@@ -10,6 +10,10 @@ def test_InitConfig_defaults():
     init_config = InitConfig.objects.create(environment="dev")
 
     assert init_config.environment == "dev"
+    assert init_config.tokenization_api_key == ""
+    assert init_config.registration_base_url == ""
+    assert init_config.registration_username == ""
+    assert init_config.registration_password_secret_name == ""
 
     # test fails if save fails
     init_config.save()
@@ -27,8 +31,13 @@ def test_InitConfig_clean_first_time_instance():
 
 
 @pytest.mark.django_db
-def test_InitConfig_clean():
-    init_config = InitConfig.objects.create(environment="dev")
+def test_InitConfig_clean(model_TransitAgency):
+    init_config = InitConfig.objects.create(
+        environment="dev",
+    )
+    init_config.transit_agency = model_TransitAgency
+    model_TransitAgency.transit_processor_config = init_config
+    model_TransitAgency.save()
     init_config.save()
 
     with pytest.raises(ValidationError) as e:
