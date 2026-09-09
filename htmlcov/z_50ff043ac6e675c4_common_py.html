@@ -67,7 +67,7 @@
             <a id="nextFileLink" class="nav" href="z_50ff043ac6e675c4_enrollment_py.html">&#xbb; next</a>
             &nbsp; &nbsp; &nbsp;
             <a class="nav" href="https://coverage.readthedocs.io/en/7.15.4">coverage.py v7.15.4</a>,
-            created at 2026-09-09 13:51 +0000
+            created at 2026-09-09 21:32 +0000
         </p>
         <aside class="hidden">
             <button type="button" class="button_next_chunk" data-shortcut="j"></button>
@@ -151,11 +151,11 @@
     <p class="pln"><span class="n"><a id="t67" href="#t67">67</a></span><span class="t">    <span class="str">&quot;&quot;&quot;API Certificate or Key in PEM format.&quot;&quot;&quot;</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t68" href="#t68">68</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
     <p class="run"><span class="n"><a id="t69" href="#t69">69</a></span><span class="t">    <span class="nam">id</span> <span class="op">=</span> <span class="nam">models</span><span class="op">.</span><span class="nam">AutoField</span><span class="op">(</span><span class="nam">primary_key</span><span class="op">=</span><span class="key">True</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
-    <p class="run"><span class="n"><a id="t70" href="#t70">70</a></span><span class="t">    <span class="nam">label</span> <span class="op">=</span> <span class="nam">models</span><span class="op">.</span><span class="nam">TextField</span><span class="op">(</span><span class="nam">help_text</span><span class="op">=</span><span class="str">&quot;Human description of the PEM data&quot;</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
+    <p class="run"><span class="n"><a id="t70" href="#t70">70</a></span><span class="t">    <span class="nam">label</span> <span class="op">=</span> <span class="nam">models</span><span class="op">.</span><span class="nam">CharField</span><span class="op">(</span><span class="nam">help_text</span><span class="op">=</span><span class="str">&quot;Human description of the PEM data&quot;</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
     <p class="run"><span class="n"><a id="t71" href="#t71">71</a></span><span class="t">    <span class="nam">text_secret_name</span> <span class="op">=</span> <span class="nam">SecretNameField</span><span class="op">(</span>&nbsp;</span><span class="r"></span></p>
     <p class="run run2"><span class="n"><a id="t72" href="#t72">72</a></span><span class="t">        <span class="nam">default</span><span class="op">=</span><span class="str">&quot;&quot;</span><span class="op">,</span> <span class="nam">blank</span><span class="op">=</span><span class="key">True</span><span class="op">,</span> <span class="nam">help_text</span><span class="op">=</span><span class="str">&quot;The name of a secret with data in utf-8 encoded PEM text format&quot;</span>&nbsp;</span><span class="r"></span></p>
     <p class="run run2"><span class="n"><a id="t73" href="#t73">73</a></span><span class="t">    <span class="op">)</span>&nbsp;</span><span class="r"></span></p>
-    <p class="run"><span class="n"><a id="t74" href="#t74">74</a></span><span class="t">    <span class="nam">remote_url</span> <span class="op">=</span> <span class="nam">models</span><span class="op">.</span><span class="nam">TextField</span><span class="op">(</span><span class="nam">default</span><span class="op">=</span><span class="str">&quot;&quot;</span><span class="op">,</span> <span class="nam">blank</span><span class="op">=</span><span class="key">True</span><span class="op">,</span> <span class="nam">help_text</span><span class="op">=</span><span class="str">&quot;Public URL hosting the utf-8 encoded PEM text&quot;</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
+    <p class="run"><span class="n"><a id="t74" href="#t74">74</a></span><span class="t">    <span class="nam">remote_url</span> <span class="op">=</span> <span class="nam">models</span><span class="op">.</span><span class="nam">URLField</span><span class="op">(</span><span class="nam">default</span><span class="op">=</span><span class="str">&quot;&quot;</span><span class="op">,</span> <span class="nam">blank</span><span class="op">=</span><span class="key">True</span><span class="op">,</span> <span class="nam">help_text</span><span class="op">=</span><span class="str">&quot;Public URL hosting the utf-8 encoded PEM text&quot;</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t75" href="#t75">75</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
     <p class="run"><span class="n"><a id="t76" href="#t76">76</a></span><span class="t">    <span class="key">def</span> <span class="nam">__str__</span><span class="op">(</span><span class="nam">self</span><span class="op">)</span><span class="op">:</span>&nbsp;</span><span class="r"></span></p>
     <p class="run"><span class="n"><a id="t77" href="#t77">77</a></span><span class="t">        <span class="key">return</span> <span class="nam">self</span><span class="op">.</span><span class="nam">label</span>&nbsp;</span><span class="r"></span></p>
@@ -188,7 +188,7 @@
             <a class="nav" href="z_50ff043ac6e675c4_enrollment_py.html">&#xbb; next</a>
             &nbsp; &nbsp; &nbsp;
             <a class="nav" href="https://coverage.readthedocs.io/en/7.15.4">coverage.py v7.15.4</a>,
-            created at 2026-09-09 13:51 +0000
+            created at 2026-09-09 21:32 +0000
         </p>
     </div>
 </footer>
