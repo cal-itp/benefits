@@ -1,2 +1,5 @@
 # sort imports with isort
 6e1d32e50a54d1436de91383c3f003fb373ce49c
+
+# djlint autoformatting
+7d8746c19c2fd2646f7d0d3695c91b338739e9c9
