@@ -64,7 +64,7 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name="transitprocessorconfig",
             name="environment",
-            field=models.TextField(
+            field=models.CharField(
                 choices=[("dev", "Development"), ("test", "Testing"), ("prod", "Production")],
                 help_text="A label to indicate which environment this configuration is for.",
             ),
