@@ -20,6 +20,13 @@
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;500;700&display=swap" rel="stylesheet">
 {% endblock extrahead %}
 
+{% block header %}
+  {% if debug %}
+    {% include "core/includes/env_banner.html" %}
+  {% endif %}
+  {{ block.super }}
+{% endblock header %}
+
 {% block branding %}
   {% include "admin/includes/branding.html" %}
 {% endblock branding %}
