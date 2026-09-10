@@ -9,26 +9,26 @@ class InitConfig(TransitProcessorConfig):
 
     tokenization_api_key = models.CharField(help_text="The Collect.js API key used for tokenization.", default="", blank=True)
 
-    registration_base_url = models.URLField(
+    registration_api_base_url = models.URLField(
         help_text="The absolute base url of the MOBILEvario API instance.", default="", blank=True
     )
 
-    registration_username = models.CharField(
+    registration_api_username = models.CharField(
         help_text="The username used to authenticate with MOBILEvario.",
         default="",
         blank=True,
         max_length=50,
     )
 
-    registration_password_secret_name = SecretNameField(
-        help_text="The name of the secret containing the password used to authenticate with MOBILEvario, typically: [agency]-init-registration-password",  # noqa: E501
+    registration_api_password_secret_name = SecretNameField(
+        help_text="The name of the secret containing the password used to authenticate with MOBILEvario, typically: [agency]-init-registration-api-password",  # noqa: E501
         default="",
         blank=True,
     )
 
     @property
-    def registration_password(self):
-        secret_field = self._meta.get_field("registration_password_secret_name")
+    def registration_api_password(self):
+        secret_field = self._meta.get_field("registration_api_password_secret_name")
         return secret_field.secret_value(self)
 
     def clean(self):

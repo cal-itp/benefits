@@ -211,7 +211,7 @@ def model_InitConfig():
     init_config = InitConfig.objects.create(
         environment=Environment.DEV,
         tokenization_api_key="api_key",
-        registration_password_secret_name="agency-init-registration-password",
+        registration_api_password_secret_name="agency-init-registration-password",
     )
 
     # TK

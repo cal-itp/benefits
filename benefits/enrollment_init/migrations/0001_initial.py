@@ -35,24 +35,24 @@ class Migration(migrations.Migration):
                     models.CharField(blank=True, default="", help_text="The Collect.js API key used for tokenization."),
                 ),
                 (
-                    "registration_base_url",
+                    "registration_api_base_url",
                     models.URLField(
                         blank=True, default="", help_text="The absolute base url of the MOBILEvario API instance."
                     ),
                 ),
                 (
-                    "registration_username",
+                    "registration_api_username",
                     models.CharField(
                         blank=True, default="", help_text="The username used to authenticate with MOBILEvario.", max_length=50
                     ),
                 ),
                 (
-                    "registration_password_secret_name",
+                    "registration_api_password_secret_name",
                     benefits.core.models.common.SecretNameField(
                         blank=True,
                         default="",
                         help_text="The name of the secret containing the password used to authenticate with MOBILEvario, "
-                        "typically: [agency]-init-registration-password",
+                        "typically: [agency]-init-registration-api-password",
                         max_length=127,
                         validators=[benefits.secrets.SecretNameValidator()],
                     ),
