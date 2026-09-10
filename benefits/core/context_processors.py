@@ -118,3 +118,8 @@ def routes(request):
     """Context processor adds information about each application route to the context."""
 
     return {"routes": app_routes.to_dict()}
+
+
+def runtime_env(request):
+    """Context processor adds environment name to request context."""
+    return {"runtime_env": settings.RUNTIME_ENVIRONMENT()}
