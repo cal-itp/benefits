@@ -56,13 +56,13 @@ repos:
           - python
 
   - repo: https://github.com/pycqa/isort
-    rev: 9.0.0b2
+    rev: 9.0.1
     hooks:
       - id: isort
         args: ["--profile", "black"]
 
   - repo: https://github.com/djlint/djLint
-    rev: v1.44.2
+    rev: v1.45.2
     hooks:
       - id: djlint-reformat-django
         exclude: "docs/reference/newsletter-archive/exports"

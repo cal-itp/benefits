@@ -4,6 +4,8 @@
     <a href="tel:{{ phone | default:agency.phone }}">{{ phone | default:agency.phone }}</a>
   </li>
   <li class="list-unstyled">
-    <a href="{{ info_url | default:agency.info_url }}" target="_blank" rel="noopener noreferrer">{{ info_url | default:agency.info_url }}</a>
+    <a href="{{ info_url | default:agency.info_url }}"
+       target="_blank"
+       rel="noopener noreferrer">{{ info_url | default:agency.info_url }}</a>
   </li>
 </ul>
