@@ -11,9 +11,9 @@ def test_InitConfig_defaults():
 
     assert init_config.environment == "dev"
     assert init_config.tokenization_api_key == ""
-    assert init_config.registration_base_url == ""
-    assert init_config.registration_username == ""
-    assert init_config.registration_password_secret_name == ""
+    assert init_config.registration_api_base_url == ""
+    assert init_config.registration_api_username == ""
+    assert init_config.registration_api_password_secret_name == ""
 
     # test fails if save fails
     init_config.save()
@@ -56,11 +56,11 @@ def test_InitConfig_clean(model_TransitAgency):
 
 
 @pytest.mark.django_db
-def test_InitConfig_registration_password(mocker, model_InitConfig):
+def test_InitConfig_registration_api_password(mocker, model_InitConfig):
     pw = "P@ssword123"
     mocked_secret_value = mocker.patch.object(SecretNameField, "secret_value", return_value=pw)
 
-    result = model_InitConfig.registration_password
+    result = model_InitConfig.registration_api_password
 
     assert result == pw
     mocked_secret_value.assert_called_once_with(model_InitConfig)
