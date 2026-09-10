@@ -171,6 +171,7 @@ template_ctx_processors = [
     "benefits.core.context_processors.enrollment",
     "benefits.core.context_processors.origin",
     "benefits.core.context_processors.routes",
+    "benefits.core.context_processors.runtime_env",
     "benefits.core.context_processors.feature_flags",
 ]
 
