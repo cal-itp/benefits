@@ -3,7 +3,7 @@ import logging
 from django.core.exceptions import ValidationError
 from django.db import models
 
-from benefits.core.models import EnrollmentGroup, Environment, SecretNameField, SystemName, TransitProcessorConfig
+from benefits.core.models import EnrollmentGroup, SecretNameField, SystemName, TransitProcessorConfig
 from benefits.secrets import get_secret_by_name
 
 logger = logging.getLogger(__name__)
@@ -55,13 +55,6 @@ class SwitchioConfig(TransitProcessorConfig):
     @property
     def client_certificate_data(self):
         """This SwitchioConfig's client certificate as a string."""
-        if self.environment == Environment.DEV.value:
-            # Special case to handle un-purgeable cert in Azure dev env Key Vault with the desired `switchio-client-cert` name
-            # See: https://cal-itp.slack.com/archives/C037Y3UE71P/p1776806316220499
-            # Also affects local setup using standard fixtures with secrets
-            # TODO: Remove this special case when the deleted cert is automatically purged on July 20, 2026
-            return get_secret_by_name("switchio-int-client-cert")
-
         return get_secret_by_name("switchio-client-cert")
 
     @property
