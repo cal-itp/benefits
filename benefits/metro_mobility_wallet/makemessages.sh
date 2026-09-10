@@ -6,7 +6,7 @@ set -eu
 cd "$(dirname "$0")"
 
 # generate .PO files from msgids in template and view files
-python ../../manage.py makemessages -l en -l es -l "zh_Hans" -l "zh_Hant" -l ko -l ja -l th -l vi -l ru -l hy  --no-obsolete --no-location
+python ../../manage.py makemessages -a  --no-obsolete --no-location
 
 # Apply bug-report link fix strictly to metro_mobility_wallet's locale files
 sed -i 's/Report-Msgid-Bugs-To\:/Report-Msgid-Bugs-To\: https\:\/\/github.com\/cal-itp\/benefits\/issues/g' locale/*/*/*.po
