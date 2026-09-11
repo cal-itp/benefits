@@ -207,16 +207,15 @@ def model_EnrollmentFlow_supports_sign_out(model_EnrollmentFlow):
 
 
 @pytest.fixture
-def model_InitConfig():
+def model_InitConfig(model_TransitAgency):
     init_config = InitConfig.objects.create(
         environment=Environment.DEV,
         tokenization_api_key="api_key",
         registration_api_password_secret_name="agency-init-registration-password",
     )
 
-    # TK
-    # model_TransitAgency.transit_processor_config = init_config
-    # model_TransitAgency.save()
+    model_TransitAgency.transit_processor_config = init_config
+    model_TransitAgency.save()
 
     return init_config
 
