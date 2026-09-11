@@ -8,6 +8,7 @@ from csp.constants import NONCE, NONE, SELF
 from django.conf import settings
 
 from benefits import sentry
+from benefits.metro_mobility_wallet import conf as metro_conf
 
 
 def _filter_empty(ls):
@@ -253,7 +254,7 @@ LANGUAGE_COOKIE_HTTPONLY = True
 LANGUAGE_COOKIE_SAMESITE = "Lax"
 LANGUAGE_COOKIE_SECURE = True
 
-LANGUAGES = [("en", "English"), ("es", "Español")]
+LANGUAGES = [("en", "English"), ("es", "Español")] + metro_conf.LANGUAGES
 
 LOCALE_PATHS = [os.path.join(BASE_DIR, "benefits", "locale")]
 
