@@ -2,4 +2,4 @@
 
 _The following configuration always happens in the Benefits `production` environment._
 
-- [ ] All {{SHORT_NAME}} staff performing in-person enrollments are added to the`{{SHORT_NAME}} Customer Service` group
+- [ ] All {{AGENCY_DBA}} staff performing in-person enrollments are added to the`{{AGENCY_DBA}} Customer Service` group
