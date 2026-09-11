@@ -3,12 +3,12 @@ name: "Agency Onboarding Issue Scaffold"
 on:
   workflow_dispatch:
     inputs:
-      long_name:
-        description: "The full name of the transit provider; e.g. California State Transit"
+      agency_name:
+        description: "The full name of the transit provider"
         required: true
         type: string
-      short_name:
-        description: "The short name / acronym of the transit provider; e.g. CST"
+      agency_dba:
+        description: "The transit provider's Doing Business As (DBA) name"
         required: true
         type: string
       transit_processor:
