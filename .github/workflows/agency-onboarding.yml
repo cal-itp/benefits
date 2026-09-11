@@ -39,11 +39,11 @@ jobs:
       helpers_script: "${{ github.workspace }}/.github/workflows/agency-onboarding/helpers.js"
     steps:
       - name: Checkout
-        uses: actions/checkout@v7
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
 
       - name: Parent issue
         id: parent
-        uses: actions/github-script@v9
+        uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # v9.0.0
         with:
           script: |
             const { createEpicIssue } = await import(process.env.helpers_script);
@@ -54,7 +54,7 @@ jobs:
 
       - name: Onboarding form issue
         id: form
-        uses: actions/github-script@v9
+        uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # v9.0.0
         with:
           script: |
             const { createSubIssue } = await import(process.env.helpers_script);
@@ -66,9 +66,24 @@ jobs:
               title: `Transit provider has completed their onboarding form`
             });
 
+      - name: Logo issue
+        id: logo
+        uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # v9.0.0
+        with:
+          script: |
+            const { createSubIssue } = await import(process.env.helpers_script);
+
+            await createSubIssue({
+              github, context, core,
+              parentNodeId: "${{ steps.parent.outputs.node_id }}",
+              templateName: 'logo.md',
+              title: `Produce a properly formatted transit provider logo`,
+              labels: ["design"]
+            });
+
       - name: Adoption table issue
         id: table
-        uses: actions/github-script@v9
+        uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # v9.0.0
         with:
           script: |
             const { updateAdoptionTable } = await import(process.env.helpers_script);
@@ -82,7 +97,7 @@ jobs:
 
       - name: Transit processor configuration issue
         id: transit-processor
-        uses: actions/github-script@v9
+        uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # v9.0.0
         with:
           script: |
             const { createSubIssue } = await import(process.env.helpers_script);
@@ -98,7 +113,7 @@ jobs:
 
       - name: Production Validation configuration issue
         id: production-validation
-        uses: actions/github-script@v9
+        uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # v9.0.0
         with:
           script: |
             const { createSubIssue } = await import(process.env.helpers_script);
@@ -112,7 +127,7 @@ jobs:
 
       - name: Test environment configuration issue
         id: test
-        uses: actions/github-script@v9
+        uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # v9.0.0
         if: inputs.transit_processor == 'Littlepay'
         with:
           script: |
@@ -127,7 +142,7 @@ jobs:
 
       - name: Production environment configuration issue
         id: production
-        uses: actions/github-script@v9
+        uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # v9.0.0
         with:
           script: |
             const { createSubIssue } = await import(process.env.helpers_script);
@@ -141,7 +156,7 @@ jobs:
 
       - name: In-Person Enrollment configuration issue
         id: in-person
-        uses: actions/github-script@v9
+        uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # v9.0.0
         with:
           script: |
             const { createSubIssue } = await import(process.env.helpers_script);
@@ -155,7 +170,7 @@ jobs:
 
       - name: Amplitude enrollment issue
         id: amplitude-enrollment
-        uses: actions/github-script@v9
+        uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # v9.0.0
         with:
           script: |
             const { createSubIssue } = await import(process.env.helpers_script);
@@ -169,7 +184,7 @@ jobs:
 
       - name: Metabase metrics issue
         id: metabase-metrics
-        uses: actions/github-script@v9
+        uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # v9.0.0
         with:
           script: |
             const { createSubIssue } = await import(process.env.helpers_script);
