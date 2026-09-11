@@ -1,5 +1,8 @@
+{% load i18n %}
+{% get_current_language as LANGUAGE_CODE %}
+{% get_available_languages as LANGUAGES %}
 <!DOCTYPE html>
-<html lang="en">
+<html lang="{{ LANGUAGE_CODE }}">
   <head>
     <meta charset="utf-8">
     <meta name="description"
@@ -10,6 +13,17 @@
   <body>
     <main>
       Metro Mobility Wallet Pilot Program
+      <br>
+      {% translate "Encouraging transportation equity by promoting access to opportunities, reducing gas emissions and improving economic and health outcomes for people in Los Angeles County." %}
+      {% for code, lang in LANGUAGES %}
+        <form method="post" action="{% url "set_language" %}">
+          {% csrf_token %}
+          {% get_language_info for code as langinfo %}
+          <input name="next" type="hidden" value="{{ redirect_to }}" />
+          <input name="language" type="hidden" value="{{ code }}" />
+          <button type="submit">{{ langinfo.name_local | capfirst }}</button>
+        </form>
+      {% endfor %}
     </main>
   </body>
 </html>
