@@ -18,10 +18,6 @@ on:
         options:
           - Littlepay
           - Switchio
-      website:
-        description: "The full URL (including https://) to the transit provider's website"
-        required: false
-        type: string
       launch_date:
         description: "Estimated launch date (month and year); e.g. August 2026"
         required: false
