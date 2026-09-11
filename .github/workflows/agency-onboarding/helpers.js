@@ -62,6 +62,7 @@ export const createSubIssue = async ({
   parentNodeId,
   templateName,
   title,
+  labels = [],
 }) => {
   const { agency_dba } = context.payload.inputs;
 
@@ -69,7 +70,7 @@ export const createSubIssue = async ({
   const child = await createIssue({
     context,
     github,
-    labels: ["agency-onboarding"],
+    labels: ["agency-onboarding"].concat(labels),
     templateName,
     title: `${agency_dba}: ${title}`,
   });
