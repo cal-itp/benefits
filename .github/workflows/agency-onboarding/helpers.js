@@ -229,5 +229,13 @@ export const updateAdoptionTable = async ({ github, context, issueNumber }) => {
     draft: true,
   });
 
+  // Request a review from @indexing
+  await github.rest.pulls.requestReviewers({
+    owner: context.repo.owner,
+    repo: context.repo.repo,
+    pull_number: prResponse.data.number,
+    reviewers: ["indexing"],
+  });
+
   return prResponse.data;
 };
