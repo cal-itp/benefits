@@ -86,7 +86,15 @@ jobs:
         uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # v9.0.0
         with:
           script: |
-            const { updateAdoptionTable } = await import(process.env.helpers_script);
+            const { updateAdoptionTable, createSubIssue } = await import(process.env.helpers_script);
+
+            issueNumber = await createSubIssue({
+              github, context, core,
+              parentNodeId: "${{ steps.parent.outputs.node_id }}",
+              templateName: 'adoption-table.md',
+              title: `Add transit provider to adoption table`,
+              labels: ["documentation"]
+            });
 
             draftPr = await updateAdoptionTable({
               github, context,
