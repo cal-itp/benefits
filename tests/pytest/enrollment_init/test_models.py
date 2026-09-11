@@ -45,14 +45,23 @@ def test_InitConfig_clean(model_TransitAgency):
 
     errors = e.value.error_dict
 
-    assert len(errors) == 1
+    assert len(errors) == 4
 
-    # the error_dict contains 1 item with key None to value of list of ValidationErrors
-    item = list(errors.items())[0]
-    key, validation_errors = item
-    error_message = validation_errors[0].message
-    assert key == "tokenization_api_key"
-    assert error_message == "This field is required when this configuration is referenced by an active transit agency."  # noqa
+    # because we called `InitConfig.clean`,
+    # the error_dict contains 4 items with the field name as the key mapped to a list of ValidationErrors
+    for index, expected_key in [
+        (0, "tokenization_api_key"),
+        (1, "registration_api_base_url"),
+        (2, "registration_api_username"),
+        (3, "registration_api_password_secret_name"),
+    ]:
+        item = list(errors.items())[index]
+        key, validation_errors = item
+        error_message = validation_errors[0].message
+        assert key == expected_key
+        assert (
+            error_message == "This field is required when this configuration is referenced by an active transit agency."
+        )  # noqa
 
 
 @pytest.mark.django_db

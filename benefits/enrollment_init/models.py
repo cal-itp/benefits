@@ -37,7 +37,12 @@ class InitConfig(TransitProcessorConfig):
         if self.pk and self.transitagency_set and any([agency.active for agency in self.transitagency_set.all()]):
 
             message = "This field is required when this configuration is referenced by an active transit agency."
-            needed = dict(tokenization_api_key=self.tokenization_api_key)
+            needed = dict(
+                tokenization_api_key=self.tokenization_api_key,
+                registration_api_base_url=self.registration_api_base_url,
+                registration_api_username=self.registration_api_username,
+                registration_api_password_secret_name=self.registration_api_password_secret_name,
+            )
             field_errors.update({k: ValidationError(message) for k, v in needed.items() if not v})
 
         if field_errors:
