@@ -1,7 +1,11 @@
+import logging
+
 from django.core.exceptions import ValidationError
 from django.db import models
 
 from benefits.core.models import EnrollmentGroup, SecretNameField, TransitProcessorConfig
+
+logger = logging.getLogger(__name__)
 
 
 class InitConfig(TransitProcessorConfig):
@@ -56,6 +60,12 @@ class InitGroup(EnrollmentGroup):
     group_id = models.PositiveIntegerField(
         default=None, blank=True, help_text="The ID of the INIT FareCategory for user enrollment."
     )
+
+    @staticmethod
+    def by_id(id):
+        """Get a InitGroup instance by its ID."""
+        logger.debug(f"Get {InitGroup.__name__} by id: {id}")
+        return InitGroup.objects.get(id=id)
 
     class Meta:
         verbose_name = "INIT group"
