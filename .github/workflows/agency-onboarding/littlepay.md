@@ -1,10 +1,10 @@
 ## Acceptance criteria
 
-- [ ] Discount product(s) configured in {{SHORT_NAME}}'s `production` Littlepay instance
-- [ ] Enrollment group(s) configured in {{SHORT_NAME}}'s `production` Littlepay instance
+- [ ] Discount product(s) configured in {{AGENCY_DBA}}'s `production` Littlepay instance
+- [ ] Enrollment group(s) configured in {{AGENCY_DBA}}'s `production` Littlepay instance
   - [ ] Respond to this issue with a comment indicating the _name_ and _group ID_ for each
 - [ ] Discount product(s) are linked to all relevant enrollment group(s)
-- [ ] API credentials for {{SHORT_NAME}}'s Littlepay instances are obtained and stored in LastPass
+- [ ] API credentials for {{AGENCY_DBA}}'s Littlepay instances are obtained and stored in LastPass
   - [ ] Littlepay `QA` environment
   - [ ] Littlepay `production` environment
 
@@ -14,7 +14,7 @@ Send an email to Littlepay Support following the below format:
 
 > Hello Littlepay,
 >
-> We're starting to onboard {{LONG_NAME}} into the Cal-ITP Benefits application. They would like to go live by {{LAUNCH_DATE}}.
+> We're starting to onboard {{AGENCY_NAME}} into the Cal-ITP Benefits application. They would like to go live by {{LAUNCH_DATE}}.
 >
 > May we please request Back Office API credentials for both QA and Production for this agency? As a reminder, we need (for each environment):
 >
