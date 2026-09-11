@@ -98,7 +98,7 @@ jobs:
 
             draftPr = await updateAdoptionTable({
               github, context,
-              parentIssue: "${{ steps.parent.outputs.issue_number }}"
+              issueNumber: issueNumber
             });
 
             core.notice(`Draft PR for updating agency adoption table: ${draftPr.html_url}`);
