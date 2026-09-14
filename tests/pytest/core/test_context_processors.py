@@ -3,7 +3,7 @@ from datetime import datetime, timedelta, timezone
 import pytest
 
 from benefits.core import session
-from benefits.core.context_processors import agency, enrollment, feature_flags, routes
+from benefits.core.context_processors import agency, enrollment, feature_flags, is_prod, routes
 from benefits.core.models import CardSchemes
 from benefits.routes import routes as app_routes
 
@@ -66,6 +66,13 @@ def test_enrollment_expiration(app_request, model_EnrollmentFlow_supports_expira
     context = enrollment(app_request)
 
     assert context["enrollment"] == {"expires": expiry, "reenrollment": reenrollment, "supports_expiration": True}
+
+
+def test_is_prod(app_request, settings):
+    settings.ALLOWED_HOSTS = ["benefits.calitp.org"]
+    context = is_prod(app_request)
+
+    assert context["is_prod"]
 
 
 @pytest.mark.django_db

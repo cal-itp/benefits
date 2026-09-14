@@ -169,8 +169,10 @@ template_ctx_processors = [
     "benefits.core.context_processors.analytics",
     "benefits.core.context_processors.authentication",
     "benefits.core.context_processors.enrollment",
+    "benefits.core.context_processors.is_prod",
     "benefits.core.context_processors.origin",
     "benefits.core.context_processors.routes",
+    "benefits.core.context_processors.runtime_env",
     "benefits.core.context_processors.feature_flags",
 ]
 
