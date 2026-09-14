@@ -1,9 +1,7 @@
 ## Agency Onboarding
 
-- **Long Name:** {{LONG_NAME}}
-- **Short Name:** {{SHORT_NAME}}
+- **Agency Name:** {{AGENCY_NAME}}
+- **Agency _Doing Business As_ (DBA) Name:** {{AGENCY_DBA}}
 - **Transit Processor:** {{TRANSIT_PROCESSOR}}
-- **Website:** [{{WEBSITE}}]({{WEBSITE}})
-- **Estimated Launch Date:** {{LAUNCH_DATE}}
 
 _This issue serves as the parent epic for the onboarding tasks._

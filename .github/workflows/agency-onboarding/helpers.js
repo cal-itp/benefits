@@ -8,15 +8,14 @@ const createIssue = async ({
   title,
 }) => {
   const templatePath = `.github/workflows/agency-onboarding/${templateName}`;
-  const { long_name, short_name, transit_processor, website, launch_date } =
+  const { agency_name, agency_dba, transit_processor, launch_date } =
     context.payload.inputs;
 
   // read body from template, fill in placeholders
   const body = readFileSync(templatePath, "utf8")
-    .replace(/{{LONG_NAME}}/g, long_name)
-    .replace(/{{SHORT_NAME}}/g, short_name)
+    .replace(/{{AGENCY_NAME}}/g, agency_name)
+    .replace(/{{AGENCY_DBA}}/g, agency_dba)
     .replace(/{{TRANSIT_PROCESSOR}}/g, transit_processor)
-    .replace(/{{WEBSITE}}/g, website || "N/A")
     .replace(/{{LAUNCH_DATE}}/g, launch_date || "TBD");
 
   return await github.rest.issues.create({
@@ -29,14 +28,14 @@ const createIssue = async ({
 };
 
 export const createEpicIssue = async ({ github, context, core }) => {
-  const { long_name, initiative_issue } = context.payload.inputs;
+  const { agency_name, initiative_issue } = context.payload.inputs;
 
   const epicIssue = await createIssue({
     context,
     github,
     labels: ["epic", "agency-onboarding"],
     templateName: "parent.md",
-    title: `Agency onboarding: ${long_name}`,
+    title: `Agency onboarding: ${agency_name}`,
   });
 
   if (initiative_issue) {
@@ -64,7 +63,7 @@ export const createSubIssue = async ({
   templateName,
   title,
 }) => {
-  const { short_name } = context.payload.inputs;
+  const { agency_dba } = context.payload.inputs;
 
   // create the child issue
   const child = await createIssue({
@@ -72,7 +71,7 @@ export const createSubIssue = async ({
     github,
     labels: ["agency-onboarding"],
     templateName,
-    title: `${short_name}: ${title}`,
+    title: `${agency_dba}: ${title}`,
   });
 
   const childNodeId = child.data.node_id;
@@ -135,7 +134,7 @@ function convertToMMYYYY(dateStr) {
 }
 
 export const updateAdoptionTable = async ({ github, context, parentIssue }) => {
-  const { long_name, launch_date, short_name } = context.payload.inputs;
+  const { agency_name, launch_date, agency_dba } = context.payload.inputs;
 
   const launchDateStr = convertToMMYYYY(launch_date);
 
@@ -144,9 +143,9 @@ export const updateAdoptionTable = async ({ github, context, parentIssue }) => {
   let content = readFileSync(filePath, "utf8");
 
   // Create the new row with proper padding
-  const namePadding = " ".repeat(Math.max(0, 47 - long_name.length));
+  const namePadding = " ".repeat(Math.max(0, 47 - agency_name.length));
   const datePadding = " ".repeat(Math.max(0, 17 - launchDateStr.length));
-  const newRow = `| **${long_name}**${namePadding} | ${launchDateStr}${datePadding} | \\*           | \\*                   | \\*            | \\*          | \\*         |`;
+  const newRow = `| **${agency_name}**${namePadding} | ${launchDateStr}${datePadding} | \\*           | \\*                   | \\*            | \\*          | \\*         |`;
 
   // Find the adoption table section
   const lines = content.split("\n");
@@ -180,7 +179,7 @@ export const updateAdoptionTable = async ({ github, context, parentIssue }) => {
   }
 
   // Create a new branch name
-  const branchName = `docs/update-adoption-table-${short_name.toLowerCase().replaceAll(/\s+/g, "-")}`;
+  const branchName = `docs/update-adoption-table-${agency_dba.toLowerCase().replaceAll(/\s+/g, "-")}`;
 
   // Get the main branch reference
   const mainRef = await github.rest.git.getRef({
@@ -212,7 +211,7 @@ export const updateAdoptionTable = async ({ github, context, parentIssue }) => {
     owner: context.repo.owner,
     repo: context.repo.repo,
     path: filePath,
-    message: `docs(onboarding): add ${long_name} to adoption table`,
+    message: `docs(onboarding): add ${agency_name} to adoption table`,
     content: Buffer.from(content).toString("base64"),
     sha: currentFile.data.sha,
     branch: branchName,
@@ -222,10 +221,10 @@ export const updateAdoptionTable = async ({ github, context, parentIssue }) => {
   const prResponse = await github.rest.pulls.create({
     owner: context.repo.owner,
     repo: context.repo.repo,
-    title: `docs: adds ${long_name} to adoption table`,
+    title: `docs: adds ${agency_name} to adoption table`,
     head: branchName,
     base: "main",
-    body: `Adds **${long_name}** to the adoption table in the docs.\n\nPart of onboarding epic #${parentIssue}.`,
+    body: `Adds **${agency_name}** to the adoption table in the docs.\n\nPart of onboarding epic #${parentIssue}.`,
     draft: true,
   });
 
