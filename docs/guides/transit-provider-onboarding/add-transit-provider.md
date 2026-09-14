@@ -42,14 +42,13 @@ The application currently requires one transit provider logo for display on the 
 
 _Typically performed by a developer._
 
-The steps below are the same whether you are adding the agency to our dev, test or production environment.
+The basic config below is required, and typically the same whether you are adding the agency to the `dev`, `test` or `prod` environment:
 
-- Add a new transit provider in the Admin with the following:
-  - Slug: Define the agency's unique landing page (no spaces or special characters)
-  - Short name, long name, info URL, phone, enrollment flows and supported card schemes: Get from their enrollment form
-  - Logo: Typically found attached to a GitHub issue comment
-  - Transit processor config: leave blank for now
-  - Active: Leave **unchecked** for now
+- Slug: Defines the agency's unique landing page (no spaces or special characters)
+- Short name, long name, info URL, phone, enrollment flows and supported card schemes: Typically comes from the onboarding form
+- Logo: Found attached to the GitHub issue for logo production and in the [Figma source](https://www.figma.com/design/IuVNsLccmvumsUzW7IC5BF/Digital-Services-Design-Language?node-id=743-4162&m=dev)
+- Transit processor config: leave blank for now
+- Active: Leave **unchecked** for now
 
 The steps to create a transit processor config and associate it with your new agency are specific to the payment processor they contract with.
 
