@@ -52,6 +52,15 @@ The basic config below is required, and typically the same whether you are addin
 
 The steps to create a transit processor config and associate it with your new agency are specific to the payment processor they contract with.
 
+### Agency naming guidance
+
+When helping an agency decide on their long and short name configuration for the app, the following guiding principles should be considered:
+
+- The long name needs to be unique among all agencies, the short name does not
+- The short name should be recognizable to end-users
+- The long name and short name can match
+- If the agency is just a place-name (e.g. a city), tack the word `Transit` (or `transit`) onto it
+
 ## Configure for development and testing
 
 === "Littlepay"
