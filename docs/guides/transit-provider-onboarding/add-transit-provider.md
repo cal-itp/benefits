@@ -40,7 +40,7 @@ The application currently requires one transit provider logo for display on the 
 
 ## Add the transit provider to the application
 
-_Typically performed by a Cal-ITP developer._
+_Typically performed by a developer._
 
 The steps below are the same whether you are adding the agency to our dev, test or production environment.
 
