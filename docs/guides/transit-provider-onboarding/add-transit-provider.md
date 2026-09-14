@@ -61,6 +61,51 @@ When helping an agency decide on their long and short name configuration for the
 - The long name and short name can match
 - If the agency is just a place-name (e.g. a city), tack the word `Transit` (or `transit`) onto it
 
+Additional context about how and where agency names are displayed to users within the app:
+
+#### Homepage
+
+The agency drop-down selector:
+
+> - `[long name 1]`
+> - `[long name 2]`
+> - `[long name 3]`
+
+#### Help page
+
+> Don’t have access to a contactless card?
+> ...
+> You can still get your transit benefit by going through `[short name]`’s application process. For updates on additional options, please check back on this website, or contact [`[short name]`](#).
+>
+> `[long name]`
+>
+> - `[phone number]`
+> - `[website]`
+
+#### Agency landing page
+
+> Get your reduced fare when you tap to ride on `[short name]`
+
+#### Benefit selection page
+
+> Cal-ITP doesn’t save any of your information. `[short name]` provides reduced fares to riders who qualify.
+
+Or for agencies that are part of a region:
+
+> Cal-ITP doesn’t save any of your information. `[short name]` and nearby transit providers offer reduced fares to riders who qualify.
+
+#### Enrollment success page
+
+> You were not charged anything today. When boarding public transit provided by `[short name]`, tap this card and you will be charged a reduced fare.
+
+Or for agencies that are part of a region:
+
+> You were not charged anything today. When boarding public transit at the following providers, tap this card and you will be charged a reduced fare:
+>
+> - `[short name 1]`
+> - `[short name 2]`
+> - `[short name 3]`
+
 ## Configure for development and testing
 
 === "Littlepay"
