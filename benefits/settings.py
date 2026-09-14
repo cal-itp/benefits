@@ -96,6 +96,7 @@ MIDDLEWARE = [
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.locale.LocaleMiddleware",
+    "benefits.core.middleware.ResetUnsupportedLanguage",
     "benefits.core.middleware.Healthcheck",
     "benefits.core.middleware.HealthcheckUserAgents",
     "django.middleware.common.CommonMiddleware",
