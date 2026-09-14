@@ -21,7 +21,7 @@
 {% endblock extrahead %}
 
 {% block header %}
-  {% if debug %}
+  {% if not is_prod %}
     {% include "core/includes/env_banner.html" %}
   {% endif %}
   {{ block.super }}

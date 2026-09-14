@@ -104,6 +104,11 @@ def formatted_gettext_lazy(string, *args, **kwargs):
     return format_lazy(gettext_lazy(string), *args, **kwargs)
 
 
+def is_prod(request):
+    """Context processor adds environment name to request context."""
+    return {"is_prod": settings.RUNTIME_ENVIRONMENT() == settings.RUNTIME_ENVS.PROD}
+
+
 def origin(request):
     """Context processor adds session.origin to request context."""
     origin = session.origin(request)
