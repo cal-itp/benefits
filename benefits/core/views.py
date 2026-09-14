@@ -2,9 +2,11 @@
 The core application: view definition for the root of the webapp.
 """
 
+import logging
 from dataclasses import asdict, dataclass
 
 from django.http import HttpResponse
+from django.utils import translation
 from django.utils.decorators import method_decorator
 from django.views.generic import RedirectView, TemplateView, View
 from django.views.generic.edit import FormView
@@ -16,6 +18,8 @@ from benefits.core.middleware import pageview_decorator, user_error
 from benefits.core.mixins import AgencySessionRequiredMixin
 from benefits.core.models import EligibilityApiVerificationRequest, SystemName
 from benefits.routes import routes
+
+logger = logging.getLogger(__name__)
 
 
 class IndexView(FormView):
@@ -36,6 +40,8 @@ class IndexView(FormView):
     @method_decorator(pageview_decorator)
     def get(self, request, *args, **kwargs):
         session.reset(request)
+        language = translation.get_language()
+        logger.debug(f"Language: {language}")
         return super().get(request, *args, **kwargs)
 
 
