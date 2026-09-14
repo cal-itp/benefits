@@ -48,11 +48,12 @@
 | benefits/enrollment/urls.py                                                              |        5 |        0 |        0 |        0 |    100% |           |
 | benefits/enrollment/views.py                                                             |      105 |        0 |       10 |        0 |    100% |           |
 | benefits/enrollment\_init/\_\_init\_\_.py                                                |        0 |        0 |        0 |        0 |    100% |           |
-| benefits/enrollment\_init/admin.py                                                       |        6 |        0 |        0 |        0 |    100% |           |
+| benefits/enrollment\_init/admin.py                                                       |        9 |        0 |        0 |        0 |    100% |           |
 | benefits/enrollment\_init/apps.py                                                        |        4 |        0 |        0 |        0 |    100% |           |
 | benefits/enrollment\_init/migrations/0001\_initial.py                                    |        8 |        0 |        0 |        0 |    100% |           |
+| benefits/enrollment\_init/migrations/0002\_initgroup.py                                  |        5 |        0 |        0 |        0 |    100% |           |
 | benefits/enrollment\_init/migrations/\_\_init\_\_.py                                     |        0 |        0 |        0 |        0 |    100% |           |
-| benefits/enrollment\_init/models.py                                                      |       22 |        0 |        4 |        0 |    100% |           |
+| benefits/enrollment\_init/models.py                                                      |       32 |        0 |        4 |        0 |    100% |           |
 | benefits/enrollment\_init/views.py                                                       |        0 |        0 |        0 |        0 |    100% |           |
 | benefits/enrollment\_littlepay/\_\_init\_\_.py                                           |        0 |        0 |        0 |        0 |    100% |           |
 | benefits/enrollment\_littlepay/admin.py                                                  |        9 |        0 |        0 |        0 |    100% |           |
@@ -109,7 +110,7 @@
 | benefits/urls.py                                                                         |       51 |       11 |       10 |        4 |     72% |45-\>48, 48-\>87, 62, 65, 68, 71, 74-76, 88-90, 93-\>105, 99-101 |
 | benefits/views.py                                                                        |       33 |        0 |        0 |        0 |    100% |           |
 | benefits/wsgi.py                                                                         |        4 |        4 |        0 |        0 |      0% |     10-16 |
-| **TOTAL**                                                                                | **3497** |  **144** |  **588** |   **57** | **94%** |           |
+| **TOTAL**                                                                                | **3515** |  **144** |  **588** |   **57** | **94%** |           |
 
 
 ## Setup coverage badge
