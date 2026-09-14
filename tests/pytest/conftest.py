@@ -18,7 +18,7 @@ from benefits.core.models import (
     TransitAgency,
     TransitAgencyGroup,
 )
-from benefits.enrollment_init.models import InitConfig
+from benefits.enrollment_init.models import InitConfig, InitGroup
 from benefits.enrollment_littlepay.models import LittlepayConfig, LittlepayGroup
 from benefits.enrollment_switchio.models import SwitchioConfig, SwitchioGroup
 
@@ -131,6 +131,15 @@ def model_EnrollmentFlow():
     )
 
     return flow
+
+
+@pytest.fixture
+def model_InitGroup(model_EnrollmentFlow, model_TransitAgency):
+    return InitGroup.objects.create(
+        group_id=1,
+        enrollment_flow=model_EnrollmentFlow,
+        transit_agency=model_TransitAgency,
+    )
 
 
 @pytest.fixture

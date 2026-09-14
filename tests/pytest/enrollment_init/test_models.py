@@ -2,7 +2,7 @@ import pytest
 from django.forms import ValidationError
 
 from benefits.core.models import SecretNameField
-from benefits.enrollment_init.models import InitConfig
+from benefits.enrollment_init.models import InitConfig, InitGroup
 
 
 @pytest.mark.django_db
@@ -73,3 +73,16 @@ def test_InitConfig_registration_api_password(mocker, model_InitConfig):
 
     assert result == pw
     mocked_secret_value.assert_called_once_with(model_InitConfig)
+
+
+@pytest.mark.django_db
+def test_InitGroup_by_id_matching(model_InitGroup):
+    flow = InitGroup.by_id(model_InitGroup.id)
+
+    assert flow == model_InitGroup
+
+
+@pytest.mark.django_db
+def test_InitGroup_by_id_nonmatching():
+    with pytest.raises(InitGroup.DoesNotExist):
+        InitGroup.by_id(99999)
