@@ -167,36 +167,26 @@ def enroll(
     try:
         group = _get_group_for_token(client, pto_id, group_id, token)
         already_enrolled = group is not None
+        has_expiration = already_enrolled and group.expiresAt is not None
 
         if flow.supports_expiration:
-            # set expiry on session
-            if already_enrolled and group.expiresAt is not None:
-                session.update(request, enrollment_expiry=group.expiresAt)
-            else:
-                session.update(request, enrollment_expiry=_calculate_expiry(flow.expiration_days))
+            should_update_expiry = True
+            expiry_date = group.expiresAt if has_expiration else None
 
-            if not already_enrolled:
-                # enroll user with an expiration date, return success
-                client.add_group_to_token(pto_id, group_id, token, expiry=session.enrollment_expiry(request))
+            if expiry_date:
+                session.update(request, enrollment_expiry=expiry_date)
+                if not (
+                    _is_expired(expiry_date)
+                    or _is_within_reenrollment_window(expiry_date, session.enrollment_reenrollment(request))
+                ):
+                    status = Status.REENROLLMENT_ERROR
+                    should_update_expiry = False
+
+            if should_update_expiry:
+                new_expiry = _calculate_expiry(flow.expiration_days)
+                session.update(request, enrollment_expiry=new_expiry)
+                client.add_group_to_token(pto_id, group_id, token, expiry=new_expiry)
                 status = Status.SUCCESS
-            else:  # already_enrolled
-                if group.expiresAt is None:
-                    # update expiration of existing enrollment, return success
-                    client.add_group_to_token(pto_id, group_id, token, expiry=session.enrollment_expiry(request))
-                    status = Status.SUCCESS
-                else:
-                    is_expired = _is_expired(group.expiresAt)
-                    is_within_reenrollment_window = _is_within_reenrollment_window(
-                        group.expiresAt, session.enrollment_reenrollment(request)
-                    )
-
-                    if is_expired or is_within_reenrollment_window:
-                        # update expiration of existing enrollment, return success
-                        client.add_group_to_token(pto_id, group_id, token, expiry=session.enrollment_expiry(request))
-                        status = Status.SUCCESS
-                    else:
-                        # re-enrollment error, return enrollment error with expiration and reenrollment_date
-                        status = Status.REENROLLMENT_ERROR
         else:  # flow does not support expiration
             if not already_enrolled:
                 # enroll user with no expiration date, return success
@@ -207,20 +197,19 @@ def enroll(
                     timeout=settings.REQUESTS_TIMEOUT,
                 )
                 status = Status.SUCCESS
-            else:  # already enrolled
-                if group.expiresAt is None:
-                    # no action, return success
-                    status = Status.SUCCESS
-                else:
-                    # remove expiration date, return success
-                    # (when you don't include an expiration date, Switchio will set the expiration date to null.)
-                    client.add_group_to_token(
-                        pto_id=pto_id,
-                        group_id=group_id,
-                        token=token,
-                        timeout=settings.REQUESTS_TIMEOUT,
-                    )
-                    status = Status.SUCCESS
+            elif not has_expiration:
+                # already enrolled, without an expiration date -> no action, return success
+                status = Status.SUCCESS
+            else:
+                # remove expiration date, return success
+                # (when you don't include an expiration date, Switchio will set the expiration date to null.)
+                client.add_group_to_token(
+                    pto_id=pto_id,
+                    group_id=group_id,
+                    token=token,
+                    timeout=settings.REQUESTS_TIMEOUT,
+                )
+                status = Status.SUCCESS
     except HTTPError as e:
         if e.response.status_code >= 500:
             status = Status.SYSTEM_ERROR

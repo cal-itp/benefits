@@ -2,6 +2,7 @@ import re
 from dataclasses import dataclass
 
 from littlepay.api.client import Client
+from littlepay.api.funding_sources import FundingSourceResponse
 from requests.exceptions import HTTPError
 
 from benefits.core import session
@@ -55,7 +56,7 @@ def request_card_tokenization_access(request) -> CardTokenizationAccessResponse:
     )
 
 
-def enroll(request, card_token) -> tuple[Status, Exception]:
+def enroll(request, card_token) -> tuple[Status, Exception, FundingSourceResponse]:
     """
     Attempts to enroll this card into the transit processor group for the flow in the request's session.
 
@@ -78,60 +79,45 @@ def enroll(request, card_token) -> tuple[Status, Exception]:
     exception = None
     try:
         group_funding_source = _get_group_funding_source(client=client, group_id=group_id, funding_source_id=funding_source.id)
-
         already_enrolled = group_funding_source is not None
+        has_expiration = already_enrolled and group_funding_source.expiry_date is not None
 
         if flow.supports_expiration:
-            # set expiry on session
-            if already_enrolled and group_funding_source.expiry_date is not None:
-                session.update(request, enrollment_expiry=group_funding_source.expiry_date)
-            else:
-                session.update(request, enrollment_expiry=_calculate_expiry(flow.expiration_days))
+            should_update_expiry = True
+            expiry_date = group_funding_source.expiry_date if has_expiration else None
 
-            if not already_enrolled:
-                # enroll user with an expiration date, return success
-                client.link_concession_group_funding_source(
-                    group_id=group_id, funding_source_id=funding_source.id, expiry=session.enrollment_expiry(request)
-                )
-                status = Status.SUCCESS
-            else:  # already_enrolled
-                if group_funding_source.expiry_date is None:
-                    # update expiration of existing enrollment, return success
-                    client.update_concession_group_funding_source_expiry(
-                        group_id=group_id,
-                        funding_source_id=funding_source.id,
-                        expiry=session.enrollment_expiry(request),
+            if expiry_date:
+                session.update(request, enrollment_expiry=expiry_date)
+                if not (
+                    _is_expired(expiry_date)
+                    or _is_within_reenrollment_window(expiry_date, session.enrollment_reenrollment(request))
+                ):
+                    status = Status.REENROLLMENT_ERROR
+                    should_update_expiry = False
+
+            if should_update_expiry:
+                new_expiry = _calculate_expiry(flow.expiration_days)
+                session.update(request, enrollment_expiry=new_expiry)
+                if not already_enrolled:
+                    client.link_concession_group_funding_source(
+                        group_id=group_id, funding_source_id=funding_source.id, expiry=new_expiry
                     )
-                    status = Status.SUCCESS
                 else:
-                    is_expired = _is_expired(group_funding_source.expiry_date)
-                    is_within_reenrollment_window = _is_within_reenrollment_window(
-                        group_funding_source.expiry_date, session.enrollment_reenrollment(request)
+                    client.update_concession_group_funding_source_expiry(
+                        group_id=group_id, funding_source_id=funding_source.id, expiry=new_expiry
                     )
+                status = Status.SUCCESS
 
-                    if is_expired or is_within_reenrollment_window:
-                        # update expiration of existing enrollment, return success
-                        client.update_concession_group_funding_source_expiry(
-                            group_id=group_id,
-                            funding_source_id=funding_source.id,
-                            expiry=session.enrollment_expiry(request),
-                        )
-                        status = Status.SUCCESS
-                    else:
-                        # re-enrollment error, return enrollment error with expiration and reenrollment_date
-                        status = Status.REENROLLMENT_ERROR
-        else:  # eligibility does not support expiration
+        else:  # expiration not supported
             if not already_enrolled:
-                # enroll user with no expiration date, return success
                 client.link_concession_group_funding_source(group_id=group_id, funding_source_id=funding_source.id)
                 status = Status.SUCCESS
-            else:  # already_enrolled
-                if group_funding_source.expiry_date is None:
-                    # no action, return success
-                    status = Status.SUCCESS
-                else:
-                    # remove expiration date, return success
-                    raise NotImplementedError("Removing expiration date is currently not supported")
+            elif not has_expiration:
+                # already enrolled, without an expiration date -> no action, return success
+                status = Status.SUCCESS
+            else:
+                # already enrolled with an expiration date -> remove expiration date, return success
+                raise NotImplementedError("Removing expiration date is currently not supported")
 
     except HTTPError as e:
         if e.response.status_code >= 500:
