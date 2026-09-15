@@ -184,6 +184,12 @@ class TestTransitAgency:
 
         assert model_TransitAgency.transit_processor == "switchio"
 
+    def test_transit_processor_init(self, model_TransitAgency, model_InitConfig):
+        model_InitConfig.transit_agency = model_TransitAgency
+        model_TransitAgency.save()
+
+        assert model_TransitAgency.transit_processor == "init"
+
     def test_transit_processor_no_config(self, model_TransitAgency):
         assert model_TransitAgency.transit_processor is None
 
