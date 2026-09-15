@@ -143,6 +143,13 @@ class TransitAgency(models.Model):
         return reverse(routes.ELIGIBILITY_INDEX)
 
     @property
+    def init_config(self):
+        if self.transit_processor_config and hasattr(self.transit_processor_config, "initconfig"):
+            return self.transit_processor_config.initconfig
+        else:
+            return None
+
+    @property
     def littlepay_config(self):
         if self.transit_processor_config and hasattr(self.transit_processor_config, "littlepayconfig"):
             return self.transit_processor_config.littlepayconfig
@@ -158,6 +165,8 @@ class TransitAgency(models.Model):
 
     @property
     def transit_processor(self):
+        if self.init_config:
+            return "init"
         if self.littlepay_config:
             return "littlepay"
         elif self.switchio_config:
@@ -183,6 +192,8 @@ class TransitAgency(models.Model):
     @property
     def enrollment_index_route(self):
         """This Agency's enrollment index route, based on its configured transit processor."""
+        if self.init_config:
+            return routes.ENROLLMENT_INIT_INDEX
         if self.littlepay_config:
             return routes.ENROLLMENT_LITTLEPAY_INDEX
         elif self.switchio_config:
@@ -247,9 +258,17 @@ class TransitAgency(models.Model):
             )
             field_errors.update({k: ValidationError(message) for k, v in needed.items() if not v})
 
-            if self.littlepay_config is None and self.switchio_config is None:
-                non_field_errors.append(ValidationError("Must fill out configuration for either Littlepay or Switchio."))
+            if self.init_config is None and self.littlepay_config is None and self.switchio_config is None:
+                non_field_errors.append(ValidationError("Must fill out configuration for either INIT, Littlepay or Switchio."))
             else:
+                if self.init_config:
+                    try:
+                        self.init_config.clean()
+                    except ValidationError as e:
+                        message = "INIT configuration is missing fields that are required when this agency is active."
+                        message += f" Missing fields: {', '.join(e.error_dict.keys())}"
+                        non_field_errors.append(ValidationError(message))
+
                 if self.littlepay_config:
                     try:
                         self.littlepay_config.clean()
