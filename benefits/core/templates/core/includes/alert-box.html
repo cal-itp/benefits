@@ -2,8 +2,8 @@
   <div class="alert-box border-start p-3 text-body {{ alert_class }}">
     {% block alert-heading-wrapper %}
       <{{ heading_tag|default:"h3" }} class="alert-box--heading lh-base mb-1">
-      {% block alert-heading %}
-      {% endblock alert-heading %}
+        {% block alert-heading %}
+        {% endblock alert-heading %}
       </{{ heading_tag|default:"h3" }}>
     {% endblock alert-heading-wrapper %}
     {% block alert-body %}
