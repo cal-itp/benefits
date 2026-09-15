@@ -54,20 +54,25 @@ def test_LittlepayConfig_clean(model_TransitAgency_inactive):
     model_TransitAgency_inactive.active = True
     model_TransitAgency_inactive.save()
     with pytest.raises(ValidationError) as e:
-        model_TransitAgency_inactive.clean()
+        littlepay_config.clean()
 
     errors = e.value.error_dict
 
-    assert len(errors) == 1
+    assert len(errors) == 3
 
-    # the error_dict contains 1 item with key None to value of list of ValidationErrors
-    item = list(errors.items())[0]
-    key, validation_errors = item
-    error_message = validation_errors[0].message
-    assert (
-        error_message
-        == "Littlepay configuration is missing fields that are required when this agency is active. Missing fields: audience, client_id, client_secret_name"  # noqa
-    )
+    # the error_dict contains 3 items with the field name as the key mapped to a list of ValidationErrors
+    for index, expected_key in [
+        (0, "audience"),
+        (1, "client_id"),
+        (2, "client_secret_name"),
+    ]:
+        item = list(errors.items())[index]
+        key, validation_errors = item
+        error_message = validation_errors[0].message
+        assert key == expected_key
+        assert (
+            error_message == "This field is required when this configuration is referenced by an active transit agency."
+        )  # noqa
 
 
 @pytest.mark.django_db

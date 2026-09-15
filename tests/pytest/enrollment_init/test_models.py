@@ -32,13 +32,10 @@ def test_InitConfig_clean_first_time_instance():
 
 @pytest.mark.django_db
 def test_InitConfig_clean(model_TransitAgency):
-    init_config = InitConfig.objects.create(
-        environment="dev",
-    )
+    init_config = InitConfig.objects.create(environment="dev")
     init_config.transit_agency = model_TransitAgency
     model_TransitAgency.transit_processor_config = init_config
     model_TransitAgency.save()
-    init_config.save()
 
     with pytest.raises(ValidationError) as e:
         init_config.clean()
@@ -47,7 +44,6 @@ def test_InitConfig_clean(model_TransitAgency):
 
     assert len(errors) == 4
 
-    # because we called `InitConfig.clean`,
     # the error_dict contains 4 items with the field name as the key mapped to a list of ValidationErrors
     for index, expected_key in [
         (0, "tokenization_api_key"),
