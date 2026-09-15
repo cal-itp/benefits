@@ -62,6 +62,7 @@ export const createSubIssue = async ({
   parentNodeId,
   templateName,
   title,
+  labels = [],
 }) => {
   const { agency_dba } = context.payload.inputs;
 
@@ -69,7 +70,7 @@ export const createSubIssue = async ({
   const child = await createIssue({
     context,
     github,
-    labels: ["agency-onboarding"],
+    labels: ["agency-onboarding"].concat(labels),
     templateName,
     title: `${agency_dba}: ${title}`,
   });
@@ -133,7 +134,7 @@ function convertToMMYYYY(dateStr) {
   return dateStr.trim();
 }
 
-export const updateAdoptionTable = async ({ github, context, parentIssue }) => {
+export const updateAdoptionTable = async ({ github, context, issueNumber }) => {
   const { agency_name, launch_date, agency_dba } = context.payload.inputs;
 
   const launchDateStr = convertToMMYYYY(launch_date);
@@ -224,8 +225,16 @@ export const updateAdoptionTable = async ({ github, context, parentIssue }) => {
     title: `docs: adds ${agency_name} to adoption table`,
     head: branchName,
     base: "main",
-    body: `Adds **${agency_name}** to the adoption table in the docs.\n\nPart of onboarding epic #${parentIssue}.`,
+    body: `Closes #${issueNumber}\n\nAdds **${agency_name}** to the adoption table in the docs.`,
     draft: true,
+  });
+
+  // Request a review from @indexing
+  await github.rest.pulls.requestReviewers({
+    owner: context.repo.owner,
+    repo: context.repo.repo,
+    pull_number: prResponse.data.number,
+    reviewers: ["indexing"],
   });
 
   return prResponse.data;
