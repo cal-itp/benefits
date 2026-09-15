@@ -2,6 +2,7 @@ import pytest
 
 import benefits.core.analytics
 from benefits.oauth.analytics import (
+    CanceledSignInAnomalyEvent,
     CanceledSignInEvent,
     FailureToProofEvent,
     FinishedSignInEvent,
@@ -11,6 +12,7 @@ from benefits.oauth.analytics import (
     StartedSignInEvent,
     StartedSignOutEvent,
     canceled_sign_in,
+    canceled_sign_in_anomaly,
     error,
     failure_to_proof,
     finished_sign_in,
@@ -61,6 +63,13 @@ def test_FinishedSignInEvent_with_error(app_request):
 
 
 @pytest.mark.django_db
+def test_CanceledSignInAnomalyEvent(app_request_query):
+    event = CanceledSignInAnomalyEvent(app_request_query)
+    assert event.event_properties["error"] == "error_code"
+    assert event.event_properties["message"] == "error_description"
+
+
+@pytest.mark.django_db
 def test_FinishedSignInEvent_without_error(app_request):
     event = FinishedSignInEvent(app_request)
     assert "error_code" not in event.event_properties
@@ -102,6 +111,18 @@ def test_canceled_sign_in(app_request, spy_send_event):
     call_arg = spy_send_event.call_args[0][0]
     assert isinstance(call_arg, CanceledSignInEvent)
     assert call_arg.event_type == "canceled sign in"
+
+
+@pytest.mark.django_db
+def test_canceled_sign_in_anomaly(app_request, spy_send_event):
+    canceled_sign_in_anomaly(app_request)
+
+    # event should have been sent
+    spy_send_event.assert_called_once()
+    # the first arg of the first (and only) call
+    call_arg = spy_send_event.call_args[0][0]
+    assert isinstance(call_arg, CanceledSignInAnomalyEvent)
+    assert call_arg.event_type == "canceled sign in anomaly"
 
 
 @pytest.mark.django_db
