@@ -1,0 +1,112 @@
+{% extends "core/base.html" %}
+
+{% load i18n %}
+
+{% block inner-content %}
+  <script nonce="{{ request.csp_nonce }}" src="https://secure.nmi.com/token/Collect.js" data-tokenization-key="{{collect_js_api_key}}">
+  </script>
+
+  <h1 class="mb-4">Enter your card details</h1>
+  <form>
+    <!-- Credit card fields -->
+    <div class="input mt-3">
+      <span>Card number</span>
+      <div id="ccnumber"></div>
+      <p class="error"></p>
+    </div>
+    <div class="input mt-4">
+      <span>Expiration date</span>
+      <div id="ccexp"></div>
+      <p class="error"></p>
+    </div>
+    <div class="input mt-4">
+      <span>Security code</span>
+      <div id="cvv"></div>
+      <p class="error"></p>
+    </div>
+    <!-- Submit the form to your server -->
+    <button class="btn btn-lg btn-primary mt-5" id="tokenizeButton" type="button">Register my card</button>
+  </form>
+
+  {% comment %} <div>reCAPTCHA</div> {% endcomment %}
+
+  <script nonce="{{ request.csp_nonce }}">
+    document.addEventListener("DOMContentLoaded", function () {
+      CollectJS.configure({
+        paymentSelector: "#tokenizeButton",
+        variant: "inline",
+        invalidCss: {
+          color: "#e74c3c",
+          "border-color": "#e74c3c",
+        },
+        fields: {
+          ccnumber: {
+            selector: "#ccnumber",
+            title: "Card Number",
+            placeholder: "1111 1111 1111 1111",
+            enableCardBrandPreviews: "true"
+          },
+          ccexp: {
+            selector: "#ccexp",
+            title: "Expiration date",
+            placeholder: "MM / YY",
+
+          },
+          cvv: {
+            display: "show",
+            selector: "#cvv",
+            title: "Security code",
+            placeholder: "123",
+          }
+        },
+        validationCallback: function (field, valid, message) {
+          const errNode = document.querySelector(`#${field} + p`)
+          errNode.innerText = valid ? '' : message;
+        },
+        timeoutDuration: 10000,
+        timeoutCallback: function () {
+          const message = "Tokenization didn't complete in the expected timeframe.  This could be due to an invalid or incomplete field or poor connectivity";
+          console.error(message);
+        },
+
+        callback: function (response) {
+          window.location.href = "{% url success_url %}?token=" + response.token;
+        },
+      });
+    });
+  </script>
+  <style nonce="{{ request.csp_nonce }}">
+    .input span {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: 500;
+      color: #212121;
+      font-size: 18px;
+    }
+
+    .input input {
+      padding: 8px;
+      border: 1px solid #212121;
+      border-radius: 3px;
+      font-size: 18px;
+      box-sizing: border-box;
+      transition: border-color 0.3s ease;
+    }
+
+    .input #ccnumber {
+      width: 350px;
+    }
+
+    .input #ccexp {
+      width: 100px;
+    }
+
+    .input #cvv {
+      width: 74px;
+    }
+
+    .error {
+      color: #ff0000;
+    }
+  </style>
+{% endblock inner-content %}
