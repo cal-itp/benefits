@@ -15,6 +15,7 @@ def _agency_context(agency: models.TransitAgency):
     agency_context = {
         "entrypoint_url": agency.entrypoint_url,
         "info_url": agency.info_url,
+        "init_config": agency.init_config,
         "littlepay_config": agency.littlepay_config,
         "long_name": agency.long_name,
         "phone": agency.phone,
