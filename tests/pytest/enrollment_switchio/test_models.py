@@ -54,25 +54,20 @@ def test_SwitchioConfig_clean(model_TransitAgency_inactive):
     model_TransitAgency_inactive.save()
 
     with pytest.raises(ValidationError) as e:
-        switchio_config.clean()
+        model_TransitAgency_inactive.clean()
 
     errors = e.value.error_dict
 
-    assert len(errors) == 3
+    assert len(errors) == 1
 
-    # the error_dict contains 3 items with the field name as the key mapped to a list of ValidationErrors
-    for index, expected_key in [
-        (0, "tokenization_api_key"),
-        (1, "tokenization_api_secret_name"),
-        (2, "pto_id"),
-    ]:
-        item = list(errors.items())[index]
-        key, validation_errors = item
-        error_message = validation_errors[0].message
-        assert key == expected_key
-        assert (
-            error_message == "This field is required when this configuration is referenced by an active transit agency."
-        )  # noqa
+    # the error_dict contains 1 item with key None to value of list of ValidationErrors
+    item = list(errors.items())[0]
+    key, validation_errors = item
+    error_message = validation_errors[0].message
+    assert (
+        error_message
+        == "Switchio configuration is missing fields that are required when this agency is active. Missing fields: tokenization_api_key, tokenization_api_secret_name, pto_id"  # noqa
+    )
 
 
 @pytest.mark.django_db

@@ -192,8 +192,6 @@ class TransitAgency(models.Model):
     @property
     def enrollment_index_route(self):
         """This Agency's enrollment index route, based on its configured transit processor."""
-        if self.init_config:
-            return routes.ENROLLMENT_INIT_INDEX
         if self.littlepay_config:
             return routes.ENROLLMENT_LITTLEPAY_INDEX
         elif self.switchio_config:
