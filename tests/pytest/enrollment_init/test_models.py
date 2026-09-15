@@ -32,36 +32,26 @@ def test_InitConfig_clean_first_time_instance():
 
 @pytest.mark.django_db
 def test_InitConfig_clean(model_TransitAgency):
-    init_config = InitConfig.objects.create(
-        environment="dev",
-    )
+    init_config = InitConfig.objects.create(environment="dev")
     init_config.transit_agency = model_TransitAgency
     model_TransitAgency.transit_processor_config = init_config
     model_TransitAgency.save()
-    init_config.save()
 
     with pytest.raises(ValidationError) as e:
-        init_config.clean()
+        model_TransitAgency.clean()
 
     errors = e.value.error_dict
 
-    assert len(errors) == 4
+    assert len(errors) == 1
 
-    # because we called `InitConfig.clean`,
-    # the error_dict contains 4 items with the field name as the key mapped to a list of ValidationErrors
-    for index, expected_key in [
-        (0, "tokenization_api_key"),
-        (1, "registration_api_base_url"),
-        (2, "registration_api_username"),
-        (3, "registration_api_password_secret_name"),
-    ]:
-        item = list(errors.items())[index]
-        key, validation_errors = item
-        error_message = validation_errors[0].message
-        assert key == expected_key
-        assert (
-            error_message == "This field is required when this configuration is referenced by an active transit agency."
-        )  # noqa
+    # the error_dict contains 1 item with key None to value of list of ValidationErrors
+    item = list(errors.items())[0]
+    key, validation_errors = item
+    error_message = validation_errors[0].message
+    assert (
+        error_message
+        == "INIT configuration is missing fields that are required when this agency is active. Missing fields: tokenization_api_key, registration_api_base_url, registration_api_username, registration_api_password_secret_name"  # noqa
+    )
 
 
 @pytest.mark.django_db

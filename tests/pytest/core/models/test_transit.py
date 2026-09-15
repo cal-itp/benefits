@@ -152,7 +152,7 @@ class TestTransitAgency:
 
         non_field_errors = errors[NON_FIELD_ERRORS]
         assert len(non_field_errors) == 1
-        assert non_field_errors[0].message == "Must fill out configuration for either Littlepay or Switchio."
+        assert non_field_errors[0].message == "Must fill out configuration for either INIT, Littlepay or Switchio."
 
     def test_clean_short_name_change_requires_group(self, model_TransitAgency_inactive):
         group = Group.objects.create(name="Existing Customer Service Group")
@@ -183,6 +183,12 @@ class TestTransitAgency:
         model_TransitAgency.save()
 
         assert model_TransitAgency.transit_processor == "switchio"
+
+    def test_transit_processor_init(self, model_TransitAgency, model_InitConfig):
+        model_InitConfig.transit_agency = model_TransitAgency
+        model_TransitAgency.save()
+
+        assert model_TransitAgency.transit_processor == "init"
 
     def test_transit_processor_no_config(self, model_TransitAgency):
         assert model_TransitAgency.transit_processor is None
