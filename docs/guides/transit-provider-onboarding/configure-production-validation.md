@@ -2,7 +2,7 @@
 
 **Production validation** is the process of doing an end-to-end test of enrolling a real person's card through the Benefits app and using it to ride with a discounted fare. The word "production" here refers to **Littlepay's production environment** (which must be used to take a ride in real life), but the Benefits application's test environment is used for the enrollment process to avoid disruption of the Benefits production environment.
 
-_Typically performed by a Cal-ITP developer._
+_Typically performed by a developer._
 
 === "Littlepay"
 

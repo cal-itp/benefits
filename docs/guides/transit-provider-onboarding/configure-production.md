@@ -2,7 +2,7 @@
 
 Once production validation is done, the transit provider can be added to the production Benefits database.
 
-_Most of these steps are typically performed by a Cal-ITP developer._
+_Most of these steps are typically performed by a developer._
 
 === "Littlepay"
 

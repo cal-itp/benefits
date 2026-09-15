@@ -40,18 +40,71 @@ The application currently requires one transit provider logo for display on the 
 
 ## Add the transit provider to the application
 
-_Typically performed by a Cal-ITP developer._
+_Typically performed by a developer._
 
-The steps below are the same whether you are adding the agency to our dev, test or production environment.
+The basic config below is required, and typically the same whether you are adding the agency to the `dev`, `test` or `prod` environment:
 
-- Add a new transit provider in the Admin with the following:
-  - Slug: Define the agency's unique landing page (no spaces or special characters)
-  - Short name, long name, info URL, phone, enrollment flows and supported card schemes: Get from their enrollment form
-  - Logo: Typically found attached to a GitHub issue comment
-  - Transit processor config: leave blank for now
-  - Active: Leave **unchecked** for now
+- Slug: Defines the agency's unique landing page (no spaces or special characters)
+- Short name, long name, info URL, phone, enrollment flows and supported card schemes: Typically comes from the onboarding form
+- Logo: Found attached to the GitHub issue for logo production and in the [Figma source](https://www.figma.com/design/IuVNsLccmvumsUzW7IC5BF/Digital-Services-Design-Language?node-id=743-4162&m=dev)
+- Transit processor config: leave blank for now
+- Active: Leave **unchecked** for now
 
 The steps to create a transit processor config and associate it with your new agency are specific to the payment processor they contract with.
+
+### Agency naming guidance
+
+When helping an agency decide on their long and short name configuration for the app, the following guiding principles should be considered:
+
+- The long name needs to be unique among all agencies, the short name does not
+- The short name should be recognizable to end-users
+- The long name and short name can match
+- If the agency is just a place-name (e.g. a city), tack the word `Transit` (or `transit`) onto it
+
+Additional context about how and where agency names are displayed to users within the app:
+
+#### Homepage
+
+The agency drop-down selector:
+
+> - `[long name 1]`
+> - `[long name 2]`
+> - `[long name 3]`
+
+#### Help page
+
+> Don’t have access to a contactless card?
+> ...
+> You can still get your transit benefit by going through `[short name]`’s application process. For updates on additional options, please check back on this website, or contact [`[short name]`](#).
+>
+> `[long name]`
+>
+> - `[phone number]`
+> - `[website]`
+
+#### Agency landing page
+
+> Get your reduced fare when you tap to ride on `[short name]`
+
+#### Benefit selection page
+
+> Cal-ITP doesn’t save any of your information. `[short name]` provides reduced fares to riders who qualify.
+
+Or for agencies that are part of a region:
+
+> Cal-ITP doesn’t save any of your information. `[short name]` and nearby transit providers offer reduced fares to riders who qualify.
+
+#### Enrollment success page
+
+> You were not charged anything today. When boarding public transit provided by `[short name]`, tap this card and you will be charged a reduced fare.
+
+Or for agencies that are part of a region:
+
+> You were not charged anything today. When boarding public transit at the following providers, tap this card and you will be charged a reduced fare:
+>
+> - `[short name 1]`
+> - `[short name 2]`
+> - `[short name 3]`
 
 ## Configure for development and testing
 
