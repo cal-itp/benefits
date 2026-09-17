@@ -54,6 +54,10 @@ class TransitProcessorConfig(models.Model):
         help_text="The absolute base URL for the TransitProcessor's control portal.",
     )
 
+    @property
+    def system_name(self):
+        return self._meta.app_config.system_name
+
     def __str__(self):
         environment_label = Environment(self.environment).label if self.environment else "unknown"
         return f"({environment_label}) {self.label}"
@@ -146,6 +150,10 @@ class TransitAgency(models.Model):
     # we will eventually remove all three properties `init_config`, `littlepay_config`, and `switchio_config` below
 
     @property
+    def typed_transit_processor_config(self):
+        return registry.get_transit_processor_config(self)
+
+    @property
     def init_config(self):
         return registry.get_transit_processor_config_for(self, "init")
 
@@ -159,14 +167,7 @@ class TransitAgency(models.Model):
 
     @property
     def transit_processor(self):
-        if self.init_config:
-            return "init"
-        if self.littlepay_config:
-            return "littlepay"
-        elif self.switchio_config:
-            return "switchio"
-        else:
-            return None
+        return self.typed_transit_processor_config.system_name if self.typed_transit_processor_config else None
 
     @property
     def in_person_enrollment_index_route(self):

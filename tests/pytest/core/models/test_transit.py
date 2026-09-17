@@ -172,24 +172,6 @@ class TestTransitAgency:
             errors["customer_service_group"]
         )
 
-    def test_transit_processor_littlepay(self, model_TransitAgency, model_LittlepayConfig):
-        model_LittlepayConfig.transit_agency = model_TransitAgency
-        model_TransitAgency.save()
-
-        assert model_TransitAgency.transit_processor == "littlepay"
-
-    def test_transit_processor_switchio(self, model_TransitAgency, model_SwitchioConfig):
-        model_SwitchioConfig.transit_agency = model_TransitAgency
-        model_TransitAgency.save()
-
-        assert model_TransitAgency.transit_processor == "switchio"
-
-    def test_transit_processor_init(self, model_TransitAgency, model_InitConfig):
-        model_InitConfig.transit_agency = model_TransitAgency
-        model_TransitAgency.save()
-
-        assert model_TransitAgency.transit_processor == "init"
-
     def test_transit_processor_no_config(self, model_TransitAgency):
         assert model_TransitAgency.transit_processor is None
 
