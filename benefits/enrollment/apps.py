@@ -19,3 +19,13 @@ class EnrollmentAppConfig(AppConfig):
 
     def ready(self):
         logger.debug(f"Currently registered transit processors: {list(self.transit_processors.entries.keys())}")
+
+
+class TransitProcessorAppConfigMixin:
+    def ready(self):
+        from django.apps import apps
+
+        enrollment_app_config = apps.get_app_config(EnrollmentAppConfig.label)
+        transit_processors = enrollment_app_config.transit_processors
+        transit_processors.add(self.system_name, self.module)
+        super().ready()
