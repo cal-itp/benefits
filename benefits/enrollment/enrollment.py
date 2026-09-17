@@ -1,3 +1,4 @@
+from dataclasses import dataclass
 from datetime import datetime, timedelta
 from enum import Enum
 
@@ -24,6 +25,15 @@ class Status(Enum):
 
     # REENROLLMENT_ERROR means that the user tried to re-enroll but is not within the reenrollment window
     REENROLLMENT_ERROR = 4
+
+
+@dataclass
+class EnrollmentDecision:
+    status: Status
+    expiry_to_store: datetime | None = None
+    expiry_to_send: datetime | None = None
+    should_enroll: bool = False
+    should_remove_expiry: bool = False
 
 
 def _is_expired(expiry_date: datetime):

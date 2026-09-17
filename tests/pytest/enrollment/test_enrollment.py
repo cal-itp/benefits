@@ -8,6 +8,7 @@ from requests import HTTPError
 import benefits.enrollment.enrollment
 from benefits.core import models
 from benefits.enrollment.enrollment import (
+    EnrollmentDecision,
     Status,
     _calculate_expiry,
     _calculate_reenrollment_start,
@@ -329,3 +330,14 @@ def test_handle_enrollment_results_reenrollment_error(app_request, mocked_analyt
     assert response.status_code == 302
     assert response.url == reverse(routes.ENROLLMENT_REENROLLMENT_ERROR)
     mocked_analytics_module.returned_error.assert_called_once()
+
+
+@pytest.mark.parametrize("status", [Status.EXCEPTION, Status.REENROLLMENT_ERROR, Status.SUCCESS, Status.SYSTEM_ERROR])
+def test_EnrollmentDecision_defaults(status):
+    decision = EnrollmentDecision(status=status)
+
+    assert decision.status is status
+    assert decision.expiry_to_send is None
+    assert decision.expiry_to_store is None
+    assert decision.should_enroll is False
+    assert decision.should_remove_expiry is False
