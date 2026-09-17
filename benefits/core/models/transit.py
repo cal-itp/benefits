@@ -164,10 +164,6 @@ class TransitAgency(models.Model):
         return registry.get_transit_processor_config(self)
 
     @property
-    def switchio_config(self):
-        return registry.get_transit_processor_config_for(self, "switchio")
-
-    @property
     def transit_processor(self):
         return self.typed_transit_processor_config.system_name if self.typed_transit_processor_config else None
 
