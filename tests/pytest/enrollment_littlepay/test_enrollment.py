@@ -3,7 +3,7 @@ from littlepay.api.funding_sources import FundingSourceResponse
 from littlepay.api.groups import GroupFundingSourceResponse
 from requests import HTTPError
 
-from benefits.enrollment.enrollment import Status, _calculate_expiry
+from benefits.enrollment.enrollment import EnrollmentDecision, Status, _calculate_expiry
 from benefits.enrollment_littlepay.enrollment import _get_group_funding_source, enroll, request_card_tokenization_access
 
 
@@ -388,24 +388,21 @@ def test_enroll_success_flow_supports_expiration_is_expired(
     )
 
     new_expiry = _calculate_expiry(mocked_session_flow(app_request).expiration_days)
-    original_expiry = mocked_group_funding_source_past_expiry.expiry_date
+    decision = EnrollmentDecision(
+        status=Status.SUCCESS, expiry_to_store=new_expiry, expiry_to_send=new_expiry, should_enroll=True
+    )
+    mocker.patch("benefits.enrollment_littlepay.enrollment.resolve_enrollment_decision", return_value=decision)
 
     status, exception, _ = enroll(app_request, card_token)
 
     mock_client.update_concession_group_funding_source_expiry.assert_called_once_with(
         group_id=str(mocked_session_group(app_request).group_id),
         funding_source_id=mocked_funding_source.id,
-        expiry=new_expiry,
+        expiry=decision.expiry_to_send,
     )
-    # assert an initial update with the original expiration date,
-    # then a subsequent update with the updated expiration date
-    mocked_session_update.assert_has_calls(
-        [
-            mocker.call(app_request, enrollment_expiry=original_expiry),
-            mocker.call(app_request, enrollment_expiry=new_expiry),
-        ]
-    )
-    assert status is Status.SUCCESS
+
+    mocked_session_update.assert_called_once_with(app_request, enrollment_expiry=decision.expiry_to_store)
+    assert status is decision.status
     assert exception is None
 
 
@@ -438,25 +435,21 @@ def test_enroll_success_flow_supports_expiration_is_within_reenrollment_window(
         return_value=mocked_group_funding_source_future_expiry,
     )
 
-    mocker.patch("benefits.enrollment_littlepay.enrollment._is_within_reenrollment_window", return_value=True)
-
-    original_expiry = mocked_group_funding_source_future_expiry.expiry_date
     new_expiry = _calculate_expiry(mocked_session_flow(app_request).expiration_days)
+    decision = EnrollmentDecision(
+        status=Status.SUCCESS, expiry_to_store=new_expiry, expiry_to_send=new_expiry, should_enroll=True
+    )
+    mocker.patch("benefits.enrollment_littlepay.enrollment.resolve_enrollment_decision", return_value=decision)
 
     status, exception, _ = enroll(app_request, card_token)
 
     mock_client.update_concession_group_funding_source_expiry.assert_called_once_with(
         group_id=str(mocked_session_group(app_request).group_id),
         funding_source_id=mocked_funding_source.id,
-        expiry=new_expiry,
+        expiry=decision.expiry_to_send,
     )
-    mocked_session_update.assert_has_calls(
-        [
-            mocker.call(app_request, enrollment_expiry=original_expiry),
-            mocker.call(app_request, enrollment_expiry=new_expiry),
-        ]
-    )
-    assert status is Status.SUCCESS
+    mocked_session_update.assert_called_once_with(app_request, enrollment_expiry=decision.expiry_to_store)
+    assert status is decision.status
     assert exception is None
 
 
@@ -488,17 +481,17 @@ def test_enroll_reenrollment_error(
         return_value=mocked_group_funding_source_future_expiry,
     )
 
-    mocker.patch("benefits.enrollment_littlepay.enrollment._is_expired", return_value=False)
-    mocker.patch("benefits.enrollment_littlepay.enrollment._is_within_reenrollment_window", return_value=False)
+    decision = EnrollmentDecision(
+        status=Status.REENROLLMENT_ERROR, expiry_to_store=mocked_group_funding_source_future_expiry.expiry_date
+    )
+    mocker.patch("benefits.enrollment_littlepay.enrollment.resolve_enrollment_decision", return_value=decision)
 
-    status, exception, funding_source = enroll(app_request, card_token)
+    status, exception, _ = enroll(app_request, card_token)
 
     mock_client.link_concession_group_funding_source.assert_not_called()
     mock_client.update_concession_group_funding_source_expiry.assert_not_called()
-    mocked_session_update.assert_called_once_with(
-        app_request, enrollment_expiry=mocked_group_funding_source_future_expiry.expiry_date
-    )
-    assert status is Status.REENROLLMENT_ERROR
+    mocked_session_update.assert_called_once_with(app_request, enrollment_expiry=decision.expiry_to_store)
+    assert status is decision.status
     assert exception is None
 
 

@@ -6,7 +6,7 @@ from littlepay.api.funding_sources import FundingSourceResponse
 from requests.exceptions import HTTPError
 
 from benefits.core import session
-from benefits.enrollment.enrollment import Status, _calculate_expiry, _is_expired, _is_within_reenrollment_window
+from benefits.enrollment.enrollment import Status, resolve_enrollment_decision
 
 
 @dataclass
@@ -80,44 +80,29 @@ def enroll(request, card_token) -> tuple[Status, Exception, FundingSourceRespons
     try:
         group_funding_source = _get_group_funding_source(client=client, group_id=group_id, funding_source_id=funding_source.id)
         already_enrolled = group_funding_source is not None
-        has_expiration = already_enrolled and group_funding_source.expiry_date is not None
+        existing_expiry = group_funding_source.expiry_date if already_enrolled else None
 
-        if flow.supports_expiration:
-            should_update_expiry = True
-            expiry_date = group_funding_source.expiry_date if has_expiration else None
+        decision = resolve_enrollment_decision(flow, already_enrolled, existing_expiry)
+        status = decision.status
 
-            if expiry_date:
-                session.update(request, enrollment_expiry=expiry_date)
-                if not (
-                    _is_expired(expiry_date)
-                    or _is_within_reenrollment_window(expiry_date, session.enrollment_reenrollment(request))
-                ):
-                    status = Status.REENROLLMENT_ERROR
-                    should_update_expiry = False
+        if decision.expiry_to_store is not None:
+            session.update(request, enrollment_expiry=decision.expiry_to_store)
 
-            if should_update_expiry:
-                new_expiry = _calculate_expiry(flow.expiration_days)
-                session.update(request, enrollment_expiry=new_expiry)
+        if status is Status.SUCCESS:
+            if decision.should_remove_expiry:
+                raise NotImplementedError("Removing expiration date is currently not supported")
+            elif decision.should_enroll:
                 if not already_enrolled:
-                    client.link_concession_group_funding_source(
-                        group_id=group_id, funding_source_id=funding_source.id, expiry=new_expiry
-                    )
+                    if decision.expiry_to_send is None:
+                        client.link_concession_group_funding_source(group_id=group_id, funding_source_id=funding_source.id)
+                    else:
+                        client.link_concession_group_funding_source(
+                            group_id=group_id, funding_source_id=funding_source.id, expiry=decision.expiry_to_send
+                        )
                 else:
                     client.update_concession_group_funding_source_expiry(
-                        group_id=group_id, funding_source_id=funding_source.id, expiry=new_expiry
+                        group_id=group_id, funding_source_id=funding_source.id, expiry=decision.expiry_to_send
                     )
-                status = Status.SUCCESS
-
-        else:  # expiration not supported
-            if not already_enrolled:
-                client.link_concession_group_funding_source(group_id=group_id, funding_source_id=funding_source.id)
-                status = Status.SUCCESS
-            elif not has_expiration:
-                # already enrolled, without an expiration date -> no action, return success
-                status = Status.SUCCESS
-            else:
-                # already enrolled with an expiration date -> remove expiration date, return success
-                raise NotImplementedError("Removing expiration date is currently not supported")
 
     except HTTPError as e:
         if e.response.status_code >= 500:
