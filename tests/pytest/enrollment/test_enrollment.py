@@ -15,6 +15,7 @@ from benefits.enrollment.enrollment import (
     _is_expired,
     _is_within_reenrollment_window,
     handle_enrollment_results,
+    resolve_enrollment_decision,
 )
 from benefits.routes import routes
 
@@ -340,4 +341,107 @@ def test_EnrollmentDecision_defaults(status):
     assert decision.expiry_to_send is None
     assert decision.expiry_to_store is None
     assert decision.should_enroll is False
+    assert decision.should_remove_expiry is False
+
+
+@pytest.mark.django_db
+@pytest.mark.parametrize(
+    "already_enrolled,existing_expiry,should_enroll,should_remove_expiry",
+    [
+        (False, None, True, False),
+        (True, None, False, False),
+        # the specific existing_expiry shouldn't matter here, since this flow doesn't support expiration anyway
+        (True, timezone.datetime(2026, 9, 15), False, True),
+    ],
+)
+def test_resolve_expiry_decision__expiration_not_supported(
+    model_EnrollmentFlow_does_not_support_expiration, already_enrolled, existing_expiry, should_enroll, should_remove_expiry
+):
+    decision = resolve_enrollment_decision(model_EnrollmentFlow_does_not_support_expiration, already_enrolled, existing_expiry)
+
+    assert decision.status is Status.SUCCESS
+    assert decision.expiry_to_send is None
+    assert decision.expiry_to_store is None
+    assert decision.should_enroll is should_enroll
+    assert decision.should_remove_expiry is should_remove_expiry
+
+
+@pytest.mark.django_db
+@pytest.mark.parametrize(
+    "already_enrolled",
+    [True, False],
+)
+def test_resolve_enrollment_decision__expiration_supported__no_existing_expiry(
+    model_EnrollmentFlow_supports_expiration, already_enrolled
+):
+    expected_expiry = _calculate_expiry(model_EnrollmentFlow_supports_expiration.expiration_days)
+
+    decision = resolve_enrollment_decision(model_EnrollmentFlow_supports_expiration, already_enrolled, existing_expiry=None)
+
+    assert decision.status is Status.SUCCESS
+    assert decision.expiry_to_send == expected_expiry
+    assert decision.expiry_to_store == expected_expiry
+    assert decision.should_enroll is True
+    assert decision.should_remove_expiry is False
+
+
+@pytest.mark.django_db
+def test_resolve_enrollment_decision__expiration_supported__future_expiry(mocker, model_EnrollmentFlow_supports_expiration):
+    # an arbitrary expiration date that exists on the provider
+    existing_expiry = timezone.make_aware(timezone.datetime(2026, 9, 16), timezone.get_default_timezone())
+    # a mock "now" time that is well before the expiry
+    now = timezone.make_aware(timezone.datetime(2026, 1, 1), timezone.get_default_timezone())
+    mocker.patch("benefits.enrollment.enrollment.timezone.now", return_value=now)
+
+    decision = resolve_enrollment_decision(
+        model_EnrollmentFlow_supports_expiration, already_enrolled=True, existing_expiry=existing_expiry
+    )
+
+    assert decision.status is Status.REENROLLMENT_ERROR
+    assert decision.expiry_to_send is None
+    assert decision.expiry_to_store == existing_expiry
+    assert decision.should_enroll is False
+    assert decision.should_remove_expiry is False
+
+
+@pytest.mark.django_db
+def test_resolve_enrollment_decision__expiration_supported__within_reenrollment_window(
+    mocker, model_EnrollmentFlow_supports_expiration
+):
+    # an arbitrary expiration date that exists on the provider
+    existing_expiry = timezone.make_aware(timezone.datetime(2026, 9, 16), timezone.get_default_timezone())
+    # a mock "now" time that is (halfway) into the renenrollment window
+    days_offset = model_EnrollmentFlow_supports_expiration.expiration_reenrollment_days / 2
+    now = existing_expiry - timedelta(days=days_offset)
+    mocker.patch("benefits.enrollment.enrollment.timezone.now", return_value=now)
+    expected_expiry = _calculate_expiry(model_EnrollmentFlow_supports_expiration.expiration_days)
+
+    decision = resolve_enrollment_decision(
+        model_EnrollmentFlow_supports_expiration, already_enrolled=True, existing_expiry=existing_expiry
+    )
+
+    assert decision.status is Status.SUCCESS
+    assert decision.expiry_to_send == expected_expiry
+    assert decision.expiry_to_store == expected_expiry
+    assert decision.should_enroll is True
+    assert decision.should_remove_expiry is False
+
+
+@pytest.mark.django_db
+def test_resolve_enrollment_decision__expiration_supported__past_expiry(mocker, model_EnrollmentFlow_supports_expiration):
+    # an arbitrary expiration date that exists on the provider, far in the past
+    existing_expiry = timezone.make_aware(timezone.datetime(2026, 1, 1), timezone.get_default_timezone())
+    # a mock "now" time that is well after the expiry
+    now = timezone.make_aware(timezone.datetime(2026, 9, 16), timezone.get_default_timezone())
+    mocker.patch("benefits.enrollment.enrollment.timezone.now", return_value=now)
+    expected_expiry = _calculate_expiry(model_EnrollmentFlow_supports_expiration.expiration_days)
+
+    decision = resolve_enrollment_decision(
+        model_EnrollmentFlow_supports_expiration, already_enrolled=True, existing_expiry=existing_expiry
+    )
+
+    assert decision.status is Status.SUCCESS
+    assert decision.expiry_to_send == expected_expiry
+    assert decision.expiry_to_store == expected_expiry
+    assert decision.should_enroll is True
     assert decision.should_remove_expiry is False

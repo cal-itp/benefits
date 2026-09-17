@@ -61,6 +61,56 @@ def _calculate_reenrollment_start(expiry: datetime, reenrollment_days: int) -> d
     return expiry - timedelta(days=reenrollment_days)
 
 
+def resolve_enrollment_decision(
+    flow: models.EnrollmentFlow, already_enrolled: bool, existing_expiry: datetime | None
+) -> EnrollmentDecision:
+    """
+    Make a (provider-agnostic) enrollment decision given the inputs based on:
+
+    - If the flow supports expiration or not
+    - If the user is already enrolled or not
+    - If the enrollment has an existing expiry or not
+    - If the existing expiry is valid, within the reenrollment window, or expired
+    """
+    # flow does not support expiration
+    if not flow.supports_expiration:
+        if not already_enrolled:
+            # not yet enrolled
+            return EnrollmentDecision(status=Status.SUCCESS, should_enroll=True)
+
+        if existing_expiry is not None:
+            # already enrolled with existing expiry: remove
+            return EnrollmentDecision(status=Status.SUCCESS, should_remove_expiry=True)
+
+        # already enrolled without existing expiry: no-op
+        return EnrollmentDecision(status=Status.SUCCESS)
+
+    # flow supports expiration
+    new_expiry = _calculate_expiry(flow.expiration_days)
+
+    # not yet enrolled and/or no existing expiry
+    if not already_enrolled or existing_expiry is None:
+        return EnrollmentDecision(
+            status=Status.SUCCESS,
+            expiry_to_store=new_expiry,
+            expiry_to_send=new_expiry,
+            should_enroll=True,
+        )
+
+    # already enrolled, with expired enrollment or within reenrollment window
+    reenrollment_start = _calculate_reenrollment_start(existing_expiry, flow.expiration_reenrollment_days)
+    if _is_expired(existing_expiry) or _is_within_reenrollment_window(existing_expiry, reenrollment_start):
+        return EnrollmentDecision(
+            status=Status.SUCCESS,
+            expiry_to_store=new_expiry,
+            expiry_to_send=new_expiry,
+            should_enroll=True,
+        )
+
+    # already enrolled, not expired and not within reenrollment window
+    return EnrollmentDecision(status=Status.REENROLLMENT_ERROR, expiry_to_store=existing_expiry)
+
+
 def handle_enrollment_results(
     request,
     status: Status,
