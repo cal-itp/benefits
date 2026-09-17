@@ -10,6 +10,7 @@ class EnrollmentInitConfig(TransitProcessorAppConfigMixin, AppConfig):
     label = "enrollment_init"
     system_name = "init"
     enrollment_index_route = routes.ENROLLMENT_INIT_INDEX
+    in_person_enrollment_index_route = None
 
     @property
     def system_name_for_display(self):

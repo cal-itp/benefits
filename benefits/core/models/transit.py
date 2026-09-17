@@ -66,6 +66,10 @@ class TransitProcessorConfig(models.Model):
     def enrollment_index_route(self):
         return self._meta.app_config.enrollment_index_route
 
+    @property
+    def in_person_enrollment_index_route(self):
+        return self._meta.app_config.in_person_enrollment_index_route
+
     def __str__(self):
         environment_label = Environment(self.environment).label if self.environment else "unknown"
         return f"({environment_label}) {self.label}"
@@ -174,16 +178,11 @@ class TransitAgency(models.Model):
     @property
     def in_person_enrollment_index_route(self):
         """This Agency's in-person enrollment index route, based on its configured transit processor."""
-        if self.littlepay_config:
-            return routes.IN_PERSON_ENROLLMENT_LITTLEPAY_INDEX
-        elif self.switchio_config:
-            return routes.IN_PERSON_ENROLLMENT_SWITCHIO_INDEX
+        if self.typed_transit_processor_config:
+            return self.typed_transit_processor_config.in_person_enrollment_index_route
         else:
             raise ValueError(
-                (
-                    "TransitAgency must have either a LittlepayConfig or SwitchioConfig "
-                    "in order to show in-person enrollment index."
-                )
+                ("TransitAgency must have a transit processor configured in order to show in-person enrollment index.")
             )
 
     @property

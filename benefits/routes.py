@@ -125,26 +125,6 @@ class Routes:
         return "in_person:enrollment"
 
     @property
-    def IN_PERSON_ENROLLMENT_LITTLEPAY_INDEX(self):
-        """In-person (e.g. agency assisted) enrollment using Littlepay"""
-        return "in_person:enrollment_littlepay_index"
-
-    @property
-    def IN_PERSON_ENROLLMENT_SWITCHIO_INDEX(self):
-        """In-person (e.g. agency assisted) enrollment using Switchio"""
-        return "in_person:enrollment_switchio_index"
-
-    @property
-    def IN_PERSON_ENROLLMENT_LITTLEPAY_TOKEN(self):
-        """Acquire a Littlepay access token for in-person enrollment."""
-        return "in_person:enrollment_littlepay_token"
-
-    @property
-    def IN_PERSON_ENROLLMENT_SWITCHIO_GATEWAY_URL(self):
-        """Switchio Gateway for in-person (e.g. agency assisted) enrollment"""
-        return "in_person:enrollment_switchio_gateway"
-
-    @property
     def IN_PERSON_SERVER_ERROR(self):
         """Generic error handler for the in_person app."""
         return "in_person:error"

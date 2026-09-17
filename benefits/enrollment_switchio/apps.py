@@ -10,3 +10,4 @@ class EnrollmentSwitchioConfig(TransitProcessorAppConfigMixin, AppConfig):
     label = "enrollment_switchio"
     system_name = "switchio"
     enrollment_index_route = routes.ENROLLMENT_SWITCHIO_INDEX
+    in_person_enrollment_index_route = routes.IN_PERSON_ENROLLMENT_SWITCHIO_INDEX

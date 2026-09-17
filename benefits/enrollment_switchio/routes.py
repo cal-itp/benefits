@@ -14,5 +14,15 @@ class Routes(BenefitsRoutes):
         """Establish a registration request and receive back a tokenization gateway URL."""
         return "switchio:gateway_url"
 
+    @property
+    def IN_PERSON_ENROLLMENT_SWITCHIO_INDEX(self):
+        """In-person (e.g. agency assisted) enrollment using Switchio"""
+        return "in_person:enrollment_switchio_index"
+
+    @property
+    def IN_PERSON_ENROLLMENT_SWITCHIO_GATEWAY_URL(self):
+        """Switchio Gateway for in-person (e.g. agency assisted) enrollment"""
+        return "in_person:enrollment_switchio_gateway"
+
 
 routes = Routes()

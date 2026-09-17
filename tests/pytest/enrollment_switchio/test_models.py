@@ -137,6 +137,11 @@ def test_SwitchioConfig_enrollment_index_route(model_SwitchioConfig):
 
 
 @pytest.mark.django_db
+def test_SwitchioConfig_in_person_enrollment_index_route(model_SwitchioConfig):
+    assert model_SwitchioConfig.in_person_enrollment_index_route == routes.IN_PERSON_ENROLLMENT_SWITCHIO_INDEX
+
+
+@pytest.mark.django_db
 def test_SwitchioGroup_by_id_matching(model_SwitchioGroup):
     flow = SwitchioGroup.by_id(model_SwitchioGroup.id)
 

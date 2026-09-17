@@ -106,6 +106,11 @@ def test_LittlepayConfig_enrollment_index_route(model_LittlepayConfig):
 
 
 @pytest.mark.django_db
+def test_LittlepayConfig_in_person_enrollment_index_route(model_LittlepayConfig):
+    assert model_LittlepayConfig.in_person_enrollment_index_route == routes.IN_PERSON_ENROLLMENT_LITTLEPAY_INDEX
+
+
+@pytest.mark.django_db
 def test_LittlepayGroup_by_id_matching(model_LittlepayGroup):
     flow = LittlepayGroup.by_id(model_LittlepayGroup.id)
 

@@ -10,7 +10,6 @@ from benefits.core.models import (
     TransitProcessorConfig,
     agency_logo,
 )
-from benefits.routes import routes
 
 
 class TestCardSchemes:
@@ -182,25 +181,10 @@ class TestTransitAgency:
         ):
             model_TransitAgency.enrollment_index_route
 
-    def test_in_person_enrollment_index_route_littlepay(self, model_TransitAgency, model_LittlepayConfig):
-        model_LittlepayConfig.transit_agency = model_TransitAgency
-        model_TransitAgency.save()
-
-        assert model_TransitAgency.in_person_enrollment_index_route == routes.IN_PERSON_ENROLLMENT_LITTLEPAY_INDEX
-
-    def test_in_person_enrollment_index_route_switchio(self, model_TransitAgency, model_SwitchioConfig):
-        model_SwitchioConfig.transit_agency = model_TransitAgency
-        model_TransitAgency.save()
-
-        assert model_TransitAgency.in_person_enrollment_index_route == routes.IN_PERSON_ENROLLMENT_SWITCHIO_INDEX
-
     def test_in_person_enrollment_index_route_no_config(self, model_TransitAgency):
         with pytest.raises(
             ValueError,
-            match=(
-                "TransitAgency must have either a LittlepayConfig or SwitchioConfig "
-                "in order to show in-person enrollment index."
-            ),
+            match=("TransitAgency must have a transit processor configured " "in order to show in-person enrollment index."),
         ):
             model_TransitAgency.in_person_enrollment_index_route
 
