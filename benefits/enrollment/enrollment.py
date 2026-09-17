@@ -27,17 +27,17 @@ class Status(Enum):
 
 
 def _is_expired(expiry_date: datetime):
-    """Returns whether the passed in datetime is expired or not."""
+    """Returns whether the given datetime is in the past or not."""
     return expiry_date <= timezone.now()
 
 
-def _is_within_reenrollment_window(expiry_date: datetime, enrollment_reenrollment_date: datetime):
-    """Returns if we are currently within the reenrollment window."""
-    return enrollment_reenrollment_date <= timezone.now() < expiry_date
+def _is_within_reenrollment_window(expiry_date: datetime, reenrollment_date: datetime):
+    """Returns if the current datetime is between the reenrollment_date and the expiry_date (the reenrollment window)."""
+    return reenrollment_date <= timezone.now() < expiry_date
 
 
 def _calculate_expiry(expiration_days: int):
-    """Returns the expiry datetime, which should be midnight in our configured timezone of the (N + 1)th day from now,
+    """Returns the expiry datetime, which should be midnight in the configured timezone of the (N + 1)th day from now,
     where N is expiration_days."""
     default_time_zone = timezone.get_default_timezone()
     expiry_date = timezone.localtime(timezone=default_time_zone) + timedelta(days=expiration_days + 1)
@@ -58,6 +58,10 @@ def handle_enrollment_results(
     card_category: str = None,
     card_scheme: str = None,
 ):
+    """
+    Handle the results of a provider enrollment call by sending the appropriate analytics events,
+    and redirecting the user to the correct route.
+    """
     flow = session.flow(request)
     agency = session.agency(request)
     group_id = str(session.group(request).group_id)  # needs to be a string for the API call
