@@ -164,7 +164,7 @@ class TransitAgency(models.Model):
         return registry.get_transit_processor_config(self)
 
     @property
-    def transit_processor(self):
+    def transit_processor_system_name(self):
         return self.typed_transit_processor_config.system_name if self.typed_transit_processor_config else None
 
     @property

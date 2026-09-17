@@ -172,7 +172,7 @@ class TestTransitAgency:
         )
 
     def test_transit_processor_no_config(self, model_TransitAgency):
-        assert model_TransitAgency.transit_processor is None
+        assert model_TransitAgency.transit_processor_system_name is None
 
     def test_enrollment_index_route_no_config(self, model_TransitAgency):
         with pytest.raises(

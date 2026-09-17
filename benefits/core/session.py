@@ -150,7 +150,7 @@ def group(request) -> models.EnrollmentGroup | None:
     """Get the EnrollmentGroup from the request's session, or None"""
 
     if agency(request):
-        match agency(request).transit_processor:
+        match agency(request).transit_processor_system_name:
             case "littlepay":
                 group_model = LittlepayGroup
             case "switchio":
