@@ -4,7 +4,7 @@ from django.views.generic import FormView
 
 from benefits.core import models
 from benefits.core.context_processors import formatted_gettext_lazy as _
-from benefits.core.mixins import AgencySessionRequiredMixin
+from benefits.core.mixins import AgencySessionRequiredMixin, EligibleSessionRequiredMixin
 from benefits.enrollment.views import IndexContextMixin
 
 # from benefits.routes import routes
@@ -13,7 +13,7 @@ logger = logging.getLogger(__name__)
 
 
 # EligibleSessionRequiredMixin
-class IndexView(AgencySessionRequiredMixin, IndexContextMixin, FormView):
+class IndexView(AgencySessionRequiredMixin, EligibleSessionRequiredMixin, IndexContextMixin, FormView):
     """View for the enrollment landing page."""
 
     enrollment_method = models.EnrollmentMethods.SELF_SERVICE
