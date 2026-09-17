@@ -7,6 +7,7 @@ from django.db import models
 from django.urls import reverse
 from multiselectfield import MultiSelectField
 
+from benefits.enrollment import registry
 from benefits.routes import routes
 
 from .common import Environment
@@ -142,26 +143,19 @@ class TransitAgency(models.Model):
 
         return reverse(routes.ELIGIBILITY_INDEX)
 
+    # we will eventually remove all three properties `init_config`, `littlepay_config`, and `switchio_config` below
+
     @property
     def init_config(self):
-        if self.transit_processor_config and hasattr(self.transit_processor_config, "initconfig"):
-            return self.transit_processor_config.initconfig
-        else:
-            return None
+        return registry.get_transit_processor_config_for(self, "init")
 
     @property
     def littlepay_config(self):
-        if self.transit_processor_config and hasattr(self.transit_processor_config, "littlepayconfig"):
-            return self.transit_processor_config.littlepayconfig
-        else:
-            return None
+        return registry.get_transit_processor_config_for(self, "littlepay")
 
     @property
     def switchio_config(self):
-        if hasattr(self, "transit_processor_config") and hasattr(self.transit_processor_config, "switchioconfig"):
-            return self.transit_processor_config.switchioconfig
-        else:
-            return None
+        return registry.get_transit_processor_config_for(self, "switchio")
 
     @property
     def transit_processor(self):
