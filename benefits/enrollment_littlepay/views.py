@@ -97,7 +97,7 @@ class IndexView(AgencySessionRequiredMixin, EligibleSessionRequiredMixin, IndexC
             }
         )
 
-        match agency.littlepay_config.environment:
+        match agency.typed_transit_processor_config.environment:
             case models.Environment.TEST.value:
                 url = "https://verify.qa.littlepay.com/assets/js/littlepay.min.js"
                 card_tokenize_env = "https://verify.qa.littlepay.com"

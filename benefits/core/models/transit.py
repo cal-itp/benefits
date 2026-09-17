@@ -164,10 +164,6 @@ class TransitAgency(models.Model):
         return registry.get_transit_processor_config(self)
 
     @property
-    def littlepay_config(self):
-        return registry.get_transit_processor_config_for(self, "littlepay")
-
-    @property
     def switchio_config(self):
         return registry.get_transit_processor_config_for(self, "switchio")
 

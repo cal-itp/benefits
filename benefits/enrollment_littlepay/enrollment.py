@@ -24,11 +24,12 @@ def request_card_tokenization_access(request) -> CardTokenizationAccessResponse:
     agency = session.agency(request)
 
     try:
+        littlepay_config = agency.typed_transit_processor_config
         client = Client(
-            base_url=agency.littlepay_config.api_base_url,
-            client_id=agency.littlepay_config.client_id,
-            client_secret=agency.littlepay_config.client_secret,
-            audience=agency.littlepay_config.audience,
+            base_url=littlepay_config.api_base_url,
+            client_id=littlepay_config.client_id,
+            client_secret=littlepay_config.client_secret,
+            audience=littlepay_config.audience,
         )
         client.oauth.ensure_active_token(client.token)
         response = client.request_card_tokenization_access()
@@ -64,11 +65,12 @@ def enroll(request, card_token) -> tuple[Status, Exception]:
     agency = session.agency(request)
     flow = session.flow(request)
 
+    littlepay_config = agency.typed_transit_processor_config
     client = Client(
-        base_url=agency.littlepay_config.api_base_url,
-        client_id=agency.littlepay_config.client_id,
-        client_secret=agency.littlepay_config.client_secret,
-        audience=agency.littlepay_config.audience,
+        base_url=littlepay_config.api_base_url,
+        client_id=littlepay_config.client_id,
+        client_secret=littlepay_config.client_secret,
+        audience=littlepay_config.audience,
     )
     client.oauth.ensure_active_token(client.token)
 
