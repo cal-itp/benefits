@@ -10,9 +10,9 @@ from benefits.core import models
 from benefits.enrollment.enrollment import Status
 from benefits.enrollment_switchio.api import Registration, RegistrationStatus
 from benefits.enrollment_switchio.enrollment import RegistrationResponse, RegistrationStatusResponse
+from benefits.enrollment_switchio.routes import routes
 from benefits.enrollment_switchio.session import Session
 from benefits.enrollment_switchio.views import GatewayUrlView, IndexView
-from benefits.routes import routes
 
 
 @pytest.fixture

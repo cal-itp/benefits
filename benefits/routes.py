@@ -85,31 +85,6 @@ class Routes:
         return "enrollment:index"
 
     @property
-    def ENROLLMENT_INIT_INDEX(self):
-        """Start of the enrollment phase, using INIT."""
-        return "init:index"
-
-    @property
-    def ENROLLMENT_LITTLEPAY_INDEX(self):
-        """Start of the enrollment phase, using Littlepay."""
-        return "littlepay:index"
-
-    @property
-    def ENROLLMENT_LITTLEPAY_TOKEN(self):
-        """Acquire a Littlepay card tokenization access token for enrollment."""
-        return "littlepay:token"
-
-    @property
-    def ENROLLMENT_SWITCHIO_INDEX(self):
-        """Start of the enrollment phase, using Switchio."""
-        return "switchio:index"
-
-    @property
-    def ENROLLMENT_SWITCHIO_GATEWAY_URL(self):
-        """Establish a registration request and receive back a tokenization gateway URL."""
-        return "switchio:gateway_url"
-
-    @property
     def ENROLLMENT_SUCCESS(self):
         """User has successfully enrolled and completed a Benefits flow."""
         return "enrollment:success"

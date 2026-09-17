@@ -2,6 +2,7 @@ import pytest
 from django.forms import ValidationError
 
 from benefits.enrollment_littlepay.models import LittlepayConfig, LittlepayGroup
+from benefits.enrollment_littlepay.routes import routes
 
 
 @pytest.mark.django_db
@@ -92,6 +93,16 @@ def test_LittlepayConfig_api_base_url_unexpected_environment():
 
     with pytest.raises(ValueError, match=f"Unexpected value for environment: {environment}"):
         littlepay_config.api_base_url
+
+
+@pytest.mark.django_db
+def test_LittlepayConfig_system_name(model_LittlepayConfig):
+    assert model_LittlepayConfig.system_name == "littlepay"
+
+
+@pytest.mark.django_db
+def test_LittlepayConfig_enrollment_index_route(model_LittlepayConfig):
+    assert model_LittlepayConfig.enrollment_index_route == routes.ENROLLMENT_LITTLEPAY_INDEX
 
 
 @pytest.mark.django_db

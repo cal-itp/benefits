@@ -13,7 +13,8 @@ from benefits.enrollment.enrollment import Status, handle_enrollment_results
 from benefits.enrollment.views import IndexContextMixin
 from benefits.enrollment_littlepay.enrollment import enroll, request_card_tokenization_access
 from benefits.enrollment_littlepay.session import Session
-from benefits.routes import routes
+
+from .routes import routes
 
 logger = logging.getLogger(__name__)
 

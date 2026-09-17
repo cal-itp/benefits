@@ -175,22 +175,10 @@ class TestTransitAgency:
     def test_transit_processor_no_config(self, model_TransitAgency):
         assert model_TransitAgency.transit_processor is None
 
-    def test_enrollment_index_route_littlepay(self, model_TransitAgency, model_LittlepayConfig):
-        model_LittlepayConfig.transit_agency = model_TransitAgency
-        model_TransitAgency.save()
-
-        assert model_TransitAgency.enrollment_index_route == routes.ENROLLMENT_LITTLEPAY_INDEX
-
-    def test_enrollment_index_route_switchio(self, model_TransitAgency, model_SwitchioConfig):
-        model_SwitchioConfig.transit_agency = model_TransitAgency
-        model_TransitAgency.save()
-
-        assert model_TransitAgency.enrollment_index_route == routes.ENROLLMENT_SWITCHIO_INDEX
-
     def test_enrollment_index_route_no_config(self, model_TransitAgency):
         with pytest.raises(
             ValueError,
-            match="TransitAgency must have either a LittlepayConfig or SwitchioConfig in order to show enrollment index.",
+            match="TransitAgency must have a transit processor configured in order to show enrollment index.",
         ):
             model_TransitAgency.enrollment_index_route
 

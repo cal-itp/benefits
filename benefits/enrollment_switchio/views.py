@@ -19,7 +19,8 @@ from benefits.enrollment_switchio.enrollment import (
 )
 from benefits.enrollment_switchio.models import SwitchioConfig
 from benefits.enrollment_switchio.session import Session
-from benefits.routes import routes
+
+from .routes import routes
 
 logger = logging.getLogger(__name__)
 

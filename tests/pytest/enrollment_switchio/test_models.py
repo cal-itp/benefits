@@ -2,6 +2,7 @@ import pytest
 from django.forms import ValidationError
 
 from benefits.enrollment_switchio.models import SwitchioConfig, SwitchioGroup
+from benefits.enrollment_switchio.routes import routes
 
 
 @pytest.mark.django_db
@@ -123,6 +124,16 @@ def test_SwitchioConfig_private_key_data(mocker, model_SwitchioConfig):
     model_SwitchioConfig.private_key_data
 
     mocked_get_secret_by_name.assert_called_once_with("switchio-private-key")
+
+
+@pytest.mark.django_db
+def test_SwitchioConfig_system_name(model_SwitchioConfig):
+    assert model_SwitchioConfig.system_name == "switchio"
+
+
+@pytest.mark.django_db
+def test_SwitchioConfig_enrollment_index_route(model_SwitchioConfig):
+    assert model_SwitchioConfig.enrollment_index_route == routes.ENROLLMENT_SWITCHIO_INDEX
 
 
 @pytest.mark.django_db
