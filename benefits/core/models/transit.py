@@ -160,18 +160,18 @@ class TransitAgency(models.Model):
         return reverse(routes.ELIGIBILITY_INDEX)
 
     @property
-    def typed_transit_processor_config(self):
+    def transit_processor(self):
         return registry.get_transit_processor_config(self)
 
     @property
     def transit_processor_system_name(self):
-        return self.typed_transit_processor_config.system_name if self.typed_transit_processor_config else None
+        return self.transit_processor.system_name if self.transit_processor else None
 
     @property
     def in_person_enrollment_index_route(self):
         """This Agency's in-person enrollment index route, based on its configured transit processor."""
-        if self.typed_transit_processor_config:
-            return self.typed_transit_processor_config.in_person_enrollment_index_route
+        if self.transit_processor:
+            return self.transit_processor.in_person_enrollment_index_route
         else:
             raise ValueError(
                 ("TransitAgency must have a transit processor configured in order to show in-person enrollment index.")
@@ -180,8 +180,8 @@ class TransitAgency(models.Model):
     @property
     def enrollment_index_route(self):
         """This Agency's enrollment index route, based on its configured transit processor."""
-        if self.typed_transit_processor_config:
-            return self.typed_transit_processor_config.enrollment_index_route
+        if self.transit_processor:
+            return self.transit_processor.enrollment_index_route
         else:
             raise ValueError("TransitAgency must have a transit processor configured in order to show enrollment index.")
 
@@ -240,13 +240,13 @@ class TransitAgency(models.Model):
             )
             field_errors.update({k: ValidationError(message) for k, v in needed.items() if not v})
 
-            if self.typed_transit_processor_config is None:
+            if self.transit_processor is None:
                 non_field_errors.append(ValidationError("Must fill out configuration for a transit processor."))
             else:
                 try:
-                    self.typed_transit_processor_config.clean()
+                    self.transit_processor.clean()
                 except ValidationError as e:
-                    display_name = self.typed_transit_processor_config.system_name_for_display
+                    display_name = self.transit_processor.system_name_for_display
                     message = f"{display_name} configuration is missing fields that are required when this agency is active."
                     message += f" Missing fields: {', '.join(e.error_dict.keys())}"
                     non_field_errors.append(ValidationError(message))

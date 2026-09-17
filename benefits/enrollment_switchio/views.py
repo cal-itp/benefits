@@ -73,7 +73,7 @@ class IndexView(AgencySessionRequiredMixin, EligibleSessionRequiredMixin, IndexC
 
     def get(self, request: HttpRequest, *args, **kwargs):
         session = Session(request)
-        switchio_config = self.agency.typed_transit_processor_config
+        switchio_config = self.agency.transit_processor
 
         if session.registration_id:
             response = get_registration_status(switchio_config=switchio_config, registration_id=session.registration_id)
@@ -103,7 +103,7 @@ class IndexView(AgencySessionRequiredMixin, EligibleSessionRequiredMixin, IndexC
         return super().get(request=request, *args, **kwargs)
 
     def form_valid(self, form):
-        switchio_config = self.agency.typed_transit_processor_config
+        switchio_config = self.agency.transit_processor
         flow = self.flow
         group = self.group
         card_token = form.cleaned_data.get("card_token")
@@ -133,7 +133,7 @@ class GatewayUrlView(AgencySessionRequiredMixin, EligibleSessionRequiredMixin, V
 
     def get(self, request: HttpRequest, *args, **kwargs):
         session = Session(request)
-        switchio_config = self.agency.typed_transit_processor_config
+        switchio_config = self.agency.transit_processor
 
         if session.registration_id is None or session.gateway_url is None:
             return self._request_registration(request, switchio_config, session)

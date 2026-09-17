@@ -24,7 +24,7 @@ def request_card_tokenization_access(request) -> CardTokenizationAccessResponse:
     agency = session.agency(request)
 
     try:
-        littlepay_config = agency.typed_transit_processor_config
+        littlepay_config = agency.transit_processor
         client = Client(
             base_url=littlepay_config.api_base_url,
             client_id=littlepay_config.client_id,
@@ -65,7 +65,7 @@ def enroll(request, card_token) -> tuple[Status, Exception]:
     agency = session.agency(request)
     flow = session.flow(request)
 
-    littlepay_config = agency.typed_transit_processor_config
+    littlepay_config = agency.transit_processor
     client = Client(
         base_url=littlepay_config.api_base_url,
         client_id=littlepay_config.client_id,
