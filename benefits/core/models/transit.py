@@ -155,15 +155,9 @@ class TransitAgency(models.Model):
 
         return reverse(routes.ELIGIBILITY_INDEX)
 
-    # we will eventually remove all three properties `init_config`, `littlepay_config`, and `switchio_config` below
-
     @property
     def typed_transit_processor_config(self):
         return registry.get_transit_processor_config(self)
-
-    @property
-    def init_config(self):
-        return registry.get_transit_processor_config_for(self, "init")
 
     @property
     def littlepay_config(self):
