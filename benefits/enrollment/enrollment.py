@@ -46,6 +46,11 @@ def _calculate_expiry(expiration_days: int):
     return expiry_datetime
 
 
+def _calculate_reenrollment_start(expiry: datetime, reenrollment_days: int) -> datetime:
+    """Returns the first date at which reenrollment can occur (renenrollment_days before the expiry)."""
+    return expiry - timedelta(days=reenrollment_days)
+
+
 def handle_enrollment_results(
     request,
     status: Status,

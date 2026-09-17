@@ -10,6 +10,7 @@ from benefits.core import models
 from benefits.enrollment.enrollment import (
     Status,
     _calculate_expiry,
+    _calculate_reenrollment_start,
     _is_expired,
     _is_within_reenrollment_window,
     handle_enrollment_results,
@@ -51,6 +52,17 @@ def test_calculate_expiry_specific_date(mocker):
     assert expiry_date == timezone.make_aware(
         value=timezone.datetime(2024, 3, 16, 0, 0, 0, 0), timezone=timezone.get_default_timezone()
     )
+
+
+def test_calculate_reenrollment_deadline():
+    expiry_date = timezone.datetime(2026, 9, 16)
+    reenrollment_days = 14
+
+    reenrollment_start = _calculate_reenrollment_start(expiry_date, reenrollment_days)
+
+    assert reenrollment_start.year == expiry_date.year
+    assert reenrollment_start.month == expiry_date.month
+    assert reenrollment_start.day == expiry_date.day - reenrollment_days
 
 
 def test_is_expired_expiry_date_is_in_the_past(mocker):
