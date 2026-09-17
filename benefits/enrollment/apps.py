@@ -29,3 +29,7 @@ class TransitProcessorAppConfigMixin:
         transit_processors = enrollment_app_config.transit_processors
         transit_processors.add(self.system_name, self.module)
         super().ready()
+
+    @property
+    def system_name_for_display(self):
+        return self.system_name.capitalize()

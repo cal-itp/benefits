@@ -59,6 +59,10 @@ class TransitProcessorConfig(models.Model):
         return self._meta.app_config.system_name
 
     @property
+    def system_name_for_display(self):
+        return self._meta.app_config.system_name_for_display
+
+    @property
     def enrollment_index_route(self):
         return self._meta.app_config.enrollment_index_route
 
@@ -251,34 +255,16 @@ class TransitAgency(models.Model):
             )
             field_errors.update({k: ValidationError(message) for k, v in needed.items() if not v})
 
-            if self.init_config is None and self.littlepay_config is None and self.switchio_config is None:
-                non_field_errors.append(
-                    ValidationError("Must fill out configuration for either INIT, Littlepay, or Switchio.")
-                )
+            if self.typed_transit_processor_config is None:
+                non_field_errors.append(ValidationError("Must fill out configuration for a transit processor."))
             else:
-                if self.init_config:
-                    try:
-                        self.init_config.clean()
-                    except ValidationError as e:
-                        message = "INIT configuration is missing fields that are required when this agency is active."
-                        message += f" Missing fields: {', '.join(e.error_dict.keys())}"
-                        non_field_errors.append(ValidationError(message))
-
-                if self.littlepay_config:
-                    try:
-                        self.littlepay_config.clean()
-                    except ValidationError as e:
-                        message = "Littlepay configuration is missing fields that are required when this agency is active."
-                        message += f" Missing fields: {', '.join(e.error_dict.keys())}"
-                        non_field_errors.append(ValidationError(message))
-
-                if self.switchio_config:
-                    try:
-                        self.switchio_config.clean()
-                    except ValidationError as e:
-                        message = "Switchio configuration is missing fields that are required when this agency is active."
-                        message += f" Missing fields: {', '.join(e.error_dict.keys())}"
-                        non_field_errors.append(ValidationError(message))
+                try:
+                    self.typed_transit_processor_config.clean()
+                except ValidationError as e:
+                    display_name = self.typed_transit_processor_config.system_name_for_display
+                    message = f"{display_name} configuration is missing fields that are required when this agency is active."
+                    message += f" Missing fields: {', '.join(e.error_dict.keys())}"
+                    non_field_errors.append(ValidationError(message))
 
         if self.pk:  # prohibit updating short_name with blank customer_service_group
             original_obj = TransitAgency.objects.get(pk=self.pk)
