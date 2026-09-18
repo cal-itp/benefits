@@ -1,5 +1,5 @@
 {% extends "core/base.html" %}
-{% comment %} this template will replace ./index-base.html eventually {% endcomment %}
+{% comment %} this template is intended to replace ./index-base.html eventually {% endcomment %}
 
 {% load i18n %}
 
@@ -51,6 +51,9 @@
 {% endblock inner-content %}
 
 {% block call-to-action-button %}
-  {%comment%}  href="{% url cta_button %}" {% endcomment %}
-  <a class="btn btn-lg btn-primary" role="button">{% translate "Register your card" %}</a>
+  <a {% comment %}
+     href="{% url cta_button %}"
+     {% endcomment %}
+     class="btn btn-lg btn-primary"
+     role="button">{% translate "Register your card" %}</a>
 {% endblock call-to-action-button %}

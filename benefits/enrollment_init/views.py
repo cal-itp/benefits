@@ -28,6 +28,7 @@ class IndexView(AgencySessionRequiredMixin, EligibleSessionRequiredMixin, IndexC
                 "next_step": _("The last step is to register a bank card so you get a reduced fare when you tap."),
                 # "cta_button": routes.ENROLLMENT_INIT_REGISTER,
                 "flow": self.flow,
+                # placeholder pending https://github.com/cal-itp/benefits/issues/4101
                 "transit_processor": {
                     "name": "INIT",
                     "website": "https://www.initse.com/enus/solutions/fare-collection-revenue-management/",
