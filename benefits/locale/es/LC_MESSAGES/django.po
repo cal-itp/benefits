@@ -919,10 +919,8 @@ msgid ""
 "will be sent to our payment partner "
 msgstr ""
 
-#, fuzzy
-#| msgid "Please use a debit or credit card by:"
 msgid "Please use a contactless debit or credit card by:"
-msgstr "Utilice una tarjeta de débito o crédito de:"
+msgstr ""
 
 msgid "Register your card"
 msgstr ""
