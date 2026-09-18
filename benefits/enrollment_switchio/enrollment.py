@@ -18,7 +18,8 @@ from benefits.enrollment_switchio.api import (
     TokenizationClient,
 )
 from benefits.enrollment_switchio.models import SwitchioConfig, SwitchioGroup
-from benefits.routes import routes
+
+from .routes import routes
 
 
 @dataclass

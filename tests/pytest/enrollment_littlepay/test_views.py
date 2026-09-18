@@ -13,9 +13,9 @@ from benefits.core.middleware import TEMPLATE_USER_ERROR
 from benefits.core.models.transit import CardSchemes
 from benefits.enrollment.enrollment import Status
 from benefits.enrollment_littlepay.enrollment import CardTokenizationAccessResponse
+from benefits.enrollment_littlepay.routes import routes
 from benefits.enrollment_littlepay.session import Session
 from benefits.enrollment_littlepay.views import IndexView
-from benefits.routes import routes
 
 
 @pytest.fixture

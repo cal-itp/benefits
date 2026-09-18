@@ -135,7 +135,7 @@ class RetryView(AgencySessionRequiredMixin, FlowSessionRequiredMixin, EligibleSe
         if request.method == "POST":
             agency = self.agency
             enrollment_group = str(self.group.group_id)  # needs to be a string for the API call
-            transit_processor = agency.transit_processor
+            transit_processor = agency.transit_processor_system_name
             analytics.returned_retry(
                 request,
                 agency=agency,

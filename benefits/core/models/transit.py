@@ -7,6 +7,7 @@ from django.db import models
 from django.urls import reverse
 from multiselectfield import MultiSelectField
 
+from benefits.enrollment import registry
 from benefits.routes import routes
 
 from .common import Environment
@@ -52,6 +53,22 @@ class TransitProcessorConfig(models.Model):
         blank=True,
         help_text="The absolute base URL for the TransitProcessor's control portal.",
     )
+
+    @property
+    def system_name(self):
+        return self._meta.app_config.system_name
+
+    @property
+    def system_name_for_display(self):
+        return self._meta.app_config.system_name_for_display
+
+    @property
+    def enrollment_index_route(self):
+        return self._meta.app_config.enrollment_index_route
+
+    @property
+    def in_person_enrollment_index_route(self):
+        return self._meta.app_config.in_person_enrollment_index_route
 
     def __str__(self):
         environment_label = Environment(self.environment).label if self.environment else "unknown"
@@ -143,65 +160,30 @@ class TransitAgency(models.Model):
         return reverse(routes.ELIGIBILITY_INDEX)
 
     @property
-    def init_config(self):
-        if self.transit_processor_config and hasattr(self.transit_processor_config, "initconfig"):
-            return self.transit_processor_config.initconfig
-        else:
-            return None
-
-    @property
-    def littlepay_config(self):
-        if self.transit_processor_config and hasattr(self.transit_processor_config, "littlepayconfig"):
-            return self.transit_processor_config.littlepayconfig
-        else:
-            return None
-
-    @property
-    def switchio_config(self):
-        if hasattr(self, "transit_processor_config") and hasattr(self.transit_processor_config, "switchioconfig"):
-            return self.transit_processor_config.switchioconfig
-        else:
-            return None
-
-    @property
     def transit_processor(self):
-        if self.init_config:
-            return "init"
-        if self.littlepay_config:
-            return "littlepay"
-        elif self.switchio_config:
-            return "switchio"
-        else:
-            return None
+        return registry.get_transit_processor_config(self)
+
+    @property
+    def transit_processor_system_name(self):
+        return self.transit_processor.system_name if self.transit_processor else None
 
     @property
     def in_person_enrollment_index_route(self):
         """This Agency's in-person enrollment index route, based on its configured transit processor."""
-        if self.littlepay_config:
-            return routes.IN_PERSON_ENROLLMENT_LITTLEPAY_INDEX
-        elif self.switchio_config:
-            return routes.IN_PERSON_ENROLLMENT_SWITCHIO_INDEX
+        if self.transit_processor:
+            return self.transit_processor.in_person_enrollment_index_route
         else:
             raise ValueError(
-                (
-                    "TransitAgency must have either a LittlepayConfig or SwitchioConfig "
-                    "in order to show in-person enrollment index."
-                )
+                ("TransitAgency must have a transit processor configured in order to show in-person enrollment index.")
             )
 
     @property
     def enrollment_index_route(self):
         """This Agency's enrollment index route, based on its configured transit processor."""
-        if self.init_config:
-            return routes.ENROLLMENT_INIT_INDEX
-        elif self.littlepay_config:
-            return routes.ENROLLMENT_LITTLEPAY_INDEX
-        elif self.switchio_config:
-            return routes.ENROLLMENT_SWITCHIO_INDEX
+        if self.transit_processor:
+            return self.transit_processor.enrollment_index_route
         else:
-            raise ValueError(
-                "TransitAgency must have either a LittlepayConfig or SwitchioConfig in order to show enrollment index."
-            )
+            raise ValueError("TransitAgency must have a transit processor configured in order to show enrollment index.")
 
     @property
     def customer_service_group_name(self):
@@ -258,34 +240,16 @@ class TransitAgency(models.Model):
             )
             field_errors.update({k: ValidationError(message) for k, v in needed.items() if not v})
 
-            if self.init_config is None and self.littlepay_config is None and self.switchio_config is None:
-                non_field_errors.append(
-                    ValidationError("Must fill out configuration for either INIT, Littlepay, or Switchio.")
-                )
+            if self.transit_processor is None:
+                non_field_errors.append(ValidationError("Must fill out configuration for a transit processor."))
             else:
-                if self.init_config:
-                    try:
-                        self.init_config.clean()
-                    except ValidationError as e:
-                        message = "INIT configuration is missing fields that are required when this agency is active."
-                        message += f" Missing fields: {', '.join(e.error_dict.keys())}"
-                        non_field_errors.append(ValidationError(message))
-
-                if self.littlepay_config:
-                    try:
-                        self.littlepay_config.clean()
-                    except ValidationError as e:
-                        message = "Littlepay configuration is missing fields that are required when this agency is active."
-                        message += f" Missing fields: {', '.join(e.error_dict.keys())}"
-                        non_field_errors.append(ValidationError(message))
-
-                if self.switchio_config:
-                    try:
-                        self.switchio_config.clean()
-                    except ValidationError as e:
-                        message = "Switchio configuration is missing fields that are required when this agency is active."
-                        message += f" Missing fields: {', '.join(e.error_dict.keys())}"
-                        non_field_errors.append(ValidationError(message))
+                try:
+                    self.transit_processor.clean()
+                except ValidationError as e:
+                    display_name = self.transit_processor.system_name_for_display
+                    message = f"{display_name} configuration is missing fields that are required when this agency is active."
+                    message += f" Missing fields: {', '.join(e.error_dict.keys())}"
+                    non_field_errors.append(ValidationError(message))
 
         if self.pk:  # prohibit updating short_name with blank customer_service_group
             original_obj = TransitAgency.objects.get(pk=self.pk)

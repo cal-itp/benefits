@@ -12,7 +12,7 @@ from benefits.enrollment_switchio.enrollment import (
     get_registration_status,
     request_registration,
 )
-from benefits.routes import routes
+from benefits.enrollment_switchio.routes import routes
 
 
 @pytest.fixture

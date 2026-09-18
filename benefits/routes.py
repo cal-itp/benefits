@@ -85,31 +85,6 @@ class Routes:
         return "enrollment:index"
 
     @property
-    def ENROLLMENT_INIT_INDEX(self):
-        """Start of the enrollment phase, using INIT."""
-        return "init:index"
-
-    @property
-    def ENROLLMENT_LITTLEPAY_INDEX(self):
-        """Start of the enrollment phase, using Littlepay."""
-        return "littlepay:index"
-
-    @property
-    def ENROLLMENT_LITTLEPAY_TOKEN(self):
-        """Acquire a Littlepay card tokenization access token for enrollment."""
-        return "littlepay:token"
-
-    @property
-    def ENROLLMENT_SWITCHIO_INDEX(self):
-        """Start of the enrollment phase, using Switchio."""
-        return "switchio:index"
-
-    @property
-    def ENROLLMENT_SWITCHIO_GATEWAY_URL(self):
-        """Establish a registration request and receive back a tokenization gateway URL."""
-        return "switchio:gateway_url"
-
-    @property
     def ENROLLMENT_SUCCESS(self):
         """User has successfully enrolled and completed a Benefits flow."""
         return "enrollment:success"
@@ -148,26 +123,6 @@ class Routes:
     def IN_PERSON_ENROLLMENT(self):
         """In-person (e.g. agency assisted) enrollment"""
         return "in_person:enrollment"
-
-    @property
-    def IN_PERSON_ENROLLMENT_LITTLEPAY_INDEX(self):
-        """In-person (e.g. agency assisted) enrollment using Littlepay"""
-        return "in_person:enrollment_littlepay_index"
-
-    @property
-    def IN_PERSON_ENROLLMENT_SWITCHIO_INDEX(self):
-        """In-person (e.g. agency assisted) enrollment using Switchio"""
-        return "in_person:enrollment_switchio_index"
-
-    @property
-    def IN_PERSON_ENROLLMENT_LITTLEPAY_TOKEN(self):
-        """Acquire a Littlepay access token for in-person enrollment."""
-        return "in_person:enrollment_littlepay_token"
-
-    @property
-    def IN_PERSON_ENROLLMENT_SWITCHIO_GATEWAY_URL(self):
-        """Switchio Gateway for in-person (e.g. agency assisted) enrollment"""
-        return "in_person:enrollment_switchio_gateway"
 
     @property
     def IN_PERSON_SERVER_ERROR(self):

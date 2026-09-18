@@ -3,6 +3,7 @@ from django.urls import reverse
 
 import benefits.in_person.views as views
 from benefits.core import models
+from benefits.enrollment_switchio.routes import routes as switchio_routes
 from benefits.in_person import forms
 from benefits.routes import routes
 
@@ -275,7 +276,7 @@ class TestSwitchioGatewayUrlView:
 
     def test_view(self, view: views.SwitchioGatewayUrlView):
         assert view.enrollment_method == models.EnrollmentMethods.IN_PERSON
-        assert view.route_redirect == routes.IN_PERSON_ENROLLMENT_SWITCHIO_INDEX
+        assert view.route_redirect == switchio_routes.IN_PERSON_ENROLLMENT_SWITCHIO_INDEX
         assert view.route_system_error == routes.IN_PERSON_ENROLLMENT_SYSTEM_ERROR
         assert view.route_server_error == routes.IN_PERSON_SERVER_ERROR
 
@@ -299,7 +300,7 @@ class TestSwitchioEnrollmentIndexView:
         assert view.route_retry == routes.IN_PERSON_ENROLLMENT_RETRY
         assert view.route_server_error == routes.IN_PERSON_SERVER_ERROR
         assert view.route_system_error == routes.IN_PERSON_ENROLLMENT_SYSTEM_ERROR
-        assert view.route_tokenize_success == routes.IN_PERSON_ENROLLMENT_SWITCHIO_INDEX
+        assert view.route_tokenize_success == switchio_routes.IN_PERSON_ENROLLMENT_SWITCHIO_INDEX
         assert view.template_name == "in_person/enrollment/index_switchio.html"
 
     def test_get_verified_by(self, mocker, app_request, view: views.SwitchioEnrollmentIndexView):

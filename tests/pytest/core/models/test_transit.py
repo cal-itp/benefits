@@ -10,7 +10,6 @@ from benefits.core.models import (
     TransitProcessorConfig,
     agency_logo,
 )
-from benefits.routes import routes
 
 
 class TestCardSchemes:
@@ -152,7 +151,7 @@ class TestTransitAgency:
 
         non_field_errors = errors[NON_FIELD_ERRORS]
         assert len(non_field_errors) == 1
-        assert non_field_errors[0].message == "Must fill out configuration for either INIT, Littlepay, or Switchio."
+        assert non_field_errors[0].message == "Must fill out configuration for a transit processor."
 
     def test_clean_short_name_change_requires_group(self, model_TransitAgency_inactive):
         group = Group.objects.create(name="Existing Customer Service Group")
@@ -172,65 +171,20 @@ class TestTransitAgency:
             errors["customer_service_group"]
         )
 
-    def test_transit_processor_littlepay(self, model_TransitAgency, model_LittlepayConfig):
-        model_LittlepayConfig.transit_agency = model_TransitAgency
-        model_TransitAgency.save()
-
-        assert model_TransitAgency.transit_processor == "littlepay"
-
-    def test_transit_processor_switchio(self, model_TransitAgency, model_SwitchioConfig):
-        model_SwitchioConfig.transit_agency = model_TransitAgency
-        model_TransitAgency.save()
-
-        assert model_TransitAgency.transit_processor == "switchio"
-
-    def test_transit_processor_init(self, model_TransitAgency, model_InitConfig):
-        model_InitConfig.transit_agency = model_TransitAgency
-        model_TransitAgency.save()
-
-        assert model_TransitAgency.transit_processor == "init"
-
     def test_transit_processor_no_config(self, model_TransitAgency):
-        assert model_TransitAgency.transit_processor is None
-
-    def test_enrollment_index_route_littlepay(self, model_TransitAgency, model_LittlepayConfig):
-        model_LittlepayConfig.transit_agency = model_TransitAgency
-        model_TransitAgency.save()
-
-        assert model_TransitAgency.enrollment_index_route == routes.ENROLLMENT_LITTLEPAY_INDEX
-
-    def test_enrollment_index_route_switchio(self, model_TransitAgency, model_SwitchioConfig):
-        model_SwitchioConfig.transit_agency = model_TransitAgency
-        model_TransitAgency.save()
-
-        assert model_TransitAgency.enrollment_index_route == routes.ENROLLMENT_SWITCHIO_INDEX
+        assert model_TransitAgency.transit_processor_system_name is None
 
     def test_enrollment_index_route_no_config(self, model_TransitAgency):
         with pytest.raises(
             ValueError,
-            match="TransitAgency must have either a LittlepayConfig or SwitchioConfig in order to show enrollment index.",
+            match="TransitAgency must have a transit processor configured in order to show enrollment index.",
         ):
             model_TransitAgency.enrollment_index_route
-
-    def test_in_person_enrollment_index_route_littlepay(self, model_TransitAgency, model_LittlepayConfig):
-        model_LittlepayConfig.transit_agency = model_TransitAgency
-        model_TransitAgency.save()
-
-        assert model_TransitAgency.in_person_enrollment_index_route == routes.IN_PERSON_ENROLLMENT_LITTLEPAY_INDEX
-
-    def test_in_person_enrollment_index_route_switchio(self, model_TransitAgency, model_SwitchioConfig):
-        model_SwitchioConfig.transit_agency = model_TransitAgency
-        model_TransitAgency.save()
-
-        assert model_TransitAgency.in_person_enrollment_index_route == routes.IN_PERSON_ENROLLMENT_SWITCHIO_INDEX
 
     def test_in_person_enrollment_index_route_no_config(self, model_TransitAgency):
         with pytest.raises(
             ValueError,
-            match=(
-                "TransitAgency must have either a LittlepayConfig or SwitchioConfig "
-                "in order to show in-person enrollment index."
-            ),
+            match=("TransitAgency must have a transit processor configured " "in order to show in-person enrollment index."),
         ):
             model_TransitAgency.in_person_enrollment_index_route
 
