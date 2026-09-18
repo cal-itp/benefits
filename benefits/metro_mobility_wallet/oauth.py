@@ -40,14 +40,7 @@ class OAuthHooks(DefaultHooks):
     def failure_to_proof(cls, request):
         super().failure_to_proof(request)
         session.update(request, logged_in=True)
-        # QUESTION: Are they still considered "logged in" if they failed to prove?
-        # Kegan thinks the only purpose of this may be to show the "log out of Login.gov" link
-
         # analytics.failure_to_proof(request)
-
-        # Did they in fact "start eligibility", or does that only refer to the post-authentication piece?
-        # flow = session.flow(request)
-        # eligibility_analytics.started_eligibility(request, flow)
 
         return redirect("metro_mobility_wallet:index")
 
