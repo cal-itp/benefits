@@ -35,12 +35,26 @@ def test_pre_login(app_request, mocked_oauth_analytics_module):
     mocked_oauth_analytics_module.started_sign_in.assert_called_once()
 
 
-def test_cancel_login(app_request, mocked_oauth_analytics_module):
+def test_cancel_login_user_initiated(rf, mocked_oauth_analytics_module):
+    app_request = rf.get("/oauth/cancel", {"error": "access_denied"})
     result = OAuthHooks.cancel_login(app_request)
 
     assert result.status_code == 302
     assert result.url == reverse(routes.ELIGIBILITY_UNVERIFIED)
     mocked_oauth_analytics_module.canceled_sign_in.assert_called_once_with(app_request)
+
+
+def test_cancel_login_not_user_initiated(rf, mocked_oauth_analytics_module):
+    app_request = rf.get(
+        "/oauth/cancel", {"error": "temporarily_unavailable", "error_description": "more details about the error"}
+    )
+    result = OAuthHooks.cancel_login(app_request)
+
+    assert result.status_code == 302
+    assert result.url == reverse(routes.ELIGIBILITY_UNVERIFIED)
+    mocked_oauth_analytics_module.error.assert_called_once_with(
+        app_request, message="more details about the error", operation="temporarily_unavailable"
+    )
 
 
 def test_pre_logout(app_request, mocked_oauth_analytics_module):

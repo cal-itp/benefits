@@ -20,7 +20,12 @@ class OAuthHooks(DefaultHooks):
     @classmethod
     def cancel_login(cls, request):
         super().cancel_login(request)
-        analytics.canceled_sign_in(request)
+        error_code = request.GET.get("error")
+        if error_code == "access_denied":
+            analytics.canceled_sign_in(request)
+        else:
+            error_description = request.GET.get("error_description")
+            analytics.error(request, message=error_description, operation=error_code)
         return redirect(routes.ELIGIBILITY_UNVERIFIED)
 
     @classmethod
