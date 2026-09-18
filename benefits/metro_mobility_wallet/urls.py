@@ -33,23 +33,6 @@ urlpatterns = [
     # /metro-mobility-wallet/
     path("", views.IndexView.as_view(), name="index"),
     #
-    # /metro-mobility-wallet/eligibility/...
-    path("eligibility", views.IndexView.as_view(), name="eligbility"),
-    path("eligibility/start", views.EligibilityStartView.as_view(), name="eligbility_start"),
-    path("eligibility/confirm", views.EligibilityConfirmView.as_view(), name="eligbility_confirm"),
-    path("eligibility/unverified", views.EligibilityUnverifiedView.as_view(), name="eligbility_unverified"),
-    #
-    # /metro-mobility-wallet/enrollment/...
-    path("enrollment", views.IndexView.as_view(), name=routes.name("enrollment_index")),
-    # path(
-    #     "enrollment/error/reenrollment",
-    #     views.ReenrollmentErrorView.as_view(),
-    #     name=routes.name("enrollment_reenrollment_error"),
-    # ),
-    # path("enrollment/retry", views.RetryView.as_view(), name=routes.name("enrollment_retry")),
-    # path("enrollment/success", views.SuccessView.as_view(), name=routes.name("enrollment_success")),
-    # path("enrollment/error", views.SystemErrorView.as_view(), name=routes.name(routes.ENROLLMENT_SYSTEM_ERROR)),
-    #
     # This results in OAuth URLs in the form `metro-mobility-wallet/oauth/*` with names of `metro_mobility_wallet:cdt:*`
     path("oauth/", include((oauth_patterns, "cdt"), namespace="cdt")),
 ]

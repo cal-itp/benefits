@@ -18,7 +18,7 @@ class OAuthHooks(DefaultHooks):
     def cancel_login(cls, request):
         super().cancel_login(request)
         # analytics.canceled_sign_in(request)
-        return redirect("metro_mobility_wallet:eligbility_unverified")
+        return redirect("metro_mobility_wallet:index")
 
     @classmethod
     def pre_logout(cls, request):
@@ -49,7 +49,7 @@ class OAuthHooks(DefaultHooks):
         # flow = session.flow(request)
         # eligibility_analytics.started_eligibility(request, flow)
 
-        return redirect("metro_mobility_wallet:failure_to_proof")
+        return redirect("metro_mobility_wallet:index")
 
     @classmethod
     def claims_verified_eligible(cls, request, claims_request, claims_result):
@@ -63,7 +63,7 @@ class OAuthHooks(DefaultHooks):
         session.update(request, eligible=True)
         # eligibility_analytics.returned_success(request, flow)
 
-        return redirect("metro_mobility_wallet:enrollment_index")
+        return redirect("metro_mobility_wallet:index")
 
     @classmethod
     def claims_verified_not_eligible(cls, request, claims_request, claims_result):
@@ -74,7 +74,7 @@ class OAuthHooks(DefaultHooks):
         # flow = session.flow(request)
         # eligibility_analytics.started_eligibility(request, flow)
 
-        return redirect("metro_mobility_wallet:eligbility_unverified")
+        return redirect("metro_mobility_wallet:index")
 
     @classmethod
     def system_error(cls, request, exception, operation):
