@@ -99,7 +99,7 @@
 | benefits/oauth/\_\_init\_\_.py                                                           |        0 |        0 |        0 |        0 |    100% |           |
 | benefits/oauth/analytics.py                                                              |       46 |        0 |        4 |        0 |    100% |           |
 | benefits/oauth/apps.py                                                                   |        5 |        0 |        0 |        0 |    100% |           |
-| benefits/oauth/hooks.py                                                                  |       56 |        0 |        0 |        0 |    100% |           |
+| benefits/oauth/hooks.py                                                                  |       60 |        0 |        2 |        0 |    100% |           |
 | benefits/oauth/middleware.py                                                             |       23 |        0 |        6 |        0 |    100% |           |
 | benefits/oauth/urls.py                                                                   |       12 |        0 |        0 |        0 |    100% |           |
 | benefits/oauth/views.py                                                                  |        8 |        0 |        0 |        0 |    100% |           |
@@ -110,7 +110,7 @@
 | benefits/urls.py                                                                         |       51 |       11 |       10 |        4 |     72% |45-\>48, 48-\>87, 62, 65, 68, 71, 74-76, 88-90, 93-\>105, 99-101 |
 | benefits/views.py                                                                        |       33 |        0 |        0 |        0 |    100% |           |
 | benefits/wsgi.py                                                                         |        4 |        4 |        0 |        0 |      0% |     10-16 |
-| **TOTAL**                                                                                | **3529** |  **144** |  **594** |   **57** | **94%** |           |
+| **TOTAL**                                                                                | **3533** |  **144** |  **596** |   **57** | **94%** |           |
 
 
 ## Setup coverage badge
