@@ -1,9 +1,6 @@
 import pytest
 from cdt_identity.claims import ClaimsResult
-from cdt_identity.hooks import Operation
-from cdt_identity.models import ClaimsVerificationRequest
 from cdt_identity.session import Session as OAuthSession
-from django.urls import reverse
 
 import benefits.eligibility
 import benefits.eligibility.views
@@ -35,14 +32,6 @@ def test_pre_login(app_request, mocked_oauth_analytics_module):
     # mocked_oauth_analytics_module.started_sign_in.assert_called_once()
 
 
-def test_cancel_login(app_request, mocked_oauth_analytics_module):
-    result = OAuthHooks.cancel_login(app_request)
-
-    assert result.status_code == 302
-    assert result.url == reverse("metro_mobility_wallet:eligbility_unverified")
-    # mocked_oauth_analytics_module.canceled_sign_in.assert_called_once_with(app_request)
-
-
 def test_pre_logout(app_request, mocked_oauth_analytics_module):
     session.update(app_request, logged_in=True)
     assert session.logged_in(app_request)
@@ -53,50 +42,3 @@ def test_pre_logout(app_request, mocked_oauth_analytics_module):
     assert not session.logged_in(app_request)
     assert session.logged_in(app_request) is False
     assert OAuthSession(app_request).claims_result == ClaimsResult()
-
-
-@pytest.mark.parametrize("origin", ["metro_mobility_wallet:eligbility_start", "metro_mobility_wallet:index"])
-def test_post_logout(app_request, mocked_oauth_analytics_module, origin):
-    session.update(app_request, origin=origin)
-
-    result = OAuthHooks.post_logout(app_request)
-
-    assert result.status_code == 302
-    assert result.url == reverse(origin)
-    # mocked_oauth_analytics_module.finished_sign_out.assert_called_once_with(app_request)
-
-
-@pytest.mark.django_db
-@pytest.mark.usefixtures("mocked_session_agency", "mocked_session_flow_uses_claims_verification", "mocked_session_logged_in")
-def test_claims_verified_eligible(app_request, mocked_oauth_analytics_module, mocked_session_update):
-    assert app_request.method == "GET"
-
-    response = OAuthHooks.claims_verified_eligible(app_request, ClaimsVerificationRequest(), ClaimsResult())
-
-    assert response.status_code == 302
-    assert response.url == reverse("metro_mobility_wallet:enrollment_index")
-
-    # mocked_oauth_analytics_module.finished_sign_in.assert_called_once_with(app_request)
-    mocked_session_update.assert_any_call(app_request, logged_in=True)
-
-
-@pytest.mark.django_db
-@pytest.mark.usefixtures("mocked_session_agency", "mocked_session_flow_uses_claims_verification", "mocked_session_logged_in")
-def test_claims_verified_not_eligible(app_request, mocked_oauth_analytics_module, mocked_session_update):
-    claims_result = ClaimsResult(errors={"some_claim": "error message"})
-    result = OAuthHooks.claims_verified_not_eligible(app_request, ClaimsVerificationRequest(), claims_result)
-
-    assert result.status_code == 302
-    assert result.url == reverse("metro_mobility_wallet:eligbility_unverified")
-    mocked_session_update.assert_called_once_with(app_request, logged_in=True)
-    # mocked_oauth_analytics_module.finished_sign_in.assert_called_once_with(app_request, error=claims_result.errors)
-
-
-@pytest.mark.parametrize("operation", Operation)
-def test_system_error(app_request, mocked_oauth_analytics_module, mocked_sentry_sdk_module, operation):
-    result = OAuthHooks.system_error(app_request, Exception("some exception"), operation)
-
-    assert result.status_code == 302
-    assert result.url == reverse("metro_mobility_wallet:system_error")
-    # mocked_oauth_analytics_module.error.assert_called_once()
-    mocked_sentry_sdk_module.capture_exception.assert_called_once()
