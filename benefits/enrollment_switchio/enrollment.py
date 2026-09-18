@@ -8,7 +8,7 @@ from requests import HTTPError
 
 from benefits.core import session
 from benefits.core.models.enrollment import EnrollmentFlow
-from benefits.enrollment.enrollment import Status, _calculate_expiry, _is_expired, _is_within_reenrollment_window
+from benefits.enrollment.enrollment import Status, resolve_enrollment_decision
 from benefits.enrollment_switchio.api import (
     EnrollmentClient,
     EshopResponseMode,
@@ -152,6 +152,11 @@ def get_latest_active_token_value(tokens):
 def enroll(
     request, switchio_config: SwitchioConfig, flow: EnrollmentFlow, group: SwitchioGroup, token: str
 ) -> tuple[Status, Exception]:
+    """
+    Attempts to enroll the token into the group.
+
+    Returns a tuple containing a Status indicating the result of the attempt and any exception that occurred.
+    """
     client = EnrollmentClient(
         api_url=switchio_config.enrollment_api_base_url,
         authorization_header_value=switchio_config.enrollment_api_authorization_header,
@@ -165,62 +170,32 @@ def enroll(
 
     exception = None
     try:
-        group = _get_group_for_token(client, pto_id, group_id, token)
-        already_enrolled = group is not None
+        token_group = _get_group_for_token(client, pto_id, group_id, token)
+        already_enrolled = token_group is not None
+        existing_expiry = token_group.expiresAt if already_enrolled else None
 
-        if flow.supports_expiration:
-            # set expiry on session
-            if already_enrolled and group.expiresAt is not None:
-                session.update(request, enrollment_expiry=group.expiresAt)
-            else:
-                session.update(request, enrollment_expiry=_calculate_expiry(flow.expiration_days))
+        decision = resolve_enrollment_decision(flow, already_enrolled, existing_expiry)
+        status = decision.status
 
-            if not already_enrolled:
-                # enroll user with an expiration date, return success
-                client.add_group_to_token(pto_id, group_id, token, expiry=session.enrollment_expiry(request))
-                status = Status.SUCCESS
-            else:  # already_enrolled
-                if group.expiresAt is None:
-                    # update expiration of existing enrollment, return success
-                    client.add_group_to_token(pto_id, group_id, token, expiry=session.enrollment_expiry(request))
-                    status = Status.SUCCESS
+        if decision.expiry_to_store is not None:
+            session.update(request, enrollment_expiry=decision.expiry_to_store)
+
+        if status is Status.SUCCESS:
+            if decision.should_remove_expiry:
+                # when expiry is omitted, Switchio will set any existing expiration date to null
+                client.add_group_to_token(pto_id=pto_id, group_id=group_id, token=token, timeout=settings.REQUESTS_TIMEOUT)
+            elif decision.should_enroll:
+                if decision.expiry_to_send is None:
+                    client.add_group_to_token(pto_id=pto_id, group_id=group_id, token=token, timeout=settings.REQUESTS_TIMEOUT)
                 else:
-                    is_expired = _is_expired(group.expiresAt)
-                    is_within_reenrollment_window = _is_within_reenrollment_window(
-                        group.expiresAt, session.enrollment_reenrollment(request)
-                    )
-
-                    if is_expired or is_within_reenrollment_window:
-                        # update expiration of existing enrollment, return success
-                        client.add_group_to_token(pto_id, group_id, token, expiry=session.enrollment_expiry(request))
-                        status = Status.SUCCESS
-                    else:
-                        # re-enrollment error, return enrollment error with expiration and reenrollment_date
-                        status = Status.REENROLLMENT_ERROR
-        else:  # flow does not support expiration
-            if not already_enrolled:
-                # enroll user with no expiration date, return success
-                client.add_group_to_token(
-                    pto_id=pto_id,
-                    group_id=group_id,
-                    token=token,
-                    timeout=settings.REQUESTS_TIMEOUT,
-                )
-                status = Status.SUCCESS
-            else:  # already enrolled
-                if group.expiresAt is None:
-                    # no action, return success
-                    status = Status.SUCCESS
-                else:
-                    # remove expiration date, return success
-                    # (when you don't include an expiration date, Switchio will set the expiration date to null.)
                     client.add_group_to_token(
                         pto_id=pto_id,
                         group_id=group_id,
                         token=token,
+                        expiry=decision.expiry_to_send,
                         timeout=settings.REQUESTS_TIMEOUT,
                     )
-                    status = Status.SUCCESS
+
     except HTTPError as e:
         if e.response.status_code >= 500:
             status = Status.SYSTEM_ERROR

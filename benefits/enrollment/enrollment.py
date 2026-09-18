@@ -1,3 +1,4 @@
+from dataclasses import dataclass
 from datetime import datetime, timedelta
 from enum import Enum
 
@@ -26,24 +27,88 @@ class Status(Enum):
     REENROLLMENT_ERROR = 4
 
 
+@dataclass
+class EnrollmentDecision:
+    status: Status
+    expiry_to_store: datetime | None = None
+    expiry_to_send: datetime | None = None
+    should_enroll: bool = False
+    should_remove_expiry: bool = False
+
+
 def _is_expired(expiry_date: datetime):
-    """Returns whether the passed in datetime is expired or not."""
+    """Returns whether the given datetime is in the past or not."""
     return expiry_date <= timezone.now()
 
 
-def _is_within_reenrollment_window(expiry_date: datetime, enrollment_reenrollment_date: datetime):
-    """Returns if we are currently within the reenrollment window."""
-    return enrollment_reenrollment_date <= timezone.now() < expiry_date
+def _is_within_reenrollment_window(expiry_date: datetime, reenrollment_date: datetime):
+    """Returns if the current datetime is between the reenrollment_date and the expiry_date (the reenrollment window)."""
+    return reenrollment_date <= timezone.now() < expiry_date
 
 
 def _calculate_expiry(expiration_days: int):
-    """Returns the expiry datetime, which should be midnight in our configured timezone of the (N + 1)th day from now,
+    """Returns the expiry datetime, which should be midnight in the configured timezone of the (N + 1)th day from now,
     where N is expiration_days."""
     default_time_zone = timezone.get_default_timezone()
     expiry_date = timezone.localtime(timezone=default_time_zone) + timedelta(days=expiration_days + 1)
     expiry_datetime = expiry_date.replace(hour=0, minute=0, second=0, microsecond=0)
 
     return expiry_datetime
+
+
+def _calculate_reenrollment_start(expiry: datetime, reenrollment_days: int) -> datetime:
+    """Returns the first date at which reenrollment can occur (renenrollment_days before the expiry)."""
+    return expiry - timedelta(days=reenrollment_days)
+
+
+def resolve_enrollment_decision(
+    flow: models.EnrollmentFlow, already_enrolled: bool, existing_expiry: datetime | None
+) -> EnrollmentDecision:
+    """
+    Make a (provider-agnostic) enrollment decision given the inputs based on:
+
+    - If the flow supports expiration or not
+    - If the user is already enrolled or not
+    - If the enrollment has an existing expiry or not
+    - If the existing expiry is valid, within the reenrollment window, or expired
+    """
+    # flow does not support expiration
+    if not flow.supports_expiration:
+        if not already_enrolled:
+            # not yet enrolled
+            return EnrollmentDecision(status=Status.SUCCESS, should_enroll=True)
+
+        if existing_expiry is not None:
+            # already enrolled with existing expiry: remove
+            return EnrollmentDecision(status=Status.SUCCESS, should_remove_expiry=True)
+
+        # already enrolled without existing expiry: no-op
+        return EnrollmentDecision(status=Status.SUCCESS)
+
+    # flow supports expiration
+    new_expiry = _calculate_expiry(flow.expiration_days)
+
+    # not yet enrolled and/or no existing expiry
+    if not already_enrolled or existing_expiry is None:
+        return EnrollmentDecision(
+            status=Status.SUCCESS,
+            expiry_to_store=new_expiry,
+            expiry_to_send=new_expiry,
+            should_enroll=True,
+        )
+
+    # already enrolled, with expired enrollment or within reenrollment window
+    reenrollment_start = _calculate_reenrollment_start(existing_expiry, flow.expiration_reenrollment_days)
+    if _is_expired(existing_expiry) or _is_within_reenrollment_window(existing_expiry, reenrollment_start):
+        return EnrollmentDecision(
+            status=Status.SUCCESS,
+            expiry_to_store=new_expiry,
+            expiry_to_send=new_expiry,
+            should_enroll=True,
+        )
+
+    # already enrolled, not expired and not within reenrollment window
+    return EnrollmentDecision(status=Status.REENROLLMENT_ERROR, expiry_to_store=existing_expiry)
 
 
 def handle_enrollment_results(
@@ -58,6 +123,10 @@ def handle_enrollment_results(
     card_category: str = None,
     card_scheme: str = None,
 ):
+    """
+    Handle the results of a provider enrollment call by sending the appropriate analytics events,
+    and redirecting the user to the correct route.
+    """
     flow = session.flow(request)
     agency = session.agency(request)
     group_id = str(session.group(request).group_id)  # needs to be a string for the API call
