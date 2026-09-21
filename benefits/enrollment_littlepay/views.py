@@ -94,6 +94,7 @@ class IndexView(AgencySessionRequiredMixin, EligibleSessionRequiredMixin, IndexC
                 "form_system_error": tokenize_system_error_form.id,
                 "overlay_language": self._get_overlay_language(request.LANGUAGE_CODE),
                 "card_schemes": json.dumps(agency.supported_card_schemes),
+                "routes": routes.to_dict(),
             }
         )
 

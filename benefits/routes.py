@@ -150,8 +150,12 @@ class Routes:
         return "in_person:system_error"
 
     def to_dict(self) -> dict[str, str]:
-        """Get a mapping of property name --> value for each `@property` in the Routes collection."""
-        return {prop: str(getattr(self, prop)) for prop in dir(Routes) if isinstance(getattr(Routes, prop), property)}
+        """Get a mapping of property name --> value for each `@property` defined in this class."""
+        return {
+            prop: str(getattr(self, prop))
+            for prop in dir(self.__class__)
+            if isinstance(getattr(self.__class__, prop), property)
+        }
 
     @staticmethod
     def name(route: str) -> str:

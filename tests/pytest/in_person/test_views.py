@@ -3,6 +3,7 @@ from django.urls import reverse
 
 import benefits.in_person.views as views
 from benefits.core import models
+from benefits.enrollment_littlepay.routes import routes as littlepay_routes
 from benefits.enrollment_switchio.routes import routes as switchio_routes
 from benefits.in_person import forms
 from benefits.routes import routes
@@ -184,6 +185,9 @@ class TestLittlepayEnrollmentView:
         context = view.get_context_data()
 
         assert "title" in context
+        assert "routes" in context
+        routes_context = context["routes"]
+        assert routes_context["IN_PERSON_ENROLLMENT_LITTLEPAY_TOKEN"] == littlepay_routes.IN_PERSON_ENROLLMENT_LITTLEPAY_TOKEN
 
 
 @pytest.mark.django_db
@@ -312,6 +316,12 @@ class TestSwitchioEnrollmentIndexView:
         context = view.get_context_data()
 
         assert "title" in context
+        assert "routes" in context
+        routes_context = context["routes"]
+        assert (
+            routes_context["IN_PERSON_ENROLLMENT_SWITCHIO_GATEWAY_URL"]
+            == switchio_routes.IN_PERSON_ENROLLMENT_SWITCHIO_GATEWAY_URL
+        )
 
     def test_get_context_data__pre_tokenize(self, view: views.SwitchioEnrollmentIndexView):
         context = view.get_context_data()

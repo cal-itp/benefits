@@ -62,6 +62,11 @@ class TestIndexView:
         assert "name" in transit_processor_context
         assert "website" in transit_processor_context
 
+        assert "locale" in context
+        assert "routes" in context
+        routes_context = context["routes"]
+        assert routes_context["ENROLLMENT_SWITCHIO_GATEWAY_URL"] == routes.ENROLLMENT_SWITCHIO_GATEWAY_URL
+
     @pytest.mark.parametrize("LANGUAGE_CODE, expected_locale", [("en", "en"), ("es", "es"), ("unsupported", "en")])
     def test_get_locale(self, view, LANGUAGE_CODE, expected_locale):
         locale = view._get_locale(LANGUAGE_CODE)

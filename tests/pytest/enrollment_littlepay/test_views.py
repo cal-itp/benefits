@@ -250,6 +250,10 @@ class TestIndexView:
         parsed_card_types = json.loads(context["card_schemes"])
         assert parsed_card_types == [CardSchemes.DISCOVER, CardSchemes.AMEX]
 
+        assert "routes" in context
+        routes_context = context["routes"]
+        assert routes_context["ENROLLMENT_LITTLEPAY_TOKEN"] == routes.ENROLLMENT_LITTLEPAY_TOKEN
+
     @pytest.mark.parametrize(
         "LANGUAGE_CODE, expected_overlay_language", [("en", "en"), ("es", "es-419"), ("unsupported", "en")]
     )

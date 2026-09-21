@@ -58,6 +58,7 @@ class IndexView(AgencySessionRequiredMixin, EligibleSessionRequiredMixin, IndexC
                 "enrollment_method": self.enrollment_method,
                 "transit_processor": {"name": "Switchio", "website": "https://switchio.com/transport/"},
                 "locale": self._get_locale(request.LANGUAGE_CODE),
+                "routes": routes.to_dict(),
             }
         )
         return context
