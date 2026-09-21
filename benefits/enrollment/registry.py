@@ -8,10 +8,11 @@ class TransitProcessorRegistry:
 
     entries = []
 
-    def add(self, system_name):
-        self.entries.append(system_name)
+    @classmethod
+    def add(cls, system_name):
+        cls.entries.append(system_name)
         logger.debug(f'Registered "{system_name}" as a transit processor')
-        logger.debug(f"Currently registered transit processors: {self.entries}")
+        logger.debug(f"Currently registered transit processors: {cls.entries}")
 
 
 # helper methods
@@ -19,14 +20,7 @@ class TransitProcessorRegistry:
 
 def get_transit_processor_config(transit_agency):
     if transit_agency.transit_processor_config:
-        from django.apps import apps
-
-        from benefits.enrollment.apps import EnrollmentAppConfig
-
-        enrollment_app_config = apps.get_app_config(EnrollmentAppConfig.label)
-        registry = enrollment_app_config.transit_processors
-
-        for system_name in registry.entries:
+        for system_name in TransitProcessorRegistry.entries:
             transit_processor_config = get_transit_processor_config_for(transit_agency, system_name)
             if transit_processor_config:
                 return transit_processor_config

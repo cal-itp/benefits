@@ -15,19 +15,14 @@ class EnrollmentAppConfig(AppConfig):
     name = "benefits.enrollment"
     label = "enrollment"
     verbose_name = "Benefits Enrollment"
-    transit_processors = TransitProcessorRegistry()
 
     def ready(self):
-        logger.debug(f"Currently registered transit processors: {self.transit_processors.entries}")
+        logger.debug(f"Currently registered transit processors: {TransitProcessorRegistry.entries}")
 
 
 class TransitProcessorAppConfigMixin:
     def ready(self):
-        from django.apps import apps
-
-        enrollment_app_config = apps.get_app_config(EnrollmentAppConfig.label)
-        transit_processors = enrollment_app_config.transit_processors
-        transit_processors.add(self.system_name)
+        TransitProcessorRegistry.add(self.system_name)
         super().ready()
 
     @property
