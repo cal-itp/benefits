@@ -62,7 +62,7 @@ repos:
         args: ["--profile", "black"]
 
   - repo: https://github.com/djlint/djLint
-    rev: v1.46.1
+    rev: v1.46.2
     hooks:
       - id: djlint-reformat-django
         exclude: "docs/reference/newsletter-archive/exports"
