@@ -12,9 +12,7 @@ from cdt_identity.claims import ClaimsResult
 from cdt_identity.session import Session as OAuthSession
 from django.urls import reverse
 
-from benefits.enrollment_littlepay.models import LittlepayGroup
 from benefits.enrollment_littlepay.session import Session as LittlepaySession
-from benefits.enrollment_switchio.models import SwitchioGroup
 from benefits.enrollment_switchio.session import Session as SwitchioSession
 from benefits.routes import routes
 
@@ -149,14 +147,8 @@ def flow(request) -> models.EnrollmentFlow | None:
 def group(request) -> models.EnrollmentGroup | None:
     """Get the EnrollmentGroup from the request's session, or None"""
 
-    if agency(request):
-        match agency(request).transit_processor_system_name:
-            case "littlepay":
-                group_model = LittlepayGroup
-            case "switchio":
-                group_model = SwitchioGroup
-            case _:
-                return None
+    if agency(request) and agency(request).transit_processor:
+        group_model = agency(request).transit_processor.group_model
 
         try:
             return group_model.by_id(request.session[_GROUP])

@@ -18,7 +18,7 @@ class EnrollmentAppConfig(AppConfig):
     transit_processors = TransitProcessorRegistry()
 
     def ready(self):
-        logger.debug(f"Currently registered transit processors: {list(self.transit_processors.entries.keys())}")
+        logger.debug(f"Currently registered transit processors: {self.transit_processors.entries}")
 
 
 class TransitProcessorAppConfigMixin:
@@ -27,8 +27,13 @@ class TransitProcessorAppConfigMixin:
 
         enrollment_app_config = apps.get_app_config(EnrollmentAppConfig.label)
         transit_processors = enrollment_app_config.transit_processors
-        transit_processors.add(self.system_name, self.module)
+        transit_processors.add(self.system_name)
         super().ready()
+
+    @property
+    def group_model(self):
+        group_model_name = self.system_name.capitalize() + "Group"
+        return getattr(self.models_module, group_model_name)
 
     @property
     def system_name_for_display(self):

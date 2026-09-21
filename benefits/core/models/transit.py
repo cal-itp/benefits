@@ -63,6 +63,11 @@ class TransitProcessorConfig(models.Model):
         return self._meta.app_config.system_name_for_display
 
     @property
+    def group_model(self):
+        self._meta.app_config
+        return self._meta.app_config.group_model
+
+    @property
     def enrollment_index_route(self):
         return self._meta.app_config.enrollment_index_route
 
