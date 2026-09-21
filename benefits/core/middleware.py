@@ -158,8 +158,7 @@ class ResetUnsupportedLanguage(MiddlewareMixin):
     """
 
     def process_request(self, request):
-        referer = request.META.get("HTTP_REFERER", "")
-        is_a_mmw_page = "metro-mobility-wallet" in request.path or "metro-mobility-wallet" in referer
+        is_a_mmw_page = "metro-mobility-wallet" in request.path
         if not is_a_mmw_page:
             logger.debug(f"MMW check triggered for path: {request.path}")
             current_lang = translation.get_language()
