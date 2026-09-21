@@ -56,7 +56,7 @@ def test_calculate_expiry_specific_date(mocker):
     )
 
 
-def test_calculate_reenrollment_deadline():
+def test_calculate_reenrollment_start():
     expiry_date = timezone.datetime(2026, 9, 16)
     reenrollment_days = 14
 
@@ -354,7 +354,7 @@ def test_EnrollmentDecision_defaults(status):
         (True, timezone.datetime(2026, 9, 15), False, True),
     ],
 )
-def test_resolve_expiry_decision__expiration_not_supported(
+def test_resolve_enrollment_decision__expiration_not_supported(
     model_EnrollmentFlow_does_not_support_expiration, already_enrolled, existing_expiry, should_enroll, should_remove_expiry
 ):
     decision = resolve_enrollment_decision(model_EnrollmentFlow_does_not_support_expiration, already_enrolled, existing_expiry)
