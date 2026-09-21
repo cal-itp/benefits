@@ -7,7 +7,7 @@ from django.db import models
 from django.urls import reverse
 from multiselectfield import MultiSelectField
 
-from benefits.enrollment import registry
+from benefits.enrollment.registry import TransitProcessorRegistry
 from benefits.routes import routes
 
 from .common import Environment
@@ -166,7 +166,7 @@ class TransitAgency(models.Model):
 
     @property
     def transit_processor(self):
-        return registry.get_transit_processor_config(self)
+        return TransitProcessorRegistry.get_transit_processor_config(self)
 
     @property
     def transit_processor_system_name(self):
