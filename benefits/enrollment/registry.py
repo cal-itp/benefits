@@ -17,7 +17,7 @@ class TransitProcessorRegistry:
     @classmethod
     def get_transit_processor_config(cls, transit_agency):
         if transit_agency.transit_processor_config:
-            for system_name in TransitProcessorRegistry.entries:
+            for system_name in cls.entries:
                 transit_processor_config = cls.get_transit_processor_config_for(transit_agency, system_name)
                 if transit_processor_config:
                     return transit_processor_config
