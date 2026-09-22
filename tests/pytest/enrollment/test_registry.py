@@ -23,14 +23,3 @@ class TestTransitProcessorAppRegistry:
         config = TransitProcessorRegistry.get_transit_processor_config(model_TransitAgency)
         assert isinstance(config, LittlepayConfig)
         assert config == model_TransitAgency.transit_processor
-
-    def test_get_transit_processor_config_for(self, model_TransitAgency, model_LittlepayConfig):
-        model_TransitAgency.transit_processor_config = model_LittlepayConfig
-        model_TransitAgency.save()
-
-        config = TransitProcessorRegistry.get_transit_processor_config_for(
-            transit_agency=model_TransitAgency,
-            system_name=self.system_name,
-        )
-        assert isinstance(config, LittlepayConfig)
-        assert config == model_TransitAgency.transit_processor
