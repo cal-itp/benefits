@@ -4,31 +4,33 @@ from benefits.enrollment.registry import TransitProcessorRegistry
 from benefits.enrollment_littlepay.models import LittlepayConfig
 
 
-def test_TransitProcessorRegistry_add():
-    system_name = "acme"
-    TransitProcessorRegistry.add(system_name)
-
-    assert system_name in TransitProcessorRegistry.entries
-
-
 @pytest.mark.django_db
-def test_TransitProcessorRegistry_get_transit_processor_config(model_TransitAgency, model_LittlepayConfig):
-    model_TransitAgency.transit_processor_config = model_LittlepayConfig
-    model_TransitAgency.save()
+class TestTransitProcessorAppRegistry:
 
-    config = TransitProcessorRegistry.get_transit_processor_config(model_TransitAgency)
-    assert isinstance(config, LittlepayConfig)
-    assert config == model_TransitAgency.transit_processor
+    @pytest.fixture(autouse=True)
+    def setup(self):
+        self.system_name = "littlepay"
 
+    def test_add(self):
+        TransitProcessorRegistry.add(self.system_name)
 
-@pytest.mark.django_db
-def test_TransitProcessorRegistry_get_transit_processor_config_for(model_TransitAgency, model_LittlepayConfig):
-    model_TransitAgency.transit_processor_config = model_LittlepayConfig
-    model_TransitAgency.save()
+        assert self.system_name in TransitProcessorRegistry.entries
 
-    config = TransitProcessorRegistry.get_transit_processor_config_for(
-        transit_agency=model_TransitAgency,
-        system_name="littlepay",
-    )
-    assert isinstance(config, LittlepayConfig)
-    assert config == model_TransitAgency.transit_processor
+    def test_get_transit_processor_config(self, model_TransitAgency, model_LittlepayConfig):
+        model_TransitAgency.transit_processor_config = model_LittlepayConfig
+        model_TransitAgency.save()
+
+        config = TransitProcessorRegistry.get_transit_processor_config(model_TransitAgency)
+        assert isinstance(config, LittlepayConfig)
+        assert config == model_TransitAgency.transit_processor
+
+    def test_get_transit_processor_config_for(self, model_TransitAgency, model_LittlepayConfig):
+        model_TransitAgency.transit_processor_config = model_LittlepayConfig
+        model_TransitAgency.save()
+
+        config = TransitProcessorRegistry.get_transit_processor_config_for(
+            transit_agency=model_TransitAgency,
+            system_name=self.system_name,
+        )
+        assert isinstance(config, LittlepayConfig)
+        assert config == model_TransitAgency.transit_processor
