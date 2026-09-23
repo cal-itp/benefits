@@ -3,6 +3,7 @@ from django.forms import ValidationError
 
 from benefits.core.models import SecretNameField
 from benefits.enrollment_init.models import InitConfig, InitGroup
+from benefits.enrollment_init.routes import routes
 
 
 @pytest.mark.django_db
@@ -63,6 +64,26 @@ def test_InitConfig_registration_api_password(mocker, model_InitConfig):
 
     assert result == pw
     mocked_secret_value.assert_called_once_with(model_InitConfig)
+
+
+@pytest.mark.django_db
+def test_InitConfig_system_name(model_InitConfig):
+    assert model_InitConfig.system_name == "init"
+
+
+@pytest.mark.django_db
+def test_InitConfig_system_name_for_display(model_InitConfig):
+    assert model_InitConfig.system_name_for_display == "INIT"
+
+
+@pytest.mark.django_db
+def test_InitConfig_enrollment_index_route(model_InitConfig):
+    assert model_InitConfig.enrollment_index_route == routes.ENROLLMENT_INIT_INDEX
+
+
+@pytest.mark.django_db
+def test_InitConfig_in_person_enrollment_index_route(model_InitConfig):
+    assert model_InitConfig.in_person_enrollment_index_route is None
 
 
 @pytest.mark.django_db
