@@ -15,8 +15,7 @@ def _agency_context(agency: models.TransitAgency):
     agency_context = {
         "entrypoint_url": agency.entrypoint_url,
         "info_url": agency.info_url,
-        "init_config": agency.init_config,
-        "littlepay_config": agency.littlepay_config,
+        "transit_processor": agency.transit_processor_system_name,
         "long_name": agency.long_name,
         "phone": agency.phone,
         "short_name": agency.short_name,
@@ -24,7 +23,6 @@ def _agency_context(agency: models.TransitAgency):
         "supported_card_schemes": [
             models.CardSchemes.CHOICES.get(card_scheme) for card_scheme in agency.supported_card_schemes
         ],
-        "switchio_config": agency.switchio_config,
     }
 
     if agency.logo:

@@ -46,7 +46,7 @@ def test_returned_error(app_request, mocker, model_LittlepayGroup, model_Transit
         "error message",
         agency=agency,
         enrollment_group=str(model_LittlepayGroup.group_id),
-        transit_processor=agency.transit_processor,
+        transit_processor=agency.transit_processor_system_name,
     )
 
     # event should have been sent
@@ -68,7 +68,7 @@ def test_returned_retry(app_request, mocker, model_LittlepayGroup, model_Transit
         app_request,
         agency=agency,
         enrollment_group=str(model_LittlepayGroup.group_id),
-        transit_processor=agency.transit_processor,
+        transit_processor=agency.transit_processor_system_name,
     )
 
     # event should have been sent
@@ -90,7 +90,7 @@ def test_returned_success_sends_event_with_optional_data(app_request, mocker, mo
         app_request,
         agency=agency,
         enrollment_group=str(model_LittlepayGroup.group_id),
-        transit_processor=agency.transit_processor,
+        transit_processor=agency.transit_processor_system_name,
         extra_claims="claim",
         card_scheme="scheme",
         card_category="catgegory",

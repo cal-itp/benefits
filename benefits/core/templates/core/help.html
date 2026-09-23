@@ -122,7 +122,7 @@
           {% endfor %}
         {% endif %}
 
-        {% if agency and agency.littlepay_config %}
+        {% if agency and agency.transit_processor == "littlepay" %}
           <h2 class="h2-sm pt-4 pt-lg-8" id="littlepay">{% translate "What is Littlepay?" %}</h2>
           <p class="pt-2 pt-lg-4">
             {% blocktranslate trimmed %}
@@ -136,7 +136,7 @@
               <a href="https://littlepay.com" target="_blank" rel="noopener noreferrer">Littlepay website</a>.
             {% endblocktranslate %}
           </p>
-        {% elif agency and agency.switchio_config %}
+        {% elif agency and agency.transit_processor == "switchio" %}
           <h2 class="h2-sm pt-4 pt-lg-8" id="switchio">{% translate "What is Switchio?" %}</h2>
           <p class="pt-2 pt-lg-4">
             {% blocktranslate trimmed %}

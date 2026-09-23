@@ -13,9 +13,9 @@ from benefits.core.middleware import TEMPLATE_USER_ERROR
 from benefits.core.models.transit import CardSchemes
 from benefits.enrollment.enrollment import Status
 from benefits.enrollment_littlepay.enrollment import CardTokenizationAccessResponse
+from benefits.enrollment_littlepay.routes import routes
 from benefits.enrollment_littlepay.session import Session
 from benefits.enrollment_littlepay.views import IndexView
-from benefits.routes import routes
 
 
 @pytest.fixture
@@ -249,6 +249,10 @@ class TestIndexView:
         assert "card_schemes" in context
         parsed_card_types = json.loads(context["card_schemes"])
         assert parsed_card_types == [CardSchemes.DISCOVER, CardSchemes.AMEX]
+
+        assert "routes" in context
+        routes_context = context["routes"]
+        assert routes_context["ENROLLMENT_LITTLEPAY_TOKEN"] == routes.ENROLLMENT_LITTLEPAY_TOKEN
 
     @pytest.mark.parametrize(
         "LANGUAGE_CODE, expected_overlay_language", [("en", "en"), ("es", "es-419"), ("unsupported", "en")]

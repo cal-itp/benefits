@@ -10,9 +10,9 @@ from benefits.core import models
 from benefits.enrollment.enrollment import Status
 from benefits.enrollment_switchio.api import Registration, RegistrationStatus
 from benefits.enrollment_switchio.enrollment import RegistrationResponse, RegistrationStatusResponse
+from benefits.enrollment_switchio.routes import routes
 from benefits.enrollment_switchio.session import Session
 from benefits.enrollment_switchio.views import GatewayUrlView, IndexView
-from benefits.routes import routes
 
 
 @pytest.fixture
@@ -61,6 +61,11 @@ class TestIndexView:
         transit_processor_context = context["transit_processor"]
         assert "name" in transit_processor_context
         assert "website" in transit_processor_context
+
+        assert "locale" in context
+        assert "routes" in context
+        routes_context = context["routes"]
+        assert routes_context["ENROLLMENT_SWITCHIO_GATEWAY_URL"] == routes.ENROLLMENT_SWITCHIO_GATEWAY_URL
 
     @pytest.mark.parametrize("LANGUAGE_CODE, expected_locale", [("en", "en"), ("es", "es"), ("unsupported", "en")])
     def test_get_locale(self, view, LANGUAGE_CODE, expected_locale):
