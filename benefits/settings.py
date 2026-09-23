@@ -256,6 +256,7 @@ LANGUAGE_COOKIE_HTTPONLY = True
 LANGUAGE_COOKIE_SAMESITE = "Lax"
 LANGUAGE_COOKIE_SECURE = True
 
+LANGUAGES_CORE = [("en", "English"), ("es", "Español")]
 LANGUAGES_METRO = [
     ("zh-hans", "Chinese simplified"),
     ("zh-hant", "Chinese traditional"),
@@ -267,7 +268,7 @@ LANGUAGES_METRO = [
     ("hy", "Armenian"),
 ]
 
-LANGUAGES = [("en", "English"), ("es", "Español")] + LANGUAGES_METRO
+LANGUAGES = LANGUAGES_CORE + LANGUAGES_METRO
 
 LOCALE_PATHS = [os.path.join(BASE_DIR, "benefits", "locale")]
 

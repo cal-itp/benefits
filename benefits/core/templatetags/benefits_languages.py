@@ -1,4 +1,5 @@
 from django import template
+from django.conf import settings
 
 register = template.Library()
 
@@ -17,6 +18,6 @@ def get_benefits_languages():
         ...
         {% endfor %}
 
-    This puts English and Spanish only into the named variable.
+    This puts Benefits core languages into the named variable.
     """
-    return [("en", "English"), ("es", "Español")]
+    return settings.LANGUAGES_CORE

@@ -161,7 +161,9 @@ class ResetUnsupportedLanguage(MiddlewareMixin):
         is_a_mmw_page = "metro-mobility-wallet" in request.path
         if not is_a_mmw_page:
             logger.debug(f"MMW check triggered for path: {request.path}")
-            current_lang = translation.get_language()
-            if current_lang not in ["en", "es"]:
+            current_language = translation.get_language()
+            # get the language code (tuple index 0) from the settings.LANGUAGES_CORE list of tuples
+            core_languages = [language[0] for language in settings.LANGUAGES_CORE]
+            if current_language not in core_languages:
                 translation.activate(settings.LANGUAGE_CODE)
-                request.LANGUAGE_CODE = "en"
+                request.LANGUAGE_CODE = settings.LANGUAGE_CODE
