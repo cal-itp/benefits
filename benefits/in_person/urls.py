@@ -1,6 +1,8 @@
 from django.contrib import admin
 from django.urls import path
 
+from benefits.enrollment_littlepay.routes import routes as littlepay_routes
+from benefits.enrollment_switchio.routes import routes as switchio_routes
 from benefits.routes import routes
 
 from . import views
@@ -29,12 +31,12 @@ urlpatterns = [
     path(
         "enrollment/littlepay",
         admin.site.admin_view(views.LittlepayEnrollmentView.as_view()),
-        name=routes.name(routes.IN_PERSON_ENROLLMENT_LITTLEPAY_INDEX),
+        name=routes.name(littlepay_routes.IN_PERSON_ENROLLMENT_LITTLEPAY_INDEX),
     ),
     path(
         "enrollment/littlepay/token/",
         admin.site.admin_view(views.LittlepayTokenView.as_view()),
-        name=routes.name(routes.IN_PERSON_ENROLLMENT_LITTLEPAY_TOKEN),
+        name=routes.name(littlepay_routes.IN_PERSON_ENROLLMENT_LITTLEPAY_TOKEN),
     ),
     path(
         "enrollment/retry",
@@ -49,12 +51,12 @@ urlpatterns = [
     path(
         "enrollment/switchio",
         admin.site.admin_view(views.SwitchioEnrollmentIndexView.as_view()),
-        name=routes.name(routes.IN_PERSON_ENROLLMENT_SWITCHIO_INDEX),
+        name=routes.name(switchio_routes.IN_PERSON_ENROLLMENT_SWITCHIO_INDEX),
     ),
     path(
         "enrollment/switchio/gateway_url",
         admin.site.admin_view(views.SwitchioGatewayUrlView.as_view()),
-        name=routes.name(routes.IN_PERSON_ENROLLMENT_SWITCHIO_GATEWAY_URL),
+        name=routes.name(switchio_routes.IN_PERSON_ENROLLMENT_SWITCHIO_GATEWAY_URL),
     ),
     path("error/", admin.site.admin_view(views.ServerErrorView.as_view()), name=routes.name(routes.IN_PERSON_SERVER_ERROR)),
 ]

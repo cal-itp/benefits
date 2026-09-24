@@ -158,7 +158,7 @@ def handle_enrollment_results(
                     request,
                     agency=agency,
                     enrollment_group=group_id,
-                    transit_processor=agency.transit_processor,
+                    transit_processor=agency.transit_processor_system_name,
                     enrollment_method=enrollment_method,
                     extra_claims=oauth_extra_claims,
                     card_scheme=card_scheme,
@@ -173,7 +173,7 @@ def handle_enrollment_results(
                 str(exception),
                 agency=agency,
                 enrollment_group=group_id,
-                transit_processor=agency.transit_processor,
+                transit_processor=agency.transit_processor_system_name,
                 enrollment_method=enrollment_method,
             )
             sentry_sdk.capture_exception(exception)
@@ -185,7 +185,7 @@ def handle_enrollment_results(
                 str(exception),
                 agency=agency,
                 enrollment_group=group_id,
-                transit_processor=agency.transit_processor,
+                transit_processor=agency.transit_processor_system_name,
                 enrollment_method=enrollment_method,
             )
             raise exception
@@ -196,7 +196,7 @@ def handle_enrollment_results(
                 "Re-enrollment error.",
                 agency=agency,
                 enrollment_group=group_id,
-                transit_processor=agency.transit_processor,
+                transit_processor=agency.transit_processor_system_name,
                 enrollment_method=enrollment_method,
             )
             return redirect(route_reenrollment_error)

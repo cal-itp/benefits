@@ -1,7 +1,8 @@
 from django.urls import path
 
 from benefits.enrollment_littlepay.views import IndexView, TokenView
-from benefits.routes import routes
+
+from .routes import routes
 
 app_name = "littlepay"
 urlpatterns = [

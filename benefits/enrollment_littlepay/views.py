@@ -13,7 +13,8 @@ from benefits.enrollment.enrollment import Status, handle_enrollment_results
 from benefits.enrollment.views import IndexContextMixin
 from benefits.enrollment_littlepay.enrollment import enroll, request_card_tokenization_access
 from benefits.enrollment_littlepay.session import Session
-from benefits.routes import routes
+
+from .routes import routes
 
 logger = logging.getLogger(__name__)
 
@@ -93,10 +94,11 @@ class IndexView(AgencySessionRequiredMixin, EligibleSessionRequiredMixin, IndexC
                 "form_system_error": tokenize_system_error_form.id,
                 "overlay_language": self._get_overlay_language(request.LANGUAGE_CODE),
                 "card_schemes": json.dumps(agency.supported_card_schemes),
+                "routes": routes.to_dict(),
             }
         )
 
-        match agency.littlepay_config.environment:
+        match agency.transit_processor.environment:
             case models.Environment.TEST.value:
                 url = "https://verify.qa.littlepay.com/assets/js/littlepay.min.js"
                 card_tokenize_env = "https://verify.qa.littlepay.com"

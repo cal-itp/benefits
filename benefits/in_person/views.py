@@ -16,8 +16,10 @@ from benefits.enrollment.views import (
     SuccessView as SelfServiceSuccessView,
     SystemErrorView as SelfServiceSystemErrorView,
 )
+from benefits.enrollment_littlepay.routes import routes as littlepay_routes
 from benefits.enrollment_littlepay.session import Session as LittlepaySession
 from benefits.enrollment_littlepay.views import IndexView as LittlepayIndexView, TokenView
+from benefits.enrollment_switchio.routes import routes as switchio_routes
 from benefits.enrollment_switchio.session import Session as SwitchioSession
 from benefits.enrollment_switchio.views import GatewayUrlView, IndexView as SwitchioIndexView
 from benefits.in_person import forms, mixins
@@ -97,7 +99,7 @@ class LittlepayEnrollmentView(mixins.CommonContextMixin, LittlepayIndexView):
     route_reenrollment_error = routes.IN_PERSON_ENROLLMENT_REENROLLMENT_ERROR
     route_server_error = routes.IN_PERSON_SERVER_ERROR
     route_system_error = routes.IN_PERSON_ENROLLMENT_SYSTEM_ERROR
-    route_tokenize_success = routes.IN_PERSON_ENROLLMENT_LITTLEPAY_INDEX
+    route_tokenize_success = littlepay_routes.IN_PERSON_ENROLLMENT_LITTLEPAY_INDEX
     template_name = "in_person/enrollment/index_littlepay.html"
 
     def _get_verified_by(self):
@@ -171,7 +173,7 @@ class SuccessView(mixins.CommonContextMixin, AgencySessionRequiredMixin, SelfSer
 
 class SwitchioGatewayUrlView(GatewayUrlView):
     enrollment_method = models.EnrollmentMethods.IN_PERSON
-    route_redirect = routes.IN_PERSON_ENROLLMENT_SWITCHIO_INDEX
+    route_redirect = switchio_routes.IN_PERSON_ENROLLMENT_SWITCHIO_INDEX
     route_server_error = routes.IN_PERSON_SERVER_ERROR
     route_system_error = routes.IN_PERSON_ENROLLMENT_SYSTEM_ERROR
 
@@ -184,7 +186,7 @@ class SwitchioEnrollmentIndexView(mixins.CommonContextMixin, SwitchioIndexView):
     route_retry = routes.IN_PERSON_ENROLLMENT_RETRY
     route_server_error = routes.IN_PERSON_SERVER_ERROR
     route_system_error = routes.IN_PERSON_ENROLLMENT_SYSTEM_ERROR
-    route_tokenize_success = routes.IN_PERSON_ENROLLMENT_SWITCHIO_INDEX
+    route_tokenize_success = switchio_routes.IN_PERSON_ENROLLMENT_SWITCHIO_INDEX
     template_name = "in_person/enrollment/index_switchio.html"
 
     def _get_verified_by(self):
