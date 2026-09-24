@@ -371,12 +371,14 @@ CONTENT_SECURITY_POLICY = {
             "https://cdn.jsdelivr.net/npm/@switchio",
             "https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/",
             "https://cdn.jsdelivr.net/npm/jquery",
+            "https://secure.nmi.com",
+            "https://pay.google.com",
         ],
         "default-src": [SELF],
-        "font-src": [SELF, "https://fonts.gstatic.com/"],
+        "font-src": [SELF, "https://applepay.cdn-apple.com", "https://fonts.gstatic.com/"],
         "frame-ancestors": [NONE],
-        "frame-src": ["*.littlepay.com"],
-        "img-src": [SELF, "data:", "*.googleusercontent.com"],
+        "frame-src": ["*.littlepay.com", "https://secure.nmi.com", "https://pay.google.com"],
+        "img-src": [SELF, "data:", "*.googleusercontent.com", "https://secure.nmi.com"],
         "object-src": [NONE],
         "script-src": [
             SELF,
@@ -385,6 +387,9 @@ CONTENT_SECURITY_POLICY = {
             "https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/",
             "https://cdn.jsdelivr.net/npm/jquery",
             "*.littlepay.com",
+            "https://secure.nmi.com",
+            "https://applepay.cdn-apple.com",
+            "https://pay.google.com",
             NONCE,  # https://django-csp.readthedocs.io/en/latest/nonce.html
         ],
         "style-src": [
@@ -392,6 +397,14 @@ CONTENT_SECURITY_POLICY = {
             "https://fonts.googleapis.com/css",
             "https://fonts.googleapis.com/css2",
             "https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/",
+            "https://secure.nmi.com",
+            # according to the Collect.js documentation
+            # https://docs.nmi.com/docs/quick-start-tutorial#required-csp-header-for-collectjs
+            # this shouldn't be required, but the only techniques i've found so far to avoid runtime errors are to either
+            # allow UNSAFE_INLINE here or inject a SHA representing the specific style tweaks that applepay tries to make
+            # which seems really brittle 🤷‍♂️
+            "'sha256-JobNDYsreMTIYfohuh2+pVhf0IMdNEBKOfHVBDG8q0g='",
+            NONCE,
         ],
     }
 }

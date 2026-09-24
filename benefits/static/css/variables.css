@@ -47,7 +47,10 @@
   --grid-spacer: calc(1rem / 2); /* 8px */
 
   /* until we start importing DSDL in benefits  */
+  --dsdl-black: var(--dsdl-slate-100);
   --dsdl-cyan-10: #dff3fe;
   --dsdl-cyan-20: #bfe4f0;
   --dsdl-gray-40: #9e9e9e;
+  --dsdl-red-60: #de0e10;
+  --dsdl-slate-100: #121416;
 }
