@@ -9,5 +9,10 @@ class Routes(BenefitsRoutes):
         """Start of the enrollment phase, using INIT."""
         return "init:index"
 
+    @property
+    def ENROLLMENT_INIT_REGISTER_CARD(self):
+        """Collect card details to tokenize and register, using INIT."""
+        return "init:register_card"
+
 
 routes = Routes()

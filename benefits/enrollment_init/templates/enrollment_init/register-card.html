@@ -1,0 +1,34 @@
+{% extends "core/base.html" %}
+
+{% load i18n %}
+{% load static %}
+
+{% block preload %}
+  <script nonce="{{ request.csp_nonce }}" src="https://secure.nmi.com/token/Collect.js" data-tokenization-key="{{ collect_js_api_key }}">
+  </script>
+  <script src="{% static "js/init-tokenize.js" %}" nonce="{{ request.csp_nonce }}"></script>
+{% endblock preload %}
+
+{% block inner-content %}
+  <h1 class="mb-4">{% translate "Enter your card details" %}</h1>
+  <form id="tokenization-form" method="post">
+    {% csrf_token %}
+    <div class="cjs-input mt-3">
+      <label for="ccnumber">{% translate "Card number" %}</label>
+      <div id="ccnumber"></div>
+      <p class="cjs-error"></p>
+    </div>
+    <div class="cjs-input mt-4">
+      <label for="ccexp">{% translate "Expiration date" %}</label>
+      <div id="ccexp"></div>
+      <p class="cjs-error"></p>
+    </div>
+    <div class="cjs-input mt-4">
+      <label for="cvv">{% translate "Security code" %}</label>
+      <div id="cvv"></div>
+      <p class="cjs-error"></p>
+    </div>
+    <input name="tokenized_card" id="tokenized-card" value="abc123" hidden>
+    <button class="btn btn-lg btn-primary mt-5" id="tokenizeButton" type="button">{% translate "Register my card" %}</button>
+  </form>
+{% endblock inner-content %}
