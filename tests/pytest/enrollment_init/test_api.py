@@ -214,6 +214,71 @@ class TestClient:
         with pytest.raises(ValueError, match=f"Unexpectedly received more than 1 TransitAccount for token {card_token}"):
             self.client.get_transit_account(card_token)
 
+    def test_get_cardholder_returns_1(self, mocker):
+        mock_response = mocker.Mock()
+
+        mock_json = json.loads("""
+        {
+            "Id": 12002,
+            "FirstName": "",
+            "MiddleName": "",
+            "LastName": "",
+            "PhoneNumber": "",
+            "DateOfBirth": "0001-01-01T00:00:00.000Z",
+            "Email": "",
+            "CellPhoneNumber": "",
+            "FaxNumber": "",
+            "Gender": 0,
+            "Identifier": "",
+            "FareCategory": 7,
+            "FareCategoryExpiry": null,
+            "AddressId": null,
+            "TransitAccountId": 17718,
+            "HasImage": false,
+            "InstitutionAccountId": null,
+            "PersonalCareAssistant": false,
+            "Address": null,
+            "OrderDetailId": null,
+            "CardPrintedNumber": null
+            }
+        """)
+        mock_response.json.return_value = mock_json
+        mocker.patch("benefits.enrollment_init.api.requests.get", return_value=mock_response)
+
+        response = self.client.get_cardholder(12002)
+
+        assert response.FareCategory == 7
+        assert response.FareCategoryExpiry is None
+
+    def test_get_cardholder_returns_0(self, mocker):
+        mock_response = mocker.Mock()
+
+        # MOBILEvario API returns this JSON as the response if no cardholder found
+        mock_json = json.loads("""
+        {"HttpStatus":404,"Errors":[{"ErrorCode":33685548,"Message":"Invalid card holder.","ParameterName":"cardholderId"}]}
+        """)
+
+        mock_response.json.return_value = mock_json
+        mocker.patch("benefits.enrollment_init.api.requests.get", return_value=mock_response)
+
+        response = self.client.get_cardholder(11111)
+
+        assert response is None
+
+    def test_get_cardholder_returns_unexpected_http_status(self, mocker):
+        mock_response = mocker.Mock()
+
+        mock_json = json.loads("""
+        {"HttpStatus":500}
+        """)
+
+        mock_response.json.return_value = mock_json
+        mocker.patch("benefits.enrollment_init.api.requests.get", return_value=mock_response)
+
+        cardholder_id = 111111
+        with pytest.raises(ValueError, match=f"Unexpected response when querying for cardholder {cardholder_id}: {mock_json}"):
+            self.client.get_cardholder(cardholder_id)
+
     def test_post_cardholder(self, mocker):
         mock_response = mocker.Mock()
         mock_json = json.loads("""
