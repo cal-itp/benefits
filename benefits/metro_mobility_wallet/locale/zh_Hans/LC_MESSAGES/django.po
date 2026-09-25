@@ -1,0 +1,22 @@
+# Cal-ITP Benefits: Chinese simplified PO file.
+# Copyright (C) 2023 California Department of Transportation
+# This file is distributed under the same license as the benefits package.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Report-Msgid-Bugs-To: https://github.com/cal-itp/benefits/issues \n"
+"POT-Creation-Date: 2026-09-21 22:40+0000\n"
+"Language: Chinese simplified\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+msgid ""
+"Encouraging transportation equity by promoting access to opportunities, "
+"reducing gas emissions and improving economic and health outcomes for people "
+"in Los Angeles County."
+msgstr ""
+"通过促进获取机会、减少气体排放以及改善洛杉矶县居民的经济和健康成果，促进交通"
+"公平。"

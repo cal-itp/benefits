@@ -95,6 +95,7 @@ MIDDLEWARE = [
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.locale.LocaleMiddleware",
+    "benefits.core.middleware.ResetUnsupportedLanguage",
     "benefits.core.middleware.Healthcheck",
     "benefits.core.middleware.HealthcheckUserAgents",
     "django.middleware.common.CommonMiddleware",
@@ -255,7 +256,19 @@ LANGUAGE_COOKIE_HTTPONLY = True
 LANGUAGE_COOKIE_SAMESITE = "Lax"
 LANGUAGE_COOKIE_SECURE = True
 
-LANGUAGES = [("en", "English"), ("es", "Español")]
+LANGUAGES_CORE = [("en", "English"), ("es", "Español")]
+LANGUAGES_METRO = [
+    ("zh-hans", "Chinese simplified"),
+    ("zh-hant", "Chinese traditional"),
+    ("ko", "Korean"),
+    ("ja", "Japanese"),
+    ("vi", "Vietnamese"),
+    ("th", "Thai"),
+    ("ru", "Russian"),
+    ("hy", "Armenian"),
+]
+
+LANGUAGES = LANGUAGES_CORE + LANGUAGES_METRO
 
 LOCALE_PATHS = [os.path.join(BASE_DIR, "benefits", "locale")]
 

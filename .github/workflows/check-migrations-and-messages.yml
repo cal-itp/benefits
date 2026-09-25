@@ -40,7 +40,7 @@ jobs:
           git add benefits
 
           # message files are up-to-date if the only differences are from the updated timestamp
-          if echo $(git diff --cached --shortstat) | grep -q '2 files changed, 2 insertions(+), 2 deletions(-)';
+          if echo $(git diff --cached --shortstat) | grep -q '12 files changed, 12 insertions(+), 12 deletions(-)';
           then
             exit 0;
           else

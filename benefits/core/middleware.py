@@ -8,6 +8,7 @@ from django.conf import settings
 from django.http import HttpResponse
 from django.template.response import TemplateResponse
 from django.urls import reverse
+from django.utils import translation
 from django.utils.decorators import decorator_from_middleware
 from django.utils.deprecation import MiddlewareMixin
 from django.views import i18n
@@ -148,3 +149,21 @@ class IndexOrAgencyIndexOrigin(MiddlewareMixin):
 
 
 index_or_agencyindex_origin_decorator = decorator_from_middleware(IndexOrAgencyIndexOrigin)
+
+
+class ResetUnsupportedLanguage(MiddlewareMixin):
+    """
+    Middleware reverts active language to English when a Benefits view is accessed with a MMW language active
+    and which is not a Benefits' supported language.
+    """
+
+    def process_request(self, request):
+        is_a_mmw_page = "metro-mobility-wallet" in request.path
+        if not is_a_mmw_page:
+            logger.debug(f"MMW check triggered for path: {request.path}")
+            current_language = translation.get_language()
+            # get the language code (tuple index 0) from the settings.LANGUAGES_CORE list of tuples
+            core_languages = [language[0] for language in settings.LANGUAGES_CORE]
+            if current_language not in core_languages:
+                translation.activate(settings.LANGUAGE_CODE)
+                request.LANGUAGE_CODE = settings.LANGUAGE_CODE
