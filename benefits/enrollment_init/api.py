@@ -55,6 +55,23 @@ class Client:
         else:
             raise ValueError(f"Unexpectedly received more than 1 TransitAccount for token {banking_service_token}")
 
+    def get_cardholder(self, cardholder_id: int, timeout=5) -> CardholderResponse:
+        url = self._endpoint_url("Cardholders") + f"/{cardholder_id}"
+        response = requests.get(
+            url,
+            headers=self._authorization_header(),
+            timeout=timeout,
+        )
+
+        response.raise_for_status()
+
+        response_json = response.json()
+
+        if "Id" in response_json and response_json["Id"] == cardholder_id:
+            return CardholderResponse.from_kwargs(**response_json)
+        else:
+            raise ValueError(f"Unexpected response when querying for cardholder {cardholder_id}: {response_json}")
+
     def post_cardholder(self, fare_category: int, transit_account_id: int, timeout=5) -> CardholderResponse:
         url = self._endpoint_url("Cardholders")
         request_body = {
