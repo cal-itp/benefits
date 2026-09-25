@@ -1,3 +1,5 @@
+import json
+
 import pytest
 
 from benefits.enrollment_init.api import Client
@@ -10,3 +12,204 @@ class TestClient:
 
     def test_init(self):
         assert self.client.authorization_header_value == "Basic YXBpX3VzZXI6YXBpX3Bhc3N3b3Jk"
+
+    def test_get_transit_account__returns_1(self, mocker):
+        mock_response = mocker.Mock()
+        mock_json = json.loads("""
+        {
+            "TotalCount": 1,
+            "Result": [
+                {
+                    "Id": 1,
+                    "Description": null,
+                    "FareCategory": 1,
+                    "FareCategoryExpiry": null,
+                    "FareMediaId": "x",
+                    "PrintedNumber": "411111~1111",
+                    "ExternalIdentifier": null,
+                    "SerialNumber": "x",
+                    "CardTypeName": "EMV Card",
+                    "FareMediaType": 217,
+                    "State": 1,
+                    "BlockingReason": 0,
+                    "IsIssued": false,
+                    "Balance": 0,
+                    "PreTaxBalance": 0,
+                    "TotalBalance": 0,
+                    "CardholderId": null,
+                    "CustomerAccountId": null,
+                    "InstitutionAccountId": null,
+                    "InstitutionAccountIds": [],
+                    "Participants": [],
+                    "ExpirationDate": "9999-12-31T23:59:59.999Z",
+                    "FareMediaTypeExternalIdentifier": 10010,
+                    "ParticipantId": null,
+                    "SequentialNumber": null,
+                    "BlockDate": null,
+                    "HasVirtualCard": false,
+                    "PrimaryAccountId": null,
+                    "InventoryState": 1,
+                    "HasPin": false,
+                    "FareProductAssignmentId": [],
+                    "AssociationType": null,
+                    "AssociationDescription": null,
+                    "ReplacedTransitAccountId": null,
+                    "OrderDetailId": null,
+                    "ReplacedTransitAccountPrintedCardNumber": null,
+                    "PinCode": null,
+                    "SecurityCode": null,
+                    "PaymentAccountReference": null,
+                    "ParticipantIdentifier": null,
+                    "ParticipantFirstName": null,
+                    "ParticipantLastName": null,
+                    "ParticipantGroupName": null,
+                    "ObservationStatus": null,
+                    "Observation": null,
+                    "CardHolderCustomAttributeValues": null,
+                    "LastUsedDate": "2026-09-04T15:25:20.000Z",
+                    "OpenLoopCardType": null,
+                    "Imported": "2026-09-04T17:25:20Z"
+                }
+            ]
+        }
+        """)
+        mock_response.json.return_value = mock_json
+        mocker.patch("benefits.enrollment_init.api.requests.get", return_value=mock_response)
+
+        response = self.client.get_transit_account("example card token")
+
+        assert response.Id == 1
+        assert response.CardholderId is None
+
+    def test_get_transit_account__returns_0(self, mocker):
+        mock_response = mocker.Mock()
+        mock_json = json.loads("""
+        {
+            "TotalCount": 0,
+            "Result": []
+        }
+        """)
+        mock_response.json.return_value = mock_json
+        mocker.patch("benefits.enrollment_init.api.requests.get", return_value=mock_response)
+
+        response = self.client.get_transit_account("example card token")
+
+        assert response is None
+
+    def test_get_transit_account__returns_more_than_1(self, mocker):
+        mock_response = mocker.Mock()
+        mock_json = json.loads("""
+        {
+            "TotalCount": 2,
+            "Result": [
+                {
+                    "Id": 1,
+                    "Description": null,
+                    "FareCategory": 1,
+                    "FareCategoryExpiry": null,
+                    "FareMediaId": "x",
+                    "PrintedNumber": "411111~1111",
+                    "ExternalIdentifier": null,
+                    "SerialNumber": "x",
+                    "CardTypeName": "EMV Card",
+                    "FareMediaType": 217,
+                    "State": 1,
+                    "BlockingReason": 0,
+                    "IsIssued": false,
+                    "Balance": 0,
+                    "PreTaxBalance": 0,
+                    "TotalBalance": 0,
+                    "CardholderId": null,
+                    "CustomerAccountId": null,
+                    "InstitutionAccountId": null,
+                    "InstitutionAccountIds": [],
+                    "Participants": [],
+                    "ExpirationDate": "9999-12-31T23:59:59.999Z",
+                    "FareMediaTypeExternalIdentifier": 10010,
+                    "ParticipantId": null,
+                    "SequentialNumber": null,
+                    "BlockDate": null,
+                    "HasVirtualCard": false,
+                    "PrimaryAccountId": null,
+                    "InventoryState": 1,
+                    "HasPin": false,
+                    "FareProductAssignmentId": [],
+                    "AssociationType": null,
+                    "AssociationDescription": null,
+                    "ReplacedTransitAccountId": null,
+                    "OrderDetailId": null,
+                    "ReplacedTransitAccountPrintedCardNumber": null,
+                    "PinCode": null,
+                    "SecurityCode": null,
+                    "PaymentAccountReference": null,
+                    "ParticipantIdentifier": null,
+                    "ParticipantFirstName": null,
+                    "ParticipantLastName": null,
+                    "ParticipantGroupName": null,
+                    "ObservationStatus": null,
+                    "Observation": null,
+                    "CardHolderCustomAttributeValues": null,
+                    "LastUsedDate": "2026-09-04T15:25:20.000Z",
+                    "OpenLoopCardType": null,
+                    "Imported": "2026-09-04T17:25:20Z"
+                },
+                {
+                    "Id": 2,
+                    "Description": null,
+                    "FareCategory": 1,
+                    "FareCategoryExpiry": null,
+                    "FareMediaId": "x",
+                    "PrintedNumber": "411111~1111",
+                    "ExternalIdentifier": null,
+                    "SerialNumber": "x",
+                    "CardTypeName": "EMV Card",
+                    "FareMediaType": 217,
+                    "State": 1,
+                    "BlockingReason": 0,
+                    "IsIssued": false,
+                    "Balance": 0,
+                    "PreTaxBalance": 0,
+                    "TotalBalance": 0,
+                    "CardholderId": null,
+                    "CustomerAccountId": null,
+                    "InstitutionAccountId": null,
+                    "InstitutionAccountIds": [],
+                    "Participants": [],
+                    "ExpirationDate": "9999-12-31T23:59:59.999Z",
+                    "FareMediaTypeExternalIdentifier": 10010,
+                    "ParticipantId": null,
+                    "SequentialNumber": null,
+                    "BlockDate": null,
+                    "HasVirtualCard": false,
+                    "PrimaryAccountId": null,
+                    "InventoryState": 1,
+                    "HasPin": false,
+                    "FareProductAssignmentId": [],
+                    "AssociationType": null,
+                    "AssociationDescription": null,
+                    "ReplacedTransitAccountId": null,
+                    "OrderDetailId": null,
+                    "ReplacedTransitAccountPrintedCardNumber": null,
+                    "PinCode": null,
+                    "SecurityCode": null,
+                    "PaymentAccountReference": null,
+                    "ParticipantIdentifier": null,
+                    "ParticipantFirstName": null,
+                    "ParticipantLastName": null,
+                    "ParticipantGroupName": null,
+                    "ObservationStatus": null,
+                    "Observation": null,
+                    "CardHolderCustomAttributeValues": null,
+                    "LastUsedDate": "2026-09-04T15:25:20.000Z",
+                    "OpenLoopCardType": null,
+                    "Imported": "2026-09-04T17:25:20Z"
+                }
+            ]
+        }
+        """)
+        mock_response.json.return_value = mock_json
+        mocker.patch("benefits.enrollment_init.api.requests.get", return_value=mock_response)
+
+        card_token = "example card token"
+        with pytest.raises(ValueError, match=f"Unexpectedly received more than 1 TransitAccount for token {card_token}"):
+            self.client.get_transit_account(card_token)
