@@ -324,3 +324,48 @@ class TestClient:
 
         assert response.FareCategory == 1
         assert response.FareCategoryExpiry is None
+
+    def test_put_cardholder(self, mocker):
+        mock_response = mocker.Mock()
+        mock_json = json.loads("""
+        {
+            "Id": 123,
+            "FirstName": "sample string 2",
+            "MiddleName": "sample string 3",
+            "LastName": "sample string 4",
+            "PhoneNumber": "sample string 5",
+            "DateOfBirth": "2026-09-25T20:03:41.386Z",
+            "Email": "sample string 7",
+            "CellPhoneNumber": "sample string 8",
+            "FaxNumber": "sample string 9",
+            "Gender": 0,
+            "Identifier": "sample string 10",
+            "FareCategory": 1,
+            "FareCategoryExpiry": null,
+            "AddressId": 1,
+            "TransitAccountId": 1,
+            "HasImage": true,
+            "InstitutionAccountId": 1,
+            "PersonalCareAssistant": true,
+            "Address": {
+                "Id": 1,
+                "AddressLine1": "sample string 2",
+                "AddressLine2": "sample string 3",
+                "PostalCode": "sample string 4",
+                "City": "sample string 5",
+                "State": "sample string 6",
+                "Country": "sample string 7",
+                "Description": "sample string 8",
+                "Addressee": "sample string 9"
+            },
+            "OrderDetailId": 1,
+            "CardPrintedNumber": "sample string 13"
+        }
+        """)
+        mock_response.json.return_value = mock_json
+        mocker.patch("benefits.enrollment_init.api.requests.put", return_value=mock_response)
+
+        response = self.client.put_cardholder(cardholder_id=123, fare_category=1)
+
+        assert response.FareCategory == 1
+        assert response.FareCategoryExpiry is None

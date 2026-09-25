@@ -88,3 +88,19 @@ class Client:
         response.raise_for_status()
 
         return CardholderResponse.from_kwargs(**response.json())
+
+    def put_cardholder(self, cardholder_id: int, fare_category: int, timeout=5) -> CardholderResponse:
+        url = self._endpoint_url("Cardholders") + f"/{cardholder_id}"
+        request_body = {
+            "FareCategory": fare_category,
+        }
+        response = requests.put(
+            url,
+            json=request_body,
+            headers=self._authorization_header(),
+            timeout=timeout,
+        )
+
+        response.raise_for_status()
+
+        return CardholderResponse.from_kwargs(**response.json())
