@@ -834,3 +834,36 @@ footer .footer-links li a.footer-link:visited {
   font-weight: 600;
   padding: calc(var(--grid-spacer) / 2) var(--grid-spacer);
 }
+
+/* Inline Collect.js tokenization card details form */
+
+.cjs-error {
+  color: var(--dsdl-red-60);
+}
+
+.cjs-input label {
+  color: var(--dsdl-black);
+  font-size: 18px;
+}
+
+.cjs-input input {
+  padding: 8px;
+  border: 1px solid var(--dsdl-black);
+  border-radius: 3px;
+  font-size: 18px;
+  box-sizing: border-box;
+  transition: border-color 0.3s ease;
+}
+
+/* these feel hacky */
+.cjs-input #ccnumber {
+  width: 350px;
+}
+
+.cjs-input #ccexp {
+  width: 100px;
+}
+
+.cjs-input #cvv {
+  width: 74px;
+}
