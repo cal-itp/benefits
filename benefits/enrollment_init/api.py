@@ -12,6 +12,12 @@ class TransitAccountResponse(BaseDataClass):
     CardholderId: int
 
 
+@dataclass
+class CardholderResponse(BaseDataClass):
+    FareCategory: int
+    FareCategoryExpiry: str
+
+
 class Client:
     def __init__(self, api_url, username, password):
         self.api_url = api_url.strip("/")
@@ -49,5 +55,19 @@ class Client:
         else:
             raise ValueError(f"Unexpectedly received more than 1 TransitAccount for token {banking_service_token}")
 
-    def post_cardholder(self, fare_category: int, transit_account_id: int):
-        pass
+    def post_cardholder(self, fare_category: int, transit_account_id: int, timeout=5) -> CardholderResponse:
+        url = self._endpoint_url("Cardholders")
+        request_body = {
+            "FareCategory": fare_category,
+            "TransitAccountId": transit_account_id,
+        }
+        response = requests.post(
+            url,
+            json=request_body,
+            headers=self._authorization_header(),
+            timeout=timeout,
+        )
+
+        response.raise_for_status()
+
+        return CardholderResponse.from_kwargs(**response.json())
