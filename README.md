@@ -22,7 +22,7 @@
 | benefits/core/forms.py                                                                   |       24 |        0 |        4 |        0 |    100% |           |
 | benefits/core/management/commands/\_\_init\_\_.py                                        |        0 |        0 |        0 |        0 |    100% |           |
 | benefits/core/management/commands/ensure\_db.py                                          |      183 |        4 |       42 |        4 |     96% |73, 87-89, 99, 103-\>exit, 230-\>232, 306-\>310 |
-| benefits/core/middleware.py                                                              |       84 |       12 |       20 |        3 |     84% |36-37, 44-49, 56-57, 76-\>81, 103-104, 131 |
+| benefits/core/middleware.py                                                              |       95 |       12 |       24 |        3 |     86% |37-38, 45-50, 57-58, 77-\>82, 104-105, 132 |
 | benefits/core/mixins.py                                                                  |       49 |        2 |       10 |        0 |     97% |     75-76 |
 | benefits/core/models/\_\_init\_\_.py                                                     |        4 |        0 |        0 |        0 |    100% |           |
 | benefits/core/models/common.py                                                           |       52 |        2 |       14 |        0 |     97% |     91-92 |
@@ -30,8 +30,10 @@
 | benefits/core/models/transit.py                                                          |      153 |        0 |       30 |        1 |     99% | 259-\>270 |
 | benefits/core/recaptcha.py                                                               |       13 |        5 |        4 |        1 |     53% |     24-30 |
 | benefits/core/session.py                                                                 |      157 |        3 |       44 |        0 |     99% |     62-64 |
+| benefits/core/templatetags/\_\_init\_\_.py                                               |        0 |        0 |        0 |        0 |    100% |           |
+| benefits/core/templatetags/benefits\_languages.py                                        |        6 |        0 |        0 |        0 |    100% |           |
 | benefits/core/urls.py                                                                    |       27 |        0 |        2 |        0 |    100% |           |
-| benefits/core/views.py                                                                   |       94 |        8 |        8 |        1 |     89% |105, 115, 129-131, 138-229 |
+| benefits/core/views.py                                                                   |       99 |        8 |        8 |        1 |     90% |111, 121, 135-137, 144-235 |
 | benefits/core/widgets.py                                                                 |       25 |        5 |        6 |        1 |     74% | 18, 39-44 |
 | benefits/eligibility/\_\_init\_\_.py                                                     |        0 |        0 |        0 |        0 |    100% |           |
 | benefits/eligibility/analytics.py                                                        |       27 |        4 |        2 |        1 |     83% |23, 41-\>exit, 47, 57, 62 |
@@ -97,6 +99,17 @@
 | benefits/locale/es/formats.py                                                            |        1 |        0 |        0 |        0 |    100% |           |
 | benefits/metro\_mobility\_wallet/\_\_init\_\_.py                                         |        0 |        0 |        0 |        0 |    100% |           |
 | benefits/metro\_mobility\_wallet/apps.py                                                 |        4 |        0 |        0 |        0 |    100% |           |
+| benefits/metro\_mobility\_wallet/locale/\_\_init\_\_.py                                  |        0 |        0 |        0 |        0 |    100% |           |
+| benefits/metro\_mobility\_wallet/locale/en/\_\_init\_\_.py                               |        0 |        0 |        0 |        0 |    100% |           |
+| benefits/metro\_mobility\_wallet/locale/es/\_\_init\_\_.py                               |        0 |        0 |        0 |        0 |    100% |           |
+| benefits/metro\_mobility\_wallet/locale/hy/\_\_init\_\_.py                               |        0 |        0 |        0 |        0 |    100% |           |
+| benefits/metro\_mobility\_wallet/locale/ja/\_\_init\_\_.py                               |        0 |        0 |        0 |        0 |    100% |           |
+| benefits/metro\_mobility\_wallet/locale/ko/\_\_init\_\_.py                               |        0 |        0 |        0 |        0 |    100% |           |
+| benefits/metro\_mobility\_wallet/locale/ru/\_\_init\_\_.py                               |        0 |        0 |        0 |        0 |    100% |           |
+| benefits/metro\_mobility\_wallet/locale/th/\_\_init\_\_.py                               |        0 |        0 |        0 |        0 |    100% |           |
+| benefits/metro\_mobility\_wallet/locale/vi/\_\_init\_\_.py                               |        0 |        0 |        0 |        0 |    100% |           |
+| benefits/metro\_mobility\_wallet/locale/zh\_Hans/\_\_init\_\_.py                         |        0 |        0 |        0 |        0 |    100% |           |
+| benefits/metro\_mobility\_wallet/locale/zh\_Hant/\_\_init\_\_.py                         |        0 |        0 |        0 |        0 |    100% |           |
 | benefits/metro\_mobility\_wallet/session.py                                              |       11 |        0 |        0 |        0 |    100% |           |
 | benefits/metro\_mobility\_wallet/urls.py                                                 |        4 |        0 |        0 |        0 |    100% |           |
 | benefits/metro\_mobility\_wallet/views.py                                                |        3 |        0 |        0 |        0 |    100% |           |
@@ -110,11 +123,11 @@
 | benefits/routes.py                                                                       |       95 |        0 |        0 |        0 |    100% |           |
 | benefits/secrets.py                                                                      |       48 |        8 |       10 |        1 |     81% |     90-99 |
 | benefits/sentry.py                                                                       |       55 |       12 |       10 |        1 |     80% |16, 21-22, 27, 31-32, 60-61, 93-118 |
-| benefits/settings.py                                                                     |      137 |       11 |       26 |       10 |     87% |110, 115-118, 142-\>147, 158-\>161, 180, 389, 399, 405, 414, 438-439 |
+| benefits/settings.py                                                                     |      139 |       11 |       26 |       10 |     87% |111, 116-119, 143-\>148, 159-\>162, 181, 402, 412, 418, 427, 451-452 |
 | benefits/urls.py                                                                         |       51 |       11 |       10 |        4 |     72% |45-\>48, 48-\>87, 62, 65, 68, 71, 74-76, 88-90, 93-\>105, 99-101 |
 | benefits/views.py                                                                        |       33 |        0 |        0 |        0 |    100% |           |
 | benefits/wsgi.py                                                                         |        4 |        4 |        0 |        0 |      0% |     10-16 |
-| **TOTAL**                                                                                | **3584** |  **145** |  **582** |   **58** | **94%** |           |
+| **TOTAL**                                                                                | **3608** |  **145** |  **586** |   **58** | **94%** |           |
 
 
 ## Setup coverage badge
