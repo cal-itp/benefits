@@ -58,7 +58,8 @@
 | benefits/enrollment\_init/migrations/\_\_init\_\_.py                                     |        0 |        0 |        0 |        0 |    100% |           |
 | benefits/enrollment\_init/models.py                                                      |       32 |        0 |        4 |        0 |    100% |           |
 | benefits/enrollment\_init/routes.py                                                      |        6 |        0 |        0 |        0 |    100% |           |
-| benefits/enrollment\_init/views.py                                                       |        0 |        0 |        0 |        0 |    100% |           |
+| benefits/enrollment\_init/urls.py                                                        |        5 |        0 |        0 |        0 |    100% |           |
+| benefits/enrollment\_init/views.py                                                       |       12 |        0 |        0 |        0 |    100% |           |
 | benefits/enrollment\_littlepay/\_\_init\_\_.py                                           |        0 |        0 |        0 |        0 |    100% |           |
 | benefits/enrollment\_littlepay/admin.py                                                  |        9 |        0 |        0 |        0 |    100% |           |
 | benefits/enrollment\_littlepay/apps.py                                                   |        9 |        0 |        0 |        0 |    100% |           |
@@ -124,10 +125,10 @@
 | benefits/secrets.py                                                                      |       48 |        8 |       10 |        1 |     81% |     90-99 |
 | benefits/sentry.py                                                                       |       55 |       12 |       10 |        1 |     80% |16, 21-22, 27, 31-32, 60-61, 93-118 |
 | benefits/settings.py                                                                     |      139 |       11 |       26 |       10 |     87% |111, 116-119, 143-\>148, 159-\>162, 181, 402, 412, 418, 427, 451-452 |
-| benefits/urls.py                                                                         |       51 |       11 |       10 |        4 |     72% |45-\>48, 48-\>87, 62, 65, 68, 71, 74-76, 88-90, 93-\>105, 99-101 |
+| benefits/urls.py                                                                         |       51 |       11 |       10 |        4 |     72% |46-\>49, 49-\>88, 63, 66, 69, 72, 75-77, 89-91, 94-\>106, 100-102 |
 | benefits/views.py                                                                        |       33 |        0 |        0 |        0 |    100% |           |
 | benefits/wsgi.py                                                                         |        4 |        4 |        0 |        0 |      0% |     10-16 |
-| **TOTAL**                                                                                | **3608** |  **145** |  **586** |   **58** | **94%** |           |
+| **TOTAL**                                                                                | **3625** |  **145** |  **586** |   **58** | **94%** |           |
 
 
 ## Setup coverage badge
