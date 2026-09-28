@@ -36,6 +36,7 @@ urlpatterns = [
     path("i18n/", include("django.conf.urls.i18n")),
     path("oauth/", include("benefits.oauth.urls")),
     path("in_person/", include("benefits.in_person.urls")),
+    path("init/", include("benefits.enrollment_init.urls")),
     path("littlepay/", include("benefits.enrollment_littlepay.urls")),
     path("switchio/", include("benefits.enrollment_switchio.urls")),
 ]

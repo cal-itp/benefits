@@ -1,0 +1,48 @@
+{% extends "core/base.html" %}
+{% comment %} this template is intended to replace ./index-base.html eventually {% endcomment %}
+
+{% load i18n %}
+
+{% block page-title %}
+  {% translate "Eligibility confirmation" %}
+{% endblock page-title %}
+
+{% block nav-buttons %}
+  {% if authentication and authentication.sign_out_link_template %}
+    {% include authentication.sign_out_link_template %}
+  {% endif %}
+{% endblock nav-buttons %}
+
+{% block headline %}
+  {% translate "You are eligible for a reduced fare!" as headline_text %}
+  {% include "core/includes/badged-headline.html" with headline=headline_text %}
+{% endblock headline %}
+
+{% block inner-content %}
+  {% block paragraphs %}
+    <p>{% translate "The last step is to register a bank card so you get a reduced fare when you tap." %}</p>
+    <p class="mt-3">
+      {% translate "You won’t be charged, and we don’t store your information. Your card details will be sent to our payment partner " %}
+      {% include "core/includes/modal-trigger.html" with modal="modal--transit-processor" text=transit_processor.name period=True %}
+    </p>
+    <div class="mt-3">
+      {% if alert_include %}
+        {% include alert_include %}
+      {% else %}
+        <p>{% translate "Please use a contactless debit or credit card by:" %}</p>
+        {% include "core/includes/list--card-schemes.html" with classes="mt-3" %}
+        {% translate "Learn more about the bank cards we accept" as text %}
+        {% include "core/includes/modal-trigger.html" with modal="modal--contactless" text=text classes="p" %}
+      {% endif %}
+    </div>
+    {% include "enrollment/includes/modal--transit-processor.html" with id="modal--transit-processor" size="modal-md" header="p-md-2 p-3" body="pb-md-3 mb-md-3 mx-md-3 py-0 pt-0 absolute-top" transit_processor=transit_processor %}
+    {% include "eligibility/includes/modal--contactless.html" with id="modal--contactless" size="modal-lg" header="p-md-2 p-3" body="pb-md-3 mb-md-3 mx-md-3 py-0 pt-0 absolute-top" %}
+  {% endblock paragraphs %}
+
+  {% block enrollment-form %}
+  {% endblock enrollment-form %}
+{% endblock inner-content %}
+
+{% block call-to-action-button %}
+  <a href="{% url cta_button %}"  class="btn btn-lg btn-primary">{% translate "Register your card" %}</a>
+{% endblock call-to-action-button %}

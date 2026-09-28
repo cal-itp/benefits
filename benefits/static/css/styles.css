@@ -822,3 +822,15 @@ footer .footer-links li a.footer-link:visited {
 .additional-agency {
   border-bottom: 1px solid var(--dsdl-gray-40);
 }
+
+.badged-headline {
+  margin-top: calc(72rem / 16);
+}
+
+.eyebrow-badge {
+  border: 1px solid var(--dsdl-cyan-20);
+  border-radius: var(--border-radius, 3px);
+  background: var(--dsdl-cyan-10);
+  font-weight: 600;
+  padding: calc(var(--grid-spacer) / 2) var(--grid-spacer);
+}
