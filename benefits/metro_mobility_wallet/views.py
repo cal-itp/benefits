@@ -5,3 +5,7 @@ class IndexView(TemplateView):
     """View for the Metro Mobility Wallet landing page."""
 
     template_name = "metro_mobility_wallet/index.html"
+
+
+class SystemErrorView(TemplateView):
+    pass
