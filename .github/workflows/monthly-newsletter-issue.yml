@@ -1,0 +1,35 @@
+name: Create Monthly Newsletter Archive Issue
+
+on:
+  workflow_dispatch:
+  schedule:
+    # 2 a.m. on the 1st of every month
+    - cron: 0 2 1 * *
+      timezone: "America/Los_Angeles"
+
+jobs:
+  create-issue:
+    runs-on: ubuntu-latest
+    permissions:
+      issues: write
+    steps:
+      - name: Check out
+        # required to use issue template file
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - name: Get last month's name
+        # and store it as output variable for later use
+        id: set_output
+        run: echo "month=$(date -d 'last month' +'%B %Y')" >> $GITHUB_OUTPUT
+
+      - name: Create issue
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          ISSUE_BODY=.github/workflows/add-newsletter-to-archive/issue-body-template.md
+          sed -i "s/{{NEWSLETTER_MONTH}}/${{ steps.set_output.outputs.month }}/g" $ISSUE_BODY
+          gh issue create \
+            --title "Archive the ${{ steps.set_output.outputs.month }} newsletter for Cal-ITP Benefits" \
+            --body-file $ISSUE_BODY \
+            --label "documentation" \
+            --assignee indexing
