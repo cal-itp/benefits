@@ -104,6 +104,7 @@ The following California transit providers have adopted Cal-ITP Benefits. The be
 | **Santa Cruz Metropolitan Transit District**        | 09/2026             | ✅           | ✅                   | ✅            | ―                    | ✅          |
 | **City of Wasco**                                   | 10/2026 (target)    | \*           | \*                   | \*            | \*                   | \*          |
 | **City of Roseville**                               | 11/2026 (target)    | \*           | \*                   | \*            | \*                   | \*          |
+| **Pinellas Suncoast Transit Authority**             | Planned             | \*           | \*                   | \*            | \*.                  | \*          |
 | **Santa Barbara County Association of Governments** | Planned             | \*           | \*                   | \*            | \*                   | \*          |
 
 ## Supported enrollment pathways
