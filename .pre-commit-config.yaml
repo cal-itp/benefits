@@ -49,7 +49,7 @@ repos:
         files: .py$
 
   - repo: https://github.com/pycqa/flake8
-    rev: 7.3.0
+    rev: 7.4.1
     hooks:
       - id: flake8
         types:
@@ -62,7 +62,7 @@ repos:
         args: ["--profile", "black"]
 
   - repo: https://github.com/djlint/djLint
-    rev: v1.46.1
+    rev: v1.46.2
     hooks:
       - id: djlint-reformat-django
         exclude: "docs/reference/newsletter-archive/exports"
