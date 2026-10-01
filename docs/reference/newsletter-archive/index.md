@@ -12,6 +12,16 @@ Most months we send a newsletter to share product updates, adoption metrics, and
 
     ## 2026 {.sr-only .insertion-point}
 
+    -   ### :material-email-newsletter: September 2026
+
+          *'Tis the season for agency onboarding*
+
+          ---
+
+          16 transit providers in California now offer Cal-ITP Benefits as part of their transit discount program. Ten of those operators have launched so far in 2026, compared with three in 2025 and one in 2024. This momentum comes from years of collaborative work by various teams at Cal-ITP, transit provider staff, and vendor partners to launch open-loop payments across California. This month, VCTC began promoting coordinated transit benefits across Ventura County, Santa Cruz METRO launched Tap2Cruz, and Yolobus started promoting open-loop payments to its riders.
+
+        [Read full newsletter →](2026-09/)
+
     -   ### :material-email-newsletter: August 2026
 
           *Ventura County region launches*
