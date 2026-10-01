@@ -3,7 +3,7 @@ from dataclasses import dataclass
 
 import requests
 
-from benefits.enrollment_switchio.api import BaseDataClass
+from benefits.enrollment.api import BaseDataClass
 
 
 @dataclass
