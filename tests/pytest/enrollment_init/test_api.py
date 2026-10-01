@@ -2,7 +2,23 @@ import json
 
 import pytest
 
-from benefits.enrollment_init.api import Client
+from benefits.enrollment_init.api import CardholderResponse, Client, TransitAccountResponse
+
+
+class TestTransitAccountResponse:
+    def test_unexpected_fields(self):
+        response_json = {"Id": 1, "CardholderId": 508, "unexpectedField": "value"}
+
+        # this test will fail if any error occurs from instantiating the class
+        TransitAccountResponse.from_kwargs(**response_json)
+
+
+class TestCardholderResponse:
+    def test_unexpected_fields(self):
+        response_json = {"FareCategory": 7, "FareCategoryExpiry": "2026-09-04T17:25:20Z"}
+
+        # this test will fail if any error occurs from instantiating the class
+        CardholderResponse.from_kwargs(**response_json)
 
 
 class TestClient:
