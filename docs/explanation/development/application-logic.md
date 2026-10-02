@@ -336,30 +336,30 @@ benefits-->>analytics: returned enrollment
 sequenceDiagram
 autonumber
 %% Enrollment phase
-    actor Transit_Rider
-    participant Benefits as Cal-ITP Benefits
-    participant Tokenization_library as Collect.js (NMI)
-    participant Fare_processor as MOBILEvario (INIT)
+    actor user as User
+    participant benefits as Benefits app
+    participant collectjs as Collect.js (NMI)
+    participant init as MOBILEvario (INIT)
 
-Transit_Rider->>Benefits: starts enrollment phase
-Benefits-->>Transit_Rider: displays enrollment index
-Transit_Rider->>Tokenization_library: request iframe via <script> element
-activate Tokenization_library
-Tokenization_library-->>Benefits: returns iframe input fields
-deactivate Tokenization_library
-Benefits-->>Transit_Rider: presents page with Collect.js iframe <br>to securely capture credit card details
-Transit_Rider->>Tokenization_library: provides debit or credit card details
-activate Tokenization_library
-Tokenization_library->>Tokenization_library: tokenizes debit or credit card details
-Tokenization_library-->>Transit_Rider: returns tokenized card
-deactivate Tokenization_library
-Transit_Rider->>Benefits: submits form POST <br>(contains the tokenized card)
-activate Benefits
-Benefits->>Fare_processor: attempts to register tokenized card for discount
-activate Fare_processor
-Fare_processor-->>Benefits: card enrollment confirmation
-deactivate Fare_processor
-deactivate Benefits
+user->>benefits: starts enrollment phase
+benefits-->>user: displays enrollment index
+user->>collectjs: request iframe via <script> element
+activate collectjs
+collectjs-->>benefits: returns iframe input fields
+deactivate collectjs
+benefits-->>user: presents page with Collect.js iframe <br>to securely capture credit card details
+user->>collectjs: provides debit or credit card details
+activate collectjs
+collectjs->>collectjs: tokenizes debit or credit card details
+collectjs-->>user: returns tokenized card
+deactivate collectjs
+user->>benefits: submits form POST <br>(contains the tokenized card)
+activate benefits
+benefits->>init: attempts to register tokenized card for discount
+activate init
+init-->>benefits: card enrollment confirmation
+deactivate init
+deactivate benefits
 ```
 
 [core-context-processors]: https://github.com/cal-itp/benefits/blob/main/benefits/core/context_processors.py
