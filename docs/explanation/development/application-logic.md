@@ -335,37 +335,15 @@ benefits-->>analytics: returned enrollment
 ```mermaid
 sequenceDiagram
 autonumber
-%% PSTA- / INIT-specific sequence diagram
-actor Transit_Rider
-participant Benefits as Cal-ITP Benefits
-participant IdG as California Identity Gateway
-participant ID_check as Identity Provider
-participant BB_API as Govt partner API
-participant Tokenization_library as Collect.js (NMI)
-participant Fare_processor as MOBILEvario (INIT)
-Note over ID_check: Login.gov<br>Medicare.gov
-Note over BB_API: Login.gov<br>Veterans Administration<br>Blue Button API<br>CalFresh Confirm
-%% Note over Tokenization_library: Collect.js<br>littlepay.js<br>@switchio/st-rp-sdk@1.0.2
-%% Note over Fare_processor: INIT<br>Littlepay<br>Switchio
-Transit_Rider->>Benefits: visits benefits.calitp.org
-activate Benefits
-Benefits-->>IdG: begin eligibility verification
-activate IdG
-Transit_Rider->>ID_check: IDP account authentication
-activate ID_check
-Note over ID_check: authenticated (Y/N)
-ID_check-->>IdG: authentication confirmation
-deactivate ID_check
-IdG->>BB_API: requests required PII
-activate BB_API
-BB_API-->>IdG: returns required PII
-deactivate BB_API
-IdG-->>Benefits: eligibility response
-Note over IdG: eligible (Y/N)
-deactivate IdG
-alt user is eligible
-Benefits-->>Tokenization_library: begin card enrollment phase
-Benefits->>Tokenization_library: request iframe via <script> element
+%% Enrollment phase
+    actor Transit_Rider
+    participant Benefits as Cal-ITP Benefits
+    participant Tokenization_library as Collect.js (NMI)
+    participant Fare_processor as MOBILEvario (INIT)
+
+Transit_Rider->>Benefits: starts enrollment phase
+Benefits-->>Transit_Rider: displays enrollment index
+Transit_Rider->>Tokenization_library: request iframe via <script> element
 activate Tokenization_library
 Tokenization_library-->>Benefits: returns iframe input fields
 deactivate Tokenization_library
@@ -376,12 +354,12 @@ Tokenization_library->>Tokenization_library: tokenizes debit or credit card deta
 Tokenization_library-->>Transit_Rider: returns tokenized card
 deactivate Tokenization_library
 Transit_Rider->>Benefits: submits form POST <br>(contains the tokenized card)
+activate Benefits
 Benefits->>Fare_processor: attempts to register tokenized card for discount
 activate Fare_processor
 Fare_processor-->>Benefits: card enrollment confirmation
 deactivate Fare_processor
 deactivate Benefits
-end
 ```
 
 [core-context-processors]: https://github.com/cal-itp/benefits/blob/main/benefits/core/context_processors.py
