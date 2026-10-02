@@ -7,8 +7,8 @@ When Benefits was hosted as an Application service, we downloaded a copy of the 
 The command (and all other commands in this guide) are run from the `-web` suffixed Container App console. It is accessible via Azure > Container App > Monitoring > Console > /bin/bash.
 
 ```bash
-# writes the file to /calitp/app
-python manage.py dumpdata --natural-foreign --natural-primary --indent=2 --output db_data.json
+# writes the file to mounted storage (to ensure it survives redeployment)
+python manage.py dumpdata --natural-foreign --natural-primary --indent=2 --output /calitp/app/data/db_data_YYYY_MM_DD.json
 ```
 
 !!! info
@@ -18,14 +18,6 @@ python manage.py dumpdata --natural-foreign --natural-primary --indent=2 --outpu
 ## Copy a backup
 
 To manage backups, use the app container's `web-storage` mounted volume.
-
-```bash
-# copy a backup into the mounted volume
-cp /calitp/app/db_data.json /calitp/app/data/db_data_YYY_MM_DD.json
-
-# copy a backup from the mounted volume
-cp /calitp/app/data/db_data_YYY_MM_DD.json /calitp/app/db_data.json
-```
 
 You can view the files in the mounted volume (and upload new ones) by navigating to Azure > Storage account > Data storage > Classic file shares > `web-storage` > Browse.
 
@@ -38,7 +30,7 @@ In order to restore from a .json backup, run the commands below from the Contain
 python manage.py ensure_db --reset
 
 # seed data using the .json backup
-python manage.py loaddata db_data.json
+python manage.py loaddata /calitp/app/data/db_data_YYYY_MM_DD.json
 ```
 
 ## Monitor server health
