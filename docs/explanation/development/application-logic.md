@@ -340,6 +340,7 @@ autonumber
     participant benefits as Benefits app
     participant collectjs as Collect.js (NMI)
     participant init as MOBILEvario (INIT)
+    participant analytics as Analytics
 
 user->>benefits: starts enrollment phase
 benefits-->>user: displays enrollment index
@@ -348,11 +349,13 @@ activate collectjs
 collectjs-->>benefits: returns iframe input fields
 deactivate collectjs
 benefits-->>user: presents page with Collect.js iframe <br>to securely capture credit card details
+user-->>analytics: started card tokenization
 user->>collectjs: provides debit or credit card details
 activate collectjs
 collectjs->>collectjs: tokenizes debit or credit card details
 collectjs-->>user: returns tokenized card
 deactivate collectjs
+user-->>analytics: finished card tokenization
 user->>benefits: submits form POST <br>(contains the tokenized card)
 activate benefits
 benefits->>init: GET transit account where BankingServiceToken == card token
