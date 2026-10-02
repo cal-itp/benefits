@@ -355,7 +355,21 @@ collectjs-->>user: returns tokenized card
 deactivate collectjs
 user->>benefits: submits form POST <br>(contains the tokenized card)
 activate benefits
-benefits->>init: attempts to register tokenized card for discount
+benefits->>init: GET transit account where BankingServiceToken == card token
+init-->>benefits: transit account <br/>(response contains CardholderId that may or may not be null)
+
+alt CardholderId is null
+benefits->>init: POST cardholder with <br/>TransitAccountId, FareCategory, and (optionally) FareCategoryExpiry
+init-->>benefits: cardholder
+
+else CardholderId is not null
+benefits->>init: GET cardholder where id == CardholderId
+init-->>benefits: cardholder<br/>(response contains FareCategory and FareCategoryExpiry)
+benefits->>init: PUT cardholder with <br/>latest FareCategory, and (optionally) FareCategoryExpiry <br/>(and all the other cardholder's properties to preserve them)
+init-->>benefits: cardholder
+
+end
+
 activate init
 init-->>benefits: card enrollment confirmation
 deactivate init
