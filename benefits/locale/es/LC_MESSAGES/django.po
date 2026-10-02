@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Report-Msgid-Bugs-To: https://github.com/cal-itp/benefits/issues \n"
-"POT-Creation-Date: 2026-09-24 11:48-0700\n"
+"POT-Creation-Date: 2026-09-24 07:09-0700\n"
 "Language: Español\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -1054,6 +1054,21 @@ msgstr ""
 "No se le ha cobrado nada hoy. Al subir al transporte público proporcionado "
 "por {short_name}, toque para pagar con esta tarjeta y se le cobrará una "
 "tarifa reducida."
+
+msgid "Enter your card details"
+msgstr ""
+
+msgid "Card number"
+msgstr ""
+
+msgid "Expiration date"
+msgstr ""
+
+msgid "Security code"
+msgstr ""
+
+msgid "Register my card"
+msgstr ""
 
 msgid "Service is down"
 msgstr "El servicio está inactivo"
