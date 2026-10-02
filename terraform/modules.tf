@@ -25,9 +25,9 @@ module "application" {
   storage_share_pgadmin_name = azurerm_storage_share.pgadmin.name
 
   # Benefits Container App Image Details
-  container_registry   = var.CONTAINER_REGISTRY
-  container_repository = var.CONTAINER_REPOSITORY
-  container_tag        = var.CONTAINER_TAG
+  container_registry   = var.container_registry
+  container_repository = var.container_repository
+  container_tag        = var.container_tag
 
   # Key Vault
   key_vault_secret_uri_prefix = local.key_vault_secret_uri_prefix

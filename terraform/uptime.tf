@@ -7,20 +7,3 @@ module "healthcheck" {
   name = "${local.env_name}-healthcheck"
   url  = "https://${local.hostname}/healthcheck"
 }
-
-# migrations
-
-moved {
-  from = azurerm_application_insights_web_test.dev_healthcheck
-  to   = module.dev_healthcheck.azurerm_application_insights_web_test.healthcheck
-}
-
-moved {
-  from = azurerm_monitor_metric_alert.uptime
-  to   = module.dev_healthcheck.azurerm_monitor_metric_alert.uptime
-}
-
-moved {
-  from = module.prod_healthcheck
-  to   = module.healthcheck
-}

@@ -41,15 +41,3 @@ resource "azurerm_monitor_action_group" "eng_email" {
     ignore_changes = [tags]
   }
 }
-
-# migrations
-
-moved {
-  from = azurerm_monitor_action_group.dev_email
-  to   = azurerm_monitor_action_group.eng_email
-}
-
-moved {
-  from = azurerm_application_insights.prod
-  to   = azurerm_application_insights.main
-}
