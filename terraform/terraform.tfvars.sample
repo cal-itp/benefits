@@ -1,3 +1,3 @@
 # these values can be found in the 'Azure env variables' note in LastPass
-ENGINEERING_GROUP_OBJECT_ID = "object-id"
+engineering_group_object_id = "object-id"
 sp_plan_object_id           = "object-id"

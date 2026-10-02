@@ -69,7 +69,7 @@ resource "azurerm_key_vault" "main" {
 resource "azurerm_key_vault_access_policy" "engineering" {
   key_vault_id = azurerm_key_vault.main.id
   tenant_id    = data.azurerm_client_config.current.tenant_id
-  object_id    = var.ENGINEERING_GROUP_OBJECT_ID
+  object_id    = var.engineering_group_object_id
 
   certificate_permissions = local.all_certificate_permissions
   key_permissions         = local.all_key_permissions
