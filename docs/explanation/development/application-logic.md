@@ -366,7 +366,7 @@ benefits->>init: POST cardholder with <br/>TransitAccountId, FareCategory, and (
 init-->>benefits: cardholder
 
 else CardholderId is not null
-benefits->>init: GET cardholder where id == CardholderId
+benefits->>init: GET cardholder/{CardholderId}
 init-->>benefits: cardholder<br/>(response contains FareCategory and FareCategoryExpiry)
 benefits->>init: PUT cardholder with <br/>latest FareCategory, and (optionally) FareCategoryExpiry <br/>(and all the other cardholder's properties to preserve them)
 init-->>benefits: cardholder
