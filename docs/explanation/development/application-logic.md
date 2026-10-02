@@ -330,6 +330,52 @@ benefits-->>analytics: returned enrollment
     deactivate benefits
 ```
 
+### INIT
+
+```mermaid
+sequenceDiagram
+autonumber
+%% Enrollment phase
+    actor user as User
+    participant benefits as Benefits app
+    participant collectjs as Collect.js (NMI)
+    participant init as MOBILEvario (INIT)
+    participant analytics as Analytics
+
+user->>benefits: starts enrollment phase
+benefits-->>user: displays enrollment index
+user->>collectjs: request iframe via <script> element
+activate collectjs
+collectjs-->>benefits: returns iframe input fields
+deactivate collectjs
+benefits-->>user: presents page with Collect.js iframe <br>to securely capture credit card details
+user-->>analytics: started card tokenization
+user->>collectjs: provides debit or credit card details
+activate collectjs
+collectjs->>collectjs: tokenizes debit or credit card details
+collectjs-->>user: returns tokenized card
+deactivate collectjs
+user-->>analytics: finished card tokenization
+user->>benefits: submits form POST <br>(contains the tokenized card)
+activate benefits
+benefits->>init: GET transit account where BankingServiceToken == card token
+init-->>benefits: transit account <br/>(response contains CardholderId that may or may not be null)
+
+alt CardholderId is null
+benefits->>init: POST cardholder with <br/>TransitAccountId, FareCategory, and (optionally) FareCategoryExpiry
+init-->>benefits: cardholder (serves as card enrollment confirmation)
+
+else CardholderId is not null
+benefits->>init: GET cardholder/{CardholderId}
+init-->>benefits: cardholder<br/>(response contains FareCategory and FareCategoryExpiry)
+benefits->>init: PUT cardholder with <br/>latest FareCategory, and (optionally) FareCategoryExpiry <br/>(and all the other cardholder's properties to preserve them)
+init-->>benefits: cardholder (serves as card enrollment confirmation)
+
+end
+
+deactivate benefits
+```
+
 [core-context-processors]: https://github.com/cal-itp/benefits/blob/main/benefits/core/context_processors.py
 [core-middleware]: https://github.com/cal-itp/benefits/blob/main/benefits/core/middleware.py
 [core-models]: https://github.com/cal-itp/benefits/blob/main/benefits/core/models.py
