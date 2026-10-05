@@ -44,6 +44,7 @@
 | benefits/eligibility/views.py                                                            |      123 |        3 |       16 |        0 |     96% |     77-79 |
 | benefits/enrollment/\_\_init\_\_.py                                                      |        0 |        0 |        0 |        0 |    100% |           |
 | benefits/enrollment/analytics.py                                                         |       30 |        0 |       12 |        1 |     98% | 25-\>exit |
+| benefits/enrollment/api.py                                                               |       16 |        0 |        6 |        0 |    100% |           |
 | benefits/enrollment/apps.py                                                              |       21 |        0 |        0 |        0 |    100% |           |
 | benefits/enrollment/enrollment.py                                                        |       73 |        0 |       22 |        1 |     99% |193-\>exit |
 | benefits/enrollment/forms.py                                                             |       14 |        0 |        0 |        0 |    100% |           |
@@ -52,6 +53,7 @@
 | benefits/enrollment/views.py                                                             |      105 |        0 |       10 |        0 |    100% |           |
 | benefits/enrollment\_init/\_\_init\_\_.py                                                |        0 |        0 |        0 |        0 |    100% |           |
 | benefits/enrollment\_init/admin.py                                                       |        9 |        0 |        0 |        0 |    100% |           |
+| benefits/enrollment\_init/api.py                                                         |       50 |        0 |        6 |        0 |    100% |           |
 | benefits/enrollment\_init/apps.py                                                        |       12 |        0 |        0 |        0 |    100% |           |
 | benefits/enrollment\_init/migrations/0001\_initial.py                                    |        8 |        0 |        0 |        0 |    100% |           |
 | benefits/enrollment\_init/migrations/0002\_initgroup.py                                  |        5 |        0 |        0 |        0 |    100% |           |
@@ -74,7 +76,7 @@
 | benefits/enrollment\_littlepay/views.py                                                  |       78 |        5 |       12 |        2 |     90% |38-\>51, 105-109 |
 | benefits/enrollment\_switchio/\_\_init\_\_.py                                            |        0 |        0 |        0 |        0 |    100% |           |
 | benefits/enrollment\_switchio/admin.py                                                   |        9 |        0 |        0 |        0 |    100% |           |
-| benefits/enrollment\_switchio/api.py                                                     |      135 |        1 |       16 |        1 |     99% |       243 |
+| benefits/enrollment\_switchio/api.py                                                     |      122 |        1 |       10 |        1 |     98% |       214 |
 | benefits/enrollment\_switchio/apps.py                                                    |        9 |        0 |        0 |        0 |    100% |           |
 | benefits/enrollment\_switchio/enrollment.py                                              |      104 |        0 |       32 |        3 |     98% |99-\>102, 147-\>144, 218-\>217 |
 | benefits/enrollment\_switchio/migrations/0001\_initial.py                                |        8 |        0 |        0 |        0 |    100% |           |
@@ -129,7 +131,7 @@
 | benefits/urls.py                                                                         |       51 |       11 |       10 |        4 |     72% |46-\>49, 49-\>88, 63, 66, 69, 72, 75-77, 89-91, 94-\>106, 100-102 |
 | benefits/views.py                                                                        |       33 |        0 |        0 |        0 |    100% |           |
 | benefits/wsgi.py                                                                         |        4 |        4 |        0 |        0 |      0% |     10-16 |
-| **TOTAL**                                                                                | **3677** |  **163** |  **586** |   **58** | **94%** |           |
+| **TOTAL**                                                                                | **3730** |  **163** |  **592** |   **58** | **94%** |           |
 
 
 ## Setup coverage badge
