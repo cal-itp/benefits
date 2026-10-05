@@ -332,6 +332,10 @@ benefits-->>analytics: returned enrollment
 
 ### INIT
 
+!!! example "Entrypoint"
+
+    [`benefits/enrollment_init/views.py`][enrollment-init-views]
+
 ```mermaid
 sequenceDiagram
 autonumber
@@ -385,6 +389,7 @@ deactivate benefits
 [core-views]: https://github.com/cal-itp/benefits/blob/main/benefits/core/views.py
 [eligibility-verify]: https://github.com/cal-itp/benefits/blob/main/benefits/eligibility/verify.py
 [eligibility-views]: https://github.com/cal-itp/benefits/blob/main/benefits/eligibility/views.py
+[enrollment-init-views]: https://github.com/cal-itp/benefits/blob/main/benefits/enrollment_init/views.py
 [enrollment-littlepay-views]: https://github.com/cal-itp/benefits/blob/main/benefits/enrollment_littlepay/views.py
 [enrollment-switchio-views]: https://github.com/cal-itp/benefits/blob/main/benefits/enrollment_switchio/views.py
 [littlepay]: https://github.com/cal-itp/littlepay
