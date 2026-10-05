@@ -35,7 +35,7 @@ repos:
         args: ["--maxkb=1500"]
 
   - repo: https://github.com/psf/black-pre-commit-mirror
-    rev: 26.5.1
+    rev: 26.10.0
     hooks:
       - id: black
         types:
@@ -49,20 +49,20 @@ repos:
         files: .py$
 
   - repo: https://github.com/pycqa/flake8
-    rev: 7.3.0
+    rev: 7.4.1
     hooks:
       - id: flake8
         types:
           - python
 
   - repo: https://github.com/pycqa/isort
-    rev: 9.0.1
+    rev: 9.0.2
     hooks:
       - id: isort
         args: ["--profile", "black"]
 
   - repo: https://github.com/djlint/djLint
-    rev: v1.46.1
+    rev: v1.46.4
     hooks:
       - id: djlint-reformat-django
         exclude: "docs/reference/newsletter-archive/exports"
