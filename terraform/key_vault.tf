@@ -69,7 +69,7 @@ resource "azurerm_key_vault" "main" {
 resource "azurerm_key_vault_access_policy" "engineering" {
   key_vault_id = azurerm_key_vault.main.id
   tenant_id    = data.azurerm_client_config.current.tenant_id
-  object_id    = var.ENGINEERING_GROUP_OBJECT_ID
+  object_id    = var.engineering_group_object_id
 
   certificate_permissions = local.all_certificate_permissions
   key_permissions         = local.all_key_permissions
@@ -126,15 +126,4 @@ resource "azurerm_key_vault_access_policy" "pgadmin_container_app" {
 
   # This ensures the Key Vault itself is created before trying to attach a policy.
   depends_on = [azurerm_key_vault.main]
-}
-
-# these declarations can be removed as soon as the application service has been torn down in the production env
-moved {
-  from = random_password.django_db_password
-  to   = module.application.random_password.django_db_password
-}
-
-moved {
-  from = azurerm_key_vault_secret.django_db_password
-  to   = module.application.azurerm_key_vault_secret.django_db_password
 }
