@@ -373,6 +373,8 @@ init-->>benefits: cardholder (serves as card enrollment confirmation)
 
 end
 
+benefits-->>analytics: returned enrollment
+
 deactivate benefits
 ```
 
