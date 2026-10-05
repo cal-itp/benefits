@@ -2,6 +2,7 @@ import base64
 from dataclasses import dataclass
 
 import requests
+from django.conf import settings
 
 from benefits.enrollment.api import BaseDataClass
 
@@ -31,7 +32,7 @@ class Client:
     def _authorization_header(self):
         return {"Authorization": self.authorization_header_value}
 
-    def get_transit_account(self, banking_service_token, timeout=5) -> TransitAccountResponse:
+    def get_transit_account(self, banking_service_token, timeout=settings.REQUESTS_TIMEOUT) -> TransitAccountResponse:
         url = self._endpoint_url("TransitAccounts")
         response = requests.get(
             url,
@@ -55,7 +56,7 @@ class Client:
         else:
             raise ValueError(f"Unexpectedly received more than 1 TransitAccount for token {banking_service_token}")
 
-    def get_cardholder(self, cardholder_id: int, timeout=5) -> CardholderResponse:
+    def get_cardholder(self, cardholder_id: int, timeout=settings.REQUESTS_TIMEOUT) -> CardholderResponse:
         url = self._endpoint_url("Cardholders") + f"/{cardholder_id}"
         response = requests.get(
             url,
@@ -72,7 +73,9 @@ class Client:
         else:
             raise ValueError(f"Unexpected response when querying for cardholder {cardholder_id}: {response_json}")
 
-    def post_cardholder(self, fare_category: int, transit_account_id: int, timeout=5) -> CardholderResponse:
+    def post_cardholder(
+        self, fare_category: int, transit_account_id: int, timeout=settings.REQUESTS_TIMEOUT
+    ) -> CardholderResponse:
         url = self._endpoint_url("Cardholders")
         request_body = {
             "FareCategory": fare_category,
@@ -89,7 +92,7 @@ class Client:
 
         return CardholderResponse.from_kwargs(**response.json())
 
-    def put_cardholder(self, cardholder_id: int, fare_category: int, timeout=5) -> CardholderResponse:
+    def put_cardholder(self, cardholder_id: int, fare_category: int, timeout=settings.REQUESTS_TIMEOUT) -> CardholderResponse:
         url = self._endpoint_url("Cardholders") + f"/{cardholder_id}"
         request_body = {
             "FareCategory": fare_category,
