@@ -61,6 +61,21 @@ jobs:
           PR_BODY=.github/workflows/add-newsletter-to-archive/pr-body-template.md
           sed -i "s/{{NEWSLETTER_NICENAME}}/${NEWSLETTER_NICENAME}/g" $PR_BODY
           sed -i "s/{{NEWSLETTER_SLUG}}/${NEWSLETTER_SLUG}/g" $PR_BODY
+
+          # search for an associated open issue
+          ISSUE_NUM=$(gh issue list \
+            --state open \
+            --label "documentation" \
+            --search "in:title 'Archive the' in:title 'newsletter for Cal-ITP Benefits'" \
+            --limit 1 \
+            --json number \
+            --jq '.[0].number // empty')
+
+          # if found, append the closing keyword to the top of the template
+          if [ -n "$ISSUE_NUM" ]; then
+            sed -i "1i Closes #${ISSUE_NUM}\n" "$PR_BODY"
+          fi
+
           gh pr create \
             --title "docs: adds ${NEWSLETTER_NICENAME} to newsletter archive" \
             --body-file $PR_BODY \
