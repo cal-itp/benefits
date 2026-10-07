@@ -42,7 +42,7 @@ def scrape_and_store(url, send_time):
 
     newsletter_nicename = send_time.strftime("%B %Y")  # August 2026
     newsletter_slug = send_time.strftime("%Y-%m")  # 2026-08
-    newsletter_year = send_time.strftime("%Y")  # August 2026
+    newsletter_year = send_time.strftime("%Y")  # 2026
 
     # write the updated HTML to a file named YYYY-MM.html
     with open(f"docs/reference/newsletter-archive/exports/{newsletter_slug}.html", "w") as file:
