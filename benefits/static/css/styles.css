@@ -834,3 +834,31 @@ footer .footer-links li a.footer-link:visited {
   font-weight: 600;
   padding: calc(var(--grid-spacer) / 2) var(--grid-spacer);
 }
+
+/* Inline Collect.js tokenization card details form */
+
+.cjs-error {
+  color: var(--dsdl-red-60);
+  font-size: var(--font-size-14px);
+  font-weight: var(--semi-bold-font-weight);
+}
+
+.cjs-input input {
+  border: 1px solid var(--dsdl-black);
+  border-radius: 3px;
+  box-sizing: border-box;
+  font-size: var(--font-size-18px);
+  margin: var(--grid-spacer) 0;
+  padding: var(--grid-spacer);
+  transition: border-color 0.3s ease;
+}
+
+.cjs-input #ccexp {
+  width: 100px;
+}
+
+@media (min-width: 992px) {
+  .cjs-input #ccnumber {
+    width: 350px;
+  }
+}

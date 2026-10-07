@@ -371,12 +371,13 @@ CONTENT_SECURITY_POLICY = {
             "https://cdn.jsdelivr.net/npm/@switchio",
             "https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/",
             "https://cdn.jsdelivr.net/npm/jquery",
+            "https://secure.nmi.com",
         ],
         "default-src": [SELF],
         "font-src": [SELF, "https://fonts.gstatic.com/"],
         "frame-ancestors": [NONE],
-        "frame-src": ["*.littlepay.com"],
-        "img-src": [SELF, "data:", "*.googleusercontent.com"],
+        "frame-src": ["*.littlepay.com", "https://secure.nmi.com"],
+        "img-src": [SELF, "data:", "*.googleusercontent.com", "https://secure.nmi.com"],
         "object-src": [NONE],
         "script-src": [
             SELF,
@@ -385,6 +386,7 @@ CONTENT_SECURITY_POLICY = {
             "https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/",
             "https://cdn.jsdelivr.net/npm/jquery",
             "*.littlepay.com",
+            "https://secure.nmi.com",
             NONCE,  # https://django-csp.readthedocs.io/en/latest/nonce.html
         ],
         "style-src": [
@@ -392,6 +394,7 @@ CONTENT_SECURITY_POLICY = {
             "https://fonts.googleapis.com/css",
             "https://fonts.googleapis.com/css2",
             "https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/",
+            "https://secure.nmi.com",
         ],
     }
 }
