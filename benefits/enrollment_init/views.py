@@ -64,6 +64,6 @@ class RegisterView(AgencySessionRequiredMixin, FlowSessionRequiredMixin, FormVie
         )
         return context
 
-    # for now just redirect to the POST when tokenization succeeds
-    def post(self, request):
-        return JsonResponse({"status": "ok", "tokenized_card": request.POST.get("tokenized_card")})
+    def form_valid(self, form):
+        card_token = form.cleaned_data.get("card_token")
+        return JsonResponse({"status": "ok", "tokenized_card": card_token})
