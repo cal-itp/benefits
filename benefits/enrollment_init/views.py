@@ -1,5 +1,6 @@
 import logging
 
+from django.http import JsonResponse
 from django.views.generic import FormView, TemplateView
 
 from benefits.core.mixins import AgencySessionRequiredMixin, EligibleSessionRequiredMixin
@@ -64,4 +65,5 @@ class RegisterView(AgencySessionRequiredMixin, FlowSessionRequiredMixin, FormVie
         return context
 
     def form_valid(self, form):
-        pass
+        card_token = form.cleaned_data.get("card_token")
+        return JsonResponse({"status": "ok", "tokenized_card": card_token})
