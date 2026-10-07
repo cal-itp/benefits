@@ -62,11 +62,11 @@ jobs:
           sed -i "s/{{NEWSLETTER_NICENAME}}/${NEWSLETTER_NICENAME}/g" $PR_BODY
           sed -i "s/{{NEWSLETTER_SLUG}}/${NEWSLETTER_SLUG}/g" $PR_BODY
 
-          # search for an associated open issue
+          # search for the associated issue
           ISSUE_NUM=$(gh issue list \
-            --state open \
+            --state all \
             --label "documentation" \
-            --search "in:title 'Archive the' in:title 'newsletter for Cal-ITP Benefits'" \
+            --search "in:title 'Archive the $NEWSLETTER_NICENAME newsletter for Cal-ITP Benefits'" \
             --limit 1 \
             --json number \
             --jq '.[0].number // empty')
