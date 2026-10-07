@@ -50,8 +50,9 @@ const opts = {
     );
   },
   callback: function (response) {
-    document.querySelector("#tokenized-card").value = response.token;
-    document.querySelector("#tokenization-form").submit();
+    const form = document.querySelector("form#{{ form_success }}");
+    form.querySelector("#card_token").value = response.token;
+    form.submit();
   },
 };
 

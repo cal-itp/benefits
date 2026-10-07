@@ -24,7 +24,10 @@
       <div class="cjs-error"></div>
     </div>
     <div id="cvv" hidden></div>
-    <input name="tokenized_card" id="tokenized-card" type="text" hidden>
     <button class="btn btn-lg btn-primary mt-5" id="tokenizeButton" type="button">{% translate "Register your card" %}</button>
   </form>
+
+  {% for f in forms %}
+    {% include "core/includes/form.html" with form=f %}
+  {% endfor %}
 {% endblock inner-content %}

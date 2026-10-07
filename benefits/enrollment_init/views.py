@@ -1,6 +1,5 @@
 import logging
 
-from django.http import JsonResponse
 from django.views.generic import FormView, TemplateView
 
 from benefits.core.mixins import AgencySessionRequiredMixin, EligibleSessionRequiredMixin
@@ -64,6 +63,5 @@ class RegisterView(AgencySessionRequiredMixin, FlowSessionRequiredMixin, FormVie
         )
         return context
 
-    # for now just redirect to the POST when tokenization succeeds
-    def post(self, request):
-        return JsonResponse({"status": "ok", "tokenized_card": request.POST.get("tokenized_card")})
+    def form_valid(self, form):
+        pass
