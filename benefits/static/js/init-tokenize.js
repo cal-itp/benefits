@@ -1,3 +1,15 @@
+const errInfoSvg = `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+          <path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2ZM13 17H11V15H13V17ZM13 13H11V7H13V13Z" fill="#DE0E10" />
+        </svg>`;
+
+// we substitute a single custom error message per field so that we can translate it
+const errMap = {
+  ccnumber:
+    errInfoSvg +
+    " Please enter a valid credit card number from Visa, Discover or Mastercard.",
+  ccexp: errInfoSvg + " Please enter an expiration date in a MM/YY format.",
+};
+
 const errColor = "#de0e10";
 
 const opts = {
@@ -19,18 +31,18 @@ const opts = {
       placeholder: "MM / YY",
     },
     cvv: {
-      display: "show", // omitting this prop results in tokenization failures
+      display: "show", // omitting this prop results in tokenization failure
       selector: "#cvv",
       title: "Security code",
       placeholder: "123",
     },
   },
   timeoutDuration: 10000,
-  validationCallback: function (field, valid, message) {
-    const errNode = document.querySelector(`#${field} + p`);
-    if (errNode) {
-      errNode.innerText = valid ? "" : message;
-    }
+  validationCallback: function (field, valid) {
+    const errNode = document.querySelector(`#${field} + .cjs-error`);
+    if (!errNode) return;
+
+    errNode.innerHTML = valid ? "" : errMap[field];
   },
   timeoutCallback: function () {
     console.error(

@@ -14,14 +14,14 @@
   <form id="tokenization-form" method="post">
     {% csrf_token %}
     <div class="cjs-input mt-3">
-      <label for="ccnumber">{% translate "Card number" %}</label>
+      <span>{% translate "Card number" %}</span>
       <div id="ccnumber"></div>
-      <p class="cjs-error"></p>
+      <div class="cjs-error"></div>
     </div>
     <div class="cjs-input mt-4">
-      <label for="ccexp">{% translate "Expiration date" %}</label>
+      <span>{% translate "Expiration date" %}</span>
       <div id="ccexp"></div>
-      <p class="cjs-error"></p>
+      <div class="cjs-error"></div>
     </div>
     <div id="cvv" hidden></div>
     <input name="tokenized_card" id="tokenized-card" type="text" hidden>
