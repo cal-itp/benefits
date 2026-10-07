@@ -28,6 +28,8 @@ jobs:
         run: |
           ISSUE_BODY=.github/workflows/add-newsletter-to-archive/issue-body-template.md
           sed -i "s/{{NEWSLETTER_MONTH}}/${{ steps.set_output.outputs.month }}/g" $ISSUE_BODY
+
+          # add-newsletter-to-archive searches for the title and label below to link the PR it creates back to this issue
           gh issue create \
             --title "Archive the ${{ steps.set_output.outputs.month }} newsletter for Cal-ITP Benefits" \
             --body-file $ISSUE_BODY \
