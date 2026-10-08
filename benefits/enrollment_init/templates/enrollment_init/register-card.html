@@ -72,6 +72,7 @@
     callback: function (response) {
       // if an unsupported scheme is encountered, short-circuit before registering the tokenized card
       if (!isSupportedScheme(response.card.type)) {
+        document.querySelector(".cjs-error-banner").hidden = false;
         revalidateField('ccnumber', false)
         return
       }
@@ -88,6 +89,12 @@
 
   </script>
   <h1 class="mb-4">{% translate "Enter card details" %}</h1>
+  <div class="my-4 p-3 cjs-error-banner" hidden>
+    <p class="fw-semibold">Please fix these errors:</p>
+    <ul class="d-flex flex-column gap-2 mt-2">
+      <li>Enter a valid card number from Visa, Discover, or Mastercard. We do not support American Express.</li>
+    </ul>
+  </div>
   <form id="tokenization-form" method="post">
     {% csrf_token %}
     <div class="cjs-input mt-3">
