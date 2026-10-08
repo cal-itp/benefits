@@ -63,6 +63,10 @@ class TransitProcessorConfig(models.Model):
         return self._meta.app_config.system_name_for_display
 
     @property
+    def info_url(self):
+        return self._meta.app_config.info_url
+
+    @property
     def group_model(self):
         self._meta.app_config
         return self._meta.app_config.group_model
@@ -171,6 +175,14 @@ class TransitAgency(models.Model):
     @property
     def transit_processor_system_name(self):
         return self.transit_processor.system_name if self.transit_processor else None
+
+    @property
+    def transit_processor_display_name(self):
+        return self.transit_processor.system_name_for_display if self.transit_processor else None
+
+    @property
+    def transit_processor_info_url(self):
+        return self.transit_processor.info_url if self.transit_processor else None
 
     @property
     def in_person_enrollment_index_route(self):

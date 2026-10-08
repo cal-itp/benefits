@@ -109,7 +109,10 @@ class IndexView(AgencySessionRequiredMixin, EligibleSessionRequiredMixin, IndexC
                 raise ValueError("Unrecognized environment value")
 
         context["transit_processor"] = dict(
-            name="Littlepay", website="https://littlepay.com", card_tokenize_url=url, card_tokenize_env=card_tokenize_env
+            name=agency.transit_processor_display_name,
+            website=agency.transit_processor_info_url,
+            card_tokenize_url=url,
+            card_tokenize_env=card_tokenize_env,
         )
 
         return context

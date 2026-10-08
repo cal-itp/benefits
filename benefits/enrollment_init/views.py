@@ -24,10 +24,6 @@ class IndexView(AgencySessionRequiredMixin, EligibleSessionRequiredMixin, FlowSe
             {
                 "cta_button": routes.ENROLLMENT_INIT_REGISTER_CARD,
                 "flow": self.flow,
-                "transit_processor": {
-                    "name": "INIT",
-                    "website": "https://www.initse.com/enus/solutions/fare-collection-revenue-management/",
-                },
             }
         )
         return context
