@@ -34,11 +34,6 @@ class TestIndexView:
 
         assert "cta_button" in context
 
-        assert "transit_processor" in context
-        transit_processor_context = context["transit_processor"]
-        assert "name" in transit_processor_context
-        assert "website" in transit_processor_context
-
     @pytest.mark.usefixtures("mocked_session_eligible")
     def test_get(self, view, app_request):
         response = view.get(app_request)

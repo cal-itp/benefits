@@ -132,6 +132,11 @@ def test_SwitchioConfig_system_name(model_SwitchioConfig):
 
 
 @pytest.mark.django_db
+def test_SwitchioConfig_info_url(model_SwitchioConfig):
+    assert model_SwitchioConfig.info_url.startswith("https://")
+
+
+@pytest.mark.django_db
 def test_SwitchioConfig_enrollment_index_route(model_SwitchioConfig):
     assert model_SwitchioConfig.enrollment_index_route == routes.ENROLLMENT_SWITCHIO_INDEX
 
