@@ -52,7 +52,7 @@
         {% if agency %}
           {% include "core/includes/list--card-schemes.html" %}
         {% else %}
-          <ul>
+          <ul class="d-flex flex-column gap-3 mt-3">
             {% for card_scheme in all_card_schemes %}<li>{{ card_scheme }}</li>{% endfor %}
           </ul>
         {% endif %}
@@ -121,50 +121,45 @@
             <p class="pt-2 pt-lg-4">{{ flow_help.text|safe }}</p>
           {% endfor %}
         {% endif %}
-
-        {% if agency and agency.transit_processor == "littlepay" %}
-          <h2 class="h2-sm pt-4 pt-lg-8" id="littlepay">{% translate "What is Littlepay?" %}</h2>
+        {% if transit_processor %}
+          <h2 class="h2-sm pt-4 pt-lg-8" id="{{ transit_processor.system_name }}">
+            {% blocktranslate trimmed with name=transit_processor.name %}
+              What is {{ name }}?
+            {% endblocktranslate %}
+          </h2>
           <p class="pt-2 pt-lg-4">
-            {% blocktranslate trimmed %}
-              Our payment partner, Littlepay, is a secure, end-to-end payment processing platform that allows us to connect your
-              transit benefit to the contactless card of your choice.
+            {% blocktranslate trimmed with name=transit_processor.name agency_name=agency.long_name %}
+              {{ name }} is a secure, end-to-end payment processing platform that allows us to connect your
+              transit benefit to the bank card of your choice. They are a payment partner for {{ agency_name }}.
             {% endblocktranslate %}
           </p>
           <p class="pt-3 pt-lg-4">
-            {% blocktranslate trimmed %}
-              For more information on Littlepay, please visit the
-              <a href="https://littlepay.com" target="_blank" rel="noopener noreferrer">Littlepay website</a>.
-            {% endblocktranslate %}
-          </p>
-        {% elif agency and agency.transit_processor == "switchio" %}
-          <h2 class="h2-sm pt-4 pt-lg-8" id="switchio">{% translate "What is Switchio?" %}</h2>
-          <p class="pt-2 pt-lg-4">
-            {% blocktranslate trimmed %}
-              Our payment partner, Switchio, is a secure, end-to-end payment processing platform that allows us to connect your
-              transit benefit to the contactless card of your choice.
-            {% endblocktranslate %}
-          </p>
-          <p class="pt-3 pt-lg-4">
-            {% blocktranslate trimmed %}
-              For more information on Switchio, please visit the
-              <a href="https://switchio.com/transport/" target="_blank" rel="noopener noreferrer">Switchio website</a>.
+            {% blocktranslate trimmed with website=transit_processor.website name=transit_processor.name %}
+              For more information, please visit the
+              <a href="{{ website }}" target="_blank" rel="noopener noreferrer">{{ name }} website</a>.
             {% endblocktranslate %}
           </p>
         {% else %}
           <h2 class="h2-sm pt-4 pt-lg-8" id="payment_partners">{% translate "Learn about our payment partners" %}</h2>
           <p class="pt-2 pt-lg-4">
-            {% blocktranslate trimmed %}
-              Our payment partners, Littlepay and Switchio, are secure, end-to-end payment processing platforms that allow us to connect your transit benefit to the contactless card of your choice.
-            {% endblocktranslate %}
+            {% translate "Payment partners are secure, end-to-end fare processing platforms that allow us to connect your transit benefit to the bank card of your choice. We currently work with Littlepay, Switchio, and INIT." %}
           </p>
-          <p class="pt-3 pt-lg-4">
-            {% blocktranslate trimmed %}
-              For more information on Littlepay, please visit the
-              <a href="https://littlepay.com" target="_blank" rel="noopener noreferrer">Littlepay website</a>.
-              For more information on Switchio, please visit the
-              <a href="https://switchio.com/transport/" target="_blank" rel="noopener noreferrer">Switchio website</a>.
-            {% endblocktranslate %}
-          </p>
+          <p class="pt-3 pt-lg-4">{% translate "For more information about our payment partners, please visit their websites:" %}</p>
+          <ul class="d-flex flex-column gap-3 mt-3">
+            <li>
+              <a href="https://littlepay.com" target="_blank" rel="noopener noreferrer">{% translate "Littlepay website" %}</a>
+            </li>
+            <li>
+              <a href="https://switchio.com/transport/"
+                 target="_blank"
+                 rel="noopener noreferrer">{% translate "Switchio website" %}</a>
+            </li>
+            <li>
+              <a href="https://www.initse.com/enus/solutions/fare-collection-revenue-management/"
+                 target="_blank"
+                 rel="noopener noreferrer">{% translate "INIT website" %}</a>
+            </li>
+          </ul>
         {% endif %}
 
         <h2 class="h2-sm pt-4 pt-lg-8" id="questions">{% translate "Questions?" %}</h2>
