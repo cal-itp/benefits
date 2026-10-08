@@ -2,6 +2,7 @@ from adminsortable2.admin import SortableAdminMixin
 from django import forms
 from django.contrib import admin
 from django.core.exceptions import ValidationError
+from translated_fields import TranslatedFieldAdmin
 
 from benefits.core import models
 from benefits.core.models.common import template_path
@@ -90,6 +91,6 @@ class EnrollmentFlowForm(forms.ModelForm):
 
 
 @admin.register(models.EnrollmentFlow)
-class SortableEnrollmentFlowAdmin(StaffPermissionMixin, SortableAdminMixin, admin.ModelAdmin):
+class SortableEnrollmentFlowAdmin(TranslatedFieldAdmin, StaffPermissionMixin, SortableAdminMixin, admin.ModelAdmin):
     list_display = ("label", "supported_enrollment_methods")
     form = EnrollmentFlowForm

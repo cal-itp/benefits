@@ -20,6 +20,7 @@ dependencies = [
     "django-csp==4.0",
     "django-google-sso==10.0.0",
     "django-multiselectfield==1.0.1",
+    "django-translated-fields==0.14.0",
     "eligibility-api==2025.4.1",
     "pillow==12.3.0",
     "psycopg[binary,pool]==3.3.6",

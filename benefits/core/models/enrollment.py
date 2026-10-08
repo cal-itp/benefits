@@ -4,7 +4,9 @@ import uuid
 from cdt_identity.models import ClaimsVerificationRequest, IdentityGatewayConfig
 from django.db import models
 from django.utils import timezone
+from django.utils.translation import gettext_lazy as _
 from multiselectfield import MultiSelectField
+from translated_fields import TranslatedField
 
 from .common import PemData, SecretNameField
 
@@ -117,10 +119,13 @@ class EnrollmentFlow(models.Model):
         choices=SystemName,
         help_text="Primary internal system name for this EnrollmentFlow instance, e.g. in analytics and Eligibility API requests.",  # noqa: 501
     )
-    label = models.CharField(
-        blank=True,
-        default="",
-        help_text="A human readable label, used as the display text in Admin.",
+    label = TranslatedField(
+        models.CharField(
+            _("label"),
+            blank=True,
+            default="",
+            help_text="A human readable label, used as the display text in Admin.",
+        )
     )
     supported_enrollment_methods = MultiSelectField(
         choices=SUPPORTED_METHODS,
