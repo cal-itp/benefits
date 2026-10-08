@@ -3,7 +3,7 @@ from datetime import datetime, timedelta, timezone
 import pytest
 
 from benefits.core import session
-from benefits.core.context_processors import agency, enrollment, feature_flags, is_prod, routes
+from benefits.core.context_processors import agency, enrollment, feature_flags, is_prod, routes, transit_processor
 from benefits.core.models import CardSchemes
 from benefits.routes import routes as app_routes
 
@@ -85,3 +85,24 @@ def test_routes(app_request):
     for route_name in app_routes_dict.keys():
         assert route_name in context_routes
         assert context_routes[route_name] == app_routes_dict[route_name]
+
+
+@pytest.mark.django_db
+def test_transit_processor_agency(app_request, mocked_session_agency):
+    mocked_session_agency.return_value.supported_card_schemes = [CardSchemes.VISA, CardSchemes.AMEX]
+
+    context = transit_processor(app_request)
+
+    mocked_session_agency.assert_called_once()
+    assert "transit_processor" in context
+
+    transit_processor_context = context["transit_processor"]
+    assert "name" in transit_processor_context
+    assert "website" in transit_processor_context
+
+
+@pytest.mark.django_db
+def test_transit_processor_no_agency(app_request):
+    transit_processor_context = transit_processor(app_request)
+
+    assert transit_processor_context == {}
