@@ -19,6 +19,7 @@ dependencies = [
     "django-cdt-identity==2026.09.2",
     "django-csp==4.0",
     "django-google-sso==10.0.0",
+    "django-modeltranslation==0.20.6",
     "django-multiselectfield==1.0.1",
     "eligibility-api==2025.4.1",
     "pillow==12.3.0",

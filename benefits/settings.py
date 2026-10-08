@@ -61,6 +61,7 @@ INSTALLED_APPS = [
     "adminsortable2",
     "cdt_identity",
     "django_google_sso",
+    "modeltranslation",
     "benefits.core",
     "benefits.enrollment",
     "benefits.enrollment_init",
