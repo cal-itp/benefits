@@ -9,18 +9,6 @@
 
 {% block inner-content %}
   <script nonce="{{ request.csp_nonce }}">
-  const errInfoSvg = `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-        <path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2ZM13 17H11V15H13V17ZM13 13H11V7H13V13Z" fill="#DE0E10" />
-      </svg>`;
-
-  // we substitute a single custom error message per field so that we can translate it
-  const errMap = {
-    ccnumber:
-      errInfoSvg +
-      " Please enter a valid credit card number from Visa, Discover or Mastercard.",
-    ccexp: errInfoSvg + " Please enter an expiration date in a MM/YY format.",
-  };
-
   const errColor = "#de0e10";
 
   const cardSchemes = JSON.parse('{{ card_schemes|escapejs }}');
@@ -28,8 +16,7 @@
 
   const revalidateField = (field, valid) => {
     const errNode = document.querySelector(`#${field} + .cjs-error`);
-    if (!errNode) return;
-    errNode.innerHTML = valid ? "" : errMap[field];
+    if (errNode) errNode.hidden = valid;
   }
 
   const opts = {
@@ -63,10 +50,19 @@
     lookUpCallback: function(response) {
       revalidateField('ccnumber', isSupportedScheme(response.type))
     },
-    timeoutCallback: function () {
-      const form = document.querySelector("form#{{ form_system_error }}");
-      form.submit();
+    timeoutCallback: function (err) {
+      // if an invalid field is detected, display banner
+      const form = document.querySelector("form#form-cjs-tokenization");
+      const validationErr = form.querySelector(".cjs-error:not([hidden])");
 
+      if (validationErr) {
+        document.querySelector(".cjs-error-banner").hidden = false;
+        return
+      }
+
+      // if no invalid field is detected, redirect to system error page
+      const errForm = document.querySelector("form#{{ form_system_error }}");
+      errForm.submit();
     },
     // Fires when tokenization completes
     callback: function (response) {
@@ -92,20 +88,31 @@
   <div class="my-4 p-3 cjs-error-banner" hidden>
     <p class="fw-semibold">Please fix these errors:</p>
     <ul class="d-flex flex-column gap-2 mt-2">
+      {% comment %} TODO: inject both list items and use runtime logic to decide which one(s) to display {% endcomment %}
       <li>Enter a valid card number from Visa, Discover, or Mastercard. We do not support American Express.</li>
     </ul>
   </div>
-  <form id="tokenization-form" method="post">
+  <form id="form-cjs-tokenization" method="post">
     {% csrf_token %}
     <div class="cjs-input mt-3">
       <span>{% translate "Card number" %}</span>
       <div id="ccnumber"></div>
-      <div class="cjs-error"></div>
+      <div class="cjs-error" data-field="ccnumber" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+          <path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2ZM13 17H11V15H13V17ZM13 13H11V7H13V13Z" fill="#DE0E10" />
+        </svg>
+        Please enter a valid credit card number from Visa, Discover or Mastercard.
+      </div>
     </div>
     <div class="cjs-input mt-4">
       <span>{% translate "Expiration date" %}</span>
       <div id="ccexp"></div>
-      <div class="cjs-error"></div>
+      <div class="cjs-error" data-field="ccexp" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+          <path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2ZM13 17H11V15H13V17ZM13 13H11V7H13V13Z" fill="#DE0E10" />
+        </svg>
+        Please enter a valid expiration date.
+      </div>
     </div>
     <div id="cvv" hidden></div>
     <button class="btn btn-lg btn-primary mt-5" id="tokenizeButton" type="button">{% translate "Register your card" %}</button>
