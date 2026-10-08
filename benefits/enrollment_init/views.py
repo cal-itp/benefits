@@ -1,3 +1,4 @@
+import json
 import logging
 
 from django.http import JsonResponse
@@ -60,6 +61,7 @@ class RegisterView(AgencySessionRequiredMixin, FlowSessionRequiredMixin, FormVie
                 "form_success": tokenize_success_form.id,
                 "form_system_error": tokenize_system_error_form.id,
                 "success_url": self.route_tokenize_success,
+                "card_schemes": json.dumps(self.agency.supported_card_schemes),
             }
         )
         return context

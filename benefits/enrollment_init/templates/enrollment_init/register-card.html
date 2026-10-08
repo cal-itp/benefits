@@ -23,6 +23,15 @@
 
   const errColor = "#de0e10";
 
+  const cardSchemes = JSON.parse('{{ card_schemes|escapejs }}');
+  const isSupportedScheme = (scheme) => cardSchemes.includes(scheme);
+
+  const revalidateField = (field, valid) => {
+    const errNode = document.querySelector(`#${field} + .cjs-error`);
+    if (!errNode) return;
+    errNode.innerHTML = valid ? "" : errMap[field];
+  }
+
   const opts = {
     paymentSelector: "#tokenizeButton",
     variant: "inline",
@@ -49,18 +58,24 @@
       },
     },
     timeoutDuration: 10000,
-    validationCallback: function (field, valid) {
-      const errNode = document.querySelector(`#${field} + .cjs-error`);
-      if (!errNode) return;
-
-      errNode.innerHTML = valid ? "" : errMap[field];
+    validationCallback: revalidateField,
+    // Fires as soon as the card number is valid
+    lookUpCallback: function(response) {
+      revalidateField('ccnumber', isSupportedScheme(response.type))
     },
     timeoutCallback: function () {
-      console.error(
-        "Tokenization didn't complete in the expected timeframe. This could be due to an invalid or incomplete field or poor connectivity",
-      );
+      const form = document.querySelector("form#{{ form_system_error }}");
+      form.submit();
+
     },
+    // Fires when tokenization completes
     callback: function (response) {
+      // if an unsupported scheme is encountered, short-circuit before registering the tokenized card
+      if (!isSupportedScheme(response.card.type)) {
+        revalidateField('ccnumber', false)
+        return
+      }
+
       const form = document.querySelector("form#{{ form_success }}");
       form.querySelector("#card_token").value = response.token;
       form.submit();
@@ -92,4 +107,6 @@
   {% for f in forms %}
     {% include "core/includes/form.html" with form=f %}
   {% endfor %}
+
+  {% include "core/includes/recaptcha.html" %}
 {% endblock inner-content %}
