@@ -101,6 +101,11 @@ def test_LittlepayConfig_system_name(model_LittlepayConfig):
 
 
 @pytest.mark.django_db
+def test_LittlepayConfig_info_url(model_LittlepayConfig):
+    assert model_LittlepayConfig.info_url.startswith("https://")
+
+
+@pytest.mark.django_db
 def test_LittlepayConfig_enrollment_index_route(model_LittlepayConfig):
     assert model_LittlepayConfig.enrollment_index_route == routes.ENROLLMENT_LITTLEPAY_INDEX
 

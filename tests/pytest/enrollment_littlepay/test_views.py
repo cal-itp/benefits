@@ -254,6 +254,17 @@ class TestIndexView:
         routes_context = context["routes"]
         assert routes_context["ENROLLMENT_LITTLEPAY_TOKEN"] == routes.ENROLLMENT_LITTLEPAY_TOKEN
 
+    def test_get_context_data_prod_env(self, mocker, view):
+        mocker.patch.object(view.agency.transit_processor, "environment", "prod")
+        context = view.get_context_data()
+        assert "card_tokenize_env" in context["transit_processor"]
+
+    def test_get_context_data_invalid_env(self, mocker, view):
+        mocker.patch.object(view.agency.transit_processor, "environment", "invalid")
+
+        with pytest.raises(ValueError):
+            view.get_context_data()
+
     @pytest.mark.parametrize(
         "LANGUAGE_CODE, expected_overlay_language", [("en", "en"), ("es", "es-419"), ("unsupported", "en")]
     )
