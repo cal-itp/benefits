@@ -56,7 +56,6 @@ class IndexView(AgencySessionRequiredMixin, EligibleSessionRequiredMixin, IndexC
                 "form_system_error": tokenize_system_error_form.id,
                 "cta_button": "tokenize_card",
                 "enrollment_method": self.enrollment_method,
-                "transit_processor": {"name": "Switchio", "website": "https://switchio.com/transport/"},
                 "locale": self._get_locale(request.LANGUAGE_CODE),
                 "routes": routes.to_dict(),
             }
