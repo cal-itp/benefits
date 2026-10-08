@@ -59,7 +59,7 @@
     },
     timeoutDuration: 10000,
     validationCallback: revalidateField,
-    // Fires as soon as the card number is valid
+    // Fires as soon as the card number is identified as valid
     lookUpCallback: function(response) {
       revalidateField('ccnumber', isSupportedScheme(response.type))
     },
