@@ -11,6 +11,7 @@ metadata.json
 node_modules/
 static/
 !benefits/static
+!benefits/metro_mobility_wallet/static
 benefits/static/sha.txt
 __pycache__/
 .coverage
