@@ -1,0 +1,109 @@
+{% load i18n %}
+{% load static %}
+{% get_current_language as LANGUAGE_CODE %}
+<!DOCTYPE html>
+<html lang="{{ LANGUAGE_CODE }}" class="{% block classes %}{% endblock classes %}">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    {% blocktranslate trimmed asvar description %}
+      The Mobility Wallet pilot program encourages transportation equity by promoting access to opportunities, reducing gas emissions and improving economic and health outcomes for people in Los Angeles County.
+    {% endblocktranslate %}
+    <meta name="description" content="{{ description }}">
+    {# djlint:off #}
+    <title>{% block page-title %}{% endblock page-title %}| {% translate "Mobility Wallet" %}</title>
+    {# djlint:on #}
+
+    {% block preload %}
+    {% endblock preload %}
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100..900;1,100..900&display=swap"
+          rel="stylesheet">
+    {% include "core/includes/bootstrap-css.html" %}
+    <link href="{% static "css/styles.css" %}" rel="stylesheet">
+    <link href="{% static "metro_mobility_wallet/metro_logo.png" %}" rel="icon" type="image/png" />
+
+    {% include "core/includes/ready-js.html" %}
+    {% include "core/includes/analytics.html" with api_key=analytics.api_key uid=analytics.uid did=analytics.did %}
+  </head>
+
+  <body>
+    {% if debug %}
+      {% include "core/includes/debug.html" %}
+    {% endif %}
+    <header role="banner" id="header">
+      <a id="skip-to-content"  href="#main-content" class="d-block w-100">
+        <div class="container">
+          <span>{% translate "Skip to main content" %}</span>
+        </div>
+      </a>
+      {% if messages %}
+        {% for message in messages %}
+          {% include "core/includes/alert.html" with message=message %}
+        {% endfor %}
+      {% endif %}
+
+      <div class="nocookies d-none">{% include "core/includes/nocookies.html" %}</div>
+
+      <noscript>
+        {% include "core/includes/noscript.html" %}
+      </noscript>
+
+      <div id="header-container" class="navbar navbar-expand-sm navbar-dark bg-primary justify-content-between">
+        <div class="container">
+          <span class="navbar-brand p-0"></span>
+        </div>
+      </div>
+    </header>
+
+    <main id="main-content" role="main">
+      {% block main-content %}
+        <div class="container main-row">
+          <div class="row justify-content-center">
+            <div class="col-lg-6">
+              {% block headline %}
+              {% endblock headline %}
+              {% block inner-content %}
+              {% endblock inner-content %}
+            </div>
+          </div>
+          {% block call-to-action %}
+            <div class="row justify-content-center pt-8">
+              <div class="col-lg-6">
+                {% block call-to-action-button %}
+                {% endblock call-to-action-button %}
+              </div>
+            </div>
+          {% endblock call-to-action %}
+        </div>
+      {% endblock main-content %}
+    </main>
+
+    <footer id="footer" class="navbar py-0">
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+            crossorigin="anonymous"
+            async></script>
+
+    <script nonce="{{ request.csp_nonce }}">
+      ready(function() {
+        document.cookie = "testcookie"
+        if (document.cookie.indexOf("testcookie") < 0) {
+          document.querySelector(".nocookies").classList.remove("d-none");
+        }
+        else {
+          document.cookie = "testcookie; expires=Thu, 01-Jan-1970 00:00:01 GMT";
+          document.querySelector(".nocookies").classList.add("d-none");
+        }
+
+        document.querySelector("a[href^='https'], a[href^='tel'], [href*='#']").addEventListener("click", function(e) {
+          amplitude.getInstance().logEvent('clicked link', {'href': e.target.href, 'path': window.location.pathname});
+        });
+      });
+    </script>
+  </body>
+</html>

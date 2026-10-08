@@ -1,30 +1,25 @@
+{% extends "metro_mobility_wallet/base.html" %}
 {% load i18n %}
-{% get_current_language as LANGUAGE_CODE %}
-{% get_available_languages as LANGUAGES %}
-<!DOCTYPE html>
-<html lang="{{ LANGUAGE_CODE }}">
-  <head>
-    <meta charset="utf-8">
-    <meta name="description"
-          content="The Mobility Wallet pilot program encourages transportation equity by promoting access to opportunities,
-          reducing gas emissions and improving economic and health outcomes for people in Los Angeles County.">
-    <title>Metro Mobility Wallet Pilot Program</title>
-  </head>
-  <body>
-    <main>
-      Metro Mobility Wallet Pilot Program
-      <br>
-      {% translate "Encouraging transportation equity by promoting access to opportunities, reducing gas emissions and improving economic and health outcomes for people in Los Angeles County." %}
-      {% for code, lang in LANGUAGES %}
-        <form method="post" action="{% url "set_language" %}">
-          {% csrf_token %}
-          {% get_language_info for code as langinfo %}
-          <input name="next" type="hidden" value="{{ redirect_to }}" />
-          <input name="language" type="hidden" value="{{ code }}" />
-          <button type="submit">{{ langinfo.name_local | capfirst }}</button>
-        </form>
-      {% endfor %}
-      <a href="{% url routes.INDEX %}">Benefits home</a>
-    </main>
-  </body>
-</html>
+
+
+{% block headline %}
+  <h1 class="pb-4">Metro Mobility Wallet Pilot Program</h1>
+{% endblock headline %}
+
+{% block inner-content %}
+  {% get_available_languages as LANGUAGES %}
+  {% translate "Encouraging transportation equity by promoting access to opportunities, reducing gas emissions and improving economic and health outcomes for people in Los Angeles County." %}
+  {% for code, lang in LANGUAGES %}
+    <form method="post" action="{% url "set_language" %}">
+      {% csrf_token %}
+      {% get_language_info for code as langinfo %}
+      <input name="next" type="hidden" value="{{ redirect_to }}" />
+      <input name="language" type="hidden" value="{{ code }}" />
+      <button type="submit">{{ langinfo.name_local | capfirst }}</button>
+    </form>
+  {% endfor %}
+{% endblock inner-content %}
+
+{% block call-to-action-button %}
+  <a href="{% url routes.INDEX %}" class="btn btn-lg btn-primary">Benefits home</a>
+{% endblock call-to-action-button %}
