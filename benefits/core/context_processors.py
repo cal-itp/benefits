@@ -41,6 +41,22 @@ def agency(request):
     return {"agency": _agency_context(agency)}
 
 
+def transit_processor(request):
+    """Context processor adds information about the active transit processor to the request context."""
+    agency = session.agency(request)
+
+    if agency is None:
+        return {}
+
+    return {
+        "transit_processor": {
+            "name": agency.transit_processor_display_name,
+            "system_name": agency.transit_processor_system_name,
+            "website": agency.transit_processor_info_url,
+        }
+    }
+
+
 def active_agencies(request):
     """Context processor adds some information about all active agencies to the request context."""
     agencies = models.TransitAgency.all_active().select_related(

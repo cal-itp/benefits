@@ -9,6 +9,7 @@ class EnrollmentInitConfig(TransitProcessorAppConfigMixin, AppConfig):
     name = "benefits.enrollment_init"
     label = "enrollment_init"
     system_name = "init"
+    info_url = "https://www.initse.com/enus/solutions/fare-collection-revenue-management/"
     enrollment_index_route = routes.ENROLLMENT_INIT_INDEX
     in_person_enrollment_index_route = None
 
