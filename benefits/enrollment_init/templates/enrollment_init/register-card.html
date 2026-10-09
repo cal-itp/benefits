@@ -8,7 +8,7 @@
 {% endblock preload %}
 
 {% block page-title %}
-  {{ title }}
+  {% translate "Enter card details" %}
 {% endblock page-title %}
 
 {% block inner-content %}
@@ -96,7 +96,7 @@
     });
 
   </script>
-  <h1 class="mb-4">{{ title }}</h1>
+  <h1 class="mb-4">{% translate "Enter card details" %}</h1>
   <div class="my-4 p-3 cjs-error-banner" hidden>
     <p class="fw-semibold">Please fix these errors:</p>
     <ul class="d-flex flex-column gap-2 mt-2">

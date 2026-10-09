@@ -62,7 +62,6 @@ class RegisterView(AgencySessionRequiredMixin, FlowSessionRequiredMixin, FormVie
                 "form_success": tokenize_success_form.id,
                 "form_system_error": tokenize_system_error_form.id,
                 "success_url": self.route_tokenize_success,
-                "title": "Enter card details",
             }
         )
         return context
