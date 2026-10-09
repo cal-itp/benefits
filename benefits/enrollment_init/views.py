@@ -56,12 +56,13 @@ class RegisterView(AgencySessionRequiredMixin, FlowSessionRequiredMixin, FormVie
 
         context.update(
             {
+                "card_schemes": json.dumps(self.agency.supported_card_schemes),
                 "collect_js_api_key": self.agency.transit_processor.tokenization_api_key,
                 "forms": [tokenize_system_error_form, tokenize_success_form],
                 "form_success": tokenize_success_form.id,
                 "form_system_error": tokenize_system_error_form.id,
                 "success_url": self.route_tokenize_success,
-                "card_schemes": json.dumps(self.agency.supported_card_schemes),
+                "title": "Enter card details",
             }
         )
         return context
