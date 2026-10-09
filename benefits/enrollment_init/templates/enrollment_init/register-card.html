@@ -9,87 +9,97 @@
 
 {% block inner-content %}
   <script nonce="{{ request.csp_nonce }}">
-  const errColor = "#de0e10";
+    const errColor = "#de0e10";
 
-  const cardSchemes = JSON.parse('{{ card_schemes|escapejs }}');
-  const isSupportedScheme = (scheme) => cardSchemes.includes(scheme);
+    const cardSchemes = JSON.parse('{{ card_schemes|escapejs }}');
+    const isSupportedScheme = (scheme) => cardSchemes.includes(scheme);
 
-  const revalidateField = (field, valid) => {
-    const errNode = document.querySelector(`#${field} + .cjs-error`);
-    if (errNode) errNode.hidden = valid;
-  }
+    const revalidateField = (field, valid) => {
+      const errNode = document.querySelector(`#${field} + .cjs-error`);
+      if (errNode) errNode.hidden = valid;
+    }
 
-  const opts = {
-    paymentSelector: "#tokenizeButton",
-    variant: "inline",
-    invalidCss: {
-      color: errColor,
-      "border-color": errColor,
-    },
-    fields: {
-      ccnumber: {
-        selector: "#ccnumber",
-        placeholder: "1111 1111 1111 1111",
-        enableCardBrandPreviews: "true",
-      },
-      ccexp: {
-        selector: "#ccexp",
-        title: "Expiration date",
-        placeholder: "MM / YY",
-      },
-      cvv: {
-        display: "show", // omitting this prop results in tokenization failure
-        selector: "#cvv",
-        title: "Security code",
-        placeholder: "123",
-      },
-    },
-    timeoutDuration: 10000,
-    validationCallback: revalidateField,
-    // Fires as soon as the card number is identified as valid
-    lookUpCallback: function(response) {
-      revalidateField('ccnumber', isSupportedScheme(response.type))
-    },
-    timeoutCallback: function (err) {
-      // if an invalid field is detected, display banner
+    const validateSubmission = (evt) => {
       const form = document.querySelector("form#form-cjs-tokenization");
-      const validationErr = form.querySelector(".cjs-error:not([hidden])");
+      const ccnumInvalid = form.querySelector(".cjs-error[data-field='ccnumber']:not([hidden])");
+      const ccexpInvalid = form.querySelector(".cjs-error[data-field='ccexp']:not([hidden])");
 
-      if (validationErr) {
-        document.querySelector(".cjs-error-banner").hidden = false;
-        return
+      if (ccnumInvalid || ccexpInvalid) {
+        const banner = document.querySelector(".cjs-error-banner")
+        banner.querySelector('li[data-field="ccnumber"]').hidden = !ccnumInvalid;
+        banner.querySelector('li[data-field="ccexp"]').hidden = !ccexpInvalid;
+        banner.hidden = false;
+        // TODO: can we avoid the tokenization attempt entirely?
       }
+    }
 
-      // if no invalid field is detected, redirect to system error page
-      const errForm = document.querySelector("form#{{ form_system_error }}");
-      errForm.submit();
-    },
-    // Fires when tokenization completes
-    callback: function (response) {
-      // if an unsupported scheme is encountered, short-circuit before registering the tokenized card
-      if (!isSupportedScheme(response.card.type)) {
-        document.querySelector(".cjs-error-banner").hidden = false;
-        revalidateField('ccnumber', false)
-        return
-      }
+    const opts = {
+      paymentSelector: "#tokenizeButton",
+      variant: "inline",
+      invalidCss: {
+        color: errColor,
+        "border-color": errColor,
+      },
+      fields: {
+        ccnumber: {
+          selector: "#ccnumber",
+          placeholder: "1111 1111 1111 1111",
+          enableCardBrandPreviews: "true",
+        },
+        ccexp: {
+          selector: "#ccexp",
+          title: "Expiration date",
+          placeholder: "MM / YY",
+        },
+        cvv: {
+          display: "show", // omitting this prop results in tokenization failure
+          selector: "#cvv",
+          title: "Security code",
+          placeholder: "123",
+        },
+      },
+      timeoutDuration: 10000,
+      validationCallback: revalidateField,
+      // Fires as soon as the card number is identified as valid
+      lookUpCallback: function(response) {
+        revalidateField('ccnumber', isSupportedScheme(response.type))
+      },
+      timeoutCallback: function (err) {
+        // if an invalid field is detected, don't redirect on failure
+        const validationErr = document.querySelector("form#form-cjs-tokenization .cjs-error:not([hidden])");
+        if (validationErr) return
 
-      const form = document.querySelector("form#{{ form_success }}");
-      form.querySelector("#card_token").value = response.token;
-      form.submit();
-    },
-  };
+        const errForm = document.querySelector("form#{{ form_system_error }}");
+        errForm.submit();
+      },
+      // Fires when tokenization completes
+      callback: function (response) {
+        // if an unsupported scheme is encountered, do not attempt to register the tokenized card
+        if (!isSupportedScheme(response.card.type)) {
+          revalidateField('ccnumber', false)
+          return
+        }
 
-  document.addEventListener("DOMContentLoaded", function () {
-    CollectJS.configure(opts);
-  });
+        const form = document.querySelector("form#{{ form_success }}");
+        form.querySelector("#card_token").value = response.token;
+        form.submit();
+      },
+    };
+
+    document.addEventListener("DOMContentLoaded", function () {
+      CollectJS.configure(opts);
+      document.querySelector('#tokenizeButton').addEventListener('click', validateSubmission);
+    });
 
   </script>
   <h1 class="mb-4">{% translate "Enter card details" %}</h1>
   <div class="my-4 p-3 cjs-error-banner" hidden>
     <p class="fw-semibold">Please fix these errors:</p>
     <ul class="d-flex flex-column gap-2 mt-2">
-      {% comment %} TODO: inject both list items and use runtime logic to decide which one(s) to display {% endcomment %}
-      <li>Enter a valid card number from Visa, Discover, or Mastercard. We do not support American Express.</li>
+      <li data-field="ccnumber" hidden>
+        Enter a <a href>valid card number</a> from Visa, Discover, or Mastercard. We do not support American Express.
+      </li>
+      <li data-field="ccexp" hidden>Enter a <a href>expiration date</a>.</li>
     </ul>
   </div>
   <form id="form-cjs-tokenization" method="post">
