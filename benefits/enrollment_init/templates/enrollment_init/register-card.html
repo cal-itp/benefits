@@ -7,83 +7,126 @@
   </script>
 {% endblock preload %}
 
+{% block page-title %}
+  {% translate "Enter card details" %}
+{% endblock page-title %}
+
 {% block inner-content %}
   <script nonce="{{ request.csp_nonce }}">
-  const errInfoSvg = `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-        <path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2ZM13 17H11V15H13V17ZM13 13H11V7H13V13Z" fill="#DE0E10" />
-      </svg>`;
+    const errColor = "#de0e10";
 
-  // we substitute a single custom error message per field so that we can translate it
-  const errMap = {
-    ccnumber:
-      errInfoSvg +
-      " Please enter a valid credit card number from Visa, Discover or Mastercard.",
-    ccexp: errInfoSvg + " Please enter an expiration date in a MM/YY format.",
-  };
+    const cardSchemes = JSON.parse('{{ card_schemes|escapejs }}');
+    const isSupportedScheme = (scheme) => cardSchemes.includes(scheme);
 
-  const errColor = "#de0e10";
-
-  const opts = {
-    paymentSelector: "#tokenizeButton",
-    variant: "inline",
-    invalidCss: {
-      color: errColor,
-      "border-color": errColor,
-    },
-    fields: {
-      ccnumber: {
-        selector: "#ccnumber",
-        placeholder: "1111 1111 1111 1111",
-        enableCardBrandPreviews: "true",
-      },
-      ccexp: {
-        selector: "#ccexp",
-        title: "Expiration date",
-        placeholder: "MM / YY",
-      },
-      cvv: {
-        display: "show", // omitting this prop results in tokenization failure
-        selector: "#cvv",
-        title: "Security code",
-        placeholder: "123",
-      },
-    },
-    timeoutDuration: 10000,
-    validationCallback: function (field, valid) {
+    const revalidateField = (field, valid) => {
       const errNode = document.querySelector(`#${field} + .cjs-error`);
-      if (!errNode) return;
+      if (errNode) errNode.hidden = valid;
+    }
 
-      errNode.innerHTML = valid ? "" : errMap[field];
-    },
-    timeoutCallback: function () {
-      console.error(
-        "Tokenization didn't complete in the expected timeframe. This could be due to an invalid or incomplete field or poor connectivity",
-      );
-    },
-    callback: function (response) {
-      const form = document.querySelector("form#{{ form_success }}");
-      form.querySelector("#card_token").value = response.token;
-      form.submit();
-    },
-  };
+    const validateSubmission = (evt) => {
+      const form = document.querySelector("form#form-cjs-tokenization");
+      const ccnumInvalid = form.querySelector(".cjs-error[data-field='ccnumber']:not([hidden])");
+      const ccexpInvalid = form.querySelector(".cjs-error[data-field='ccexp']:not([hidden])");
 
-  document.addEventListener("DOMContentLoaded", function () {
-    CollectJS.configure(opts);
-  });
+      if (ccnumInvalid || ccexpInvalid) {
+        const banner = document.querySelector(".cjs-error-banner")
+        banner.querySelector('li[data-field="ccnumber"]').hidden = !ccnumInvalid;
+        banner.querySelector('li[data-field="ccexp"]').hidden = !ccexpInvalid;
+        banner.hidden = false;
+        // TODO: can we avoid the tokenization attempt entirely?
+      }
+    }
+
+    const opts = {
+      paymentSelector: "#tokenizeButton",
+      variant: "inline",
+      invalidCss: {
+        color: errColor,
+        "border-color": errColor,
+      },
+      fields: {
+        ccnumber: {
+          selector: "#ccnumber",
+          placeholder: "1111 1111 1111 1111",
+          enableCardBrandPreviews: "true",
+        },
+        ccexp: {
+          selector: "#ccexp",
+          title: "Expiration date",
+          placeholder: "MM / YY",
+        },
+        cvv: {
+          display: "show", // omitting this prop results in tokenization failure
+          selector: "#cvv",
+          title: "Security code",
+          placeholder: "123",
+        },
+      },
+      timeoutDuration: 10000,
+      validationCallback: revalidateField,
+      // Fires as soon as the card number is identified as valid
+      lookUpCallback: function(response) {
+        revalidateField('ccnumber', isSupportedScheme(response.type))
+      },
+      timeoutCallback: function (err) {
+        // if an invalid field is detected, don't redirect on failure
+        const validationErr = document.querySelector("form#form-cjs-tokenization .cjs-error:not([hidden])");
+        if (validationErr) return
+
+        const errForm = document.querySelector("form#{{ form_system_error }}");
+        errForm.submit();
+      },
+      // Fires when tokenization completes
+      callback: function (response) {
+        // if an unsupported scheme is encountered, do not attempt to register the tokenized card
+        if (!isSupportedScheme(response.card.type)) {
+          revalidateField('ccnumber', false)
+          return
+        }
+
+        const form = document.querySelector("form#{{ form_success }}");
+        form.querySelector("#card_token").value = response.token;
+        form.submit();
+      },
+    };
+
+    document.addEventListener("DOMContentLoaded", function () {
+      CollectJS.configure(opts);
+      document.querySelector('#tokenizeButton').addEventListener('click', validateSubmission);
+    });
 
   </script>
   <h1 class="mb-4">{% translate "Enter card details" %}</h1>
-  <form id="tokenization-form" method="post">
+  <div class="my-4 p-3 cjs-error-banner" hidden>
+    <p class="fw-semibold">Please fix these errors:</p>
+    <ul class="d-flex flex-column gap-2 mt-2">
+      <li data-field="ccnumber" hidden>
+        Enter a <a href>valid card number</a> from Visa, Discover, or Mastercard. We do not support American Express.
+      </li>
+      <li data-field="ccexp" hidden>Enter a <a href>expiration date</a>.</li>
+    </ul>
+  </div>
+  <form id="form-cjs-tokenization" method="post">
     {% csrf_token %}
     <div class="cjs-input mt-3">
       <span>{% translate "Card number" %}</span>
       <div id="ccnumber"></div>
-      <div class="cjs-error"></div>
+      <div class="cjs-error" data-field="ccnumber" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+          <path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2ZM13 17H11V15H13V17ZM13 13H11V7H13V13Z" fill="#DE0E10" />
+        </svg>
+        Please enter a valid credit card number from Visa, Discover or Mastercard.
+      </div>
     </div>
     <div class="cjs-input mt-4">
       <span>{% translate "Expiration date" %}</span>
       <div id="ccexp"></div>
-      <div class="cjs-error"></div>
+      <div class="cjs-error" data-field="ccexp" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+          <path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2ZM13 17H11V15H13V17ZM13 13H11V7H13V13Z" fill="#DE0E10" />
+        </svg>
+        Please enter a valid expiration date.
+      </div>
     </div>
     <div id="cvv" hidden></div>
     <button class="btn btn-lg btn-primary mt-5" id="tokenizeButton" type="button">{% translate "Register your card" %}</button>
@@ -92,4 +135,6 @@
   {% for f in forms %}
     {% include "core/includes/form.html" with form=f %}
   {% endfor %}
+
+  {% include "core/includes/recaptcha.html" %}
 {% endblock inner-content %}

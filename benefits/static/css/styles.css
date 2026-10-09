@@ -837,6 +837,11 @@ footer .footer-links li a.footer-link:visited {
 
 /* Inline Collect.js tokenization card details form */
 
+.cjs-error-banner {
+  background: var(--dsdl-red-10);
+  border-left: var(--grid-spacer) solid var(--dsdl-red-60);
+}
+
 .cjs-error {
   color: var(--dsdl-red-60);
   font-size: var(--font-size-14px);
@@ -851,6 +856,10 @@ footer .footer-links li a.footer-link:visited {
   margin: var(--grid-spacer) 0;
   padding: var(--grid-spacer);
   transition: border-color 0.3s ease;
+}
+
+.cjs-input span {
+  font-weight: var(--semi-bold-font-weight);
 }
 
 .cjs-input #ccexp {
