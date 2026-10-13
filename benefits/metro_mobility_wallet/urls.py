@@ -32,6 +32,7 @@ oauth_patterns = [
 urlpatterns = [
     # /metro-mobility-wallet/
     path("", views.IndexView.as_view(), name="index"),
+    path("terms", views.TermsView.as_view(), name="terms"),
     #
     # This results in OAuth URLs in the form `metro-mobility-wallet/oauth/*` with names of `metro_mobility_wallet:cdt:*`
     path("oauth/", include((oauth_patterns, "cdt"), namespace="cdt")),

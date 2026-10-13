@@ -12,3 +12,14 @@ class TestIndexView:
 
     def test_template_name(self, view):
         assert view.template_name == "metro_mobility_wallet/index.html"
+
+
+class TestTermsView:
+    @pytest.fixture
+    def view(self, app_request):
+        v = views.TermsView()
+        v.setup(app_request)
+        return v
+
+    def test_template_name(self, view):
+        assert view.template_name == "metro_mobility_wallet/terms.html"

@@ -1,0 +1,2 @@
+class TestTermsAcceptanceForm:
+    pass
