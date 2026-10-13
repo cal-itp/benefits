@@ -45,3 +45,14 @@ class TestConfirmationView:
 
     def test_template_name(self, view):
         assert view.template_name == "metro_mobility_wallet/confirmation.html"
+
+
+class TestSuccessView:
+    @pytest.fixture
+    def view(self, app_request):
+        v = views.SuccessView()
+        v.setup(app_request)
+        return v
+
+    def test_template_name(self, view):
+        assert view.template_name == "metro_mobility_wallet/success.html"
