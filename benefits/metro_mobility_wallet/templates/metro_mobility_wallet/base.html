@@ -27,6 +27,27 @@
 
     {% include "core/includes/ready-js.html" %}
     {% include "core/includes/analytics.html" with api_key=analytics.api_key uid=analytics.uid did=analytics.did %}
+    <style nonce="{{ request.csp_nonce }}">
+      /* Mobile */
+      .metro-branding img {
+        width: 59px;
+      }
+
+      .metro-branding span {
+        border-left: none;
+      }
+
+      /* Desktop */
+      @media (min-width: 992px) {
+        .metro-branding img {
+          width: 92px;
+        }
+
+        .metro-branding span {
+          border-left: 1px solid #ffffff;
+        }
+      }
+    </style>
   </head>
 
   <body>
@@ -54,22 +75,11 @@
       <div id="header-container" class="navbar navbar-expand-sm navbar-dark bg-primary">
         <div class="container d-flex align-items-center justify-content-between">
 
-          <!-- desktop, will hide on smaller than lg -->
-          <div class="flex-row d-none d-lg-flex align-items-center">
-            <img class="lg pe-2"
+          <div class="metro-branding d-flex flex-column flex-lg-row align-items-start align-items-lg-center">
+            <img class="pe-0 pe-lg-2"
                  src="{% static "metro_mobility_wallet/icon-metro-logo-horizontal-white.svg" %}"
-                 width="92"
                  alt="{% translate "Metro logo" %}">
-            <span class="navbar-brand fs-5 fw-semibold py-0 ps-2 border-start">Mobility Wallet</span>
-          </div>
-
-          <!-- mobile, will hide on lg and wider -->
-          <div class="d-flex flex-column d-lg-none align-items-start">
-            <img class="sm d-inline-block"
-                 src="{% static "metro_mobility_wallet/icon-metro-logo-horizontal-white.svg" %}"
-                 width="59"
-                 alt="{% translate "Metro logo" %}">
-            <span class="navbar-brand d-flex flex-column flex-lg-row fs-6 fw-semibold pt-1 pb-0">Mobility Wallet</span>
+            <span class="text-white fs-6 fs-lg-5 fw-semibold pt-1 pt-lg-0 pb-0 ps-lg-2">Mobility Wallet</span>
           </div>
 
           <!-- language selector -->
