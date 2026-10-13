@@ -369,7 +369,7 @@ CONTENT_SECURITY_POLICY = {
             "https://api.amplitude.com/",
             "https://cdn.jsdelivr.net/sm/",  # centralized sourcemap hosting
             "https://cdn.jsdelivr.net/npm/@switchio",
-            "https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/",
+            "https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/",
             "https://cdn.jsdelivr.net/npm/jquery",
             "https://secure.nmi.com",
         ],
@@ -383,7 +383,7 @@ CONTENT_SECURITY_POLICY = {
             SELF,
             "https://cdn.amplitude.com/libs/",
             "https://cdn.jsdelivr.net/npm/@switchio",
-            "https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/",
+            "https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/",
             "https://cdn.jsdelivr.net/npm/jquery",
             "*.littlepay.com",
             "https://secure.nmi.com",
@@ -393,7 +393,7 @@ CONTENT_SECURITY_POLICY = {
             SELF,
             "https://fonts.googleapis.com/css",
             "https://fonts.googleapis.com/css2",
-            "https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/",
+            "https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/",
             "https://secure.nmi.com",
         ],
     }
