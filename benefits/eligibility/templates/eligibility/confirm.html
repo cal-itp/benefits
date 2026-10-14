@@ -10,7 +10,7 @@
 {% endblock nav-buttons %}
 
 {% block headline %}
-  <h1>{{ form.headline }}</h1>
+  {% include "core/includes/badged-headline.html" with headline=form.headline %}
 {% endblock headline %}
 
 {% block inner-content %}

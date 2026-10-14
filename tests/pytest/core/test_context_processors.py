@@ -3,7 +3,7 @@ from datetime import datetime, timedelta, timezone
 import pytest
 
 from benefits.core import session
-from benefits.core.context_processors import agency, enrollment, feature_flags, is_prod, routes
+from benefits.core.context_processors import agency, enrollment, feature_flags, flow, is_prod, routes
 from benefits.core.models import CardSchemes
 from benefits.routes import routes as app_routes
 
@@ -48,6 +48,14 @@ def test_feature_flags(app_request):
     context = feature_flags(app_request)
 
     assert "feature_flags" in context
+
+
+@pytest.mark.django_db
+@pytest.mark.usefixtures("mocked_session_flow")
+def test_flow(app_request):
+    context = flow(app_request)
+
+    assert "flow" in context
 
 
 @pytest.mark.django_db

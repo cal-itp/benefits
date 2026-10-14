@@ -231,6 +231,13 @@ class EnrollmentFlow(models.Model):
     def supports_sign_out(self):
         return bool(self.sign_out_button_template) or bool(self.sign_out_link_template)
 
+    @property
+    def apply_badge_prefix(self):
+        if self.system_name in [SystemName.COURTESY_CARD, SystemName.REDUCED_FARE_MOBILITY_ID]:
+            return True
+        else:
+            return False
+
     @staticmethod
     def by_id(id):
         """Get an EnrollmentFlow instance by its ID."""

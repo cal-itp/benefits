@@ -15,7 +15,8 @@
 {% endblock nav-buttons %}
 
 {% block headline %}
-  <h1>{{ headline_text }}</h1>
+  {% translate "What you’ll need to apply" as headline_text %}
+  {% include "core/includes/badged-headline.html" with headline=headline_text %}
 {% endblock headline %}
 
 {% block inner-content %}
