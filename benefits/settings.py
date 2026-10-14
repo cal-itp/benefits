@@ -395,6 +395,7 @@ CONTENT_SECURITY_POLICY = {
             "https://fonts.googleapis.com/css2",
             "https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/",
             "https://secure.nmi.com",
+            NONCE,
         ],
     }
 }

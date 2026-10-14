@@ -27,6 +27,30 @@
 
     {% include "core/includes/ready-js.html" %}
     {% include "core/includes/analytics.html" with api_key=analytics.api_key uid=analytics.uid did=analytics.did %}
+    <style nonce="{{ request.csp_nonce }}">
+      /* Mobile */
+      .metro-branding img {
+        width: 59px;
+      }
+
+      .metro-branding span {
+        border-left: none;
+        font-size: var(--font-size-16px);
+      }
+
+      /* Desktop */
+      @media (min-width: 992px) {
+        .metro-branding img {
+          width: 92px;
+        }
+
+        .metro-branding span {
+          border-left: 1px solid #ffffff;
+          font-size: var(--font-size-20px);
+          line-height: 1.25;
+        }
+      }
+    </style>
   </head>
 
   <body>
@@ -51,9 +75,19 @@
         {% include "core/includes/noscript.html" %}
       </noscript>
 
-      <div id="header-container" class="navbar navbar-expand-sm navbar-dark bg-primary justify-content-between">
-        <div class="container">
-          <span class="navbar-brand p-0"></span>
+      <div id="header-container" class="navbar navbar-expand-sm navbar-dark bg-primary">
+        <div class="container d-flex align-items-center justify-content-between">
+
+          <div class="metro-branding d-flex flex-column flex-lg-row align-items-start align-items-lg-center">
+            <img class="pe-0 pe-lg-2"
+                 src="{% static "metro_mobility_wallet/icon-metro-logo-horizontal-white.svg" %}"
+                 alt="{% translate "Metro logo" %}">
+            <span class="text-white fw-semibold pt-1 pt-lg-0 pb-0 ps-lg-2">Mobility Wallet</span>
+          </div>
+
+          <!-- language selector -->
+          <div class="form-inline">{% include "core/includes/lang-selector.html" %}</div>
+
         </div>
       </div>
     </header>
