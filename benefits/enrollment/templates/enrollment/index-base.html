@@ -13,7 +13,8 @@
 {% endblock nav-buttons %}
 
 {% block headline %}
-  <h1 class="pb-4">{{ headline }}</h1>
+  {% translate "You are eligible for a reduced fare!" as headline_text %}
+  {% include "core/includes/badged-headline.html" with headline=headline_text %}
 {% endblock headline %}
 
 {% block inner-content %}
