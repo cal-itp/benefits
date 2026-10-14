@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Report-Msgid-Bugs-To: https://github.com/cal-itp/benefits/issues \n"
-"POT-Creation-Date: 2026-10-19 13:08-0700\n"
+"POT-Creation-Date: 2026-10-19 15:12-0700\n"
 "Language: English\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -447,7 +447,7 @@ msgstr ""
 msgid "Learn more about the transit benefit for CalFresh Cardholders"
 msgstr ""
 
-msgid "Learn more about contactless cards"
+msgid "Bank cards we accept"
 msgstr ""
 
 msgid "Learn more about"
@@ -529,6 +529,9 @@ msgstr ""
 msgid "Choose the transit benefit you would like to enroll in"
 msgstr ""
 
+msgid "What you’ll need to apply"
+msgstr ""
+
 msgid "You will need a few items to continue:"
 msgstr ""
 
@@ -555,10 +558,13 @@ msgstr ""
 msgid "A phone number with a phone plan associated with your name"
 msgstr ""
 
-msgid "Your contactless card details"
+msgid "Your bank card"
 msgstr ""
 
 msgid "Your contactless card must be a debit or credit card by:"
+msgstr ""
+
+msgid "Learn more about the bank cards we accept"
 msgstr ""
 
 msgid "Unable to confirm eligibility"
@@ -598,12 +604,6 @@ msgstr ""
 msgid "CalFresh benefit overview"
 msgstr ""
 
-msgid "You selected a CalFresh Cardholder transit benefit."
-msgstr ""
-
-msgid "You selected a Courtesy Card transit benefit."
-msgstr ""
-
 msgid "Your current Courtesy Card number"
 msgstr ""
 
@@ -613,9 +613,6 @@ msgid ""
 msgstr ""
 
 msgid "Medicare benefit overview"
-msgstr ""
-
-msgid "You selected a Medicare Cardholder transit benefit."
 msgstr ""
 
 msgid "An online account with Medicare.gov"
@@ -630,13 +627,7 @@ msgstr ""
 msgid "Continue to Medicare.gov"
 msgstr ""
 
-msgid "Older Adult benefit overview"
-msgstr ""
-
-msgid "You selected an Older Adult transit benefit."
-msgstr ""
-
-msgid "You selected a Reduced Fare Mobility ID transit benefit."
+msgid "Older adult benefit overview"
 msgstr ""
 
 msgid "Your current Reduced Fare Mobility ID number"
@@ -647,10 +638,7 @@ msgid ""
 "number."
 msgstr ""
 
-msgid "Veterans benefit overview"
-msgstr ""
-
-msgid "You selected a Veteran transit benefit."
+msgid "U.S. Veteran benefit overview"
 msgstr ""
 
 msgid "Your card information may not have been entered correctly."
@@ -672,37 +660,16 @@ msgstr ""
 msgid "SBMTD Reduced Fare Mobility ID card"
 msgstr ""
 
-msgid "Do not enter information from your EBT card."
+msgid "Do not enter your EBT card."
+msgstr ""
+
+msgid "You can’t use a Golden State Advantage card pay for transit."
 msgstr ""
 
 msgid "Read our guidance on the CalFresh benefit"
 msgstr ""
 
-msgid ""
-"You can’t pay for transit using the CalFresh funds on your Golden State "
-"Advantage card. Please provide details from your contactless debit or credit "
-"card issued by:"
-msgstr ""
-
-msgid "and use that card to pay for transit."
-msgstr ""
-
 msgid "Eligibility confirmation"
-msgstr ""
-
-msgid "You will be directed to our partner, "
-msgstr ""
-
-msgid "We don’t store your information, and you won’t be charged."
-msgstr ""
-
-msgid "Please use a debit or credit card by:"
-msgstr ""
-
-msgid "Please wait..."
-msgstr ""
-
-msgid "Enroll"
 msgstr ""
 
 msgid "You are eligible for a reduced fare!"
@@ -713,15 +680,19 @@ msgid ""
 "tap."
 msgstr ""
 
-msgid ""
-"You won’t be charged, and we don’t store your information. Your card details "
-"will be sent to our payment partner "
+msgid "You won’t be charged, and we don’t store your information."
+msgstr ""
+
+msgid "You will be directed to our payment partner, "
+msgstr ""
+
+msgid "to enter your card details."
 msgstr ""
 
 msgid "Please use a contactless debit or credit card by:"
 msgstr ""
 
-msgid "Learn more about the bank cards we accept"
+msgid "Please wait..."
 msgstr ""
 
 msgid "Register your card"
@@ -779,24 +750,6 @@ msgstr ""
 msgid "Sign out of"
 msgstr ""
 
-msgid "Your eligibility is confirmed! You’re almost there."
-msgstr ""
-
-msgid ""
-"The next step is to enroll the contactless card you will use to tap to ride "
-"for a reduced fare."
-msgstr ""
-
-msgid ", to enter your contactless card details."
-msgstr ""
-
-msgid "We found your record! Now let’s enroll your contactless card."
-msgstr ""
-
-msgid ""
-"The next step is to connect your contactless card to your transit benefit"
-msgstr ""
-
 msgid "Your CalFresh Cardholder transit benefit does not expire until"
 msgstr ""
 
@@ -815,6 +768,9 @@ msgstr ""
 msgid ""
 "You were not charged anything today. When boarding public transit provided "
 "by {short_name}, tap this card and you will be charged a reduced fare."
+msgstr ""
+
+msgid "Your card details will be sent to our payment partner, "
 msgstr ""
 
 msgid "Enter card details"
