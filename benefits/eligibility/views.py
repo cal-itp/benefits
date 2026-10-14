@@ -90,7 +90,6 @@ class CTAButton:
 @dataclass
 class EligibilityStart:
     page_title: str
-    headline_text: str
     call_to_action_button: CTAButton
     eligibility_item_headline: Optional[str] = None
     eligibility_item_body: Optional[str] = None
@@ -100,10 +99,10 @@ class EligibilityStart:
 
 
 class LoginGovEligibilityStart(EligibilityStart):
-    def __init__(self, page_title, headline_text):
+
+    def __init__(self, page_title):
         super().__init__(
             page_title=page_title,
-            headline_text=headline_text,
             call_to_action_button=CTAButton(
                 text=_("Get started with"),
                 fallback_text="Login.gov",
@@ -114,10 +113,10 @@ class LoginGovEligibilityStart(EligibilityStart):
 
 
 class AgencyCardEligibilityStart(EligibilityStart):
-    def __init__(self, headline_text, eligibility_item_headline, eligibility_item_body):
+
+    def __init__(self, eligibility_item_headline, eligibility_item_body):
         super().__init__(
             page_title=_("Agency card overview"),
-            headline_text=headline_text,
             eligibility_item_headline=eligibility_item_headline,
             eligibility_item_body=eligibility_item_body,
             call_to_action_button=CTAButton(text=_("Continue"), route=routes.ELIGIBILITY_CONFIRM),
@@ -139,10 +138,8 @@ class StartView(AgencySessionRequiredMixin, FlowSessionRequiredMixin, TemplateVi
         eligibility_start = {
             SystemName.CALFRESH.value: LoginGovEligibilityStart(
                 page_title=_("CalFresh benefit overview"),
-                headline_text=_("You selected a CalFresh Cardholder transit benefit."),
             ),
             SystemName.COURTESY_CARD.value: AgencyCardEligibilityStart(
-                headline_text=_("You selected a Courtesy Card transit benefit."),
                 eligibility_item_headline=_("Your current Courtesy Card number"),
                 eligibility_item_body=_(
                     "You do not need to have your physical MST Courtesy Card, but you will need to know the number."
@@ -150,7 +147,6 @@ class StartView(AgencySessionRequiredMixin, FlowSessionRequiredMixin, TemplateVi
             ),
             SystemName.MEDICARE.value: EligibilityStart(
                 page_title=_("Medicare benefit overview"),
-                headline_text=_("You selected a Medicare Cardholder transit benefit."),
                 eligibility_item_headline=_("An online account with Medicare.gov"),
                 eligibility_item_body=_(
                     "If you do not have an account you will be able to create one using your red, white, and blue Medicare "
@@ -159,17 +155,14 @@ class StartView(AgencySessionRequiredMixin, FlowSessionRequiredMixin, TemplateVi
                 call_to_action_button=CTAButton(text=_("Continue to Medicare.gov"), route=routes.OAUTH_LOGIN),
             ),
             SystemName.OLDER_ADULT.value: LoginGovEligibilityStart(
-                page_title=_("Older Adult benefit overview"),
-                headline_text=_("You selected an Older Adult transit benefit."),
+                page_title=_("Older adult benefit overview"),
             ),
             SystemName.REDUCED_FARE_MOBILITY_ID.value: AgencyCardEligibilityStart(
-                headline_text=_("You selected a Reduced Fare Mobility ID transit benefit."),
                 eligibility_item_headline=_("Your current Reduced Fare Mobility ID number"),
                 eligibility_item_body=_("You do not need to have your physical card, but you will need to know the number."),
             ),
             SystemName.VETERAN.value: LoginGovEligibilityStart(
-                page_title=_("Veterans benefit overview"),
-                headline_text=_("You selected a Veteran transit benefit."),
+                page_title=_("U.S. Veteran benefit overview"),
             ),
         }
 
