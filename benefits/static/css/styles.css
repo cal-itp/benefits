@@ -48,6 +48,18 @@ li {
   margin: 0;
 }
 
+p + p,
+p + ol,
+p + ul,
+ol + p,
+ul + p {
+  margin-top: calc(var(--grid-spacer) * 2);
+}
+
+h2 + p {
+  margin-top: calc(var(--grid-spacer));
+}
+
 /* Utility Classes */
 
 @media (min-width: 992px) {
@@ -104,6 +116,7 @@ a:visited:not(.btn) {
   --external-link-icon-size-small: var(--font-size-18px);
 }
 
+a.external::after,
 a[target="_blank"]::after {
   content: " ";
   background-color: currentColor;
@@ -163,7 +176,7 @@ h4,
 h1,
 .h1 {
   font-size: var(--h1-font-size);
-  padding-top: calc(72rem / 16);
+  padding-top: calc(40rem / 16);
   line-height: var(--heading-line-height);
 }
 
@@ -438,9 +451,9 @@ footer .footer-links li a.footer-link:visited {
 }
 
 .login .fallback-text.white-logo {
-  background-image: url("/static/img/login-gov-logo-rev.svg");
-  width: 130.9887px;
-  height: 17px;
+  background-image: url("/static/img/login-gov-logo-red-shield-white-text.svg");
+  width: 137px;
+  height: 18px;
 }
 
 /* Login.gov modal button (color logo) on Eligibility Index */
@@ -696,6 +709,7 @@ footer .footer-links li a.footer-link:visited {
   vertical-align: text-bottom;
   position: relative;
   top: -2px;
+  margin-left: 2px;
 }
 
 [data-bs-toggle="modal"]:not(.btn):hover::after {
@@ -821,10 +835,6 @@ footer .footer-links li a.footer-link:visited {
 
 .additional-agency {
   border-bottom: 1px solid var(--dsdl-gray-40);
-}
-
-.badged-headline {
-  margin-top: calc(72rem / 16);
 }
 
 .eyebrow-badge {
