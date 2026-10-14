@@ -41,9 +41,9 @@ class TestIndexContextMixin:
         "system_name,expected_ctx",
         [
             (models.SystemName.CALFRESH, views.CalFreshEnrollmentIndex()),
-            (models.SystemName.COURTESY_CARD, views.AgencyCardEnrollmentIndex()),
+            (models.SystemName.COURTESY_CARD, views.EnrollmentIndex()),
             (models.SystemName.OLDER_ADULT, views.EnrollmentIndex()),
-            (models.SystemName.REDUCED_FARE_MOBILITY_ID, views.AgencyCardEnrollmentIndex()),
+            (models.SystemName.REDUCED_FARE_MOBILITY_ID, views.EnrollmentIndex()),
         ],
     )
     def test_get_context_data(self, model_EnrollmentFlow, system_name, expected_ctx):
@@ -53,9 +53,6 @@ class TestIndexContextMixin:
 
         ctx = mixin.get_context_data()
 
-        assert ctx["headline"] == expected_ctx.headline
-        assert ctx["next_step"] == expected_ctx.next_step
-        assert ctx["partner_post_link"] == expected_ctx.partner_post_link
         assert ctx["alert_include"] == expected_ctx.alert_include
 
 

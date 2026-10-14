@@ -6,18 +6,12 @@
 {% endblock alert-wrapper %}
 
 {% block alert-heading %}
-  {% translate "Do not enter information from your EBT card." %}
+  {% translate "Do not enter your EBT card." %}
 {% endblock alert-heading %}
 
 {% block alert-body %}
+  <p>{% translate "You can’t use a Golden State Advantage card pay for transit." %}</p>
   {% translate "Read our guidance on the CalFresh benefit" as calfresh_modal_link %}
-  <p>
-    {% translate "You can’t pay for transit using the CalFresh funds on your Golden State Advantage card. Please provide details from your contactless debit or credit card issued by:" %}
-  </p>
-  {% include "core/includes/list--card-schemes.html" %}
-  <p>
-    {% translate "and use that card to pay for transit." %}
-    {% include "core/includes/modal-trigger.html" with modal="modal--calfresh" text=calfresh_modal_link period=True %}
-  </p>
+  <p class="mt-2">{% include "core/includes/modal-trigger.html" with modal="modal--calfresh" text=calfresh_modal_link %}</p>
   {% include "eligibility/includes/modal--calfresh.html" with id="modal--calfresh" size="modal-lg" header="p-md-2 p-3" body="pb-md-3 mb-md-3 mx-md-3 py-0 pt-0 absolute-top" %}
 {% endblock alert-body %}
