@@ -13,26 +13,34 @@
 {% endblock nav-buttons %}
 
 {% block headline %}
-  <h1 class="pb-4">{{ headline }}</h1>
+  {% translate "You are eligible for a reduced fare!" as headline_text %}
+  {% include "core/includes/badged-headline.html" with headline=headline_text %}
 {% endblock headline %}
 
 {% block inner-content %}
   {% block paragraphs %}
-    <h2 class="h3 pb-1">{{ next_step }}</h2>
+    <p>{% translate "The last step is to register a bank card so you get a reduced fare when you tap." %}</p>
     <p>
-      {% translate "You will be directed to our partner, " %}
-      <!-- djlint:off --><a href="modal--transit-processor" class="{{ classes }}" data-bs-toggle="modal" data-bs-target="#modal--transit-processor">{{ transit_processor.name }}</a>{{ partner_post_link }}<!-- djlint:on -->
-      {% translate "We don’t store your information, and you won’t be charged." %}
+      {% translate "You won’t be charged, and we don’t store your information." %}
+      {% block transit_processor_details %}
+        {% translate "You will be directed to our partner, " %}
+        <a href="modal--transit-processor"
+           class="{{ classes }}"
+           data-bs-toggle="modal"
+           data-bs-target="#modal--transit-processor">{{ transit_processor.name }}</a>,
+        {% translate "to enter your card details." %}
+      {% endblock transit_processor_details %}
     </p>
-    <div class="mt-4">
-      {% if alert_include %}
-        {% include alert_include %}
-      {% else %}
-        <p>{% translate "Please use a debit or credit card by:" %}</p>
-        {% include "core/includes/list--card-schemes.html" %}
-      {% endif %}
-    </div>
+    <p>{% translate "Please use a contactless debit or credit card by:" %}</p>
+    {% include "core/includes/list--card-schemes.html" with classes="ps-4" %}
+    {% translate "Learn more about the bank cards we accept" as text %}
+    {% include "core/includes/modal-trigger.html" with modal="modal--contactless" text=text classes="p" %}
+
+    {% if alert_include %}
+      <div class="mt-5">{% include alert_include %}</div>
+    {% endif %}
     {% include "enrollment/includes/modal--transit-processor.html" with id="modal--transit-processor" size="modal-md" header="p-md-2 p-3" body="pb-md-3 mb-md-3 mx-md-3 py-0 pt-0 absolute-top" transit_processor=transit_processor %}
+    {% include "eligibility/includes/modal--contactless.html" with id="modal--contactless" size="modal-lg" header="p-md-2 p-3" body="pb-md-3 mb-md-3 mx-md-3 py-0 pt-0 absolute-top" %}
   {% endblock paragraphs %}
 
   {% block enrollment-form %}
@@ -42,8 +50,8 @@
 {% block call-to-action-button %}
   <button type="button" class="btn btn-primary btn-lg loading" role="status" disabled>{% translate "Please wait..." %}</button>
   <div class="invisible">
-    <button id="{{ cta_button }}" href="#{{ cta_button }}" class="btn btn-lg btn-primary" role="button" type="button">
-      {% translate "Enroll" %}
+    <button id="{{ cta_button }}" href="#{{ cta_button }}" class="btn btn-lg btn-primary" type="button">
+      {% translate "Register your card" %}
     </button>
   </div>
 {% endblock call-to-action-button %}
