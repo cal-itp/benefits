@@ -102,8 +102,8 @@ The following California transit providers have adopted Cal-ITP Benefits. The be
 | **Valley Express**                                  | 08/2026             | ✅           | ✅                   | ✅            | ―                    | ✅          |
 | **Yolo County Transportation District**             | 09/2026             | ✅           | ✅                   | ―             | ―                    | ―           |
 | **Santa Cruz Metropolitan Transit District**        | 09/2026             | ✅           | ✅                   | ✅            | ―                    | ✅          |
-| **City of Wasco**                                   | 10/2026 (target)    | \*           | \*                   | \*            | \*                   | \*          |
-| **City of Roseville**                               | 11/2026 (target)    | \*           | \*                   | \*            | \*                   | \*          |
+| **City of Wasco**                                   | 11/2026 (target)    | \*           | \*                   | \*            | \*                   | \*          |
+| **City of Roseville**                               | 01/2027 (target)    | \*           | \*                   | \*            | \*                   | \*          |
 | **Pinellas Suncoast Transit Authority**             | Planned             | \*           | \*                   | \*            | \*.                  | \*          |
 | **Santa Barbara County Association of Governments** | Planned             | \*           | \*                   | \*            | \*                   | \*          |
 
