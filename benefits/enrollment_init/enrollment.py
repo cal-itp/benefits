@@ -1,3 +1,5 @@
+from requests import HTTPError
+
 from benefits.core import session
 from benefits.core.models.enrollment import EnrollmentFlow
 from benefits.enrollment.enrollment import Status, resolve_enrollment_decision
@@ -13,35 +15,48 @@ def enroll(request, init_config: InitConfig, flow: EnrollmentFlow, group: InitGr
         init_config.registration_api_password,
     )
 
-    transit_account = _get_transit_account(client, token)
-    cardholder = _get_cardholder(client, transit_account)
-    already_enrolled = _is_already_enrolled(cardholder, group)
-    existing_expiry = cardholder.FareCategoryExpiry if already_enrolled else None  # need to make FareCategoryExpiry a datetime
+    try:
+        transit_account = _get_transit_account(client, token)
+        cardholder = _get_cardholder(client, transit_account)
+        already_enrolled = _is_already_enrolled(cardholder, group)
+        existing_expiry = (
+            cardholder.FareCategoryExpiry if already_enrolled else None
+        )  # need to make FareCategoryExpiry a datetime
 
-    decision = resolve_enrollment_decision(flow, already_enrolled, existing_expiry)
-    status = decision.status
+        decision = resolve_enrollment_decision(flow, already_enrolled, existing_expiry)
+        status = decision.status
 
-    if decision.expiry_to_store is not None:
-        session.update(request, enrollment_expiry=decision.expiry_to_store)
+        if decision.expiry_to_store is not None:
+            session.update(request, enrollment_expiry=decision.expiry_to_store)
 
-    if status is Status.SUCCESS:
-        if decision.should_remove_expiry:
-            # need to update put_cardholder so that we can preserve all of the Cardholder's properties
-            # put_cardholder with empty expiry
-            pass
-        elif decision.should_enroll:
-            if not already_enrolled:
-                if decision.expiry_to_send is None:
-                    # post_cardholder with no expiry
-                    pass
-                else:
-                    # post_cardholder with expiry_to_send
-                    pass
-            else:
-                # put_cardholder with expiry_to_send
+        if status is Status.SUCCESS:
+            if decision.should_remove_expiry:
+                # need to update put_cardholder so that we can preserve all of the Cardholder's properties
+                # put_cardholder with empty expiry
                 pass
+            elif decision.should_enroll:
+                if not already_enrolled:
+                    if decision.expiry_to_send is None:
+                        # post_cardholder with no expiry
+                        pass
+                    else:
+                        # post_cardholder with expiry_to_send
+                        pass
+                else:
+                    # put_cardholder with expiry_to_send
+                    pass
+    except HTTPError as e:
+        if e.response.status_code >= 500:
+            status = Status.SYSTEM_ERROR
+            exception = e
+        else:
+            status = Status.EXCEPTION
+            exception = Exception(f"{e}: {e.response.text}")
+    except Exception as e:
+        status = Status.EXCEPTION
+        exception = e
 
-    return status, None
+    return status, exception
 
 
 def _get_transit_account(client: Client, token: str):
