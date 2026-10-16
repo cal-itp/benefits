@@ -106,6 +106,7 @@ The following California transit providers have adopted Cal-ITP Benefits. The be
 | **City of Roseville**                               | 11/2026 (target)    | \*           | \*                   | \*            | \*                   | \*          |
 | **Pinellas Suncoast Transit Authority**             | Planned             | \*           | \*                   | \*            | \*.                  | \*          |
 | **Santa Barbara County Association of Governments** | Planned             | \*           | \*                   | \*            | \*                   | \*          |
+| **Mendocino Transit Authority**                     | 1/2027 (target)   | \*           | \*                   | \*            | \*          | \*         |
 
 ## Supported enrollment pathways
 
