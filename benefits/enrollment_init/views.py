@@ -7,6 +7,7 @@ from django.views.generic import FormView, TemplateView
 from benefits.core.mixins import AgencySessionRequiredMixin, EligibleSessionRequiredMixin
 from benefits.enrollment import forms
 from benefits.enrollment.views import FlowSessionRequiredMixin
+from benefits.enrollment_init.enrollment import enroll
 
 from .routes import routes
 
@@ -68,5 +69,11 @@ class RegisterView(AgencySessionRequiredMixin, FlowSessionRequiredMixin, FormVie
         return context
 
     def form_valid(self, form):
+        init_config = self.agency.transit_processor
+        flow = self.flow
+        group = self.group
         card_token = form.cleaned_data.get("card_token")
+
+        status, exception = enroll(self.request, init_config, flow, group, card_token)
+
         return JsonResponse({"status": "ok", "tokenized_card": card_token})
