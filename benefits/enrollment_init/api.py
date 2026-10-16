@@ -1,5 +1,6 @@
 import base64
 from dataclasses import dataclass
+from datetime import datetime
 
 import requests
 from django.conf import settings
@@ -16,7 +17,17 @@ class TransitAccountResponse(BaseDataClass):
 @dataclass
 class CardholderResponse(BaseDataClass):
     FareCategory: int
-    FareCategoryExpiry: str
+    FareCategoryExpiry: datetime | None = None
+
+    def __post_init__(self):
+        """Parses any date parameters into aware Python datetime objects.
+
+        For @dataclasses with a generated __init__ function, this function is called automatically.
+
+        https://docs.python.org/3.12/library/datetime.html#datetime.datetime.fromisoformat
+        """
+        if self.FareCategoryExpiry:
+            self.FareCategoryExpiry = datetime.fromisoformat(self.FareCategoryExpiry)
 
 
 class Client:
