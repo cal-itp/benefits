@@ -6,7 +6,7 @@
 
   the functionality here includes:
   * wiring up custom validation messaging (when enabled)
-  * recaptchas (when enabled)
+  * recaptchas (when enabled and not explicitly suppressed)
 {% endcomment %}
 
 {% block content %}
@@ -59,8 +59,7 @@
         {% endif %}
     });
   </script>
-
-  {% if request.recaptcha %}
+  {% if request.recaptcha and not suppress_recaptcha %}
     {% include "core/includes/recaptcha.html" %}
   {% endif %}
 {% endblock content %}
