@@ -19,9 +19,7 @@ def enroll(request, init_config: InitConfig, flow: EnrollmentFlow, group: InitGr
         transit_account = _get_transit_account(client, token)
         cardholder = _get_cardholder(client, transit_account)
         already_enrolled = _is_already_enrolled(cardholder, group)
-        existing_expiry = (
-            cardholder.FareCategoryExpiry if already_enrolled else None
-        )  # need to make FareCategoryExpiry a datetime
+        existing_expiry = cardholder.FareCategoryExpiry if already_enrolled else None
 
         decision = resolve_enrollment_decision(flow, already_enrolled, existing_expiry)
         status = decision.status
