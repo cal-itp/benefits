@@ -137,6 +137,10 @@ class HelpView(TemplateView):
                     flows_help.extend(help_contexts)
 
             context["flows_help"] = flows_help
+            context["transit_processor"] = dict(
+                name=agency.transit_processor_display_name,
+                website=agency.transit_processor_info_url,
+            )
 
         return context
 

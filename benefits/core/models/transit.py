@@ -68,7 +68,6 @@ class TransitProcessorConfig(models.Model):
 
     @property
     def group_model(self):
-        self._meta.app_config
         return self._meta.app_config.group_model
 
     @property

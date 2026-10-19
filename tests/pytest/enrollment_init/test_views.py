@@ -19,11 +19,11 @@ def mocked_sentry_sdk_module(mocker):
 @pytest.mark.django_db
 class TestIndexView:
     @pytest.fixture
-    def view(self, app_request, model_InitConfig, model_EnrollmentFlow):
+    def view(self, app_request, model_TransitAgency, model_EnrollmentFlow):
         """Fixture to create an instance of IndexView."""
         v = IndexView()
         v.setup(app_request)
-        v.agency = model_InitConfig
+        v.agency = model_TransitAgency
         v.agency.supported_card_schemes = [CardSchemes.DISCOVER, CardSchemes.AMEX]
         v.flow = model_EnrollmentFlow
 
@@ -33,6 +33,11 @@ class TestIndexView:
         context = view.get_context_data()
 
         assert "cta_button" in context
+
+        assert "transit_processor" in context
+        transit_processor_context = context["transit_processor"]
+        assert "name" in transit_processor_context
+        assert "website" in transit_processor_context
 
     @pytest.mark.usefixtures("mocked_session_eligible")
     def test_get(self, view, app_request):

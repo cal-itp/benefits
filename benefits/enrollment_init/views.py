@@ -19,11 +19,16 @@ class IndexView(AgencySessionRequiredMixin, EligibleSessionRequiredMixin, FlowSe
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        agency = self.agency
 
         context.update(
             {
                 "cta_button": routes.ENROLLMENT_INIT_REGISTER_CARD,
                 "flow": self.flow,
+                "transit_processor": {
+                    "name": agency.transit_processor_display_name,
+                    "website": agency.transit_processor_info_url,
+                },
             }
         )
         return context
