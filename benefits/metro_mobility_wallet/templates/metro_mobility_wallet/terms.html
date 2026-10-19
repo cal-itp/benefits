@@ -6,8 +6,48 @@
 {% endblock headline %}
 
 {% block inner-content %}
-  <h2 class="h3 pb-4">Signature</h2>
-  <form id="form-accept-terms" action="{% url form.action_url_name %}" method="{{ form.method }}">
+  <style nonce="{{ request.csp_nonce }}">
+    .error-summary {
+      border-left: 4px solid #DE0E10;
+      background-color: #FEF5F5;
+      margin-bottom: calc(24rem / 16);
+      font-size: calc(16rem / 16);
+    }
+    .error-summary:focus {
+      outline: 2px solid #756FFF;
+      outline-offset: 2px;
+    }
+
+    .error-summary-heading {
+      font-size: var(--font-size-16px);
+    }
+
+    .error-summary li,
+    .error-summary a {
+      font-size: var(--font-size-16px) !important;
+    }
+
+    @media (min-width: 992px) {
+      .error-summary {
+        margin-bottom: calc(32rem / 16);
+    }
+  </style>
+
+  <div id="error-summary" class="alert-box error-summary p-3 {% if not form.errors %}d-none{% endif %}" tabindex="-1">
+    <h2 class="error-summary-heading fw-semibold mb-2 text-dark"
+        id="error-summary-heading">{% translate "There was a problem" %}</h2>
+    <ul class="mb-0 ps-3">
+      <li>
+        {% blocktranslate trimmed with field_id=form.agree_to_terms.id_for_label %}
+          Add your <a href="#{{ field_id }}">signature</a>
+        {% endblocktranslate %}
+      </li>
+    </ul>
+  </div>
+
+  <h2 class="h3 pb-4">{% translate "Signature" %}</h2>
+
+  <form id="form-accept-terms" action="{% url form.action_url_name %}" method="{{ form.method }}" novalidate>
     {% csrf_token %}
     <div class="form-field-container">
       <div class="form-group mb-0 d-flex align-items-center">
@@ -31,4 +71,6 @@
       </button>
     </div>
   </form>
+
+
 {% endblock inner-content %}
