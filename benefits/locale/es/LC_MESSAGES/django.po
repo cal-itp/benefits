@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Report-Msgid-Bugs-To: https://github.com/cal-itp/benefits/issues \n"
-"POT-Creation-Date: 2026-10-19 12:05-0700\n"
+"POT-Creation-Date: 2026-10-19 13:08-0700\n"
 "Language: Español\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -224,8 +224,8 @@ msgstr "¿Qué es %(name)s?"
 
 #, python-format
 msgid ""
-"%(name)s is a secure, end-to-end payment processing platform that allows us "
-"to connect your transit benefit to the bank card of your choice. They are a "
+"%(name)s is a secure, end-to-end fare processing platform that allows us to "
+"connect your transit benefit to the bank card of your choice. They are a "
 "payment partner for %(agency_name)s."
 msgstr ""
 "%(name)s es una plataforma segura de procesamiento de tarifas de extremo a "
@@ -857,16 +857,6 @@ msgstr ""
 
 msgid "and use that card to pay for transit."
 msgstr "y use esa tarjeta para pagar el transporte público."
-
-#, python-format
-msgid ""
-"%(name)s is a secure, end-to-end fare processing platform that allows us to "
-"connect your transit benefit to the bank card of your choice. They are a "
-"payment partner for %(agency_name)s."
-msgstr ""
-"%(name)s es una plataforma segura de procesamiento de tarifas de extremo a "
-"extremo que nos permite vincular su beneficio de transporte con una tarjeta "
-"bancaria de su elección. Es un socio de pago de %(agency_name)s."
 
 msgid "Eligibility confirmation"
 msgstr "Confirmación de elegibilidad"
