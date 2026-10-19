@@ -72,5 +72,49 @@
     </div>
   </form>
 
+  <script nonce="{{ request.csp_nonce }}">
+    ready(function() {
+      const form = document.querySelector("#form-accept-terms");
+      const checkbox = document.querySelector("#{{ form.agree_to_terms.id_for_label }}");
+      const errorSummary = document.querySelector("#error-summary");
+      const signatureLink = document.querySelector("#error-summary a");
+
+      // Auto-focus summary on page load if rendered by server-side validation
+      if (errorSummary && !errorSummary.classList.contains("d-none")) {
+        errorSummary.focus();
+      }
+
+      // Transfer focus to the checkbox when clicking the link in the summary
+      if (signatureLink && checkbox) {
+        signatureLink.addEventListener("click", function(e) {
+          checkbox.focus();
+        });
+      }
+
+      // Intercept submit for client-side validation
+      if (form && checkbox) {
+        form.addEventListener("submit", function(event) {
+          if (!checkbox.checked) {
+            event.preventDefault();
+
+            // Display error summary and shift focus
+            if (errorSummary) {
+              errorSummary.classList.remove("d-none");
+              errorSummary.focus();
+            }
+          }
+        });
+
+        // Clear error as soon as user checks the box
+        checkbox.addEventListener("change", function() {
+          if (checkbox.checked) {
+            if (errorSummary) {
+              errorSummary.classList.add("d-none");
+            }
+          }
+        });
+      }
+    });
+  </script>
 
 {% endblock inner-content %}
