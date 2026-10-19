@@ -199,6 +199,10 @@ class TestHelpView:
     def test_get_context_data_with_agency(self, view, mocked_session_agency):
         context_data = view.get_context_data()
         assert "flows_help" in context_data
+        assert "transit_processor" in context_data
+        transit_processor_context = context_data["transit_processor"]
+        assert "name" in transit_processor_context
+        assert "website" in transit_processor_context
 
 
 @pytest.mark.django_db
