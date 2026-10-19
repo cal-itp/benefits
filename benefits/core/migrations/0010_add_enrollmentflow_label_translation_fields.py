@@ -2,6 +2,28 @@
 
 from django.db import migrations, models
 
+from benefits.core.models.enrollment import SystemName
+
+
+def populate_translation_fields(apps, schema_editor):
+    flow_labels = {
+        # system_name: (english, spanish)
+        SystemName.CALFRESH: ("CalFresh cardholder", "Titular de la tarjeta CalFresh"),
+        SystemName.COURTESY_CARD: ("Courtesy Card", "Tarjeta de cortesía"),
+        SystemName.MEDICARE: ("Medicare cardholder", "Titular de tarjeta Medicare"),
+        SystemName.METRO_MOBILITY_WALLET: ("CalFresh cardholder", "Titular de la tarjeta CalFresh"),
+        SystemName.OLDER_ADULT: ("Older adult", "Adulto mayor"),
+        SystemName.REDUCED_FARE_MOBILITY_ID: ("Reduced Fare Mobility ID", "Pase de Movilidad"),
+        SystemName.VETERAN: ("U.S. Veteran", "Veterano de EE. UU."),
+    }
+    EnrollmentFlow = apps.get_model("core", "EnrollmentFlow")
+
+    for flow in EnrollmentFlow.objects.all():
+        if flow_labels.get(flow.system_name):
+            flow.label_en = flow_labels[flow.system_name][0]
+            flow.label_es = flow_labels[flow.system_name][1]
+            flow.save()
+
 
 class Migration(migrations.Migration):
 
@@ -10,74 +32,82 @@ class Migration(migrations.Migration):
     ]
 
     operations = [
+        migrations.AlterField(
+            model_name="enrollmentflow",
+            name="label",
+            field=models.CharField(
+                blank=True, default="", help_text="A human readable label, shown to users on the front end."
+            ),
+        ),
         migrations.AddField(
             model_name="enrollmentflow",
             name="label_en",
             field=models.CharField(
-                blank=True, default="", help_text="A human readable label, used as the display text in Admin.", null=True
+                blank=True, default="", help_text="A human readable label, shown to users on the front end.", null=True
             ),
         ),
         migrations.AddField(
             model_name="enrollmentflow",
             name="label_es",
             field=models.CharField(
-                blank=True, default="", help_text="A human readable label, used as the display text in Admin.", null=True
+                blank=True, default="", help_text="A human readable label, shown to users on the front end.", null=True
             ),
         ),
         migrations.AddField(
             model_name="enrollmentflow",
             name="label_hy",
             field=models.CharField(
-                blank=True, default="", help_text="A human readable label, used as the display text in Admin.", null=True
+                blank=True, default="", help_text="A human readable label, shown to users on the front end.", null=True
             ),
         ),
         migrations.AddField(
             model_name="enrollmentflow",
             name="label_ja",
             field=models.CharField(
-                blank=True, default="", help_text="A human readable label, used as the display text in Admin.", null=True
+                blank=True, default="", help_text="A human readable label, shown to users on the front end.", null=True
             ),
         ),
         migrations.AddField(
             model_name="enrollmentflow",
             name="label_ko",
             field=models.CharField(
-                blank=True, default="", help_text="A human readable label, used as the display text in Admin.", null=True
+                blank=True, default="", help_text="A human readable label, shown to users on the front end.", null=True
             ),
         ),
         migrations.AddField(
             model_name="enrollmentflow",
             name="label_ru",
             field=models.CharField(
-                blank=True, default="", help_text="A human readable label, used as the display text in Admin.", null=True
+                blank=True, default="", help_text="A human readable label, shown to users on the front end.", null=True
             ),
         ),
         migrations.AddField(
             model_name="enrollmentflow",
             name="label_th",
             field=models.CharField(
-                blank=True, default="", help_text="A human readable label, used as the display text in Admin.", null=True
+                blank=True, default="", help_text="A human readable label, shown to users on the front end.", null=True
             ),
         ),
         migrations.AddField(
             model_name="enrollmentflow",
             name="label_vi",
             field=models.CharField(
-                blank=True, default="", help_text="A human readable label, used as the display text in Admin.", null=True
+                blank=True, default="", help_text="A human readable label, shown to users on the front end.", null=True
             ),
         ),
         migrations.AddField(
             model_name="enrollmentflow",
             name="label_zh_hans",
             field=models.CharField(
-                blank=True, default="", help_text="A human readable label, used as the display text in Admin.", null=True
+                blank=True, default="", help_text="A human readable label, shown to users on the front end.", null=True
             ),
         ),
         migrations.AddField(
             model_name="enrollmentflow",
             name="label_zh_hant",
             field=models.CharField(
-                blank=True, default="", help_text="A human readable label, used as the display text in Admin.", null=True
+                blank=True, default="", help_text="A human readable label, shown to users on the front end.", null=True
             ),
         ),
+        migrations.RunPython(populate_translation_fields),
     ]
