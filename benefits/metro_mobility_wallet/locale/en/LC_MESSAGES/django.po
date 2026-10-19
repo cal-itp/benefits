@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Report-Msgid-Bugs-To: https://github.com/cal-itp/benefits/issues \n"
-"POT-Creation-Date: 2026-10-21 11:40+0000\n"
+"POT-Creation-Date: 2026-10-19 20:37+0000\n"
 "Language: English\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -35,4 +35,16 @@ msgid "You can apply for a Mobility Wallet if you get CalFresh"
 msgstr ""
 
 msgid "Let’s confirm your eligibility and fill out your application."
+msgstr ""
+
+msgid "Review and accept program terms"
+msgstr ""
+
+msgid "I have read and agree to the"
+msgstr ""
+
+msgid "Mobility Wallet Program Terms."
+msgstr ""
+
+msgid "Next"
 msgstr ""

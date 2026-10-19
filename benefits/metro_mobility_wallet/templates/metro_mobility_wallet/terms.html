@@ -1,1 +1,34 @@
-Terms
+{% extends "metro_mobility_wallet/base.html" %}
+{% load i18n %}
+
+{% block headline %}
+  <h1 class="mmw-headline">{% translate "Review and accept program terms" %}</h1>
+{% endblock headline %}
+
+{% block inner-content %}
+  <h2 class="h3 pb-4">Signature</h2>
+  <form id="form-accept-terms" action="{% url form.action_url_name %}" method="{{ form.method }}">
+    {% csrf_token %}
+    <div class="form-field-container">
+      <div class="form-group mb-0 d-flex align-items-center">
+        {{ form.agree_to_terms }}
+        <label class="ps-2 mb-0" for="{{ form.agree_to_terms.id_for_label }}">
+          <span>
+            {% translate "I have read and agree to the" %}
+            <a href="">{% translate "Mobility Wallet Program Terms." %}</a>
+          </span>
+        </label>
+      </div>
+    </div>
+
+    <div class="pt-8">
+      <button class="btn btn-lg btn-primary spinner-hidden d-flex justify-content-center align-items-center"
+              data-action="submit"
+              type="submit"
+              form="form-accept-terms">
+        <span class="btn-text">{% translate "Next" %}</span>
+        <span class="spinner-border spinner-border-sm"></span>
+      </button>
+    </div>
+  </form>
+{% endblock inner-content %}

@@ -1,4 +1,5 @@
 import pytest
+from django.urls import reverse
 
 import benefits.metro_mobility_wallet.views as views
 
@@ -23,6 +24,14 @@ class TestTermsView:
 
     def test_template_name(self, view):
         assert view.template_name == "metro_mobility_wallet/terms.html"
+
+    def test_form_valid(self, view):
+        form = view.form_class(data={"agree_to_terms": True})
+
+        assert form.is_valid()
+        response = view.form_valid(form)
+
+        assert response.url == reverse("metro_mobility_wallet:apply")
 
 
 class TestApplyView:
