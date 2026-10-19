@@ -260,13 +260,13 @@ msgstr ""
 "sitios web:"
 
 msgid "Littlepay website"
-msgstr "el sitio web de Littlepay"
+msgstr "Sitio web de Littlepay"
 
 msgid "Switchio website"
-msgstr "el sitio web de Switchio"
+msgstr "Sitio web de Switchio"
 
 msgid "INIT website"
-msgstr "el sitio web de INIT"
+msgstr "Sitio web de INIT"
 
 msgid "Questions?"
 msgstr "¿Tiene preguntas?"
