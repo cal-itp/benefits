@@ -1,10 +1,11 @@
 from django.shortcuts import redirect
 from django.views.generic import FormView, TemplateView
 
+from benefits.core.mixins import RecaptchaEnabledMixin
 from benefits.metro_mobility_wallet.forms import TermsAcceptanceForm
 
 
-class TermsView(FormView):
+class TermsView(RecaptchaEnabledMixin, FormView):
     template_name = "metro_mobility_wallet/terms.html"
     form_class = TermsAcceptanceForm
 

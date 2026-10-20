@@ -116,5 +116,7 @@
       }
     });
   </script>
-
+  {% if request.recaptcha %}
+    {% include "core/includes/recaptcha.html" %}
+  {% endif %}
 {% endblock inner-content %}
