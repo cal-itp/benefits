@@ -7,6 +7,11 @@
 
 {% block inner-content %}
   <style nonce="{{ request.csp_nonce }}">
+    .mmw-terms-checkbox {
+        width: calc(24rem / 16);
+        height: calc(24rem / 16);
+      }
+
     .error-summary {
       border-left: 4px solid #DE0E10;
       background-color: #FEF5F5;
