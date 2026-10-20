@@ -120,7 +120,7 @@ class EnrollmentFlow(models.Model):
     label = models.CharField(
         blank=True,
         default="",
-        help_text="A human readable label, used as the display text in Admin.",
+        help_text="A human readable label, shown to users on the front end.",
     )
     supported_enrollment_methods = MultiSelectField(
         choices=SUPPORTED_METHODS,
