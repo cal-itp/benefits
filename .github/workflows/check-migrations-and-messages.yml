@@ -3,6 +3,7 @@ on: [push, pull_request, workflow_call]
 
 jobs:
   check-migrations-and-messages:
+    # when our DevContainer starts running Debian 13, we can upgrade this to ubuntu-26.04
     runs-on: ubuntu-24.04
     steps:
       - name: Check out code
