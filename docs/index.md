@@ -84,29 +84,28 @@ timeline
 
 The following California transit providers have adopted Cal-ITP Benefits. The benefit options available to eligible riders are denoted by a green checkmark.
 
-| Transit provider                                    | Initial launch date | Older adults | Medicare cardholders | U.S. Veterans | CalFresh cardholders | Agency card |
-| --------------------------------------------------- | ------------------- | ------------ | -------------------- | ------------- | -------------------- | ----------- |
-| **Monterey-Salinas Transit**                        | 12/2021             | ✅           | ✅                   | ✅            | ―                    | ✅          |
-| **Santa Barbara Metropolitan Transit District**     | 10/2023             | ✅           | ✅                   | ―             | ―                    | ✅          |
-| **Sacramento Regional Transit District**            | 10/2024             | ✅           | ✅                   | ✅            | ―                    | ―           |
-| **Nevada County Connects**                          | 03/2025             | ✅           | ✅                   | ✅            | ―                    | ―           |
-| **Ventura County Transportation Commission**        | 10/2025             | ✅           | ✅                   | ✅            | ―                    | ✅          |
-| **San Luis Obispo Regional Transit**                | 12/2025             | ✅           | ✅                   | ―             | ―                    | ―           |
-| **El Dorado Transit Authority**                     | 01/2026             | ✅           | ✅                   | ―             | ―                    | ―           |
-| **Redding Area Bus Authority**                      | 02/2026             | ✅           | ✅                   | ✅            | ✅                   | ―           |
-| **City of San Luis Obispo**                         | 04/2026             | ✅           | ✅                   | ―             | ―                    | ―           |
-| **City of Camarillo**                               | 08/2026             | ✅           | ✅                   | ✅            | ―                    | ✅          |
-| **City of Simi Valley**                             | 08/2026             | ✅           | ✅                   | ✅            | ―                    | ✅          |
-| **City of Thousand Oaks**                           | 08/2026             | ✅           | ✅                   | ✅            | ―                    | ✅          |
-| **Gold Coast Transit Distict**                      | 08/2026             | ✅           | ✅                   | ✅            | ―                    | ✅          |
-| **Valley Express**                                  | 08/2026             | ✅           | ✅                   | ✅            | ―                    | ✅          |
-| **Yolo County Transportation District**             | 09/2026             | ✅           | ✅                   | ―             | ―                    | ―           |
-| **Santa Cruz Metropolitan Transit District**        | 09/2026             | ✅           | ✅                   | ✅            | ―                    | ✅          |
-| **City of Wasco**                                   | 11/2026 (target)    | \*           | \*                   | \*            | \*                   | \*          |
-| **City of Roseville**                               | 01/2027 (target)    | \*           | \*                   | \*            | \*                   | \*          |
-| **Mendocino Transit Authority**                     | 01/2027 (target)    | \*           | \*                   | \*            | \*                   | \*          |
-| **Pinellas Suncoast Transit Authority**             | Planned             | \*           | \*                   | \*            | \*.                  | \*          |
-| **Santa Barbara County Association of Governments** | Planned             | \*           | \*                   | \*            | \*                   | \*          |
+| Transit provider                                | Initial launch date | Older adults | Medicare cardholders | U.S. Veterans | CalFresh cardholders | Agency card |
+| ----------------------------------------------- | ------------------- | ------------ | -------------------- | ------------- | -------------------- | ----------- |
+| **Monterey-Salinas Transit**                    | 12/2021             | ✅           | ✅                   | ✅            | ―                    | ✅          |
+| **Santa Barbara Metropolitan Transit District** | 10/2023             | ✅           | ✅                   | ―             | ―                    | ✅          |
+| **Sacramento Regional Transit District**        | 10/2024             | ✅           | ✅                   | ✅            | ―                    | ―           |
+| **Nevada County Connects**                      | 03/2025             | ✅           | ✅                   | ✅            | ―                    | ―           |
+| **Ventura County Transportation Commission**    | 10/2025             | ✅           | ✅                   | ✅            | ―                    | ✅          |
+| **San Luis Obispo Regional Transit**            | 12/2025             | ✅           | ✅                   | ―             | ―                    | ―           |
+| **El Dorado Transit Authority**                 | 01/2026             | ✅           | ✅                   | ―             | ―                    | ―           |
+| **Redding Area Bus Authority**                  | 02/2026             | ✅           | ✅                   | ✅            | ✅                   | ―           |
+| **City of San Luis Obispo**                     | 04/2026             | ✅           | ✅                   | ―             | ―                    | ―           |
+| **City of Camarillo**                           | 08/2026             | ✅           | ✅                   | ✅            | ―                    | ✅          |
+| **City of Simi Valley**                         | 08/2026             | ✅           | ✅                   | ✅            | ―                    | ✅          |
+| **City of Thousand Oaks**                       | 08/2026             | ✅           | ✅                   | ✅            | ―                    | ✅          |
+| **Gold Coast Transit Distict**                  | 08/2026             | ✅           | ✅                   | ✅            | ―                    | ✅          |
+| **Valley Express**                              | 08/2026             | ✅           | ✅                   | ✅            | ―                    | ✅          |
+| **Yolo County Transportation District**         | 09/2026             | ✅           | ✅                   | ―             | ―                    | ―           |
+| **Santa Cruz Metropolitan Transit District**    | 09/2026             | ✅           | ✅                   | ✅            | ―                    | ✅          |
+| **City of Wasco**                               | 11/2026 (target)    | \*           | \*                   | \*            | \*                   | \*          |
+| **City of Roseville**                           | 01/2027 (target)    | \*           | \*                   | \*            | \*                   | \*          |
+| **Mendocino Transit Authority**                 | 01/2027 (target)    | \*           | \*                   | \*            | \*                   | \*          |
+| **Pinellas Suncoast Transit Authority**         | Planned             | \*           | \*                   | \*            | \*                   | \*          |
 
 ## Supported enrollment pathways
 
