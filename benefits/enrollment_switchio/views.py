@@ -41,6 +41,7 @@ class IndexView(AgencySessionRequiredMixin, EligibleSessionRequiredMixin, IndexC
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
 
+        agency = self.agency
         request = self.request
 
         tokenize_system_error_form = forms.CardTokenizeFailForm(
@@ -56,7 +57,10 @@ class IndexView(AgencySessionRequiredMixin, EligibleSessionRequiredMixin, IndexC
                 "form_system_error": tokenize_system_error_form.id,
                 "cta_button": "tokenize_card",
                 "enrollment_method": self.enrollment_method,
-                "transit_processor": {"name": "Switchio", "website": "https://switchio.com/transport/"},
+                "transit_processor": {
+                    "name": agency.transit_processor_display_name,
+                    "website": agency.transit_processor_info_url,
+                },
                 "locale": self._get_locale(request.LANGUAGE_CODE),
                 "routes": routes.to_dict(),
             }

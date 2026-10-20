@@ -19,11 +19,11 @@ def mocked_sentry_sdk_module(mocker):
 @pytest.mark.django_db
 class TestIndexView:
     @pytest.fixture
-    def view(self, app_request, model_InitConfig, model_EnrollmentFlow):
+    def view(self, app_request, model_TransitAgency, model_EnrollmentFlow):
         """Fixture to create an instance of IndexView."""
         v = IndexView()
         v.setup(app_request)
-        v.agency = model_InitConfig
+        v.agency = model_TransitAgency
         v.agency.supported_card_schemes = [CardSchemes.DISCOVER, CardSchemes.AMEX]
         v.flow = model_EnrollmentFlow
 

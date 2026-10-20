@@ -77,6 +77,11 @@ def test_InitConfig_system_name_for_display(model_InitConfig):
 
 
 @pytest.mark.django_db
+def test_InitConfig_info_url(model_InitConfig):
+    assert model_InitConfig.info_url.startswith("https://")
+
+
+@pytest.mark.django_db
 def test_InitConfig_enrollment_index_route(model_InitConfig):
     assert model_InitConfig.enrollment_index_route == routes.ENROLLMENT_INIT_INDEX
 

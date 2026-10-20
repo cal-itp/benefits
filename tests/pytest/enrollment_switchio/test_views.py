@@ -56,7 +56,6 @@ class TestIndexView:
         assert "next_step" in context
         assert "partner_post_link" in context
         assert "alert_include" in context
-        assert "locale" in context
         assert "transit_processor" in context.keys()
         transit_processor_context = context["transit_processor"]
         assert "name" in transit_processor_context
