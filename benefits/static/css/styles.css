@@ -893,3 +893,31 @@ footer .footer-links li a.footer-link:visited {
     width: 350px;
   }
 }
+
+/* Pulsing icons */
+
+.icon.pulsing {
+  border-radius: 100%;
+  outline-color: var(--dsdl-cyan-20);
+  outline-style: solid;
+  animation-name: pulse;
+  animation-duration: 0.75s;
+  animation-iteration-count: infinite;
+  animation-timing-function: linear;
+  animation-direction: alternate;
+}
+
+@keyframes pulse {
+  0% {
+    outline-width: 0;
+  }
+  100% {
+    outline-width: 12px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .icon.pulsing {
+    animation-duration: 3s;
+  }
+}
