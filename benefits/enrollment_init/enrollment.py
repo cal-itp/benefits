@@ -29,7 +29,6 @@ def enroll(request, init_config: InitConfig, flow: EnrollmentFlow, group: InitGr
 
         if status is Status.SUCCESS:
             if decision.should_remove_expiry:
-                # need to update put_cardholder so that we can preserve all of the Cardholder's properties
                 # put_cardholder with empty expiry
                 pass
             elif decision.should_enroll:
