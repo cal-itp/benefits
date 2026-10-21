@@ -15,6 +15,7 @@ def enroll(request, init_config: InitConfig, flow: EnrollmentFlow, group: InitGr
         init_config.registration_api_password,
     )
 
+    exception = None
     try:
         transit_account = _get_transit_account(client, token)
         cardholder = _get_cardholder(client, transit_account)
@@ -34,8 +35,7 @@ def enroll(request, init_config: InitConfig, flow: EnrollmentFlow, group: InitGr
             elif decision.should_enroll:
                 if not already_enrolled:
                     if decision.expiry_to_send is None:
-                        # post_cardholder with no expiry
-                        pass
+                        client.post_cardholder(fare_category=group.group_id, transit_account_id=transit_account.Id)
                     else:
                         # post_cardholder with expiry_to_send
                         pass
