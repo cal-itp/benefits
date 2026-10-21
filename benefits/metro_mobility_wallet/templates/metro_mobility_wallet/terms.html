@@ -11,6 +11,10 @@
         width: calc(24rem / 16);
         height: calc(24rem / 16);
       }
+    .mmw-terms-checkbox:focus {
+      outline: 2px solid #756FFF;
+      outline-offset: 1px;
+    }
 
     .error-summary {
       border-left: 4px solid #DE0E10;
@@ -54,9 +58,9 @@
   <form id="form-accept-terms" action="{% url form.action_url_name %}" method="{{ form.method }}" novalidate>
     {% csrf_token %}
     <div class="form-field-container">
-      <div class="form-group mb-0 d-flex align-items-center">
+      <div class="form-group mb-0 d-flex align-items-start">
         {{ form.agree_to_terms }}
-        <label class="ps-2 mb-0" for="{{ form.agree_to_terms.id_for_label }}">
+        <label class="ps-3 mb-0" for="{{ form.agree_to_terms.id_for_label }}">
           <span>
             {% blocktranslate trimmed with url_terms="" %}
               I have read and agree to the <a href="{{ url_terms }}">Mobility Wallet Program Terms.</a>
