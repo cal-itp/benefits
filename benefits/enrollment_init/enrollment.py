@@ -30,18 +30,18 @@ def enroll(request, init_config: InitConfig, flow: EnrollmentFlow, group: InitGr
 
         if status is Status.SUCCESS:
             if decision.should_remove_expiry:
-                # put_cardholder with empty expiry
-                pass
+                # TODO: put_cardholder with empty expiry
+                raise NotImplementedError()
             elif decision.should_enroll:
                 if not already_enrolled:
                     if decision.expiry_to_send is None:
                         client.post_cardholder(fare_category=group.group_id, transit_account_id=transit_account.Id)
                     else:
-                        # post_cardholder with expiry_to_send
-                        pass
+                        # TODO: post_cardholder with expiry_to_send
+                        raise NotImplementedError()
                 else:
-                    # put_cardholder with expiry_to_send
-                    pass
+                    # TODO: put_cardholder with expiry_to_send
+                    raise NotImplementedError()
     except HTTPError as e:
         if e.response.status_code >= 500:
             status = Status.SYSTEM_ERROR
