@@ -38,8 +38,21 @@ class CardholderUpdateModel(BaseDataClass):
 
 @dataclass
 class CardholderResponse(BaseDataClass):
-    FareCategory: int
+    FirstName: str | None = None
+    MiddleName: str | None = None
+    LastName: str | None = None
+    PhoneNumber: str | None = None
+    DateOfBirth: str | None = None
+    Email: str | None = None
+    CellPhoneNumber: str | None = None
+    FaxNumber: str | None = None
+    Gender: str | None = None
+    Identifier: str | None = None
+    FareCategory: int | None = None
     FareCategoryExpiry: datetime | None = None
+    TransitAccountId: int | None = None
+    PersonalCareAssistant: bool | None = None
+    # there are more fields that can be returned, but we don't need them and they're not in the PUT parameters
 
     def __post_init__(self):
         """Parses any date parameters into aware Python datetime objects.
