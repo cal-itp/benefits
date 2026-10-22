@@ -4,6 +4,8 @@ The enrollment application: Form definitions for results from Hosted Card Verifi
 
 from django import forms
 
+from benefits.core.mixins import ValidateRecaptchaMixin
+
 
 class CardTokenizeSuccessForm(forms.Form):
     """Form to bring client card token back to server."""
@@ -17,6 +19,10 @@ class CardTokenizeSuccessForm(forms.Form):
 
     # hidden input with no label
     card_token = forms.CharField(widget=forms.HiddenInput(), label="")
+
+
+class ReCAPTCHAedCardTokenizeSuccessForm(ValidateRecaptchaMixin, CardTokenizeSuccessForm):
+    pass
 
 
 class CardTokenizeFailForm(forms.Form):

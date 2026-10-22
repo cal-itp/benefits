@@ -85,8 +85,19 @@
         }
 
         const form = document.querySelector("form#{{ form_success }}");
-        form.querySelector("#card_token").value = response.token;
-        form.submit();
+        form.elements["card_token"].value = response.token;
+
+        // the reCAPTCHA on this page is a deviation in that it is *not* triggered via the submit button
+        // on a user-facing form. instead a tokenized response is retrieved from Collect.js
+        // and passed to our own backend via an ancillary form POST
+        // the success form includes only hidden inputs and lacks a submit button
+        grecaptcha.ready(function() {
+          grecaptcha.execute("{{ request.recaptcha.site_key }}", { action: "submit" })
+            .then(function(gToken) {
+                form.elements["g-recaptcha-response"].value = gToken;
+                form.submit();
+            });
+        });
       },
     };
 
@@ -139,6 +150,11 @@
   </form>
 
   {% for f in forms %}
-    {% include "core/includes/form.html" with form=f %}
+    {% if f.id == form_success %}
+      {% include "core/includes/form.html" with form=f %}
+    {% else %}
+      {% comment %} only inject the reCAPTCHA for the success form to avoid a redundant handler/disclaimer {% endcomment %}
+      {% include "core/includes/form.html" with form=f suppress_recaptcha=True %}
+    {% endif %}
   {% endfor %}
 {% endblock inner-content %}
