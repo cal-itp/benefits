@@ -3,9 +3,12 @@ import json
 import pytest
 
 import benefits.enrollment_init.views
+from benefits.core import models
 from benefits.core.middleware import TEMPLATE_USER_ERROR
 from benefits.core.models.transit import CardSchemes
+from benefits.enrollment.enrollment import Status
 from benefits.enrollment_init.views import IndexView, RegisterView
+from benefits.routes import routes
 
 
 @pytest.fixture
@@ -59,11 +62,12 @@ class TestIndexView:
 @pytest.mark.django_db
 class TestRegisterView:
     @pytest.fixture
-    def view(self, app_request, model_TransitAgency, model_InitConfig, model_EnrollmentFlow):
+    def view(self, app_request, model_TransitAgency, model_InitConfig, model_InitGroup, model_EnrollmentFlow):
         """Fixture to create an instance of RegisterView."""
         v = RegisterView()
         v.setup(app_request)
         v.agency = model_TransitAgency
+        v.group = model_InitGroup
 
         v.agency.supported_card_schemes = [CardSchemes.VISA, CardSchemes.MASTERCARD, CardSchemes.DISCOVER]
         v.flow = model_EnrollmentFlow
@@ -82,8 +86,19 @@ class TestRegisterView:
         parsed_card_types = json.loads(context["card_schemes"])
         assert parsed_card_types == [CardSchemes.VISA, CardSchemes.MASTERCARD, CardSchemes.DISCOVER]
 
-    def test_form_valid(self, view):
+    def test_form_valid(self, mocker, view):
+        mocker.patch("benefits.enrollment_init.views.enroll", return_value=(Status.SUCCESS, None))
+
         form = view.form_class(data=dict(card_token="abc123"))
+        mock_handler = mocker.patch("benefits.enrollment_init.views.handle_enrollment_results", return_value=True)
 
         assert form.is_valid()
         view.form_valid(form)
+
+        mock_handler.assert_called_once()
+        handler_kwargs = mock_handler.call_args.kwargs
+        assert handler_kwargs["verified_by"] == view._get_verified_by()
+        assert handler_kwargs["enrollment_method"] == models.EnrollmentMethods.SELF_SERVICE
+        assert handler_kwargs["route_reenrollment_error"] == routes.ENROLLMENT_REENROLLMENT_ERROR
+        assert handler_kwargs["route_success"] == routes.ENROLLMENT_SUCCESS
+        assert handler_kwargs["route_system_error"] == routes.ENROLLMENT_SYSTEM_ERROR
