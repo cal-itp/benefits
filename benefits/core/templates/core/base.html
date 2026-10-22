@@ -76,7 +76,7 @@
         {% endblock nav-buttons %}
         <div class="container main-row">
           <div class="row justify-content-center">
-            <div class="col-lg-6">
+            <div class="col-lg-5 pt-5">
               {% block headline %}
               {% endblock headline %}
               {% block inner-content %}
@@ -85,7 +85,7 @@
           </div>
           {% block call-to-action %}
             <div class="row justify-content-center pt-8">
-              <div class="col-lg-6">
+              <div class="col-lg-5">
                 {% block call-to-action-button %}
                 {% endblock call-to-action-button %}
               </div>
@@ -97,7 +97,8 @@
 
     <footer id="footer" class="navbar py-0">
       <div class="container d-none d-lg-block">
-        <ul class="footer-links m-0 p-0 list-unstyled d-lg-flex gap-lg-4">
+        {# desktop footer #}
+        <ul class="footer-links list-unstyled m-0 flex-lg-row gap-lg-4">
           <li>
             <a class="footer-link m-0 p-0" href="{% url routes.HELP %}">{% translate "Help" %}</a>
           </li>
@@ -117,6 +118,7 @@
         </ul>
       </div>
 
+      {# mobile footer #}
       <div class="d-block d-lg-none container">
         <ul class="col-12 footer-links ps-0 mb-0">
           <li>

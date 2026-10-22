@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Report-Msgid-Bugs-To: https://github.com/cal-itp/benefits/issues \n"
-"POT-Creation-Date: 2026-10-19 13:08-0700\n"
+"POT-Creation-Date: 2026-10-19 15:12-0700\n"
 "Language: Español\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -580,8 +580,8 @@ msgstr ""
 "Obtenga más información sobre el beneficio de tránsito para los titulares de "
 "la tarjeta CalFresh"
 
-msgid "Learn more about contactless cards"
-msgstr "Más información sobre las tarjetas sin contacto"
+msgid "Bank cards we accept"
+msgstr "Tarjetas bancarias que aceptamos"
 
 msgid "Learn more about"
 msgstr "Más información sobre"
@@ -674,6 +674,9 @@ msgstr "Elija la opción de beneficio"
 msgid "Choose the transit benefit you would like to enroll in"
 msgstr "Elija el beneficio de tránsito al que le gustaría inscribirse"
 
+msgid "What you’ll need to apply"
+msgstr "Lo que necesitará para su hacer su solicitud"
+
 msgid "You will need a few items to continue:"
 msgstr "Necesitará algunos artículos para continuar:"
 
@@ -704,11 +707,14 @@ msgid "A phone number with a phone plan associated with your name"
 msgstr ""
 "Un número de teléfono en el cual pueda recibir llamadas o mensajes de texto"
 
-msgid "Your contactless card details"
-msgstr "Los datos de su tarjeta sin contacto"
+msgid "Your bank card"
+msgstr "Su tarjeta bancaria"
 
 msgid "Your contactless card must be a debit or credit card by:"
 msgstr "Su tarjeta sin contacto debe ser una tarjeta de débito o crédito de:"
+
+msgid "Learn more about the bank cards we accept"
+msgstr "Obtenga más información sobre las tarjetas bancarias que aceptamos"
 
 msgid "Unable to confirm eligibility"
 msgstr "No se pudo confirmar la elegibilidad"
@@ -752,14 +758,6 @@ msgstr "Continuar"
 msgid "CalFresh benefit overview"
 msgstr "Descripción general de CalFresh"
 
-msgid "You selected a CalFresh Cardholder transit benefit."
-msgstr ""
-"Ha seleccionado un beneficio de tránsito para titulares de la tarjeta "
-"CalFresh."
-
-msgid "You selected a Courtesy Card transit benefit."
-msgstr "Ha seleccionado un beneficio de tránsito de tarjeta de cortesía."
-
 msgid "Your current Courtesy Card number"
 msgstr "Su número actual de tarjeta de cortesía"
 
@@ -772,11 +770,6 @@ msgstr ""
 
 msgid "Medicare benefit overview"
 msgstr "Descripción de beneficios de Medicare"
-
-msgid "You selected a Medicare Cardholder transit benefit."
-msgstr ""
-"Ha seleccionado un beneficio de tránsito para titulares de la tarjeta "
-"Medicare."
 
 msgid "An online account with Medicare.gov"
 msgstr "Una cuenta en línea con Medicare.gov"
@@ -793,14 +786,8 @@ msgstr ""
 msgid "Continue to Medicare.gov"
 msgstr "Continuar a Medicare.gov"
 
-msgid "Older Adult benefit overview"
+msgid "Older adult benefit overview"
 msgstr "Descripción de beneficios para adultos mayores"
-
-msgid "You selected an Older Adult transit benefit."
-msgstr "Ha seleccionado un beneficio de tránsito para adultos mayores."
-
-msgid "You selected a Reduced Fare Mobility ID transit benefit."
-msgstr "Ha seleccionado un beneficio de tránsito de Reduced Fare Mobility ID."
 
 msgid "Your current Reduced Fare Mobility ID number"
 msgstr "Su número actual de Reduced Fare Mobility ID"
@@ -810,11 +797,8 @@ msgid ""
 "number."
 msgstr "No necesita tener su tarjeta física, pero necesitará saber su número."
 
-msgid "Veterans benefit overview"
-msgstr "Descripción de beneficios para veteranos"
-
-msgid "You selected a Veteran transit benefit."
-msgstr "Ha seleccionado un beneficio de tránsito para veteranos."
+msgid "U.S. Veteran benefit overview"
+msgstr "Descripción de beneficios para veteranos de EE. UU."
 
 msgid "Your card information may not have been entered correctly."
 msgstr ""
@@ -840,41 +824,19 @@ msgstr "tarjeta de cortesía de MST"
 msgid "SBMTD Reduced Fare Mobility ID card"
 msgstr "tarjeta Reduced Fare Mobility ID de SBMTD"
 
-msgid "Do not enter information from your EBT card."
+msgid "Do not enter your EBT card."
 msgstr "No ingrese información de su tarjeta EBT."
+
+msgid "You can’t use a Golden State Advantage card pay for transit."
+msgstr ""
+"No puede utilizar una tarjeta Golden State Advantage para pagar el "
+"transporte público."
 
 msgid "Read our guidance on the CalFresh benefit"
 msgstr "Lea nuestra guía sobre el beneficio de CalFresh."
 
-msgid ""
-"You can’t pay for transit using the CalFresh funds on your Golden State "
-"Advantage card. Please provide details from your contactless debit or credit "
-"card issued by:"
-msgstr ""
-"No puede pagar el transporte público usando los fondos de CalFresh en su "
-"tarjeta Golden State Advantage. Proporcione detalles de su tarjeta de débito "
-"o crédito sin contacto emitida por:"
-
-msgid "and use that card to pay for transit."
-msgstr "y use esa tarjeta para pagar el transporte público."
-
 msgid "Eligibility confirmation"
 msgstr "Confirmación de elegibilidad"
-
-msgid "You will be directed to our partner, "
-msgstr "Será dirigido a nuestro socio, "
-
-msgid "We don’t store your information, and you won’t be charged."
-msgstr "No almacenamos su información y no se le cobrará."
-
-msgid "Please use a debit or credit card by:"
-msgstr "Utilice una tarjeta de débito o crédito de:"
-
-msgid "Please wait..."
-msgstr "Espere por favor..."
-
-msgid "Enroll"
-msgstr "Inscribir"
 
 msgid "You are eligible for a reduced fare!"
 msgstr "¡Es elegible para una tarifa reducida!"
@@ -886,18 +848,20 @@ msgstr ""
 "El último paso es registrar una tarjeta bancaria para que obtenga una tarifa "
 "reducida al tocar para pagar."
 
-msgid ""
-"You won’t be charged, and we don’t store your information. Your card details "
-"will be sent to our payment partner "
-msgstr ""
-"No se le cobrará nada y no almacenamos su información. Los datos de su "
-"tarjeta se enviarán a nuestro socio de pago "
+msgid "You won’t be charged, and we don’t store your information."
+msgstr "No se le cobrará nada y no almacenamos su información."
+
+msgid "You will be directed to our payment partner, "
+msgstr "Se le dirigirá a  "
+
+msgid "to enter your card details."
+msgstr ", nuestro socio de pago, para que ingrese los datos de su tarjeta."
 
 msgid "Please use a contactless debit or credit card by:"
 msgstr "Utilice una tarjeta de débito o crédito sin contacto emitida por:"
 
-msgid "Learn more about the bank cards we accept"
-msgstr "Obtenga más información sobre las tarjetas bancarias que aceptamos"
+msgid "Please wait..."
+msgstr "Espere por favor..."
 
 msgid "Register your card"
 msgstr "Registre su tarjeta"
@@ -966,29 +930,6 @@ msgstr ""
 msgid "Sign out of"
 msgstr "Cierre sesión de"
 
-msgid "Your eligibility is confirmed! You’re almost there."
-msgstr "¡Su elegibilidad está confirmada! Ya falta poco."
-
-msgid ""
-"The next step is to enroll the contactless card you will use to tap to ride "
-"for a reduced fare."
-msgstr ""
-"El siguiente paso es inscribir la tarjeta de pago sin contacto que usará "
-"para viajar y obtener una tarifa reducida"
-
-msgid ", to enter your contactless card details."
-msgstr ", para introducir los datos de su tarjeta de pago sin contacto."
-
-msgid "We found your record! Now let’s enroll your contactless card."
-msgstr ""
-"¡Encontramos su registro! Ahora inscribamos su tarjeta de pago sin contacto."
-
-msgid ""
-"The next step is to connect your contactless card to your transit benefit"
-msgstr ""
-"El siguiente paso es conectar su tarjeta sin contacto a su beneficio de "
-"tránsito"
-
 msgid "Your CalFresh Cardholder transit benefit does not expire until"
 msgstr ""
 "Su beneficio de tránsito para titulares de la tarjeta CalFresh no expira "
@@ -1016,6 +957,9 @@ msgstr ""
 "No se le ha cobrado nada hoy. Al subir al transporte público proporcionado "
 "por {short_name}, toque para pagar con esta tarjeta y se le cobrará una "
 "tarifa reducida."
+
+msgid "Your card details will be sent to our payment partner, "
+msgstr "Los datos de su tarjeta se enviarán a nuestro socio de pago, "
 
 msgid "Enter card details"
 msgstr ""
