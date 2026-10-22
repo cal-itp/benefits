@@ -87,3 +87,9 @@ class TestRegisterView:
 
         assert form.is_valid()
         view.form_valid(form)
+
+    def test_form_invalid(self, view):
+        form = view.form_class(data=dict(card_token=None))
+
+        assert form.is_valid() is False
+        view.form_invalid(form)
