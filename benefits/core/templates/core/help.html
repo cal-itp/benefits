@@ -52,7 +52,7 @@
         {% if agency %}
           {% include "core/includes/list--card-schemes.html" %}
         {% else %}
-          <ul class="d-flex flex-column gap-3 mt-3">
+          <ul>
             {% for card_scheme in all_card_schemes %}<li>{{ card_scheme }}</li>{% endfor %}
           </ul>
         {% endif %}
@@ -145,7 +145,7 @@
             {% translate "Payment partners are secure, end-to-end fare processing platforms that allow us to connect your transit benefit to the bank card of your choice. We currently work with Littlepay, Switchio, and INIT." %}
           </p>
           <p class="pt-3 pt-lg-4">{% translate "For more information about our payment partners, please visit their websites:" %}</p>
-          <ul class="d-flex flex-column gap-3 mt-3">
+          <ul>
             <li>
               <a href="https://littlepay.com" target="_blank" rel="noopener noreferrer">{% translate "Littlepay website" %}</a>
             </li>

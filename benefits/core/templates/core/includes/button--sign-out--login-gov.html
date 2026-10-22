@@ -1,7 +1,7 @@
 {% load i18n %}
 
 {% if authentication.logged_in %}
-  <a href="{% url routes.OAUTH_LOGOUT %}" class="login p-0 btn btn-lg external">
+  <a href="{% url routes.OAUTH_LOGOUT %}" class="login p-0 btn external">
     <span class="fallback-text color-logo">Login.gov</span>
   </a>
 {% endif %}
