@@ -1,9 +1,11 @@
 import json
 import logging
 
+from django.contrib import messages
 from django.http import JsonResponse
 from django.views.generic import FormView, TemplateView
 
+from benefits.core import recaptcha
 from benefits.core.mixins import AgencySessionRequiredMixin, EligibleSessionRequiredMixin, RecaptchaEnabledMixin
 from benefits.enrollment import forms
 from benefits.enrollment.views import FlowSessionRequiredMixin
@@ -70,3 +72,9 @@ class RegisterView(AgencySessionRequiredMixin, FlowSessionRequiredMixin, Recaptc
     def form_valid(self, form):
         card_token = form.cleaned_data.get("card_token")
         return JsonResponse({"status": "ok", "tokenized_card": card_token})
+
+    def form_invalid(self, form):
+        """If the form is invalid, display error messages."""
+        if recaptcha.has_error(form):
+            messages.error(self.request, "Recaptcha failed. Please try again.")
+        return super().form_invalid(form)
