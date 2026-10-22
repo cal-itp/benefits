@@ -188,6 +188,27 @@ jobs:
           skip-comment: true
           working-directory: terraform
 
+  sentry:
+    needs: [setup, deploy]
+    if: ${{ needs.setup.outputs.is_tag == 'true' }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+
+      # notify Sentry of new release
+      - name: Create Sentry release
+        uses: getsentry/action-release@ff07929a6537bac57790c3451cf4d364aca38528 # v3.7.0
+        env:
+          SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
+          SENTRY_ORG: ${{ vars.SENTRY_ORG }}
+          SENTRY_PROJECT: ${{ vars.SENTRY_PROJECT }}
+        with:
+          environment: ${{ needs.setup.outputs.env_name }}
+          release: benefits@${{ github.ref_name }}
+
   release:
     needs: deploy
     if: ${{ needs.setup.outputs.is_release =='true' }}
