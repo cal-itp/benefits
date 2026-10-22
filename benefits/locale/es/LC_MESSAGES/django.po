@@ -1020,10 +1020,25 @@ msgstr ""
 msgid "Enter card details"
 msgstr ""
 
+msgid ""
+"Enter a <a href=\"#ccnumber\">valid card number</a> from Visa, Discover, or "
+"Mastercard. We do not support American Express."
+msgstr ""
+
+msgid "Enter a <a href=\"#ccexp\">expiration date</a>."
+msgstr ""
+
 msgid "Card number"
 msgstr ""
 
+msgid ""
+"Please enter a valid credit card number from Visa, Discover or Mastercard."
+msgstr ""
+
 msgid "Expiration date"
+msgstr ""
+
+msgid "Please enter a valid expiration date."
 msgstr ""
 
 msgid "Service is down"
