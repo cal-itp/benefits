@@ -1,9 +1,10 @@
 import json
 import logging
 
+from django.contrib import messages
 from django.views.generic import FormView, TemplateView
 
-from benefits.core import models
+from benefits.core import models, recaptcha
 from benefits.core.mixins import AgencySessionRequiredMixin, EligibleSessionRequiredMixin, RecaptchaEnabledMixin
 from benefits.enrollment import forms
 from benefits.enrollment.enrollment import handle_enrollment_results
@@ -92,3 +93,9 @@ class RegisterView(AgencySessionRequiredMixin, FlowSessionRequiredMixin, Recaptc
             route_success=self.route_enrollment_success,
             route_system_error=self.route_system_error,
         )
+
+    def form_invalid(self, form):
+        """If the form is invalid, display error messages."""
+        if recaptcha.has_error(form):
+            messages.error(self.request, "Recaptcha failed. Please try again.")
+        return super().form_invalid(form)
