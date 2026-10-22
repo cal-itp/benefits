@@ -102,3 +102,9 @@ class TestRegisterView:
         assert handler_kwargs["route_reenrollment_error"] == routes.ENROLLMENT_REENROLLMENT_ERROR
         assert handler_kwargs["route_success"] == routes.ENROLLMENT_SUCCESS
         assert handler_kwargs["route_system_error"] == routes.ENROLLMENT_SYSTEM_ERROR
+
+    def test_form_invalid(self, view):
+        form = view.form_class(data=dict(card_token=None))
+
+        assert form.is_valid() is False
+        view.form_invalid(form)
