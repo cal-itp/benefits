@@ -60,6 +60,14 @@ h2 + p {
   margin-top: calc(var(--grid-spacer));
 }
 
+ol,
+ul {
+  display: flex;
+  flex-direction: column;
+  gap: calc(var(--grid-spacer) / 2);
+  padding-left: 1.5rem;
+}
+
 /* Utility Classes */
 
 @media (min-width: 992px) {
@@ -72,6 +80,11 @@ h2 + p {
   .pt-lg-8 {
     padding-top: 64px !important;
   }
+}
+
+.mb-4-5 {
+  /* Bridging the gap between Bootstrap's spacing-4 (1.5rem or 24px) and spacing-5 (3rem or 48px) */
+  margin-bottom: calc(var(--grid-spacer) * 4);
 }
 
 .pt-8 {
@@ -405,7 +418,7 @@ footer .footer-links li a.footer-link:visited {
   --login-gov-button-line-height: 1;
 }
 
-@media (min-width: 992px) {
+@media (min-width: 576px) {
   :root {
     --login-gov-button-padding: 1rem;
     --login-gov-button-line-height: 1.5;
@@ -425,14 +438,17 @@ footer .footer-links li a.footer-link:visited {
 .login .fallback-text {
   background-size: contain;
   background-repeat: no-repeat;
-  display: block;
-  margin: 11px auto 0 auto;
-  position: relative;
-  padding-top: 1px;
+  background-position-y: center;
+  display: inline-block;
+  /* margin: 11px auto 0 auto; */
+  margin: 0 0 0 4px;
+  /* position: relative; */
+  /* padding-top: 1px; */
+  /* top: 2px; */
   color: transparent;
-  font-size: var(--font-size-16px);
+  font-size: var(--font-size-18px);
   font-weight: var(--semi-bold-font-weight);
-  line-height: 1;
+  /* line-height: 1; */
 }
 
 /* Sign in with Login.gov (white logo) on System Enrollment Error, Eligibility Start */
@@ -441,19 +457,22 @@ footer .footer-links li a.footer-link:visited {
   border-width: calc(4rem / 16);
   padding: var(--login-gov-button-padding);
 }
+@media (max-width: 576px) {
+  .btn.btn-lg.btn-primary.login .fallback-text {
+    display: block;
+    margin: 0.5rem auto 0;
+  }
+}
 
 @media (min-width: 992px) {
   .login .fallback-text {
-    margin: 0 0 0 5px;
-    display: inline-block;
-    vertical-align: baseline;
+    margin: 0 0 0 4px;
   }
 }
 
 .login .fallback-text.white-logo {
   background-image: url("/static/img/login-gov-logo-red-shield-white-text.svg");
   width: 137px;
-  height: 18px;
 }
 
 /* Login.gov modal button (color logo) on Eligibility Index */
@@ -461,7 +480,6 @@ footer .footer-links li a.footer-link:visited {
 .login .fallback-text.color-logo {
   background-image: url("/static/img/login-gov-logo.svg");
   width: 120px;
-  height: 16px;
 }
 
 .eligibility-index .login .fallback-text {

@@ -21,9 +21,9 @@
 
 {% block inner-content %}
   <p class="mt-3">{% translate "You will need a few items to continue:" %}</p>
-  <ul class="d-flex flex-column gap-4 list-unstyled ps-0 my-0">
+  <ul class="d-flex flex-column gap-4 list-unstyled ps-0 mt-4 mb-0">
     <li>
-      <h2 class="h3 mt-4">
+      <h2 class="h3">
         {% if eligibility_item_headline %}
           {{ eligibility_item_headline }}
         {% else %}
@@ -39,7 +39,7 @@
           {% include "core/includes/modal-trigger.html" with modal="modal--identity-verification" text=text %}
         </p>
         <p>{% translate "For this process you will need:" %}</p>
-        <ul class="list-disc ps-4">
+        <ul class="list-disc">
           <li>{% translate "Your state-issued ID card" %}</li>
           <li>{% translate "Your Social Security number" %}</li>
           <li>{% translate "A phone number with a phone plan associated with your name" %}</li>
@@ -48,9 +48,9 @@
       {% endif %}
     </li>
     <li>
-      <h2 class="h3 mt-4">{% translate "Your bank card" %}</h2>
+      <h2 class="h3">{% translate "Your bank card" %}</h2>
       <p>{% translate "Your contactless card must be a debit or credit card by:" %}</p>
-      {% include "core/includes/list--card-schemes.html" with classes="ps-4" %}
+      {% include "core/includes/list--card-schemes.html" with classes="list-disc" %}
       <p>
         {% translate "Learn more about the bank cards we accept" as text %}
         {% include "core/includes/modal-trigger.html" with modal="modal--contactless" text=text %}
