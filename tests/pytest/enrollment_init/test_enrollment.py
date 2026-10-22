@@ -40,6 +40,7 @@ def test_enroll_system_error(
     mock_error_response.json.return_value = mock_error
     http_error = HTTPError(response=mock_error_response)
     mock_client.post_cardholder.side_effect = http_error
+    mock_client.get_cardholder.return_value = None
 
     status, exception = enroll(
         request=app_request,
@@ -72,6 +73,7 @@ def test_enroll_exception_http_error_400(
         response=mock_error_response,
     )
     mock_client.post_cardholder.side_effect = http_error
+    mock_client.get_cardholder.return_value = None
 
     status, exception = enroll(
         request=app_request,
@@ -99,6 +101,7 @@ def test_enroll_exception_non_http_error(
     mock_client = mock_client_cls.return_value
 
     mock_client.post_cardholder.side_effect = Exception("some other exception")
+    mock_client.get_cardholder.return_value = None
 
     status, exception = enroll(
         request=app_request,
@@ -128,6 +131,7 @@ def test_enroll_success_flow_does_not_support_expiration_no_expiry(
     mock_client = mock_client_cls.return_value
 
     mock_client.get_transit_account.return_value = mocked_TransitAccountResponse
+    mock_client.get_cardholder.return_value = None
 
     status, exception = enroll(
         request=app_request,
