@@ -35,3 +35,15 @@ class TestSession:
         flow = session.flow
 
         assert flow == model_metro_EnrollmentFlow
+
+    def test_agreed_to_terms_default(self, mock_request):
+        session = Session(mock_request)
+
+        assert session.agreed_to_terms is False
+
+    def test_agreed_to_terms_setter_and_getter(self, mock_request):
+        session = Session(mock_request)
+
+        session.agreed_to_terms = True
+
+        assert session.agreed_to_terms is True
