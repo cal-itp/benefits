@@ -1,7 +1,7 @@
 {% extends "in_person/error-base.html" %}
 
 {% block error-message %}
-  <h3 class="fw-bold h4">This person is still enrolled in the {{ flow_label }} benefit.</h3>
+  <h3 class="fw-bold h4">This person is still enrolled in the {{ flow_label }} benefit</h3>
 
   <p class="my-4">
     <span class="fw-bold">This rider will enjoy a transit benefit until {{ enrollment.expires|date }}.</span> They can re-enroll for this benefit beginning on {{ enrollment.reenrollment|date }}. Please try again then.
