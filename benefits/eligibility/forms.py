@@ -52,7 +52,7 @@ class EligibilityVerificationForm(ValidateRecaptchaMixin, forms.Form):
 
     # Default configuration attributes (override in subclasses)
     title = _("Agency card information")
-    headline = _("Let’s find the record of your transit benefit.")
+    headline = _("Let’s find the record of your transit benefit")
     blurb = None
 
     name_label = _("Last Name")
