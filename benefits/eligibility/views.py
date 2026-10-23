@@ -139,10 +139,10 @@ class StartView(AgencySessionRequiredMixin, FlowSessionRequiredMixin, TemplateVi
         eligibility_start = {
             SystemName.CALFRESH.value: LoginGovEligibilityStart(
                 page_title=_("CalFresh benefit overview"),
-                headline_text=_("You selected a CalFresh Cardholder transit benefit."),
+                headline_text=_("You selected a CalFresh Cardholder transit benefit"),
             ),
             SystemName.COURTESY_CARD.value: AgencyCardEligibilityStart(
-                headline_text=_("You selected a Courtesy Card transit benefit."),
+                headline_text=_("You selected a Courtesy Card transit benefit"),
                 eligibility_item_headline=_("Your current Courtesy Card number"),
                 eligibility_item_body=_(
                     "You do not need to have your physical MST Courtesy Card, but you will need to know the number."
@@ -150,7 +150,7 @@ class StartView(AgencySessionRequiredMixin, FlowSessionRequiredMixin, TemplateVi
             ),
             SystemName.MEDICARE.value: EligibilityStart(
                 page_title=_("Medicare benefit overview"),
-                headline_text=_("You selected a Medicare Cardholder transit benefit."),
+                headline_text=_("You selected a Medicare Cardholder transit benefit"),
                 eligibility_item_headline=_("An online account with Medicare.gov"),
                 eligibility_item_body=_(
                     "If you do not have an account you will be able to create one using your red, white, and blue Medicare "
@@ -160,16 +160,16 @@ class StartView(AgencySessionRequiredMixin, FlowSessionRequiredMixin, TemplateVi
             ),
             SystemName.OLDER_ADULT.value: LoginGovEligibilityStart(
                 page_title=_("Older Adult benefit overview"),
-                headline_text=_("You selected an Older Adult transit benefit."),
+                headline_text=_("You selected an Older Adult transit benefit"),
             ),
             SystemName.REDUCED_FARE_MOBILITY_ID.value: AgencyCardEligibilityStart(
-                headline_text=_("You selected a Reduced Fare Mobility ID transit benefit."),
+                headline_text=_("You selected a Reduced Fare Mobility ID transit benefit"),
                 eligibility_item_headline=_("Your current Reduced Fare Mobility ID number"),
                 eligibility_item_body=_("You do not need to have your physical card, but you will need to know the number."),
             ),
             SystemName.VETERAN.value: LoginGovEligibilityStart(
                 page_title=_("Veterans benefit overview"),
-                headline_text=_("You selected a Veteran transit benefit."),
+                headline_text=_("You selected a Veteran transit benefit"),
             ),
         }
 
@@ -248,7 +248,7 @@ class EligibilityUnverified:
 class AgencyCardEligibilityUnverified(EligibilityUnverified):
     def __init__(self, agency_card):
         super().__init__(
-            headline_text=_("Your card information may not have been entered correctly."),
+            headline_text=_("Your card information may not have been entered correctly"),
             body_text=_(
                 "The number and last name must be entered exactly as they appear on your {agency_card}. "
                 "Please check your card and try again, or contact your transit agency for help.",
