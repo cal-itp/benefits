@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Report-Msgid-Bugs-To: https://github.com/cal-itp/benefits/issues \n"
-"POT-Creation-Date: 2026-10-19 13:08-0700\n"
+"POT-Creation-Date: 2026-10-29 14:09-0700\n"
 "Language: English\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -402,7 +402,7 @@ msgstr ""
 msgid "Agency card information"
 msgstr ""
 
-msgid "Let’s find the record of your transit benefit."
+msgid "Let’s find the record of your transit benefit"
 msgstr ""
 
 msgid "Last Name"
@@ -564,7 +564,7 @@ msgstr ""
 msgid "Unable to confirm eligibility"
 msgstr ""
 
-msgid "Your eligibility could not be verified."
+msgid "Your eligibility could not be verified"
 msgstr ""
 
 msgid "That’s okay! You may still be eligible for our program."
@@ -598,10 +598,10 @@ msgstr ""
 msgid "CalFresh benefit overview"
 msgstr ""
 
-msgid "You selected a CalFresh Cardholder transit benefit."
+msgid "You selected a CalFresh Cardholder transit benefit"
 msgstr ""
 
-msgid "You selected a Courtesy Card transit benefit."
+msgid "You selected a Courtesy Card transit benefit"
 msgstr ""
 
 msgid "Your current Courtesy Card number"
@@ -615,7 +615,7 @@ msgstr ""
 msgid "Medicare benefit overview"
 msgstr ""
 
-msgid "You selected a Medicare Cardholder transit benefit."
+msgid "You selected a Medicare Cardholder transit benefit"
 msgstr ""
 
 msgid "An online account with Medicare.gov"
@@ -633,10 +633,10 @@ msgstr ""
 msgid "Older Adult benefit overview"
 msgstr ""
 
-msgid "You selected an Older Adult transit benefit."
+msgid "You selected an Older Adult transit benefit"
 msgstr ""
 
-msgid "You selected a Reduced Fare Mobility ID transit benefit."
+msgid "You selected a Reduced Fare Mobility ID transit benefit"
 msgstr ""
 
 msgid "Your current Reduced Fare Mobility ID number"
@@ -650,10 +650,10 @@ msgstr ""
 msgid "Veterans benefit overview"
 msgstr ""
 
-msgid "You selected a Veteran transit benefit."
+msgid "You selected a Veteran transit benefit"
 msgstr ""
 
-msgid "Your card information may not have been entered correctly."
+msgid "Your card information may not have been entered correctly"
 msgstr ""
 
 #, python-brace-format
@@ -672,7 +672,7 @@ msgstr ""
 msgid "SBMTD Reduced Fare Mobility ID card"
 msgstr ""
 
-msgid "Do not enter information from your EBT card."
+msgid "Do not enter information from your EBT card"
 msgstr ""
 
 msgid "Read our guidance on the CalFresh benefit"
@@ -736,7 +736,7 @@ msgstr ""
 msgid "Unable to enroll card"
 msgstr ""
 
-msgid "The card information may not have been entered correctly."
+msgid "The card information may not have been entered correctly"
 msgstr ""
 
 msgid ""
@@ -768,7 +768,7 @@ msgstr ""
 msgid "Enrollment system down"
 msgstr ""
 
-msgid "Our enrollment system is not working right now."
+msgid "Our enrollment system is not working right now"
 msgstr ""
 
 msgid ""
@@ -844,7 +844,7 @@ msgstr ""
 msgid "Service is down"
 msgstr ""
 
-msgid "There was a problem with the service that checks your identity."
+msgid "There was a problem with the service that checks your identity"
 msgstr ""
 
 msgid ""
@@ -855,7 +855,7 @@ msgstr ""
 msgid "Start over"
 msgstr ""
 
-msgid "You may have reached this page on accident."
+msgid "You may have reached this page on accident"
 msgstr ""
 
 msgid ""
@@ -885,7 +885,7 @@ msgid ""
 "anymore."
 msgstr ""
 
-msgid "We’re working on fixing a problem."
+msgid "We’re working on fixing a problem"
 msgstr ""
 
 msgid ""
