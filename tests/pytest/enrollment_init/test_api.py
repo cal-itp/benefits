@@ -1,9 +1,10 @@
 import json
+from datetime import datetime
 
 import pytest
 from requests import HTTPError
 
-from benefits.enrollment_init.api import CardholderResponse, Client, TransitAccountResponse
+from benefits.enrollment_init.api import CardholderResponse, CardholderUpdateModel, Client, TransitAccountResponse
 
 
 class TestTransitAccountResponse:
@@ -15,8 +16,15 @@ class TestTransitAccountResponse:
 
 
 class TestCardholderResponse:
-    def test_unexpected_fields(self):
+    def test_fare_category_expiry(self):
         response_json = {"FareCategory": 7, "FareCategoryExpiry": "2026-09-04T17:25:20Z"}
+
+        cardholder = CardholderResponse.from_kwargs(**response_json)
+        assert isinstance(cardholder.FareCategoryExpiry, datetime)
+        assert cardholder.FareCategoryExpiry.tzinfo
+
+    def test_unexpected_fields(self):
+        response_json = {"FareCategory": 7, "FareCategoryExpiry": "2026-09-04T17:25:20Z", "unexpectedField": "value"}
 
         # this test will fail if any error occurs from instantiating the class
         CardholderResponse.from_kwargs(**response_json)
@@ -346,42 +354,36 @@ class TestClient:
         mock_json = json.loads("""
         {
             "Id": 123,
-            "FirstName": "sample string 2",
-            "MiddleName": "sample string 3",
-            "LastName": "sample string 4",
-            "PhoneNumber": "sample string 5",
-            "DateOfBirth": "2026-09-25T20:03:41.386Z",
-            "Email": "sample string 7",
-            "CellPhoneNumber": "sample string 8",
-            "FaxNumber": "sample string 9",
+            "FirstName": "",
+            "MiddleName": "",
+            "LastName": "",
+            "PhoneNumber": "",
+            "DateOfBirth": "0001-01-01T00:00:00.000Z",
+            "Email": "",
+            "CellPhoneNumber": "",
+            "FaxNumber": "",
             "Gender": 0,
-            "Identifier": "sample string 10",
+            "Identifier": "",
             "FareCategory": 1,
             "FareCategoryExpiry": null,
-            "AddressId": 1,
+            "AddressId": null,
             "TransitAccountId": 1,
-            "HasImage": true,
-            "InstitutionAccountId": 1,
-            "PersonalCareAssistant": true,
-            "Address": {
-                "Id": 1,
-                "AddressLine1": "sample string 2",
-                "AddressLine2": "sample string 3",
-                "PostalCode": "sample string 4",
-                "City": "sample string 5",
-                "State": "sample string 6",
-                "Country": "sample string 7",
-                "Description": "sample string 8",
-                "Addressee": "sample string 9"
-            },
-            "OrderDetailId": 1,
-            "CardPrintedNumber": "sample string 13"
+            "HasImage": false,
+            "InstitutionAccountId": null,
+            "PersonalCareAssistant": false,
+            "Address": null,
+            "OrderDetailId": null,
+            "CardPrintedNumber": null
         }
         """)
         mock_response.json.return_value = mock_json
         mocker.patch("benefits.enrollment_init.api.requests.put", return_value=mock_response)
 
-        response = self.client.put_cardholder(cardholder_id=123, fare_category=1)
+        cardholder_update_model = CardholderUpdateModel(
+            FareCategory=1,
+            TransitAccountId=1,
+        )
+        response = self.client.put_cardholder(cardholder_id=123, cardholder_update_model=cardholder_update_model)
 
         assert response.FareCategory == 1
         assert response.FareCategoryExpiry is None
