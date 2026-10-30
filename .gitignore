@@ -1,5 +1,7 @@
 *.db
 *.env
+# we use these files to make direct REST API calls to MOBILEvario via the "humao.rest-client" VS Code extension
+*.http
 *fixtures.json
 !benefits/core/migrations/local_fixtures.json
 *.pem
