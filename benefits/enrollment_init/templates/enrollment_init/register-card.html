@@ -98,7 +98,7 @@
   </script>
   <h1 class="mb-4">{% translate "Enter card details" %}</h1>
   <div class="my-4 p-3 cjs-error-banner" hidden>
-    <p class="fw-semibold">Please fix these errors:</p>
+    <p class="fw-semibold">{% translate "There was a problem" %}</p>
     <ul class="d-flex flex-column gap-2 mt-2">
       <li data-field="ccnumber" hidden>
         {% blocktranslate trimmed %}
@@ -131,7 +131,7 @@
         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
           <path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2ZM13 17H11V15H13V17ZM13 13H11V7H13V13Z" fill="#DE0E10" />
         </svg>
-        {% translate "Please enter a valid expiration date." %}
+        {% translate "Please enter an expiration date in a MM/YY format." %}
       </div>
     </div>
     <div id="cvv" hidden></div>

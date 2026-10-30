@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Report-Msgid-Bugs-To: https://github.com/cal-itp/benefits/issues \n"
-"POT-Creation-Date: 2026-10-29 14:09-0700\n"
+"POT-Creation-Date: 2026-10-30 16:27-0700\n"
 "Language: Español\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -1018,28 +1018,33 @@ msgstr ""
 "tarifa reducida."
 
 msgid "Enter card details"
-msgstr ""
+msgstr "Ingrese los datos de la tarjeta"
+
+msgid "There was a problem"
+msgstr "Hubo un problema"
 
 msgid ""
 "Enter a <a href=\"#ccnumber\">valid card number</a> from Visa, Discover, or "
 "Mastercard. We do not support American Express."
 msgstr ""
+"Ingrese un <a href=\"#ccnumber\">número válido de tarjeta</a> from Visa, "
+"Discover, or Mastercard. No aceptamos American Express."
 
 msgid "Enter a <a href=\"#ccexp\">expiration date</a>."
-msgstr ""
+msgstr "Ingrese una <a href=\"#ccexp\">fecha de vencimiento</a>."
 
 msgid "Card number"
-msgstr ""
+msgstr "Número de tarjeta"
 
 msgid ""
 "Please enter a valid credit card number from Visa, Discover or Mastercard."
-msgstr ""
+msgstr "Ingrese un número válido de tarjeta Visa, Discover o Mastercard."
 
 msgid "Expiration date"
-msgstr ""
+msgstr "Fecha de vencimiento"
 
-msgid "Please enter a valid expiration date."
-msgstr ""
+msgid "Please enter an expiration date in a MM/YY format."
+msgstr "Ingrese la fecha de vencimiento en fomato MM/YY."
 
 msgid "Service is down"
 msgstr "El servicio está inactivo"
