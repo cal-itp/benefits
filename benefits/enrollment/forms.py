@@ -21,7 +21,7 @@ class CardTokenizeSuccessForm(forms.Form):
     card_token = forms.CharField(widget=forms.HiddenInput(), label="")
 
 
-class ReCAPTCHAedCardTokenizeSuccessForm(ValidateRecaptchaMixin, CardTokenizeSuccessForm):
+class RecaptchaedCardTokenizeSuccessForm(ValidateRecaptchaMixin, CardTokenizeSuccessForm):
     pass
 
 

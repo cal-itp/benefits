@@ -94,8 +94,8 @@
         grecaptcha.ready(function() {
           grecaptcha.execute("{{ request.recaptcha.site_key }}", { action: "submit" })
             .then(function(gToken) {
-                form.elements["g-recaptcha-response"].value = gToken;
-                form.submit();
+              form.elements["{{ request.recaptcha.data_field }}"].value = gToken;
+              form.submit();
             });
         });
       },

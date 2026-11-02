@@ -42,7 +42,7 @@ class RegisterView(AgencySessionRequiredMixin, FlowSessionRequiredMixin, Recaptc
     """View for the page that tokenizes the user card."""
 
     enrollment_method = models.EnrollmentMethods.SELF_SERVICE
-    form_class = forms.ReCAPTCHAedCardTokenizeSuccessForm
+    form_class = forms.RecaptchaedCardTokenizeSuccessForm
     route_enrollment_success = routes.ENROLLMENT_SUCCESS
     route_reenrollment_error = routes.ENROLLMENT_REENROLLMENT_ERROR
     route_system_error = routes.ENROLLMENT_SYSTEM_ERROR
@@ -56,7 +56,7 @@ class RegisterView(AgencySessionRequiredMixin, FlowSessionRequiredMixin, Recaptc
         tokenize_system_error_form = forms.CardTokenizeFailForm(
             self.route_system_error, "form-card-tokenize-fail-system-error"
         )
-        tokenize_success_form = forms.ReCAPTCHAedCardTokenizeSuccessForm(
+        tokenize_success_form = forms.RecaptchaedCardTokenizeSuccessForm(
             action_url=self.route_tokenize_success, auto_id=True, label_suffix=""
         )
 
