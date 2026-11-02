@@ -1,12 +1,14 @@
 import json
 import logging
 
-from django.http import JsonResponse
 from django.views.generic import FormView, TemplateView
 
+from benefits.core import models
 from benefits.core.mixins import AgencySessionRequiredMixin, EligibleSessionRequiredMixin
 from benefits.enrollment import forms
+from benefits.enrollment.enrollment import handle_enrollment_results
 from benefits.enrollment.views import FlowSessionRequiredMixin
+from benefits.enrollment_init.enrollment import enroll
 
 from .routes import routes
 
@@ -38,8 +40,10 @@ class IndexView(AgencySessionRequiredMixin, EligibleSessionRequiredMixin, FlowSe
 class RegisterView(AgencySessionRequiredMixin, FlowSessionRequiredMixin, FormView):
     """View for the page that tokenizes the user card."""
 
+    enrollment_method = models.EnrollmentMethods.SELF_SERVICE
     form_class = forms.CardTokenizeSuccessForm
-
+    route_enrollment_success = routes.ENROLLMENT_SUCCESS
+    route_reenrollment_error = routes.ENROLLMENT_REENROLLMENT_ERROR
     route_system_error = routes.ENROLLMENT_SYSTEM_ERROR
 
     route_tokenize_success = routes.ENROLLMENT_INIT_REGISTER_CARD
@@ -67,6 +71,24 @@ class RegisterView(AgencySessionRequiredMixin, FlowSessionRequiredMixin, FormVie
         )
         return context
 
+    def _get_verified_by(self):
+        return self.flow.eligibility_verifier
+
     def form_valid(self, form):
+        init_config = self.agency.transit_processor
+        flow = self.flow
+        group = self.group
         card_token = form.cleaned_data.get("card_token")
-        return JsonResponse({"status": "ok", "tokenized_card": card_token})
+
+        status, exception = enroll(self.request, init_config, flow, group, card_token)
+
+        return handle_enrollment_results(
+            request=self.request,
+            status=status,
+            verified_by=self._get_verified_by(),
+            exception=exception,
+            enrollment_method=self.enrollment_method,
+            route_reenrollment_error=self.route_reenrollment_error,
+            route_success=self.route_enrollment_success,
+            route_system_error=self.route_system_error,
+        )
