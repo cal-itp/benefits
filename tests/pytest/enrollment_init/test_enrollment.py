@@ -213,6 +213,7 @@ def test_enroll_success_flow_does_not_support_expiration_customer_already_enroll
     mock_client.post_cardholder.assert_not_called()
 
     cardholder_update_model = CardholderUpdateModel.from_kwargs(**asdict(cardholder))
+    cardholder_update_model.FareCategory = model_InitGroup.group_id
     mock_client.put_cardholder.assert_called_once_with(
         cardholder_id=cardholder.Id, cardholder_update_model=cardholder_update_model
     )
