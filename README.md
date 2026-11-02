@@ -48,7 +48,7 @@
 | benefits/enrollment/api.py                                                               |       16 |        0 |        6 |        0 |    100% |           |
 | benefits/enrollment/apps.py                                                              |       21 |        0 |        0 |        0 |    100% |           |
 | benefits/enrollment/enrollment.py                                                        |       73 |        0 |       22 |        1 |     99% |193-\>exit |
-| benefits/enrollment/forms.py                                                             |       14 |        0 |        0 |        0 |    100% |           |
+| benefits/enrollment/forms.py                                                             |       17 |        0 |        0 |        0 |    100% |           |
 | benefits/enrollment/registry.py                                                          |       21 |        1 |        8 |        1 |     93% |        30 |
 | benefits/enrollment/urls.py                                                              |        5 |        0 |        0 |        0 |    100% |           |
 | benefits/enrollment/views.py                                                             |      105 |        0 |       10 |        0 |    100% |           |
@@ -63,7 +63,7 @@
 | benefits/enrollment\_init/models.py                                                      |       32 |        0 |        4 |        0 |    100% |           |
 | benefits/enrollment\_init/routes.py                                                      |        9 |        0 |        0 |        0 |    100% |           |
 | benefits/enrollment\_init/urls.py                                                        |        5 |        0 |        0 |        0 |    100% |           |
-| benefits/enrollment\_init/views.py                                                       |       41 |        0 |        0 |        0 |    100% |           |
+| benefits/enrollment\_init/views.py                                                       |       46 |        0 |        2 |        0 |    100% |           |
 | benefits/enrollment\_littlepay/\_\_init\_\_.py                                           |        0 |        0 |        0 |        0 |    100% |           |
 | benefits/enrollment\_littlepay/admin.py                                                  |        9 |        0 |        0 |        0 |    100% |           |
 | benefits/enrollment\_littlepay/apps.py                                                   |       10 |        0 |        0 |        0 |    100% |           |
@@ -138,7 +138,7 @@
 | benefits/urls.py                                                                         |       51 |       11 |       10 |        4 |     72% |46-\>49, 49-\>88, 63, 66, 69, 72, 75-77, 89-91, 94-\>106, 100-102 |
 | benefits/views.py                                                                        |       33 |        0 |        0 |        0 |    100% |           |
 | benefits/wsgi.py                                                                         |        4 |        4 |        0 |        0 |      0% |     10-16 |
-| **TOTAL**                                                                                | **3892** |  **168** |  **614** |   **64** | **94%** |           |
+| **TOTAL**                                                                                | **3900** |  **168** |  **616** |   **64** | **94%** |           |
 
 
 ## Setup coverage badge
