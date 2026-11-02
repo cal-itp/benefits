@@ -10,7 +10,7 @@
 {% endblock alert-heading %}
 
 {% block alert-body %}
-  <p>{% translate "You can’t use a Golden State Advantage card pay for transit." %}</p>
+  <p>{% translate "You can’t use a Golden State Advantage card to pay for transit." %}</p>
   {% translate "Read our guidance on the CalFresh benefit" as calfresh_modal_link %}
   <p class="mt-2">{% include "core/includes/modal-trigger.html" with modal="modal--calfresh" text=calfresh_modal_link %}</p>
   {% include "eligibility/includes/modal--calfresh.html" with id="modal--calfresh" size="modal-lg" header="p-md-2 p-3" body="pb-md-3 mb-md-3 mx-md-3 py-0 pt-0 absolute-top" %}

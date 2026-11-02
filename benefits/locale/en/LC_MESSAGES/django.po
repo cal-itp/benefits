@@ -663,7 +663,7 @@ msgstr ""
 msgid "Do not enter your EBT card"
 msgstr ""
 
-msgid "You can’t use a Golden State Advantage card pay for transit."
+msgid "You can’t use a Golden State Advantage card to pay for transit."
 msgstr ""
 
 msgid "Read our guidance on the CalFresh benefit"
@@ -683,10 +683,11 @@ msgstr ""
 msgid "You won’t be charged, and we don’t store your information."
 msgstr ""
 
-msgid "You will be directed to our payment partner, "
-msgstr ""
-
-msgid "to enter your card details."
+#, python-format
+msgid ""
+"You will be directed to our payment partner, <a href=\"modal--transit-"
+"processor\" data-bs-toggle=\"modal\" data-bs-target=\"#modal--transit-"
+"processor\">%(name)s</a>, to enter your card details."
 msgstr ""
 
 msgid "Please use a contactless debit or credit card by:"

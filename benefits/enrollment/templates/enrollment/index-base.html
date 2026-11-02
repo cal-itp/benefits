@@ -23,12 +23,12 @@
     <p>
       {% translate "You won’t be charged, and we don’t store your information." %}
       {% block transit_processor_details %}
-        {% translate "You will be directed to our payment partner, " %}
-        <a href="modal--transit-processor"
-           class="{{ classes }}"
-           data-bs-toggle="modal"
-           data-bs-target="#modal--transit-processor">{{ transit_processor.name }}</a>,
-        {% translate "to enter your card details." %}
+        {% blocktranslate trimmed with name=transit_processor.name %}
+          You will be directed to our payment partner,
+          <a href="modal--transit-processor"
+             data-bs-toggle="modal"
+             data-bs-target="#modal--transit-processor">{{ name }}</a>, to enter your card details.
+        {% endblocktranslate %}
       {% endblock transit_processor_details %}
     </p>
     <p>{% translate "Please use a contactless debit or credit card by:" %}</p>

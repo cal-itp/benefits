@@ -440,15 +440,10 @@ footer .footer-links li a.footer-link:visited {
   background-repeat: no-repeat;
   background-position-y: center;
   display: inline-block;
-  /* margin: 11px auto 0 auto; */
   margin: 0 0 0 4px;
-  /* position: relative; */
-  /* padding-top: 1px; */
-  /* top: 2px; */
   color: transparent;
   font-size: var(--font-size-18px);
   font-weight: var(--semi-bold-font-weight);
-  /* line-height: 1; */
 }
 
 /* Sign in with Login.gov (white logo) on System Enrollment Error, Eligibility Start */
