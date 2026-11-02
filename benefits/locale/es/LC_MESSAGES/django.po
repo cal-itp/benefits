@@ -750,13 +750,13 @@ msgid "Get started with"
 msgstr "Comience con"
 
 msgid "Agency card overview"
-msgstr "Descripción de la tarjeta de agencia"
+msgstr "Resumen de la tarjeta de agencia"
 
 msgid "Continue"
 msgstr "Continuar"
 
 msgid "CalFresh benefit overview"
-msgstr "Descripción general de CalFresh"
+msgstr "Resumen de los beneficios de CalFresh"
 
 msgid "Your current Courtesy Card number"
 msgstr "Su número actual de tarjeta de cortesía"
@@ -769,7 +769,7 @@ msgstr ""
 "saber su número."
 
 msgid "Medicare benefit overview"
-msgstr "Descripción de beneficios de Medicare"
+msgstr "Resumen de los beneficios de Medicare"
 
 msgid "An online account with Medicare.gov"
 msgstr "Una cuenta en línea con Medicare.gov"
@@ -787,7 +787,7 @@ msgid "Continue to Medicare.gov"
 msgstr "Continuar a Medicare.gov"
 
 msgid "Older adult benefit overview"
-msgstr "Descripción de beneficios para adultos mayores"
+msgstr "Resumen de los beneficios para adultos mayores"
 
 msgid "Your current Reduced Fare Mobility ID number"
 msgstr "Su número actual de Reduced Fare Mobility ID"
@@ -798,7 +798,7 @@ msgid ""
 msgstr "No necesita tener su tarjeta física, pero necesitará saber su número."
 
 msgid "U.S. Veteran benefit overview"
-msgstr "Descripción de beneficios para veteranos de EE. UU."
+msgstr "Resumen de los beneficios para veteranos de EE. UU."
 
 msgid "Your card information may not have been entered correctly"
 msgstr ""
