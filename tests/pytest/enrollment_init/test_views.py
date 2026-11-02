@@ -1,6 +1,8 @@
 import json
 
 import pytest
+from django.contrib.messages.middleware import MessageMiddleware
+from django.forms import ValidationError
 
 import benefits.enrollment_init.views
 from benefits.core import models
@@ -72,6 +74,10 @@ class TestRegisterView:
         v.agency.supported_card_schemes = [CardSchemes.VISA, CardSchemes.MASTERCARD, CardSchemes.DISCOVER]
         v.flow = model_EnrollmentFlow
 
+        # Enable the Django messages framework
+        middleware = MessageMiddleware(get_response=lambda request: None)
+        middleware.process_request(app_request)
+
         return v
 
     def test_get_context_data(self, view):
@@ -102,3 +108,28 @@ class TestRegisterView:
         assert handler_kwargs["route_reenrollment_error"] == routes.ENROLLMENT_REENROLLMENT_ERROR
         assert handler_kwargs["route_success"] == routes.ENROLLMENT_SUCCESS
         assert handler_kwargs["route_system_error"] == routes.ENROLLMENT_SYSTEM_ERROR
+
+    def test_form_clean_recaptcha(self, view, mocker):
+        mocker.patch("benefits.core.recaptcha.verify", return_value=False)
+        form = view.form_class(data=dict(card_token="abc123"))
+
+        with pytest.raises(ValidationError):
+            form.clean()
+
+    def test_form_invalid_recaptcha(self, view, mocker):
+        mocker.patch("benefits.core.recaptcha.has_error", return_value=True)
+        view.form = view.form_class(data=dict(card_token="abc123"))
+
+        view.form_invalid(view.form)
+
+        messages = list(view.request._messages)
+        assert len(messages) == 1
+        assert messages[0].tags == "error"
+        assert str(messages[0]) == "Recaptcha failed. Please try again."
+
+    def test_form_invalid(self, view):
+        view.form = view.form_class(data=dict(card_token="abc123"))
+        view.form_invalid(view.form)
+
+        messages = list(view.request._messages)
+        assert len(messages) == 0

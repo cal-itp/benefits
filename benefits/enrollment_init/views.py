@@ -1,10 +1,11 @@
 import json
 import logging
 
+from django.contrib import messages
 from django.views.generic import FormView, TemplateView
 
-from benefits.core import models
-from benefits.core.mixins import AgencySessionRequiredMixin, EligibleSessionRequiredMixin
+from benefits.core import models, recaptcha
+from benefits.core.mixins import AgencySessionRequiredMixin, EligibleSessionRequiredMixin, RecaptchaEnabledMixin
 from benefits.enrollment import forms
 from benefits.enrollment.enrollment import handle_enrollment_results
 from benefits.enrollment.views import FlowSessionRequiredMixin
@@ -37,11 +38,11 @@ class IndexView(AgencySessionRequiredMixin, EligibleSessionRequiredMixin, FlowSe
         return context
 
 
-class RegisterView(AgencySessionRequiredMixin, FlowSessionRequiredMixin, FormView):
+class RegisterView(AgencySessionRequiredMixin, FlowSessionRequiredMixin, RecaptchaEnabledMixin, FormView):
     """View for the page that tokenizes the user card."""
 
     enrollment_method = models.EnrollmentMethods.SELF_SERVICE
-    form_class = forms.CardTokenizeSuccessForm
+    form_class = forms.RecaptchaedCardTokenizeSuccessForm
     route_enrollment_success = routes.ENROLLMENT_SUCCESS
     route_reenrollment_error = routes.ENROLLMENT_REENROLLMENT_ERROR
     route_system_error = routes.ENROLLMENT_SYSTEM_ERROR
@@ -55,7 +56,7 @@ class RegisterView(AgencySessionRequiredMixin, FlowSessionRequiredMixin, FormVie
         tokenize_system_error_form = forms.CardTokenizeFailForm(
             self.route_system_error, "form-card-tokenize-fail-system-error"
         )
-        tokenize_success_form = forms.CardTokenizeSuccessForm(
+        tokenize_success_form = forms.RecaptchaedCardTokenizeSuccessForm(
             action_url=self.route_tokenize_success, auto_id=True, label_suffix=""
         )
 
@@ -92,3 +93,9 @@ class RegisterView(AgencySessionRequiredMixin, FlowSessionRequiredMixin, FormVie
             route_success=self.route_enrollment_success,
             route_system_error=self.route_system_error,
         )
+
+    def form_invalid(self, form):
+        """If the form is invalid, display error messages."""
+        if recaptcha.has_error(form):
+            messages.error(self.request, "Recaptcha failed. Please try again.")
+        return super().form_invalid(form)
