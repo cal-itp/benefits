@@ -40,7 +40,7 @@ def enroll(request, init_config: InitConfig, flow: EnrollmentFlow, group: InitGr
                         if cardholder is None:
                             client.post_cardholder(fare_category=group.group_id, transit_account_id=transit_account.Id)
                         else:
-                            cardholder_update_model = CardholderUpdateModel(**asdict(cardholder))
+                            cardholder_update_model = CardholderUpdateModel.from_kwargs(**asdict(cardholder))
                             client.put_cardholder(cardholder_id=cardholder.Id, cardholder_update_model=cardholder_update_model)
                     else:
                         # TODO: post_cardholder with expiry_to_send

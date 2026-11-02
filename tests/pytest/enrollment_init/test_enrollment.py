@@ -1,8 +1,10 @@
+from dataclasses import asdict
+
 import pytest
 from requests import HTTPError
 
 from benefits.enrollment.enrollment import Status
-from benefits.enrollment_init.api import CardholderResponse, TransitAccountResponse
+from benefits.enrollment_init.api import CardholderResponse, CardholderUpdateModel, TransitAccountResponse
 from benefits.enrollment_init.enrollment import enroll
 
 
@@ -13,7 +15,7 @@ def mocked_TransitAccountResponse():
 
 @pytest.fixture
 def mocked_CardholderResponse_no_expiry(model_InitGroup):
-    return CardholderResponse(FareCategory=model_InitGroup.group_id, FareCategoryExpiry=None)
+    return CardholderResponse(Id=5, FareCategory=model_InitGroup.group_id, FareCategoryExpiry=None)
 
 
 @pytest.fixture
@@ -174,6 +176,46 @@ def test_enroll_success_flow_does_not_support_expiration_customer_already_enroll
     )
 
     mock_client.post_cardholder.assert_not_called()
+    mock_client.put_cardholder.assert_not_called()
+
+    assert status is Status.SUCCESS
+    assert exception is None
+
+
+@pytest.mark.django_db
+def test_enroll_success_flow_does_not_support_expiration_customer_already_enrolled_no_expiry_different_discount(
+    mocker,
+    app_request,
+    model_EnrollmentFlow_does_not_support_expiration,
+    model_InitConfig,
+    model_InitGroup,
+    card_token,
+    mocked_TransitAccountResponse,
+):
+    mock_client_cls = mocker.patch("benefits.enrollment_init.enrollment.Client")
+    mock_client = mock_client_cls.return_value
+    mock_client.get_transit_account.return_value = mocked_TransitAccountResponse
+    cardholder = CardholderResponse(
+        Id=10,
+        FareCategory=model_InitGroup.group_id + 1,  # use an ID different from what will be used to enroll
+        FareCategoryExpiry=None,
+    )
+    mock_client.get_cardholder.return_value = cardholder
+
+    status, exception = enroll(
+        request=app_request,
+        init_config=model_InitConfig,
+        flow=model_EnrollmentFlow_does_not_support_expiration,
+        group=model_InitGroup,
+        token=card_token,
+    )
+
+    mock_client.post_cardholder.assert_not_called()
+
+    cardholder_update_model = CardholderUpdateModel.from_kwargs(**asdict(cardholder))
+    mock_client.put_cardholder.assert_called_once_with(
+        cardholder_id=cardholder.Id, cardholder_update_model=cardholder_update_model
+    )
 
     assert status is Status.SUCCESS
     assert exception is None

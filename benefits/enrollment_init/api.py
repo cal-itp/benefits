@@ -38,6 +38,7 @@ class CardholderUpdateModel(BaseDataClass):
 
 @dataclass
 class CardholderResponse(BaseDataClass):
+    Id: int
     FirstName: str | None = None
     MiddleName: str | None = None
     LastName: str | None = None
