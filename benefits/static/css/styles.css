@@ -173,16 +173,15 @@ h4,
 }
 
 /* H1 */
-/* Mobile first: Screen width up to 992px - 24px (24rem/16 = 1.5rem) and left */
-/* Screen width above 992px - 35px (35rem/16 = 2.1875rem) and centered */
+/* Mobile first: Screen width up to 992px - 28px (28rem/16 = 1.75rem) and left */
+/* Screen width above 992px - 32px (32rem/16 = 2rem) and centered */
 :root {
-  --h1-font-size: var(--font-size-24px);
+  --h1-font-size: var(--font-size-28px);
 }
 
 @media (min-width: 992px) {
   :root {
-    --h1-font-size: var(--font-size-35px);
-    --font-size-35px: 2.1875rem;
+    --h1-font-size: var(--font-size-32px);
   }
 }
 
