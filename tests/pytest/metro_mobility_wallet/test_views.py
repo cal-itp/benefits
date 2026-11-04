@@ -34,7 +34,7 @@ class TestTermsView:
         assert view.template_name == "metro_mobility_wallet/terms.html"
 
     def test_form_valid(self, view, mocked_session_terms):
-        form = view.form_class(data={"agree_to_terms": True})
+        form = view.form_class(data={"accepted_terms": True})
 
         assert form.is_valid()
         response = view.form_valid(form)
