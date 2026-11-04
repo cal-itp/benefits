@@ -372,7 +372,6 @@ CONTENT_SECURITY_POLICY = {
             "https://cdn.jsdelivr.net/sm/",  # centralized sourcemap hosting
             "https://cdn.jsdelivr.net/npm/@switchio",
             "https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/",
-            "https://cdn.jsdelivr.net/npm/jquery",
             "https://secure.nmi.com",
         ],
         "default-src": [SELF],
@@ -386,7 +385,6 @@ CONTENT_SECURITY_POLICY = {
             "https://cdn.amplitude.com/libs/",
             "https://cdn.jsdelivr.net/npm/@switchio",
             "https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/",
-            "https://cdn.jsdelivr.net/npm/jquery",
             "*.littlepay.com",
             "https://secure.nmi.com",
             NONCE,  # https://django-csp.readthedocs.io/en/latest/nonce.html

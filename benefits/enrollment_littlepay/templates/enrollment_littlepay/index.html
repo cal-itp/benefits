@@ -8,14 +8,41 @@
   {% endcomment %}
   {% translate "Please wait..." as loading_text %}
 
-  {% include "enrollment/includes/jquery.html" %}
-
   <script nonce="{{ request.csp_nonce }}">
-      var startedEvent = "started card tokenization", closedEvent = "finished card tokenization";
+      const startedEvent = "started card tokenization", closedEvent = "finished card tokenization";
 
-      $.ajax({ dataType: "script", attrs: { nonce: "{{ request.csp_nonce }}"}, url: "{{ transit_processor.card_tokenize_url }}" })
-          .done(function() {
-          $.get("{% url routes.ENROLLMENT_LITTLEPAY_TOKEN %}", function(data) {
+      function setLoadingHidden(hidden) {
+        document.querySelectorAll(".loading").forEach(function(element) {
+          element.classList.toggle("d-none", hidden);
+        });
+      }
+
+      function setEnrollmentVisible(visible) {
+        document.querySelectorAll(".invisible, .visible").forEach(function(element) {
+          element.classList.toggle("invisible", !visible);
+          element.classList.toggle("visible", visible);
+        });
+      }
+
+      function handleError(error) {
+        setLoadingHidden(true);
+        console.error(error);
+      }
+
+      function loadTokenizeScript() {
+        const script = document.createElement("script");
+        script.src = "{{ transit_processor.card_tokenize_url }}";
+        script.async = true;
+        script.setAttribute("nonce", "{{ request.csp_nonce }}");
+        script.onload = function() {
+          fetch("{% url routes.ENROLLMENT_LITTLEPAY_TOKEN %}")
+            .then(function(response) {
+              if (!response.ok) {
+                throw new Error("Littlepay token request failed with status " + response.status);
+              }
+              return response.json();
+            })
+            .then(function(data) {
               if (data.redirect) {
                 // https://stackoverflow.com/a/42469170
                 // use 'assign' because 'replace' was giving strange Back button behavior
@@ -23,81 +50,87 @@
                 return; // exit early so the rest of this function doesn't execute
               }
 
-              $(".loading").remove();
+              setLoadingHidden(true);
               // remove invisible and add back visible, so we aren't left with
               // a div with an empty class attribute
               // (this is purely for clarity when reviewing the HTML, no UX impact)
-              $(".invisible").removeClass("invisible").addClass("visible");
+              setEnrollmentVisible(true);
 
-              $("#{{ cta_button }}").on("click", function() {
-                  amplitude.getInstance().logEvent(startedEvent, {
-                      card_tokenize_url: "{{ transit_processor.card_tokenize_url }}",
-                      card_tokenize_func: "{{ transit_processor.card_tokenize_func }}",
-                      enrollment_method: "{{ enrollment_method }}"
-                  });
-                  $(this).addClass("disabled").attr("aria-disabled", "true").text("{{ loading_text }}");
+              const button = document.getElementById("{{ cta_button }}");
+              button.addEventListener("click", function() {
+                amplitude.getInstance().logEvent(startedEvent, {
+                  card_tokenize_url: "{{ transit_processor.card_tokenize_url }}",
+                  card_tokenize_func: "{{ transit_processor.card_tokenize_func }}",
+                  enrollment_method: "{{ enrollment_method }}"
+                });
+                button.classList.add("disabled");
+                button.setAttribute("aria-disabled", "true");
+                button.textContent = "{{ loading_text }}";
               });
 
               // parse the JSON string back into a JS array
               // the escapejs filter handles e.g. quote conversion
-              let card_schemes = JSON.parse('{{ card_schemes|escapejs }}');
+              const card_schemes = JSON.parse('{{ card_schemes|escapejs }}');
 
               littlepay({
-                  authorization: data.token,
-                  element: '#{{ cta_button }}',
-                  envUrl: '{{ transit_processor.card_tokenize_env }}',
-                  options: {
-                      color: '#046b99',
-                      language: '{{ overlay_language }}',
-                      cardTypes: card_schemes
-                  },
-                  onTokenize: function (response) {
-                      /* This function executes when the
-                      /* card verification returns
-                      /* successfully with a token from enrollment server */
-                      amplitude.getInstance().logEvent(closedEvent, {status: "success", enrollment_method: "{{ enrollment_method }}"});
+                authorization: data.token,
+                element: '#{{ cta_button }}',
+                envUrl: '{{ transit_processor.card_tokenize_env }}',
+                options: {
+                  color: '#046b99',
+                  language: '{{ overlay_language }}',
+                  cardTypes: card_schemes
+                },
+                onTokenize: function (response) {
+                  /* This function executes when the
+                  /* card verification returns
+                  /* successfully with a token from enrollment server */
+                  amplitude.getInstance().logEvent(closedEvent, {status: "success", enrollment_method: "{{ enrollment_method }}"});
 
-                      var form = $("form#{{ form_success }}");
-                      $("#{{ token_field }}", form).val(response.token);
-                      form.submit();
-                  },
-                  onVerificationFailure: function (response) {
-                      /* This function executes when the
-                      /* card verification fails and server
-                      /* return verification failure message */
-                      amplitude.getInstance().logEvent(closedEvent, {status: "fail", enrollment_method: "{{ enrollment_method }}"});
+                  const form = document.getElementById("{{ form_success }}");
+                  const tokenInput = document.getElementById("{{ token_field }}");
+                  tokenInput.value = response.token;
+                  form.submit();
+                },
+                onVerificationFailure: function (response) {
+                  /* This function executes when the
+                  /* card verification fails and server
+                  /* return verification failure message */
+                  amplitude.getInstance().logEvent(closedEvent, {status: "fail", enrollment_method: "{{ enrollment_method }}"});
 
-                      var form = $("form#{{ form_retry }}");
-                      form.submit();
-                  },
-                  onError: function (response) {
-                      /* This function executes when the
-                      /* server returns error or token is invalid.
-                      /* 400 or 500 will return. */
-                      amplitude.getInstance().logEvent(closedEvent, {status: "error", error: response, enrollment_method: "{{ enrollment_method }}"});
+                  const form = document.getElementById("{{ form_retry }}");
+                  form.submit();
+                },
+                onError: function (response) {
+                  /* This function executes when the
+                  /* server returns error or token is invalid.
+                  /* 400 or 500 will return. */
+                  amplitude.getInstance().logEvent(closedEvent, {status: "error", error: response, enrollment_method: "{{ enrollment_method }}"});
 
-                      if (response.status >= 500) {
-                        var form = $("form#{{ form_system_error }}");
-                      } else {
-                        var form = $("form#{{ form_server_error }}");
-                      }
-                      form.submit();
-                  },
-                  onCancel: function () {
-                      /* This function executes when the
-                      /* user cancels and closes the window
-                      /* and returns to home page. */
-                      amplitude.getInstance().logEvent(closedEvent, {status: "cancel", enrollment_method: "{{ enrollment_method }}"});
+                  const form = document.getElementById(
+                    response.status >= 500 ? "{{ form_system_error }}" : "{{ form_server_error }}"
+                  );
+                  form.submit();
+                },
+                onCancel: function () {
+                  /* This function executes when the
+                  /* user cancels and closes the window
+                  /* and returns to home page. */
+                  amplitude.getInstance().logEvent(closedEvent, {status: "cancel", enrollment_method: "{{ enrollment_method }}"});
 
-                      return location.reload();
-                  }
+                  return location.reload();
+                }
               });
-          });
-      })
-      .fail(function(jqxhr, settings, exception) {
-        $(".loading").remove();
-        console.log(exception);
-      });
+            })
+            .catch(handleError);
+        };
+        script.onerror = function() {
+          handleError(new Error("Unable to load Littlepay card tokenization script"));
+        };
+        document.head.appendChild(script);
+      }
+
+      loadTokenizeScript();
   </script>
 
   {% for f in forms %}
