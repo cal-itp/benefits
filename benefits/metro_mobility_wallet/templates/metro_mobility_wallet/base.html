@@ -38,6 +38,10 @@
         font-size: var(--font-size-16px);
       }
 
+      .pt-cta {
+        padding-top: 40px;
+      }
+
       /* Desktop */
       @media (min-width: 992px) {
         .metro-branding img {
@@ -48,6 +52,10 @@
           border-left: 1px solid #ffffff;
           font-size: var(--font-size-20px);
           line-height: 1.25;
+        }
+
+        .pt-cta {
+          padding-top: 48px;
         }
       }
     </style>
@@ -104,7 +112,7 @@
             </div>
           </div>
           {% block call-to-action %}
-            <div class="row justify-content-center pt-8">
+            <div class="row justify-content-center pt-cta">
               <div class="col-lg-6">
                 {% block call-to-action-button %}
                 {% endblock call-to-action-button %}
