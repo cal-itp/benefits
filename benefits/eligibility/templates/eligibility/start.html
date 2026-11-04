@@ -15,14 +15,15 @@
 {% endblock nav-buttons %}
 
 {% block headline %}
-  <h1>{{ headline_text }}</h1>
+  {% translate "What you’ll need to apply" as headline_text %}
+  {% include "core/includes/badged-headline.html" with headline=headline_text %}
 {% endblock headline %}
 
 {% block inner-content %}
-  <p class="py-4">{% translate "You will need a few items to continue:" %}</p>
-  <ul class="d-flex flex-column gap-4 list-unstyled ps-0 mb-0">
+  <p class="mt-3">{% translate "You will need a few items to continue:" %}</p>
+  <ul class="d-flex flex-column gap-4 list-unstyled ps-0 mt-4 mb-0">
     <li>
-      <h2 class="h3 pb-1">
+      <h2 class="h3">
         {% if eligibility_item_headline %}
           {{ eligibility_item_headline }}
         {% else %}
@@ -35,10 +36,10 @@
         <p>
           {% translate "You will be able to create an account using your email address if you do not already have one. We use your Login.gov account to verify your identity." %}
           {% translate "Learn more about identity verification" as text %}
-          {% include "core/includes/modal-trigger.html" with modal="modal--identity-verification" text=text period=True %}
+          {% include "core/includes/modal-trigger.html" with modal="modal--identity-verification" text=text %}
         </p>
         <p>{% translate "For this process you will need:" %}</p>
-        <ul class="list-disc ms-lg-5 ms-0">
+        <ul class="list-disc">
           <li>{% translate "Your state-issued ID card" %}</li>
           <li>{% translate "Your Social Security number" %}</li>
           <li>{% translate "A phone number with a phone plan associated with your name" %}</li>
@@ -47,12 +48,12 @@
       {% endif %}
     </li>
     <li>
-      <h2 class="h3 pb-1">{% translate "Your contactless card details" %}</h2>
+      <h2 class="h3">{% translate "Your bank card" %}</h2>
       <p>{% translate "Your contactless card must be a debit or credit card by:" %}</p>
-      {% include "core/includes/list--card-schemes.html" with classes="ms-lg-5 ms-0" %}
+      {% include "core/includes/list--card-schemes.html" with classes="list-disc" %}
       <p>
-        {% translate "Learn more about contactless cards" as text %}
-        {% include "core/includes/modal-trigger.html" with modal="modal--contactless" text=text period=True %}
+        {% translate "Learn more about the bank cards we accept" as text %}
+        {% include "core/includes/modal-trigger.html" with modal="modal--contactless" text=text %}
       </p>
       {% include "eligibility/includes/modal--contactless.html" with id="modal--contactless" size="modal-lg" header="p-md-2 p-3" body="pb-md-3 mb-md-3 mx-md-3 py-0 pt-0 absolute-top" %}
     </li>

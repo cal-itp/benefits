@@ -52,9 +52,6 @@ class TestIndexView:
 
         assert "cta_button" in context
         assert "enrollment_method" in context
-        assert "headline" in context
-        assert "next_step" in context
-        assert "partner_post_link" in context
         assert "alert_include" in context
         assert "transit_processor" in context.keys()
         transit_processor_context = context["transit_processor"]

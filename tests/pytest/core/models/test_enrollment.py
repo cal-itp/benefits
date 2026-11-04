@@ -119,6 +119,19 @@ def test_EnrollmentFlow_get_selection_label_template():
 
 
 @pytest.mark.django_db
+def test_EnrollmentFlow_apply_badge_prefix_to_agency_card_flows(model_EnrollmentFlow):
+    model_EnrollmentFlow.system_name = "courtesy_card"
+    assert model_EnrollmentFlow.apply_badge_prefix is True
+    model_EnrollmentFlow.system_name = "mobility_pass"
+    assert model_EnrollmentFlow.apply_badge_prefix is True
+
+
+@pytest.mark.django_db
+def test_EnrollmentFlow_apply_badge_prefix_false_for_other_flows(model_EnrollmentFlow):
+    assert model_EnrollmentFlow.apply_badge_prefix is False
+
+
+@pytest.mark.django_db
 def test_EnrollmentGroup_str(model_LittlepayGroup):
     assert str(model_LittlepayGroup) == f"{model_LittlepayGroup.enrollment_flow} ({model_LittlepayGroup.transit_agency.slug})"
 

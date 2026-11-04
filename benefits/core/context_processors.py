@@ -98,6 +98,16 @@ def feature_flags(request):
     return {"feature_flags": {}}
 
 
+def flow(request):
+    """Context processor adds the name of the active flow to the request context."""
+    flow = session.flow(request)
+
+    if flow:
+        return {"flow": flow}
+
+    return {}
+
+
 def formatted_gettext_lazy(string, *args, **kwargs):
     """Wraps format_lazy around gettext_lazy for simpler calling."""
     return format_lazy(gettext_lazy(string), *args, **kwargs)

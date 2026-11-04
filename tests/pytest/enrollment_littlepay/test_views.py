@@ -234,9 +234,6 @@ class TestIndexView:
         assert "form_system_error" in context
         assert "overlay_language" in context
 
-        assert "headline" in context
-        assert "next_step" in context
-        assert "partner_post_link" in context
         assert "alert_include" in context
 
         assert "transit_processor" in context

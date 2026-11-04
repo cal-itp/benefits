@@ -128,7 +128,6 @@ class TestStartView:
         context = view.get_context_data()
 
         assert "page_title" in context
-        assert "headline_text" in context
         assert "eligibility_item_headline" in context
         assert "eligibility_item_body" in context
         assert "call_to_action_button" in context

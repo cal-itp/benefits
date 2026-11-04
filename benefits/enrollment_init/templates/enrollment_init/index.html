@@ -1,1 +1,14 @@
-{% extends "enrollment/index-init.html" %}
+{% extends "enrollment/index-base.html" %}
+{% load i18n %}
+
+{% block transit_processor_details %}
+  {% translate "Your card details will be sent to our payment partner, " %}
+  <a href="modal--transit-processor"
+     class="{{ classes }}"
+     data-bs-toggle="modal"
+     data-bs-target="#modal--transit-processor">{{ transit_processor.name }}</a>.
+{% endblock transit_processor_details %}
+
+{% block call-to-action-button %}
+  <a href="{% url cta_button %}"  class="btn btn-lg btn-primary">{% translate "Register your card" %}</a>
+{% endblock call-to-action-button %}
