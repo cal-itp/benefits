@@ -41,7 +41,10 @@
     }
   </style>
 
-  <div id="error-summary" class="alert-box error-summary p-3 {% if not form.errors %}d-none{% endif %}" tabindex="-1">
+  <div id="error-summary"
+       class="alert-box error-summary p-3 {% if not form.errors %}d-none{% endif %}"
+       tabindex="-1"
+       aria-live="polite">
     <h2 class="error-summary-heading fw-semibold mb-2 text-dark"
         id="error-summary-heading">{% translate "There was a problem" %}</h2>
     <ul class="mb-0 ps-3">
