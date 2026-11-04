@@ -1,16 +1,20 @@
 {% extends "metro_mobility_wallet/base.html" %}
 {% load i18n %}
 
+{% block page-title %}
+  {% translate "Review terms" %}
+{% endblock page-title %}
+
 {% block headline %}
-  <h1 class="mmw-headline">{% translate "Review and accept program terms" %}</h1>
+  <h1>{% translate "Review and accept program terms" %}</h1>
 {% endblock headline %}
 
 {% block inner-content %}
   <style nonce="{{ request.csp_nonce }}">
     .mmw-terms-checkbox {
-        width: calc(24rem / 16);
-        height: calc(24rem / 16);
-      }
+      width: calc(24rem / 16);
+      height: calc(24rem / 16);
+    }
     .mmw-terms-checkbox:focus {
       outline: 2px solid #756FFF;
       outline-offset: 1px;
@@ -133,3 +137,7 @@
     {% include "core/includes/recaptcha.html" %}
   {% endif %}
 {% endblock inner-content %}
+
+{% comment %} Override with empty block to prevent rendering empty divs {% endcomment %}
+{% block call-to-action %}
+{% endblock call-to-action %}
