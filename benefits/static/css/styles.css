@@ -538,6 +538,17 @@ footer .footer-links li a.footer-link:visited {
   line-height: var(--form-field-text-line-height);
 }
 
+/* Forms: Checkbox Inputs */
+
+input[type="checkbox"] {
+  width: calc(24rem / 16);
+  height: calc(24rem / 16);
+}
+input[type="checkbox"]:focus {
+  outline: 2px solid #756fff;
+  outline-offset: 1px;
+}
+
 /* Forms: Text Inputs */
 /* Form Field Container: Must use .form-field-container parent to use these styles */
 

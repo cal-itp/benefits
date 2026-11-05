@@ -8,14 +8,7 @@ class TermsAcceptanceForm(forms.Form):
     id = "form-accept-terms"
     method = "POST"
 
-    accepted_terms = forms.BooleanField(
-        required=True,
-        widget=forms.CheckboxInput(
-            attrs={
-                "class": "mmw-terms-checkbox",
-            }
-        ),
-    )
+    accepted_terms = forms.BooleanField(required=True, widget=forms.CheckboxInput())
 
 
 class ContactInfoConfirmationForm(forms.Form):

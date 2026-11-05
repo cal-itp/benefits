@@ -29,15 +29,6 @@
   }
 }
 
-.mmw-terms-checkbox {
-  width: calc(24rem / 16);
-  height: calc(24rem / 16);
-}
-.mmw-terms-checkbox:focus {
-  outline: 2px solid #756fff;
-  outline-offset: 1px;
-}
-
 /* Error summary component */
 .error-summary {
   border-left: 4px solid #de0e10;
