@@ -263,6 +263,7 @@ h4,
 /* The minimum height is calculated by 100 viewport height minus Header and Footer height */
 main {
   min-height: var(--main-content-min-height);
+  position: relative;
 }
 
 #skip-to-content {
@@ -920,4 +921,13 @@ footer .footer-links li a.footer-link:visited {
   .icon.pulsing {
     animation-duration: 3s;
   }
+}
+
+/* Animated loading screen */
+
+.loading-screen {
+  height: 100%;
+}
+.loading-screen p {
+  max-width: 296px;
 }
