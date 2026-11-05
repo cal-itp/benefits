@@ -1,5 +1,10 @@
 name: Check for up-to-date Django migrations and messages
-on: [push, pull_request, workflow_call]
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+  workflow_call:
 
 jobs:
   check-migrations-and-messages:
