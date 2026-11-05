@@ -1,0 +1,12 @@
+{% load i18n %}
+
+<div id="{{ id }}"
+     class="loading-screen
+            d-flex flex-column gap-5 align-items-center
+            position-absolute top-0 start-0 w-100 pt-5
+            bg-white
+            {{ state|default:"invisible" }}"
+     aria-live="polite">
+  <p class="h2 mt-5 text-center">{{ text|default:"Please wait…" }}</p>
+  {% include "core/includes/icon.html" with name="happybus" size=150 pulse=True %}
+</div>
