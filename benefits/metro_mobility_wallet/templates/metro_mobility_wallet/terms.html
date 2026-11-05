@@ -10,35 +10,6 @@
 {% endblock headline %}
 
 {% block inner-content %}
-  <style nonce="{{ request.csp_nonce }}">
-    .mmw-terms-checkbox {
-      width: calc(24rem / 16);
-      height: calc(24rem / 16);
-    }
-    .mmw-terms-checkbox:focus {
-      outline: 2px solid #756FFF;
-      outline-offset: 1px;
-    }
-
-    .error-summary {
-      border-left: 4px solid #DE0E10;
-      background-color: #FEF5F5;
-    }
-    .error-summary:focus {
-      outline: 2px solid #756FFF;
-      outline-offset: 2px;
-    }
-
-    .error-summary-heading {
-      font-size: var(--font-size-16px);
-    }
-
-    .error-summary li,
-    .error-summary a {
-      font-size: var(--font-size-16px) !important;
-    }
-  </style>
-
   <div id="error-summary"
        class="alert-box error-summary mt-3 mb-lg-3 mb-2 p-3 {% if not form.errors %}d-none{% endif %}"
        tabindex="-1"
