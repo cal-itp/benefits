@@ -747,6 +747,8 @@ input[type="checkbox"]:focus {
   --alert-box-border-width: calc(8rem / 16);
   --alert-box-background-color--warning: #fff1d0;
   --alert-box-border-color--warning: #fdb714;
+  --alert-box-background-color--error: #fef5f5;
+  --alert-box-border-color--error: #de0e10;
 }
 
 .alert-box {
@@ -762,6 +764,11 @@ input[type="checkbox"]:focus {
 .alert-box--warning {
   background-color: var(--alert-box-background-color--warning);
   border-left-color: var(--alert-box-border-color--warning) !important;
+}
+
+.alert-box--error {
+  background-color: var(--alert-box-background-color--error);
+  border-left-color: var(--alert-box-border-color--error) !important;
 }
 
 .alert-box--heading {

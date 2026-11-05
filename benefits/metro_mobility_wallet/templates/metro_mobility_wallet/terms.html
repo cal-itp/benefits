@@ -11,7 +11,7 @@
 
 {% block inner-content %}
   <div id="error-summary"
-       class="alert-box error-summary mt-3 mb-lg-3 mb-2 p-3 {% if not form.errors %}d-none{% endif %}"
+       class="alert-box alert-box--error error-summary mt-3 mb-lg-3 mb-2 p-3 border-start {% if not form.errors %}d-none{% endif %}"
        tabindex="-1"
        aria-live="polite">
     <h2 class="error-summary-heading fw-semibold mb-2 text-dark"

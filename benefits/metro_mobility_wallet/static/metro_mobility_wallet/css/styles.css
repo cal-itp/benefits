@@ -30,10 +30,6 @@
 }
 
 /* Error summary component */
-.error-summary {
-  border-left: 4px solid #de0e10;
-  background-color: #fef5f5;
-}
 .error-summary:focus {
   outline: 2px solid #756fff;
   outline-offset: 2px;
