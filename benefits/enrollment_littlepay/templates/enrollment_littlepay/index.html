@@ -23,11 +23,12 @@
                 return; // exit early so the rest of this function doesn't execute
               }
 
-              $(".loading").remove();
+              $(".btn.loading").remove();
+              $("#loading_verifying").remove();
               // remove invisible and add back visible, so we aren't left with
               // a div with an empty class attribute
               // (this is purely for clarity when reviewing the HTML, no UX impact)
-              $(".invisible").removeClass("invisible").addClass("visible");
+              $(".enroll-button").removeClass("invisible").addClass("visible");
 
               $("#{{ cta_button }}").on("click", function() {
                   amplitude.getInstance().logEvent(startedEvent, {
@@ -36,6 +37,7 @@
                       enrollment_method: "{{ enrollment_method }}"
                   });
                   $(this).addClass("disabled").attr("aria-disabled", "true").text("{{ loading_text }}");
+                  $("#loading_registering").removeClass("invisible").addClass("visible");
               });
 
               // parse the JSON string back into a JS array
