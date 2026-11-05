@@ -1,6 +1,11 @@
 name: Check the dynamic version of the Benefits package
 
-on: [push, pull_request, workflow_call]
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+  workflow_call:
 
 jobs:
   check-dynamic-version:
