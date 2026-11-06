@@ -1,0 +1,45 @@
+/* Mobile */
+.metro-branding img {
+  width: 59px;
+}
+
+.metro-branding span {
+  border-left: none;
+  font-size: var(--font-size-16px);
+}
+
+.pt-cta {
+  padding-top: 40px;
+}
+
+/* Desktop */
+@media (min-width: 992px) {
+  .metro-branding img {
+    width: 92px;
+  }
+
+  .metro-branding span {
+    border-left: 1px solid #ffffff;
+    font-size: var(--font-size-20px);
+    line-height: 1.25;
+  }
+
+  .pt-cta {
+    padding-top: 48px;
+  }
+}
+
+/* Error summary component */
+.error-summary:focus {
+  outline: 2px solid #756fff;
+  outline-offset: 2px;
+}
+
+.error-summary-heading {
+  font-size: var(--font-size-16px);
+}
+
+.error-summary li,
+.error-summary a {
+  font-size: var(--font-size-16px) !important;
+}
