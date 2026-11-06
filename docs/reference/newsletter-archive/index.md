@@ -14,7 +14,7 @@ Most months we send a newsletter to share product updates, adoption metrics, and
 
     -   ### :material-email-newsletter: October 2026
 
-          *Subtitle TKTKTK*
+          *Healthy growth in enrollments*
 
           ---
 
