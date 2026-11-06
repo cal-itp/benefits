@@ -263,6 +263,7 @@ h4,
 /* The minimum height is calculated by 100 viewport height minus Header and Footer height */
 main {
   min-height: var(--main-content-min-height);
+  position: relative;
 }
 
 #skip-to-content {
@@ -892,4 +893,41 @@ footer .footer-links li a.footer-link:visited {
   .cjs-input #ccnumber {
     width: 350px;
   }
+}
+
+/* Pulsing icons */
+
+.icon.pulsing {
+  border-radius: 100%;
+  outline-color: var(--dsdl-cyan-20);
+  outline-style: solid;
+  animation-name: pulse;
+  animation-duration: 0.75s;
+  animation-iteration-count: infinite;
+  animation-timing-function: linear;
+  animation-direction: alternate;
+}
+
+@keyframes pulse {
+  0% {
+    outline-width: 0;
+  }
+  100% {
+    outline-width: 12px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .icon.pulsing {
+    animation-duration: 3s;
+  }
+}
+
+/* Animated loading screen */
+
+.loading-screen {
+  height: 100%;
+}
+.loading-screen p {
+  max-width: 296px;
 }
