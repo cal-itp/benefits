@@ -541,11 +541,21 @@ footer .footer-links li a.footer-link:visited {
 /* Forms: Checkbox Inputs */
 
 input[type="checkbox"] {
+  appearance: none;
   width: calc(24rem / 16);
   height: calc(24rem / 16);
+  border-radius: 3px;
+  border: 2px solid var(--standout-color);
+}
+input[type="checkbox"]:checked {
+  background-color: var(--standout-color);
+  background-image: url("/static/img/icon/input-checkbox.svg");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 12.1px 9.2px;
 }
 input[type="checkbox"]:focus {
-  outline: 2px solid #756fff;
+  outline: 2px solid var(--focus-color-dark);
   outline-offset: 1px;
 }
 
