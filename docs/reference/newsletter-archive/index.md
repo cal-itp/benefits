@@ -12,6 +12,16 @@ Most months we send a newsletter to share product updates, adoption metrics, and
 
     ## 2026 {.sr-only .insertion-point}
 
+    -   ### :material-email-newsletter: October 2026
+
+          *Subtitle TKTKTK*
+
+          ---
+
+          Summary TKTKTK
+
+        [Read full newsletter →](2026-10/)
+
     -   ### :material-email-newsletter: September 2026
 
           *'Tis the season for agency onboarding*
