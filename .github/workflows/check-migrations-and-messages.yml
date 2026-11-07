@@ -8,7 +8,7 @@ on:
 
 jobs:
   check-migrations-and-messages:
-    # when our DevContainer starts running Debian 13, we can upgrade this to ubuntu-26.04
+    # when our DevContainer starts running Debian 13 (AKA "trixie"), we can upgrade this to ubuntu-26.04 (AKA "resolute")
     runs-on: ubuntu-24.04
     steps:
       - name: Check out code
