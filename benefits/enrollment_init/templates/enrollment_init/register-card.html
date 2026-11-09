@@ -3,8 +3,9 @@
 {% load i18n %}
 
 {% block preload %}
-  <script nonce="{{ request.csp_nonce }}" src="https://secure.nmi.com/token/Collect.js" data-tokenization-key="{{ collect_js_api_key }}">
-  </script>
+  <script nonce="{{ request.csp_nonce }}"
+          src="https://secure.nmi.com/token/Collect.js"
+          data-tokenization-key="{{ collect_js_api_key }}"></script>
 {% endblock preload %}
 
 {% block page-title %}
