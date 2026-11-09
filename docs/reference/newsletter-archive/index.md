@@ -12,6 +12,16 @@ Most months we send a newsletter to share product updates, adoption metrics, and
 
     ## 2026 {.sr-only .insertion-point}
 
+    -   ### :material-email-newsletter: October 2026
+
+          *Healthy growth in enrollments*
+
+          ---
+
+         Q3 2026 was the strongest quarter yet for Cal-ITP Benefits enrollments. Between the start of July and the end of September, 333 riders enrolled their bank card for reduced fares. That’s a 57% increase from Q2 and 1,750% from Q3 2024, highlighting strong growth in eligible riders using Cal-ITP Benefits for transit benefits and reinforcing its fit as a transit benefit solution for operators offering open-loop payments. Mendocino Transit joined the adoption pipeline this month, and more agencies will launch in 2027.
+
+        [Read full newsletter →](2026-10/)
+
     -   ### :material-email-newsletter: September 2026
 
           *'Tis the season for agency onboarding*
