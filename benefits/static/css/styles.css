@@ -920,3 +920,29 @@ input[type="checkbox"]:focus {
     width: 350px;
   }
 }
+
+/* Accordion component */
+
+.accordion {
+  font-size: var(--font-size-16px);
+}
+
+.accordion p {
+  font-size: var(--font-size-16px);
+}
+
+.accordion-details {
+  border: 1px solid var(--dsdl-gray-40);
+  border-radius: var(--border-radius);
+}
+
+.accordion-item-body {
+  border-top: 1px solid var(--dsdl-gray-40);
+}
+
+summary {
+  border-bottom: 0px;
+  font-weight: var(--semi-bold-font-weight);
+  color: var(--text-primary-color);
+  list-style: none;
+}
