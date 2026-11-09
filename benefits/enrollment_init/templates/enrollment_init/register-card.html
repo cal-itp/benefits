@@ -56,12 +56,7 @@
           title: "Expiration date",
           placeholder: "MM / YY",
         },
-        cvv: {
-          display: "show", // omitting this prop results in tokenization failure
-          selector: "#cvv",
-          title: "Security code",
-          placeholder: "123",
-        },
+        cvv: { display: "hide" }
       },
       timeoutDuration: 10000,
       validationCallback: revalidateField,
@@ -150,7 +145,6 @@
         {% translate "Please enter an expiration date in a MM/YY format." %}
       </div>
     </div>
-    <div id="cvv" hidden></div>
     <button class="btn btn-lg btn-primary mt-5" id="tokenizeButton" type="button">{% translate "Register your card" %}</button>
   </form>
 
