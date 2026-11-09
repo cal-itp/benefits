@@ -104,7 +104,7 @@
 | benefits/locale/es/formats.py                                                            |        1 |        0 |        0 |        0 |    100% |           |
 | benefits/metro\_mobility\_wallet/\_\_init\_\_.py                                         |        0 |        0 |        0 |        0 |    100% |           |
 | benefits/metro\_mobility\_wallet/apps.py                                                 |        4 |        0 |        0 |        0 |    100% |           |
-| benefits/metro\_mobility\_wallet/forms.py                                                |        5 |        0 |        0 |        0 |    100% |           |
+| benefits/metro\_mobility\_wallet/forms.py                                                |        8 |        0 |        0 |        0 |    100% |           |
 | benefits/metro\_mobility\_wallet/locale/\_\_init\_\_.py                                  |        0 |        0 |        0 |        0 |    100% |           |
 | benefits/metro\_mobility\_wallet/locale/en/\_\_init\_\_.py                               |        0 |        0 |        0 |        0 |    100% |           |
 | benefits/metro\_mobility\_wallet/locale/es/\_\_init\_\_.py                               |        0 |        0 |        0 |        0 |    100% |           |
@@ -117,10 +117,10 @@
 | benefits/metro\_mobility\_wallet/locale/zh\_Hans/\_\_init\_\_.py                         |        0 |        0 |        0 |        0 |    100% |           |
 | benefits/metro\_mobility\_wallet/locale/zh\_Hant/\_\_init\_\_.py                         |        0 |        0 |        0 |        0 |    100% |           |
 | benefits/metro\_mobility\_wallet/oauth.py                                                |       42 |       18 |        0 |        0 |     57% |19-21, 33-37, 41-45, 49-59, 63-70, 74-77 |
-| benefits/metro\_mobility\_wallet/session.py                                              |       11 |        0 |        0 |        0 |    100% |           |
+| benefits/metro\_mobility\_wallet/session.py                                              |       18 |        0 |        0 |        0 |    100% |           |
 | benefits/metro\_mobility\_wallet/urls.py                                                 |       12 |        0 |        0 |        0 |    100% |           |
 | benefits/metro\_mobility\_wallet/views/\_\_init\_\_.py                                   |        5 |        0 |        0 |        0 |    100% |           |
-| benefits/metro\_mobility\_wallet/views/eligibility.py                                    |        7 |        0 |        0 |        0 |    100% |           |
+| benefits/metro\_mobility\_wallet/views/eligibility.py                                    |       14 |        0 |        0 |        0 |    100% |           |
 | benefits/metro\_mobility\_wallet/views/enrollment.py                                     |        7 |        0 |        0 |        0 |    100% |           |
 | benefits/metro\_mobility\_wallet/views/errors.py                                         |        3 |        0 |        0 |        0 |    100% |           |
 | benefits/metro\_mobility\_wallet/views/index.py                                          |        3 |        0 |        0 |        0 |    100% |           |
@@ -138,7 +138,7 @@
 | benefits/urls.py                                                                         |       51 |       11 |       10 |        4 |     72% |46-\>49, 49-\>88, 63, 66, 69, 72, 75-77, 89-91, 94-\>106, 100-102 |
 | benefits/views.py                                                                        |       33 |        0 |        0 |        0 |    100% |           |
 | benefits/wsgi.py                                                                         |        4 |        4 |        0 |        0 |      0% |     10-16 |
-| **TOTAL**                                                                                | **3903** |  **168** |  **620** |   **64** | **94%** |           |
+| **TOTAL**                                                                                | **3920** |  **168** |  **620** |   **64** | **94%** |           |
 
 
 ## Setup coverage badge
