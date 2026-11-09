@@ -552,7 +552,6 @@ input[type="checkbox"]:checked {
   background-image: url("/static/img/icon/input-checkbox.svg");
   background-repeat: no-repeat;
   background-position: center;
-  background-size: 12.1px 9.2px;
 }
 input[type="checkbox"]:focus {
   outline: 2px solid var(--focus-color-dark);
