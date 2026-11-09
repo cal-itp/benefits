@@ -1,1 +1,19 @@
-Apply
+{% extends "metro_mobility_wallet/base.html" %}
+{% load i18n %}
+
+{% block page-title %}
+  {% translate "Applying with Login.gov" %}
+{% endblock page-title %}
+
+{% block headline %}
+  <h1 class="pb-lg-3 pb-2">{% translate "Applying with Login.gov" %}</h1>
+{% endblock headline %}
+
+{% block inner-content %}
+  <p class="py-3">{% translate "We'll use your Login.gov account to complete the following tasks:" %}</p>
+  <ul class="mt-0">
+    <li>{% translate "Verify your identity." %}</li>
+    <li>{% translate "Get the details we need to check your CalFresh status." %}</li>
+    <li>{% translate "Fill out your application." %}</li>
+  </ul>
+{% endblock inner-content %}
