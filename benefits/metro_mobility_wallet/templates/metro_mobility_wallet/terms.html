@@ -1,1 +1,99 @@
-Terms
+{% extends "metro_mobility_wallet/base.html" %}
+{% load i18n %}
+
+{% block page-title %}
+  {% translate "Review terms" %}
+{% endblock page-title %}
+
+{% block headline %}
+  <h1 class="pb-lg-3 pb-2">{% translate "Review and accept program terms" %}</h1>
+{% endblock headline %}
+
+{% block inner-content %}
+  <div id="error-summary"
+       class="alert-box alert-box--error error-summary mt-3 mb-lg-3 mb-2 p-3 border-start {% if not form.errors %}d-none{% endif %}"
+       tabindex="-1"
+       role="alert"
+       aria-atomic="true">
+    <h2 class="error-summary-heading fw-semibold mb-2 text-dark"
+        id="error-summary-heading">{% translate "There was a problem" %}</h2>
+    <ul class="mb-0 ps-3">
+      <li>
+        {% blocktranslate trimmed with field_id=form.accepted_terms.id_for_label %}
+          Add your <a href="#{{ field_id }}">signature</a>
+        {% endblocktranslate %}
+      </li>
+    </ul>
+  </div>
+
+  <h2 class="h3 pt-3 pb-4">{% translate "Signature" %}</h2>
+
+  <form id="form-accept-terms" action="{% url form.action_url_name %}" method="{{ form.method }}" novalidate>
+    {% csrf_token %}
+    <div class="form-field-container">
+      <div class="form-group mb-0 d-flex align-items-start">
+        {{ form.accepted_terms }}
+        <label class="ps-3 mb-0" for="{{ form.accepted_terms.id_for_label }}">
+          <span>
+            {% blocktranslate trimmed with url_terms="#TODO" %}
+              I have read and agree to the <a href="{{ url_terms }}">Mobility Wallet Program Terms.</a>
+            {% endblocktranslate %}
+          </span>
+        </label>
+      </div>
+    </div>
+
+    <div class="pt-cta">
+      <button class="btn btn-lg btn-primary spinner-hidden d-flex justify-content-center align-items-center"
+              data-action="submit"
+              type="submit"
+              form="form-accept-terms">
+        <span class="btn-text">{% translate "Next" %}</span>
+        <span class="spinner-border spinner-border-sm"></span>
+      </button>
+    </div>
+  </form>
+
+  <script nonce="{{ request.csp_nonce }}">
+    ready(function() {
+      const form = document.querySelector("#form-accept-terms");
+      const checkbox = document.querySelector("#{{ form.accepted_terms.id_for_label }}");
+      const errorSummary = document.querySelector("#error-summary");
+      const signatureLink = document.querySelector("#error-summary a");
+
+      // Auto-focus summary on page load if rendered by server-side validation
+      if (errorSummary && !errorSummary.classList.contains("d-none")) {
+        errorSummary.focus();
+      }
+
+      // Transfer focus to the checkbox when clicking the link in the summary
+      if (signatureLink && checkbox) {
+        signatureLink.addEventListener("click", function(e) {
+          checkbox.focus();
+        });
+      }
+
+      // Intercept submit for client-side validation
+      if (form && checkbox) {
+        form.addEventListener("submit", function(event) {
+          if (!checkbox.checked) {
+            event.preventDefault();
+
+            // Display error summary and shift focus
+            if (errorSummary) {
+              errorSummary.classList.remove("d-none");
+              errorSummary.focus();
+            }
+          }
+        });
+      }
+    });
+  </script>
+  {% if request.recaptcha %}
+    {% include "core/includes/recaptcha.html" %}
+  {% endif %}
+{% endblock inner-content %}
+
+{% comment %} Override with empty block to prevent rendering empty divs {% endcomment %}
+{% block call-to-action %}
+{% endblock call-to-action %}

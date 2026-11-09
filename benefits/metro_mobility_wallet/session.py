@@ -8,6 +8,9 @@ logger = logging.getLogger(__name__)
 
 
 class Session:
+
+    _keys_accepted_terms = "mmw_accepted_terms"
+
     def __init__(self, request: HttpRequest):
         """Initialize a new Metro Mobility Wallet session wrapper for this request"""
 
@@ -17,3 +20,11 @@ class Session:
     @property
     def flow(self) -> EnrollmentFlow:
         return EnrollmentFlow.objects.filter(system_name=SystemName.METRO_MOBILITY_WALLET).first()
+
+    @property
+    def accepted_terms(self) -> bool:
+        return self.session.get(self._keys_accepted_terms, False)
+
+    @accepted_terms.setter
+    def accepted_terms(self, value: bool) -> None:
+        self.session[self._keys_accepted_terms] = value
