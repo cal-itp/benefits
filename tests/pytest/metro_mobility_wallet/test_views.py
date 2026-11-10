@@ -53,6 +53,15 @@ class TestApplyView:
     def test_template_name(self, view):
         assert view.template_name == "metro_mobility_wallet/apply.html"
 
+    def test_get_context_data(self, view):
+        context_data = view.get_context_data()
+        cta_button = context_data["call_to_action_button"]
+
+        assert cta_button.text == "Apply with"
+        assert cta_button.fallback_text == "Login.gov"
+        assert cta_button.route == "metro_mobility_wallet:cdt:login"
+        assert cta_button.extra_classes == "login"
+
 
 class TestConfirmationView:
     @pytest.fixture
