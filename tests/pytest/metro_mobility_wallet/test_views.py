@@ -39,7 +39,7 @@ class TestTermsView:
         assert form.is_valid()
         response = view.form_valid(form)
 
-        assert mocked_session_terms.agreed_to_terms is True
+        assert mocked_session_terms.accepted_terms is True
         assert response.url == reverse("metro_mobility_wallet:apply")
 
 

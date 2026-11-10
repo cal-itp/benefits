@@ -15,7 +15,7 @@ class TermsView(RecaptchaEnabledMixin, FormView):
     def form_valid(self, form):
         """If the form is valid, user agreed to terms."""
         session = Session(self.request)
-        session.agreed_to_terms = True
+        session.accepted_terms = True
         return redirect("metro_mobility_wallet:apply")
 
 
