@@ -964,3 +964,38 @@ summary {
 .accordion-details[open] .accordion-closed {
   display: none;
 }
+
+/* Process List Component */
+
+.process-list {
+  list-style: none;
+  counter-reset: process-counter;
+  padding-left: 0;
+}
+
+.process-list > li {
+  counter-increment: process-counter;
+  font-weight: var(--semi-bold-font-weight);
+}
+
+/* Colored circle badge */
+.process-list > li::before {
+  content: counter(process-counter);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  border-radius: 100px;
+  background-color: var(--primary-color);
+  color: #ffffff;
+  font-weight: var(--bold-font-weight);
+  margin-right: 0.5rem;
+  vertical-align: middle;
+}
+
+/* Nested ordered list reset */
+.process-list ol {
+  list-style-type: decimal;
+  font-weight: normal;
+}
