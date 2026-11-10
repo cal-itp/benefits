@@ -944,5 +944,6 @@ summary {
   border-bottom: 0px;
   font-weight: var(--semi-bold-font-weight);
   color: var(--text-primary-color);
+  background-color: var(--secondary-bg-color);
   list-style: none;
 }

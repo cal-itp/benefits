@@ -1,5 +1,6 @@
 {% extends "metro_mobility_wallet/base.html" %}
 {% load i18n %}
+{% load static %}
 
 {% block page-title %}
   {% translate "Applying with Login.gov" %}
@@ -18,7 +19,12 @@
   </ul>
   <div class="accordion">
     <details class="accordion-details">
-      <summary class="p-3">Don’t have a Login.gov account?</summary>
+      <summary class="p-3">
+        <div class="container p-0 d-flex align-items-center justify-content-between">
+          Don’t have a Login.gov account?
+          <img src="{% static "img/icon/accordion-expand-button.svg" %}" alt="" aria-hidden="true" />
+        </div>
+      </summary>
       <div class="accordion-item-body px-3 py-4">
         <p class="pb-4">If you don't have a Login.gov account, we'll have you create one to get started.</p>
         <p class="pb-4">You’ll need to complete two steps.</p>
