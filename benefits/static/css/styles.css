@@ -927,7 +927,8 @@ input[type="checkbox"]:focus {
   font-size: var(--font-size-16px);
 }
 
-.accordion p {
+.accordion p,
+.accordion li {
   font-size: var(--font-size-16px);
 }
 
