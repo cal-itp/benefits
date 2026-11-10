@@ -947,3 +947,19 @@ summary {
   background-color: var(--secondary-bg-color);
   list-style: none;
 }
+
+.accordion-details .accordion-open {
+  display: none;
+}
+
+.accordion-details .accordion-closed {
+  display: block;
+}
+
+.accordion-details[open] .accordion-open {
+  display: block;
+}
+
+.accordion-details[open] .accordion-closed {
+  display: none;
+}
