@@ -949,6 +949,12 @@ summary {
   list-style: none;
 }
 
+summary:focus {
+  outline: 2px solid var(--focus-color-dark);
+  outline-offset: 1px;
+  border-radius: var(--border-radius);
+}
+
 .accordion-details .accordion-open {
   display: none;
 }

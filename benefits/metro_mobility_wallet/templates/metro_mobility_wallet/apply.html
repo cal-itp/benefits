@@ -53,4 +53,22 @@
       </div>
     </details>
   </div>
+
+  <script nonce="{{ request.csp_nonce }}">
+  ready(function() {
+    const closeButton = document.querySelector(".accordion-close-btn");
+    const details = document.querySelector(".accordion-details");
+    const summary = document.querySelector(".accordion-details summary");
+
+    if (closeButton && details) {
+      closeButton.addEventListener("click", function() {
+        details.open = false;
+
+        if (summary) {
+          summary.focus();
+        }
+      });
+    }
+  });
+  </script>
 {% endblock inner-content %}
