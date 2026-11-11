@@ -5,6 +5,7 @@ from benefits.core.context_processors import formatted_gettext_lazy as _
 from benefits.core.mixins import RecaptchaEnabledMixin
 from benefits.eligibility.views import CTAButton
 from benefits.metro_mobility_wallet.forms import TermsAcceptanceForm
+from benefits.metro_mobility_wallet.mixins import TermsAcceptanceRequiredMixin
 from benefits.metro_mobility_wallet.session import Session
 
 
@@ -19,7 +20,7 @@ class TermsView(RecaptchaEnabledMixin, FormView):
         return redirect("metro_mobility_wallet:apply")
 
 
-class ApplyView(TemplateView):
+class ApplyView(TermsAcceptanceRequiredMixin, TemplateView):
     template_name = "metro_mobility_wallet/apply.html"
 
     def get_context_data(self, **kwargs):
