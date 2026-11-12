@@ -920,3 +920,104 @@ input[type="checkbox"]:focus {
     width: 350px;
   }
 }
+
+/* Accordion component */
+
+.accordion {
+  font-size: var(--font-size-16px);
+}
+
+.accordion p,
+.accordion li {
+  font-size: var(--font-size-16px);
+}
+
+.accordion-details {
+  border: 1px solid var(--dsdl-gray-40);
+  border-radius: var(--border-radius);
+}
+
+.accordion-item-body {
+  border-top: 1px solid var(--dsdl-gray-40);
+}
+
+summary {
+  border-bottom: 0px;
+  font-weight: var(--semi-bold-font-weight);
+  color: var(--text-primary-color);
+  background-color: var(--secondary-bg-color);
+  list-style: none;
+}
+
+summary:focus {
+  outline: 2px solid var(--focus-color-dark);
+  outline-offset: 1px;
+  border-radius: var(--border-radius);
+}
+
+.accordion-details .accordion-open {
+  display: none;
+}
+
+.accordion-details .accordion-closed {
+  display: block;
+}
+
+.accordion-details[open] .accordion-open {
+  display: block;
+}
+
+.accordion-details[open] .accordion-closed {
+  display: none;
+}
+
+.accordion-close-btn {
+  background: none;
+  border: none;
+  padding: 0;
+  color: var(--primary-color);
+  font-size: var(--font-size-16px);
+  font-weight: var(--semi-bold-font-weight);
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.accordion-close-btn:focus-visible {
+  outline: 2px solid var(--focus-color-dark);
+  outline-offset: 1px;
+}
+
+/* Process List Component */
+
+.process-list {
+  list-style: none;
+  counter-reset: process-counter;
+  padding-left: 0;
+}
+
+.process-list > li {
+  counter-increment: process-counter;
+  font-weight: var(--semi-bold-font-weight);
+}
+
+/* Colored circle badge */
+.process-list > li::before {
+  content: counter(process-counter);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  border-radius: 100px;
+  background-color: var(--primary-color);
+  color: #ffffff;
+  font-weight: var(--bold-font-weight);
+  margin-right: 0.5rem;
+  vertical-align: middle;
+}
+
+/* Nested ordered list reset */
+.process-list ol {
+  list-style-type: decimal;
+  font-weight: normal;
+}

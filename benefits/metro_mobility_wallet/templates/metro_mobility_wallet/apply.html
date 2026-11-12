@@ -1,1 +1,84 @@
-Apply
+{% extends "metro_mobility_wallet/base.html" %}
+{% load i18n %}
+{% load static %}
+
+{% block page-title %}
+  {% translate "Applying with Login.gov" %}
+{% endblock page-title %}
+
+{% block headline %}
+  <h1 class="pb-lg-3 pb-2">{% translate "Applying with Login.gov" %}</h1>
+{% endblock headline %}
+
+{% block inner-content %}
+  <p class="py-3">{% translate "We'll use your Login.gov account to complete the following tasks:" %}</p>
+  <ul class="mt-0">
+    <li>{% translate "Verify your identity." %}</li>
+    <li>{% translate "Get the details we need to check your CalFresh status." %}</li>
+    <li>{% translate "Fill out your application." %}</li>
+  </ul>
+  <div class="accordion">
+    <details class="accordion-details">
+      <summary class="p-3">
+        <div class="container p-0 d-flex align-items-center justify-content-between">
+          {% translate "Don’t have a Login.gov account?" %}
+          <img class="accordion-closed" src="{% static "img/icon/accordion-expand-button.svg" %}" alt="" aria-hidden="true" />
+          <img class="accordion-open" src="{% static "img/icon/accordion-collapse-button.svg" %}" alt="" aria-hidden="true" />
+        </div>
+      </summary>
+      <div class="accordion-item-body px-3 py-4">
+        <p class="pb-4">{% translate "If you don't have a Login.gov account, we'll have you create one to get started." %}</p>
+        <p class="mt-0">{% translate "You’ll need to complete two steps." %}</p>
+        <ol class="process-list my-4">
+          <li>
+            {% translate "Create a Login.gov account" %}
+            <ol class="mt-3">
+              <li class="mb-2">{% translate "Click “Apply with Login.gov”" %}</li>
+              <li class="mb-2">{% translate "Enter a personal email address." %}</li>
+              <li class="mb-2">{% translate "Enter a password." %}</li>
+              <li>{% translate "Select a way to authenticate your account" %}</li>
+            </ol>
+          </li>
+          <li class="mt-4">
+            {% translate "Verify your identity" %}
+            <p class="py-3">{% translate "After you create your Login.gov account, you have to verify your identity. The process asks you to:" %}</p>
+            <ol class="mt-0">
+              <li class="mb-2">{% translate "Upload a picture of your ID" %}</li>
+              <li class="mb-2">{% translate "Enter your Social Security number." %}</li>
+              <li>{% translate "Verify your phone number." %}</li>
+            </ol>
+          </li>
+        </ol>
+        <button type="button" class="accordion-close-btn">{% translate "Close" %}</button>
+      </div>
+    </details>
+  </div>
+
+  <script nonce="{{ request.csp_nonce }}">
+  ready(function() {
+    const closeButton = document.querySelector(".accordion-close-btn");
+    const details = document.querySelector(".accordion-details");
+    const summary = document.querySelector(".accordion-details summary");
+
+    if (closeButton && details) {
+      closeButton.addEventListener("click", function() {
+        details.open = false;
+
+        if (summary) {
+          summary.focus();
+        }
+      });
+    }
+  });
+  </script>
+{% endblock inner-content %}
+
+{% block call-to-action-button %}
+  <a href="{% url call_to_action_button.route %}"
+     class="btn btn-lg btn-primary{% if call_to_action_button.extra_classes %} {{ call_to_action_button.extra_classes }}{% endif %}">
+    {{ call_to_action_button.text }}
+    {% if call_to_action_button.fallback_text %}
+      <span class="fallback-text white-logo">{{ call_to_action_button.fallback_text }}</span>
+    {% endif %}
+  </a>
+{% endblock call-to-action-button %}

@@ -1,7 +1,9 @@
 import logging
 
+from cdt_identity.session import Session as OAuthSession
 from django.http import HttpRequest
 
+from benefits.core import session as BenefitsSession
 from benefits.core.models.enrollment import EnrollmentFlow, SystemName
 
 logger = logging.getLogger(__name__)
@@ -16,6 +18,11 @@ class Session:
 
         self.request = request
         self.session = request.session
+
+        BenefitsSession.update(request, flow=self.flow)
+        oauth_session = OAuthSession(request)
+        oauth_session.client_config = self.flow.oauth_config
+        oauth_session.claims_request = self.flow.claims_request
 
     @property
     def flow(self) -> EnrollmentFlow:
