@@ -6,12 +6,73 @@
 msgid ""
 msgstr ""
 "Report-Msgid-Bugs-To: https://github.com/cal-itp/benefits/issues \n"
-"POT-Creation-Date: 2026-11-05 12:16+0000\n"
+"POT-Creation-Date: 2026-11-12 15:11+0000\n"
 "Language: Japanese\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
+
+msgid "Applying with Login.gov"
+msgstr ""
+
+msgid "We'll use your Login.gov account to complete the following tasks:"
+msgstr ""
+
+msgid "Verify your identity."
+msgstr ""
+
+msgid "Get the details we need to check your CalFresh status."
+msgstr ""
+
+msgid "Fill out your application."
+msgstr ""
+
+msgid "Don’t have a Login.gov account?"
+msgstr ""
+
+msgid ""
+"If you don't have a Login.gov account, we'll have you create one to get "
+"started."
+msgstr ""
+
+msgid "You’ll need to complete two steps."
+msgstr ""
+
+msgid "Create a Login.gov account"
+msgstr ""
+
+msgid "Click “Apply with Login.gov”"
+msgstr ""
+
+msgid "Enter a personal email address."
+msgstr ""
+
+msgid "Enter a password."
+msgstr ""
+
+msgid "Select a way to authenticate your account"
+msgstr ""
+
+msgid "Verify your identity"
+msgstr ""
+
+msgid ""
+"After you create your Login.gov account, you have to verify your identity. "
+"The process asks you to:"
+msgstr ""
+
+msgid "Upload a picture of your ID"
+msgstr ""
+
+msgid "Enter your Social Security number."
+msgstr ""
+
+msgid "Verify your phone number."
+msgstr ""
+
+msgid "Close"
+msgstr ""
 
 msgid ""
 "The Mobility Wallet pilot program encourages transportation equity by "
@@ -60,4 +121,7 @@ msgid ""
 msgstr ""
 
 msgid "Next"
+msgstr ""
+
+msgid "Apply with"
 msgstr ""
