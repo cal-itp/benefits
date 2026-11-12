@@ -1,6 +1,6 @@
 # https://playwright.dev/docs/docker
 # version needs to match the requirements.txt file
-FROM mcr.microsoft.com/playwright/python:v1.64.1-resolute
+FROM mcr.microsoft.com/playwright/python:v1.65.1-resolute
 
 WORKDIR /playwright
 
