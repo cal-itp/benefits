@@ -23,7 +23,7 @@ dependencies = [
     "django-multiselectfield==1.0.1",
     "eligibility-api==2025.4.1",
     "pillow==13.0.0",
-    "psycopg[binary,pool]==3.3.6",
+    "psycopg[binary,pool]==3.3.8",
     "requests==2.34.2",
     "sentry-sdk==2.74.0",
     "six==1.17.0",
