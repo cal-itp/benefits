@@ -49,9 +49,13 @@
 
 {% block call-to-action-button %}
   <button type="button" class="btn btn-primary btn-lg loading" role="status" disabled>{% translate "Please wait..." %}</button>
-  <div class="invisible">
+  <div class="enroll-button invisible">
     <button id="{{ cta_button }}" href="#{{ cta_button }}" class="btn btn-lg btn-primary" type="button">
       {% translate "Register your card" %}
     </button>
   </div>
+  {% translate "Confirming your identity and eligibility" as verifying %}
+  {% include "core/includes/loading-screen.html" with id="loading_verifying" text=verifying state="visible" %}
+  {% translate "Registering your card for reduced fares" as registering %}
+  {% include "core/includes/loading-screen.html" with id="loading_registering" text=registering %}
 {% endblock call-to-action-button %}
