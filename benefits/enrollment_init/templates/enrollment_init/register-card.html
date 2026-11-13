@@ -24,13 +24,13 @@
       if (errNode) errNode.hidden = valid;
     }
 
-    const validateSubmission = (evt) => {
+    const validateSubmission = () => {
       const form = document.querySelector("form#form-cjs-tokenization");
       const ccnumInvalid = form.querySelector(".cjs-error[data-field='ccnumber']:not([hidden])");
       const ccexpInvalid = form.querySelector(".cjs-error[data-field='ccexp']:not([hidden])");
 
       if (ccnumInvalid || ccexpInvalid) {
-        const banner = document.querySelector(".cjs-error-banner")
+        const banner = document.querySelector(".cjs-error-banner");
         banner.querySelector('li[data-field="ccnumber"]').hidden = !ccnumInvalid;
         banner.querySelector('li[data-field="ccexp"]').hidden = !ccexpInvalid;
         banner.hidden = false;
@@ -67,12 +67,12 @@
       validationCallback: revalidateField,
       // Fires as soon as the card number is identified as valid
       lookUpCallback: function(response) {
-        revalidateField('ccnumber', isSupportedScheme(response.type))
+        revalidateField('ccnumber', isSupportedScheme(response.type));
       },
-      timeoutCallback: function(err) {
+      timeoutCallback: function() {
         // if an invalid field is detected, don't redirect on failure
         const validationErr = document.querySelector("form#form-cjs-tokenization .cjs-error:not([hidden])");
-        validateSubmission(err);
+        validateSubmission();
         if (validationErr) return
 
         const errForm = document.querySelector("form#{{ form_system_error }}");
