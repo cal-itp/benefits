@@ -14,6 +14,8 @@
 
 {% block inner-content %}
   <script nonce="{{ request.csp_nonce }}">
+    let attemptedUnsupportedCard = false;
+
     const errColor = "#de0e10";
 
     const cardSchemes = JSON.parse('{{ card_schemes|escapejs }}');
@@ -28,6 +30,11 @@
       const form = document.querySelector("form#form-cjs-tokenization");
       const ccnumInvalid = form.querySelector(".cjs-error[data-field='ccnumber']:not([hidden])");
       const ccexpInvalid = form.querySelector(".cjs-error[data-field='ccexp']:not([hidden])");
+
+      if (ccnumInvalid) {
+        const unsupportedCardTypeMessage = document.querySelector("span#cardTypeMessage");
+        unsupportedCardTypeMessage.hidden = !attemptedUnsupportedCard;
+      }
 
       if (ccnumInvalid || ccexpInvalid) {
         const banner = document.querySelector(".cjs-error-banner");
@@ -64,11 +71,14 @@
         },
       },
       // We could make timeoutDuration configurable via a model property on InitConfig
-      timeoutDuration: 10000,
+      timeoutDuration: 1000,
       validationCallback: revalidateField,
       // Fires as soon as the card number is identified as valid
       lookUpCallback: function(response) {
-        revalidateField('ccnumber', isSupportedScheme(response.type));
+        const supportedScheme = isSupportedScheme(response.type);
+        revalidateField('ccnumber', supportedScheme);
+
+        attemptedUnsupportedCard = !supportedScheme;
       },
       timeoutCallback: function() {
         // if an invalid field is detected, don't redirect on failure
@@ -139,7 +149,7 @@
     <ul class="d-flex flex-column gap-2 mt-2">
       <li data-field="ccnumber" hidden>
         {% blocktranslate trimmed %}
-          Enter a <a href="#ccnumber">valid card number</a> from Visa, Discover, or Mastercard. We do not support American Express.
+          Enter a <a href="#ccnumber">valid card number</a> from Visa, Discover, or Mastercard. <span id="cardTypeMessage">We do not support American Express.</span>
         {% endblocktranslate %}
       </li>
       <li data-field="ccexp" hidden>
