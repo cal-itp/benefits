@@ -69,9 +69,10 @@
       lookUpCallback: function(response) {
         revalidateField('ccnumber', isSupportedScheme(response.type))
       },
-      timeoutCallback: function (err) {
+      timeoutCallback: function(err) {
         // if an invalid field is detected, don't redirect on failure
         const validationErr = document.querySelector("form#form-cjs-tokenization .cjs-error:not([hidden])");
+        validateSubmission(err);
         if (validationErr) return
 
         const errForm = document.querySelector("form#{{ form_system_error }}");
@@ -108,7 +109,6 @@
 
     document.addEventListener("DOMContentLoaded", function () {
       CollectJS.configure(opts);
-      document.querySelector('#tokenizeButton').addEventListener('click', validateSubmission);
     });
 
   </script>
