@@ -3,7 +3,7 @@ import logging
 from cdt_identity.session import Session as OAuthSession
 from django.http import HttpRequest
 
-from benefits.core import session as BenefitsSession
+from benefits.core import session
 from benefits.core.models.enrollment import EnrollmentFlow, SystemName
 
 logger = logging.getLogger(__name__)
@@ -16,7 +16,7 @@ class Session(OAuthSession):
     def __init__(self, request: HttpRequest):
         """Initialize a new Metro Mobility Wallet session wrapper for this request"""
 
-        BenefitsSession.update(request, flow=self.flow)
+        session.update(request, flow=self.flow)
         super().__init__(
             request=request,
             client_config=self.flow.oauth_config,

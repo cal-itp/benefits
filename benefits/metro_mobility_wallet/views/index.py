@@ -1,6 +1,6 @@
 from django.views.generic import TemplateView
 
-from benefits.core import session as BenefitsSession
+from benefits.core import session
 from benefits.metro_mobility_wallet.session import Session
 
 
@@ -10,7 +10,7 @@ class IndexView(TemplateView):
     template_name = "metro_mobility_wallet/index.html"
 
     def get(self, request, *args, **kwargs):
-        BenefitsSession.reset(request)
-        session = Session(self.request)
-        session.accepted_terms = False
+        session.reset(request)
+        mmw_session = Session(self.request)
+        mmw_session.accepted_terms = False
         return super().get(request, *args, **kwargs)
