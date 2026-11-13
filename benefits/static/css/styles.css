@@ -907,16 +907,30 @@ input[type="checkbox"]:focus {
   transition: border-color 0.3s ease;
 }
 
-.cjs-input span {
+.cjs-wrapper span {
   font-weight: var(--semi-bold-font-weight);
 }
 
-.cjs-input #ccexp {
-  width: 100px;
+/* it takes an extra beat for Collect.js to inject and style the <iframe>d cc inputs
+define a skeleton input form to display in the meantime in the exact same position on screen
+*/
+.cjs-stack {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: 1fr;
 }
 
-@media (min-width: 992px) {
-  .cjs-input #ccnumber {
-    width: 350px;
-  }
+/* Stack both elements directly on top of each other */
+.cjs-stack > .cjs-placeholder,
+.cjs-stack > .cjs-input {
+  grid-area: 1 / 1;
+}
+
+.cjs-placeholder {
+  background: transparent;
+  border: 1px solid #000;
+  border-radius: 3px;
+  min-height: 45px;
+  margin: 8px 0;
+  opacity: 1;
 }

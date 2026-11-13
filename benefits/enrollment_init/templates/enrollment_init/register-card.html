@@ -41,6 +41,12 @@
     const opts = {
       paymentSelector: "#tokenizeButton",
       variant: "inline",
+      // fires when the <iframe>d inputs have finally rendered
+      fieldsAvailableCallback: function() {
+        document.querySelectorAll('.placeholder').forEach((ph) => {
+          ph.classList.add('d-none')
+        })
+      },
       invalidCss: {
         color: errColor,
         "border-color": errColor,
@@ -56,12 +62,7 @@
           title: "Expiration date",
           placeholder: "MM / YY",
         },
-        cvv: {
-          display: "show", // omitting this prop results in tokenization failure
-          selector: "#cvv",
-          title: "Security code",
-          placeholder: "123",
-        },
+        cvv: { display: "hide" }
       },
       timeoutDuration: 10000,
       validationCallback: revalidateField,
@@ -130,27 +131,32 @@
   </div>
   <form id="form-cjs-tokenization" method="post">
     {% csrf_token %}
-    <div class="cjs-input mt-3">
+    <div class="cjs-wrapper mt-3">
       <span>{% translate "Card number" %}</span>
-      <div id="ccnumber"></div>
-      <div class="cjs-error" data-field="ccnumber" hidden>
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-          <path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2ZM13 17H11V15H13V17ZM13 13H11V7H13V13Z" fill="#DE0E10" />
-        </svg>
-        {% translate "Please enter a valid credit card number from Visa, Discover, or Mastercard." %}
+      <div class="cjs-stack col-lg-8">
+        <div class="placeholder cjs-placeholder"></div>
+        <div class="cjs-input">
+          <div id="ccnumber"></div>
+          <div class="cjs-error" data-field="ccnumber" hidden>
+            {% include "includes/card-validation-error.html" %}
+            {% translate "Please enter a valid credit card number from Visa, Discover, or Mastercard." %}
+          </div>
+        </div>
       </div>
     </div>
-    <div class="cjs-input mt-4">
+    <div class="cjs-wrapper mt-4">
       <span>{% translate "Expiration date" %}</span>
-      <div id="ccexp"></div>
-      <div class="cjs-error" data-field="ccexp" hidden>
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-          <path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2ZM13 17H11V15H13V17ZM13 13H11V7H13V13Z" fill="#DE0E10" />
-        </svg>
-        {% translate "Please enter an expiration date in a MM/YY format." %}
+      <div class="cjs-stack col-lg-2 col-3">
+        <div class="placeholder cjs-placeholder"></div>
+        <div class="cjs-input">
+          <div id="ccexp"></div>
+          <div class="cjs-error" data-field="ccexp" hidden>
+            {% include "includes/card-validation-error.html" %}
+            {% translate "Please enter an expiration date in a MM/YY format." %}
+          </div>
+        </div>
       </div>
     </div>
-    <div id="cvv" hidden></div>
     <button class="btn btn-lg btn-primary mt-5" id="tokenizeButton" type="button">{% translate "Register your card" %}</button>
   </form>
 
