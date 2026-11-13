@@ -73,7 +73,16 @@
         // if an invalid field is detected, don't redirect on failure
         const validationErr = document.querySelector("form#form-cjs-tokenization .cjs-error:not([hidden])");
         validateSubmission();
-        if (validationErr) return
+        if (validationErr) {
+          let ctaButton = document.querySelector('#tokenizeButton');
+          ctaButton.classList.remove("disabled");
+          ctaButton.classList.add("spinner-hidden");
+          ctaButton.setAttribute("aria-disabled", "false");
+
+          {% translate "Register your card" as register_text %}
+          ctaButton.children[0].textContent = "{{ register_text }}";
+          return;
+        }
 
         const errForm = document.querySelector("form#{{ form_system_error }}");
         errForm.submit();
@@ -109,6 +118,17 @@
 
     document.addEventListener("DOMContentLoaded", function () {
       CollectJS.configure(opts);
+
+      let ctaButton = document.querySelector('#tokenizeButton');
+      ctaButton.addEventListener("click", event => {
+          ctaButton.classList.add("disabled");
+          ctaButton.classList.remove("spinner-hidden");
+          ctaButton.setAttribute("aria-disabled", "true");
+
+          {% translate "Please wait..." as loading_text %}
+          ctaButton.children[0].textContent = "{{ loading_text }}";
+        }
+      );
     });
 
   </script>
@@ -151,7 +171,10 @@
       </div>
     </div>
     <div id="cvv" hidden></div>
-    <button class="btn btn-lg btn-primary mt-5" id="tokenizeButton" type="button">{% translate "Register your card" %}</button>
+    <button class="btn btn-lg btn-primary mt-5 spinner-hidden" role="status" id="tokenizeButton" type="button">
+      <span class="btn-text">{% translate "Register your card" %}</span>
+      <span class="spinner-border spinner-border-sm"></span>
+    </button>
   </form>
 
   {% for f in forms %}
