@@ -924,17 +924,13 @@ input[type="checkbox"]:focus {
 /* Accordion component */
 
 .accordion {
-  font-size: var(--font-size-16px);
+  border: 1px solid var(--dsdl-gray-40);
+  border-radius: var(--border-radius);
 }
 
 .accordion p,
 .accordion li {
   font-size: var(--font-size-16px);
-}
-
-.accordion-details {
-  border: 1px solid var(--dsdl-gray-40);
-  border-radius: var(--border-radius);
 }
 
 .accordion-item-body {
@@ -955,19 +951,19 @@ summary:focus {
   border-radius: var(--border-radius);
 }
 
-.accordion-details .accordion-open {
+.accordion .accordion-open {
   display: none;
 }
 
-.accordion-details .accordion-closed {
+.accordion .accordion-closed {
   display: block;
 }
 
-.accordion-details[open] .accordion-open {
+.accordion[open] .accordion-open {
   display: block;
 }
 
-.accordion-details[open] .accordion-closed {
+.accordion[open] .accordion-closed {
   display: none;
 }
 
