@@ -6,7 +6,8 @@
 {% endblock page-title %}
 
 {% block headline %}
-  <h1 class="pb-lg-3 pb-2">{% translate "You can apply for a Mobility Wallet if you get CalFresh" %}</h1>
+  {% translate "You can apply for a Mobility Wallet if you get CalFresh" as headline_text %}
+  {% include "core/includes/badged-headline.html" with headline=headline_text %}
 {% endblock headline %}
 
 {% block inner-content %}

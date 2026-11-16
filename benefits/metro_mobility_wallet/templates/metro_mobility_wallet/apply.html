@@ -7,7 +7,8 @@
 {% endblock page-title %}
 
 {% block headline %}
-  <h1 class="pb-lg-3 pb-2">{% translate "Applying with Login.gov" %}</h1>
+  {% translate "Applying with Login.gov" as headline_text %}
+  {% include "core/includes/badged-headline.html" with headline=headline_text %}
 {% endblock headline %}
 
 {% block inner-content %}
