@@ -30,6 +30,12 @@ resource "azurerm_postgresql_flexible_server" "main" {
   administrator_login           = local.postgres_admin_login
   administrator_password        = azurerm_key_vault_secret.postgres_admin_password.value
 
+  maintenance_window {
+    day_of_week  = 0  # Sunday
+    start_hour   = 11 # 11:00 UTC - 8 = 3:00 am PST /  11 - 7 = 4:00 am PDT
+    start_minute = 0
+  }
+
   lifecycle {
     ignore_changes = [tags]
   }
