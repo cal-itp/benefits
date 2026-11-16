@@ -951,20 +951,18 @@ summary:focus {
   border-radius: var(--border-radius);
 }
 
-.accordion .accordion-open {
-  display: none;
+.accordion summary::after {
+  content: "+";
+  content: "+" / ""; /* Hides the symbol from screen readers */
+  color: var(--primary-color);
+  font-size: var(--font-size-32px);
+  line-height: 1;
+  font-weight: var(--bs-body-font-weight);
 }
 
-.accordion .accordion-closed {
-  display: block;
-}
-
-.accordion[open] .accordion-open {
-  display: block;
-}
-
-.accordion[open] .accordion-closed {
-  display: none;
+.accordion[open] summary::after {
+  content: "\2212"; /* Use Unicode minus sign to match the alignment/size of plus sign */
+  content: "\2212" / "";
 }
 
 .accordion-close-btn {
