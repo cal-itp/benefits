@@ -8,8 +8,7 @@ jobs:
   add-to-project-issues:
     runs-on: ubuntu-latest
     steps:
-      # https://github.com/actions/add-to-project/issues/563
-      - uses: actions/add-to-project@v2
+      - uses: actions/add-to-project@f2c1f1fa649a891be84948ea89b5dfba1526ef05 # v2.0.1
         with:
           project-url: ${{ secrets.USB_PROJECT_URL }}
           github-token: ${{ secrets.USB_PROJECT_TOKEN }}
@@ -20,7 +19,7 @@ jobs:
     runs-on: ubuntu-latest
     if: "contains( github.event.issue.labels.*.name, 'agency-onboarding')"
     steps:
-      - uses: EndBug/project-fields@v2
+      - uses: EndBug/project-fields@0d05f57b6123b950f5373058dd715823730d162a # v2.1.0
         with:
           operation: set
           fields: Status
@@ -28,7 +27,7 @@ jobs:
           project_url: ${{ secrets.USB_PROJECT_URL }}
           github_token: ${{ secrets.USB_PROJECT_TOKEN }}
 
-      - uses: actions/add-to-project@v2
+      - uses: actions/add-to-project@f2c1f1fa649a891be84948ea89b5dfba1526ef05 # v2.0.1
         with:
           project-url: ${{ vars.CS_PROJECT_URL }}
           github-token: ${{ secrets.CS_PROJECT_TOKEN }}
