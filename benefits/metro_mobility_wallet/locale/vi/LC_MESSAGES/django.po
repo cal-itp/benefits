@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Report-Msgid-Bugs-To: https://github.com/cal-itp/benefits/issues \n"
-"POT-Creation-Date: 2026-11-16 12:29+0000\n"
+"POT-Creation-Date: 2026-11-16 12:45+0000\n"
 "Language: Vietnamese\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -42,7 +42,7 @@ msgstr ""
 msgid "Create a Login.gov account"
 msgstr ""
 
-msgid "Click “Apply with Login.gov”"
+msgid "Click “Apply with Login.gov.”"
 msgstr ""
 
 msgid "Enter a personal email address."
@@ -51,7 +51,7 @@ msgstr ""
 msgid "Enter a password."
 msgstr ""
 
-msgid "Select a way to authenticate your account"
+msgid "Select a way to authenticate your account."
 msgstr ""
 
 msgid "Verify your identity"
@@ -62,7 +62,7 @@ msgid ""
 "The process asks you to:"
 msgstr ""
 
-msgid "Upload a picture of your ID"
+msgid "Upload a picture of your ID."
 msgstr ""
 
 msgid "Enter your Social Security number."
