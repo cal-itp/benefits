@@ -10,8 +10,7 @@ jobs:
     # see https://docs.github.com/en/code-security/dependabot/working-with-dependabot/automating-dependabot-with-github-actions#responding-to-events
     if: github.actor == 'dependabot[bot]' || github.actor == 'pre-commit-ci[bot]'
     steps:
-      # https://github.com/actions/add-to-project/issues/563
-      - uses: actions/add-to-project@v2
+      - uses: actions/add-to-project@f2c1f1fa649a891be84948ea89b5dfba1526ef05 # v2.0.1
         with:
           project-url: ${{ secrets.USB_PROJECT_URL }}
           github-token: ${{ secrets.USB_PROJECT_TOKEN }}
