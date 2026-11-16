@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Report-Msgid-Bugs-To: https://github.com/cal-itp/benefits/issues \n"
-"POT-Creation-Date: 2026-11-12 15:11+0000\n"
+"POT-Creation-Date: 2026-11-16 12:29+0000\n"
 "Language: Thai\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -16,7 +16,7 @@ msgstr ""
 msgid "Applying with Login.gov"
 msgstr ""
 
-msgid "We'll use your Login.gov account to complete the following tasks:"
+msgid "We’ll use your Login.gov account to complete the following tasks:"
 msgstr ""
 
 msgid "Verify your identity."
@@ -32,7 +32,7 @@ msgid "Don’t have a Login.gov account?"
 msgstr ""
 
 msgid ""
-"If you don't have a Login.gov account, we'll have you create one to get "
+"If you don’t have a Login.gov account, we’ll have you create one to get "
 "started."
 msgstr ""
 
