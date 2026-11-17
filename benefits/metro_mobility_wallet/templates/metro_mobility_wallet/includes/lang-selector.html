@@ -1,0 +1,25 @@
+
+{% load i18n %}
+{% get_current_language as LANGUAGE_CODE %}
+{% get_available_languages as LANGUAGES %}
+
+<form id="lang-select-form" method="post" action="{% url "set_language" %}">
+  {% csrf_token %}
+  <input name="next" type="hidden" value="{{ redirect_to }}" />
+  <select name="language" id="lang-select">
+    {% for code, lang in LANGUAGES %}
+      <option value="{{ code }}" {% if code == LANGUAGE_CODE %}selected{% endif %}>{{ lang }}</option>
+    {% endfor %}
+  </select>
+</form>
+
+<script nonce="{{ request.csp_nonce }}">
+    ready(function() {
+      const langSelect = document.querySelector('#lang-select');
+      if (langSelect) {
+        langSelect.addEventListener('change', function() {
+          this.form.submit();
+        });
+      }
+    });
+</script>
