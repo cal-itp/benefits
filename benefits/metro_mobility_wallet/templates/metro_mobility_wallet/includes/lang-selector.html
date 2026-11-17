@@ -8,7 +8,10 @@
   <input name="next" type="hidden" value="{{ redirect_to }}" />
   <select name="language" id="lang-select">
     {% for code, lang in LANGUAGES %}
-      <option value="{{ code }}" {% if code == LANGUAGE_CODE %}selected{% endif %}>{{ lang }}</option>
+      {% get_language_info for code as langinfo %}
+      <option value="{{ code }}" {% if code == LANGUAGE_CODE %}selected{% endif %}>
+        {{ langinfo.name_local | capfirst }}
+      </option>
     {% endfor %}
   </select>
 </form>
