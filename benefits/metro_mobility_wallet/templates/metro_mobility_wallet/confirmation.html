@@ -1,1 +1,52 @@
-Confirmation
+{% extends "metro_mobility_wallet/base.html" %}
+{% load i18n %}
+
+{% block page-title %}
+  {% translate "Eligibility confirmation" %}
+{% endblock page-title %}
+
+{% block headline %}
+  <div class="mt-5 fs-5 fw-semibold">{{ first_name }} {{ last_name }}</div>
+  <h1 class="pt-0">{% translate "You are eligible to apply!" %}</h1>
+{% endblock headline %}
+
+{% block inner-content %}
+  <div id="error-summary"
+       class="alert-box alert-box--error error-summary mt-3 mb-lg-3 mb-2 p-3 border-start {% if not form.errors %}d-none{% endif %}"
+       tabindex="-1"
+       role="alert"
+       aria-atomic="true">
+    <h2 class="error-summary-heading fw-semibold mb-2 text-dark"
+        id="error-summary-heading">{% translate "There was a problem" %}</h2>
+    <ul class="mb-0 ps-3">
+      {% for error in form.errors %}
+        <li>
+          {% if error == "email" %}
+            {% blocktranslate trimmed with field_id=form.email.id_for_label %}
+              Enter a valid <a href="#{{ field_id }}">email</a>.
+            {% endblocktranslate %}
+          {% elif error == "phone_number" %}
+            {% blocktranslate trimmed with field_id=form.phone.id_for_label %}
+              Enter a valid <a href="#{{ field_id }}">phone number</a>.
+            {% endblocktranslate %}
+          {% endif %}
+        </li>
+      {% endfor %}
+    </ul>
+  </div>
+
+  <p class="my-4">{{ form.blurb }}</p>
+
+  {% include "core/includes/form.html" with form=form %}
+
+  {% if request.recaptcha %}
+    {% include "core/includes/recaptcha.html" %}
+  {% endif %}
+{% endblock inner-content %}
+
+{# TODO: Add JS for nicer client-side error handling. #}
+{# TODO: Add JS to focus error summary, if present, on load. #}
+
+{# Override with empty block to prevent rendering empty divs #}
+{% block call-to-action %}
+{% endblock call-to-action %}

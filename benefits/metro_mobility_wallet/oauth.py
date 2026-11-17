@@ -56,7 +56,11 @@ class OAuthHooks(DefaultHooks):
         session.update(request, eligible=True)
         # eligibility_analytics.returned_success(request, flow)
 
-        return redirect("metro_mobility_wallet:index")
+        # BE SURE NOT TO SEND ALL EXTRA CLAIMS TO ANALYTICS
+        # like we do in benefits.enrollmenrt.handle_enrollment_results()
+        # because these contain PII.
+
+        return redirect("metro_mobility_wallet:confirmation")
 
     @classmethod
     def claims_verified_not_eligible(cls, request, claims_request, claims_result):
