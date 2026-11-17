@@ -43,3 +43,26 @@
 .error-summary a {
   font-size: var(--font-size-16px) !important;
 }
+
+/* Language selector component */
+.lang-selector {
+  appearance: none;
+  background-color: transparent;
+  color: #ffffff;
+  border: var(--border-width) solid #ffffff;
+  border-radius: var(--border-radius);
+  font-size: var(--font-size-16px);
+  font-weight: var(--semi-bold-font-weight);
+  cursor: pointer;
+}
+
+.lang-selector:focus,
+.lang-selector:focus-visible {
+  outline: var(--focus-style-light);
+  outline-offset: var(--focus-outline-offset);
+}
+
+.lang-selector:hover {
+  background-color: #ffffff;
+  color: var(--hover-color);
+}

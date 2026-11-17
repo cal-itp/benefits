@@ -6,7 +6,7 @@
 <form id="lang-select-form" method="post" action="{% url "set_language" %}">
   {% csrf_token %}
   <input name="next" type="hidden" value="{{ redirect_to }}" />
-  <select name="language" id="lang-select">
+  <select name="language" id="lang-select" class="lang-selector p-2">
     {% for code, lang in LANGUAGES %}
       {% get_language_info for code as langinfo %}
       <option value="{{ code }}" {% if code == LANGUAGE_CODE %}selected{% endif %}>
