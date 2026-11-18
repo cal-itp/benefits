@@ -74,6 +74,9 @@
         revalidateField('ccnumber', isSupportedScheme(response.type));
       },
       timeoutCallback: function() {
+        const loadingOverlay = document.querySelector("#loading_registering")
+        loadingOverlay.classList.add("invisible");
+
         // if an invalid field is detected, don't redirect on failure
         const validationErr = isInvalidSubmission();
         if (validationErr) return
@@ -82,7 +85,9 @@
         errForm.submit();
       },
       // Fires when tokenization completes
-      callback: function (response) {
+      callback: function(response) {
+        // we don't hide the loadingOverlay on success because we still need to register the tokenized card
+
         // if an unsupported scheme is encountered, do not attempt to register the tokenized card
         if (!isSupportedScheme(response.card.type)) {
           revalidateField('ccnumber', false)
@@ -112,6 +117,11 @@
 
     document.addEventListener("DOMContentLoaded", function () {
       CollectJS.configure(opts);
+
+      document.querySelector('#tokenizeButton').addEventListener('click', function() {
+        const loadingOverlay = document.querySelector("#loading_registering");
+        loadingOverlay.classList.remove("invisible");
+      });
     });
 
   </script>
@@ -135,8 +145,8 @@
     {% csrf_token %}
     <div class="cjs-wrapper mt-3">
       <span>{% translate "Card number" %}</span>
-      <div class="cjs-stack col-lg-8">
-        <div class="placeholder cjs-placeholder"></div>
+      <div class="cjs-stack">
+        <div class="placeholder cjs-placeholder cjs-ccnum-placeholder"></div>
         <div class="cjs-input">
           <div id="ccnumber"></div>
           <div class="cjs-error" data-field="ccnumber" hidden>
@@ -148,8 +158,8 @@
     </div>
     <div class="cjs-wrapper mt-4">
       <span>{% translate "Expiration date" %}</span>
-      <div class="cjs-stack col-lg-2 col-3">
-        <div class="placeholder cjs-placeholder"></div>
+      <div class="cjs-stack">
+        <div class="placeholder cjs-placeholder cjs-ccexp-placeholder"></div>
         <div class="cjs-input">
           <div id="ccexp"></div>
           <div class="cjs-error" data-field="ccexp" hidden>
@@ -160,6 +170,8 @@
       </div>
     </div>
     <button class="btn btn-lg btn-primary mt-5" id="tokenizeButton" type="button">{% translate "Register your card" %}</button>
+    {% comment %} TODO: translate the loading text below once we're happy with it {% endcomment %}
+    {% include "core/includes/loading-screen.html" with id="loading_registering" text="Registering your card for reduced fares" %}
   </form>
 
   {% for f in forms %}

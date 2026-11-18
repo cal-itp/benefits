@@ -77,8 +77,9 @@ ignore = "H017,H031"
 indent = 2
 max_attribute_length = 127
 max_line_length = 127
-profile = "django"
 preserve_blank_lines = true
+preserve_class_newlines = true
+profile = "django"
 use_gitignore = true
 
 [tool.isort]
