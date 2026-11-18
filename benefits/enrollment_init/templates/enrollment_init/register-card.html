@@ -24,7 +24,7 @@
       if (errNode) errNode.hidden = valid;
     }
 
-    const validateSubmission = () => {
+    const isInvalidSubmission = () => {
       const form = document.querySelector("form#form-cjs-tokenization");
       const ccnumInvalid = form.querySelector(".cjs-error[data-field='ccnumber']:not([hidden])");
       const ccexpInvalid = form.querySelector(".cjs-error[data-field='ccexp']:not([hidden])");
@@ -35,7 +35,10 @@
         banner.querySelector('li[data-field="ccexp"]').hidden = !ccexpInvalid;
         banner.hidden = false;
         // TODO: can we avoid the tokenization attempt entirely?
+
+        return true;
       }
+      return false;
     }
 
     const opts = {
@@ -72,8 +75,7 @@
       },
       timeoutCallback: function() {
         // if an invalid field is detected, don't redirect on failure
-        const validationErr = document.querySelector("form#form-cjs-tokenization .cjs-error:not([hidden])");
-        validateSubmission();
+        const validationErr = isInvalidSubmission();
         if (validationErr) return
 
         const errForm = document.querySelector("form#{{ form_system_error }}");
