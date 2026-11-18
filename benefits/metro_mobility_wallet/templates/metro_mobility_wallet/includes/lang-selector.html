@@ -1,5 +1,5 @@
 
-{% load i18n %}
+{% load i18n static %}
 {% get_current_language as LANGUAGE_CODE %}
 {% get_available_languages as LANGUAGES %}
 
@@ -7,9 +7,10 @@
   {% csrf_token %}
   <input name="next" type="hidden" value="{{ redirect_to }}" />
   <div class="dropdown">
-    <button class="lang-selector dropdown-toggle p-2" type="button" data-bs-toggle="dropdown">
+    <button class="lang-selector dropdown-toggle p-2 d-flex align-items-center gap-1" type="button" data-bs-toggle="dropdown">
+      <span class="lang-icon" aria-hidden="true"></span>
       {% get_language_info for LANGUAGE_CODE as current_lang %}
-      {{ current_lang.name_local | capfirst }}
+      <span>{{ current_lang.name_local | capfirst }}</span>
     </button>
     <ul class="dropdown-menu lang-selector-menu">
       {% for code, lang in LANGUAGES %}

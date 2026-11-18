@@ -51,9 +51,13 @@
   color: #ffffff;
   border: var(--border-width) solid #ffffff;
   border-radius: var(--border-radius);
+  cursor: pointer;
+}
+
+.lang-selector span {
+  color: #ffffff;
   font-size: var(--font-size-16px);
   font-weight: var(--semi-bold-font-weight);
-  cursor: pointer;
 }
 
 .lang-selector:focus,
@@ -65,6 +69,21 @@
 .lang-selector:hover {
   background-color: #ffffff;
   color: var(--hover-color);
+}
+
+.lang-selector:hover span {
+  color: var(--hover-color);
+}
+
+.lang-icon {
+  width: 18px;
+  height: 18px;
+  display: inline-block;
+  mask-image: url("/static/metro_mobility_wallet/img/language.svg");
+  background-color: currentColor;
+  mask-size: contain;
+  mask-repeat: no-repeat;
+  mask-position: center;
 }
 
 /* The dropdown <ul> */
