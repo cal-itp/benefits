@@ -7,7 +7,10 @@
   {% csrf_token %}
   <input name="next" type="hidden" value="{{ redirect_to }}" />
   <div class="dropdown">
-    <button class="lang-selector dropdown-toggle p-2 d-flex align-items-center gap-1" type="button" data-bs-toggle="dropdown">
+    <button class="lang-selector dropdown-toggle p-2 d-flex align-items-center gap-1"
+            type="button"
+            data-bs-toggle="dropdown"
+            aria-expanded="false">
       <span class="lang-icon" aria-hidden="true"></span>
       {% get_language_info for LANGUAGE_CODE as current_lang %}
       <span>{{ current_lang.name_local | capfirst }}</span>

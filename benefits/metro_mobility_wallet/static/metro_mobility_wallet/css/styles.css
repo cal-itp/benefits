@@ -66,12 +66,14 @@
   outline-offset: var(--focus-outline-offset);
 }
 
-.lang-selector:hover {
+.lang-selector:hover,
+.lang-selector[aria-expanded="true"] {
   background-color: #ffffff;
   color: var(--hover-color);
 }
 
-.lang-selector:hover span {
+.lang-selector:hover span,
+.lang-selector[aria-expanded="true"] span {
   color: var(--hover-color);
 }
 
