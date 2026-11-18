@@ -14,6 +14,7 @@
       <span class="lang-icon" aria-hidden="true"></span>
       {% get_language_info for LANGUAGE_CODE as current_lang %}
       <span>{{ current_lang.name_local | capfirst }}</span>
+      <span class="lang-arrow" aria-hidden="true"></span>
     </button>
     <ul class="dropdown-menu lang-selector-menu">
       {% for code, lang in LANGUAGES %}

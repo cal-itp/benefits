@@ -88,6 +88,26 @@
   mask-position: center;
 }
 
+/* Hide Bootstrap's default caret */
+.lang-selector.dropdown-toggle::after {
+  display: none !important;
+}
+
+.lang-arrow {
+  width: 18px;
+  height: 18px;
+  display: inline-block;
+  mask-image: url("/static/metro_mobility_wallet/img/language-arrow.svg");
+  background-color: currentColor;
+  mask-size: contain;
+  mask-repeat: no-repeat;
+  mask-position: center;
+}
+
+.lang-selector[aria-expanded="true"] .lang-arrow {
+  transform: rotate(180deg);
+}
+
 /* The dropdown <ul> */
 .lang-selector-menu.dropdown-menu {
   background-color: var(--dsdl-cyan-10);
