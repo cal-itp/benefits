@@ -933,6 +933,18 @@ we display a loading skeleton in the meantime in the exact same position on scre
   margin: 8px 0;
 }
 
+.cjs-ccexp-placeholder,
+.cjs-input #ccexp {
+  width: 100px;
+}
+
+@media (min-width: 992px) {
+  .cjs-ccnum-placeholder,
+  .cjs-input #ccnumber {
+    width: 350px;
+  }
+}
+
 /* Accordion component */
 
 .accordion {

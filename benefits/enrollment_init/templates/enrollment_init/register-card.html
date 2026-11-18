@@ -145,8 +145,8 @@
     {% csrf_token %}
     <div class="cjs-wrapper mt-3">
       <span>{% translate "Card number" %}</span>
-      <div class="cjs-stack col-lg-8">
-        <div class="placeholder cjs-placeholder"></div>
+      <div class="cjs-stack">
+        <div class="placeholder cjs-placeholder cjs-ccnum-placeholder"></div>
         <div class="cjs-input">
           <div id="ccnumber"></div>
           <div class="cjs-error" data-field="ccnumber" hidden>
@@ -158,8 +158,8 @@
     </div>
     <div class="cjs-wrapper mt-4">
       <span>{% translate "Expiration date" %}</span>
-      <div class="cjs-stack col-lg-2 col-3">
-        <div class="placeholder cjs-placeholder"></div>
+      <div class="cjs-stack">
+        <div class="placeholder cjs-placeholder cjs-ccexp-placeholder"></div>
         <div class="cjs-input">
           <div id="ccexp"></div>
           <div class="cjs-error" data-field="ccexp" hidden>
