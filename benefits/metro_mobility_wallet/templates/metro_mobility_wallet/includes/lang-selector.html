@@ -6,23 +6,21 @@
 <form id="lang-select-form" method="post" action="{% url "set_language" %}">
   {% csrf_token %}
   <input name="next" type="hidden" value="{{ redirect_to }}" />
-  <select name="language" id="lang-select" class="lang-selector p-2">
-    {% for code, lang in LANGUAGES %}
-      {% get_language_info for code as langinfo %}
-      <option value="{{ code }}" {% if code == LANGUAGE_CODE %}selected{% endif %}>
-        {{ langinfo.name_local | capfirst }}
-      </option>
-    {% endfor %}
-  </select>
+  <div class="dropdown">
+    <button class="lang-selector dropdown-toggle p-2" type="button" data-bs-toggle="dropdown">
+      {% get_language_info for LANGUAGE_CODE as current_lang %}
+      {{ current_lang.name_local | capfirst }}
+    </button>
+    <ul class="dropdown-menu lang-selector-menu">
+      {% for code, lang in LANGUAGES %}
+        {% get_language_info for code as langinfo %}
+        <li>
+          <button type="submit"
+                  name="language"
+                  value="{{ code }}"
+                  class="dropdown-item p-3 {% if code == LANGUAGE_CODE %}active{% endif %}">{{ langinfo.name_local | capfirst }}</button>
+        </li>
+      {% endfor %}
+    </ul>
+  </div>
 </form>
-
-<script nonce="{{ request.csp_nonce }}">
-    ready(function() {
-      const langSelect = document.querySelector('#lang-select');
-      if (langSelect) {
-        langSelect.addEventListener('change', function() {
-          this.form.submit();
-        });
-      }
-    });
-</script>

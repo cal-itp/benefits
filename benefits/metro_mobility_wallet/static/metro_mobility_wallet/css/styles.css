@@ -66,3 +66,37 @@
   background-color: #ffffff;
   color: var(--hover-color);
 }
+
+/* The dropdown <ul> */
+.lang-selector-menu.dropdown-menu {
+  background-color: var(--dsdl-cyan-10);
+  border: 1px solid var(--dsdl-cyan-20);
+}
+
+/* The individual language <button>s */
+.lang-selector-menu .dropdown-item {
+  border-bottom: 1px solid var(--dsdl-cyan-20);
+  color: var(--primary-color);
+}
+
+/* Remove the bottom line from the last <button> due to the container border */
+.lang-selector-menu li:last-child .dropdown-item {
+  border-bottom: none;
+}
+
+/* Override Bootstrap's default */
+.lang-selector-menu .dropdown-item:hover,
+.lang-selector-menu .dropdown-item:focus {
+  background-color: var(--dsdl-cyan-20);
+}
+
+/* Override Bootstrap's default */
+.lang-selector-menu .dropdown-item.active {
+  background-color: transparent;
+}
+
+/* Override Bootstrap's default */
+.lang-selector-menu .dropdown-item.active:hover,
+.lang-selector-menu .dropdown-item.active:focus {
+  background-color: var(--dsdl-cyan-20);
+}
