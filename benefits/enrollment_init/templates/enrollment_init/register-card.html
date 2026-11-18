@@ -86,14 +86,17 @@
       },
       // Fires when tokenization completes
       callback: function(response) {
-        // we don't hide the loadingOverlay on success because we still need to register the tokenized card
-
         // if an unsupported scheme is encountered, do not attempt to register the tokenized card
         if (!isSupportedScheme(response.card.type)) {
-          revalidateField('ccnumber', false)
+          revalidateField('ccnumber', false); // display the inline-error message
+          isInvalidSubmission(); // display the error summary
+
+          const loadingOverlay = document.querySelector("#loading_registering");
+          loadingOverlay.classList.add("invisible");
           return
         }
 
+        // we don't hide the loadingOverlay on success because we still need to register the tokenized card
         const form = document.querySelector("form#{{ form_success }}");
         form.elements["card_token"].value = response.token;
 
