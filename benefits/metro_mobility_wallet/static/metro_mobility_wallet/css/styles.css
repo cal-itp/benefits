@@ -112,6 +112,9 @@
 .lang-selector-menu.dropdown-menu {
   background-color: var(--dsdl-cyan-10);
   border: 1px solid var(--dsdl-cyan-20);
+  margin-top: calc(18rem / 16) !important; /* place dropdown below header */
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
 }
 
 /* The individual language <button>s */
