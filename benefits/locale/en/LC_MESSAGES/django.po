@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Report-Msgid-Bugs-To: https://github.com/cal-itp/benefits/issues \n"
-"POT-Creation-Date: 2026-11-02 15:11-0800\n"
+"POT-Creation-Date: 2026-11-18 14:38-0800\n"
 "Language: English\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -782,7 +782,10 @@ msgstr ""
 
 msgid ""
 "Enter a <a href=\"#ccnumber\">valid card number</a> from Visa, Discover, or "
-"Mastercard. We do not support American Express."
+"Mastercard."
+msgstr ""
+
+msgid "We do not support American Express."
 msgstr ""
 
 msgid "Enter a <a href=\"#ccexp\">expiration date</a>."
