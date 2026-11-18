@@ -153,3 +153,10 @@
 .lang-selector-menu .dropdown-item.active:focus {
   background-color: var(--dsdl-cyan-20);
 }
+
+/* Override Bootstrap's default */
+.lang-selector-menu .dropdown-item:focus,
+.lang-selector-menu .dropdown-item:focus-visible {
+  outline: var(--focus-style-light);
+  outline-offset: var(--focus-outline-offset);
+}
