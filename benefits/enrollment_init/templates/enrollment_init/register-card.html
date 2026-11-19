@@ -14,9 +14,7 @@
 
 {% block inner-content %}
   <script nonce="{{ request.csp_nonce }}">
-    const errColor = "#de0e10";
-
-    const cardSchemes = JSON.parse('{{ card_schemes|escapejs }}');
+    const cardSchemes = JSON.parse("{{ card_schemes|escapejs }}");
     const isSupportedScheme = (scheme) => cardSchemes.includes(scheme);
 
     // we consider each input invalid prior to interaction
@@ -28,7 +26,9 @@
     const revalidateField = (field, valid) => {
       validFields[field] = valid;
       const errNode = document.querySelector(`#${field} + .cjs-error`);
-      if (errNode) errNode.hidden = valid;
+      if (errNode) {
+        valid ? errNode.classList.add("d-none") : errNode.classList.remove("d-none");
+      }
     }
 
     const setLoadingVisibility = (visible) => {
@@ -52,13 +52,12 @@
       variant: "inline",
       // fires when the <iframe>d inputs have finally rendered
       fieldsAvailableCallback: function() {
-        document.querySelectorAll('.placeholder').forEach((ph) => {
-          ph.classList.add('d-none')
+        document.querySelectorAll(".placeholder").forEach((ph) => {
+          ph.classList.add("d-none")
         })
       },
       invalidCss: {
-        color: errColor,
-        "border-color": errColor,
+        "border-color": "#de0e10",
       },
       fields: {
         ccnumber: {
@@ -77,7 +76,7 @@
       validationCallback: revalidateField,
       // Fires as soon as the card number is identified as valid
       lookUpCallback: function(response) {
-        revalidateField('ccnumber', isSupportedScheme(response.type));
+        revalidateField("ccnumber", isSupportedScheme(response.type));
       },
       timeoutCallback: function() {
         setLoadingVisibility(false);
@@ -88,7 +87,7 @@
       callback: function(response) {
         // if an unsupported scheme is encountered, do not attempt to register the tokenized card
         if (!isSupportedScheme(response.card.type)) {
-          revalidateField('ccnumber', false); // display the inline-error message
+          revalidateField("ccnumber", false); // display the inline-error message
           showErrorBanner(); // display the error summary
           setLoadingVisibility(false);
           return;
@@ -116,10 +115,10 @@
       },
     };
 
-    document.addEventListener("DOMContentLoaded", function () {
+    document.addEventListener("DOMContentLoaded", function() {
       CollectJS.configure(opts);
 
-      document.querySelector('#tokenizeButton').addEventListener('click', function() {
+      document.querySelector("#tokenizeButton").addEventListener("click", function() {
         // when invalid input(s) are detected, do not attempt tokenization
         if (formHasInvalidInput()) {
           revalidateField("ccnumber", validFields.ccnumber);
@@ -131,7 +130,6 @@
         }
       });
     });
-
   </script>
   <h1 class="mb-4">{% translate "Enter card details" %}</h1>
   <div class="my-4 p-3 cjs-error-banner" hidden>
@@ -157,7 +155,7 @@
         <div class="placeholder cjs-placeholder cjs-ccnum-placeholder"></div>
         <div class="cjs-input">
           <div id="ccnumber"></div>
-          <div class="cjs-error" data-field="ccnumber" hidden>
+          <div class="cjs-error d-flex d-none gap-1" data-field="ccnumber">
             {% include "includes/card-validation-error-icon.html" %}
             {% translate "Please enter a valid credit card number from Visa, Discover, or Mastercard." %}
           </div>
@@ -170,7 +168,7 @@
         <div class="placeholder cjs-placeholder cjs-ccexp-placeholder"></div>
         <div class="cjs-input">
           <div id="ccexp"></div>
-          <div class="cjs-error" data-field="ccexp" hidden>
+          <div class="cjs-error d-flex d-none gap-1" data-field="ccexp">
             {% include "includes/card-validation-error-icon.html" %}
             {% translate "Please enter an expiration date in a MM/YY format." %}
           </div>
