@@ -14,9 +14,7 @@
 
 {% block inner-content %}
   <script nonce="{{ request.csp_nonce }}">
-    const errColor = "#de0e10";
-
-    const cardSchemes = JSON.parse('{{ card_schemes|escapejs }}');
+    const cardSchemes = JSON.parse("{{ card_schemes|escapejs }}");
     const isSupportedScheme = (scheme) => cardSchemes.includes(scheme);
 
     // we consider each input invalid prior to interaction
@@ -28,7 +26,9 @@
     const revalidateField = (field, valid) => {
       validFields[field] = valid;
       const errNode = document.querySelector(`#${field} + .cjs-error`);
-      if (errNode) errNode.hidden = valid;
+      if (errNode) {
+        valid ? errNode.classList.add("d-none") : errNode.classList.remove("d-none");
+      }
     }
 
     const setLoadingVisibility = (visible) => {
@@ -57,8 +57,7 @@
         })
       },
       invalidCss: {
-        color: errColor,
-        "border-color": errColor,
+        "border-color": "#de0e10",
       },
       fields: {
         ccnumber: {
@@ -157,7 +156,7 @@
         <div class="placeholder cjs-placeholder cjs-ccnum-placeholder"></div>
         <div class="cjs-input">
           <div id="ccnumber"></div>
-          <div class="cjs-error" data-field="ccnumber" hidden>
+          <div class="cjs-error d-flex d-none gap-1" data-field="ccnumber">
             {% include "includes/card-validation-error-icon.html" %}
             {% translate "Please enter a valid credit card number from Visa, Discover, or Mastercard." %}
           </div>
@@ -170,7 +169,7 @@
         <div class="placeholder cjs-placeholder cjs-ccexp-placeholder"></div>
         <div class="cjs-input">
           <div id="ccexp"></div>
-          <div class="cjs-error" data-field="ccexp" hidden>
+          <div class="cjs-error d-flex d-none gap-1" data-field="ccexp">
             {% include "includes/card-validation-error-icon.html" %}
             {% translate "Please enter an expiration date in a MM/YY format." %}
           </div>
