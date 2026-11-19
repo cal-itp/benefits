@@ -114,10 +114,14 @@
   height: 18px;
   display: inline-block;
   mask-image: url("/static/metro_mobility_wallet/img/language.svg");
+  -webkit-mask-image: url("/static/metro_mobility_wallet/img/language.svg");
   background-color: currentColor;
   mask-size: contain;
+  -webkit-mask-size: contain;
   mask-repeat: no-repeat;
+  -webkit-mask-repeat: no-repeat;
   mask-position: center;
+  -webkit-mask-position: center;
 }
 
 /* Hide Bootstrap's default caret */
@@ -130,10 +134,14 @@
   height: 18px;
   display: inline-block;
   mask-image: url("/static/metro_mobility_wallet/img/language-arrow.svg");
+  -webkit-mask-image: url("/static/metro_mobility_wallet/img/language-arrow.svg");
   background-color: currentColor;
   mask-size: contain;
+  -webkit-mask-size: contain;
   mask-repeat: no-repeat;
+  -webkit-mask-repeat: no-repeat;
   mask-position: center;
+  -webkit-mask-position: center;
 }
 
 .lang-selector[aria-expanded="true"] .lang-arrow {
@@ -160,10 +168,14 @@
   display: inline-block;
   content: "";
   mask-image: url("/static/img/icon/check-circle-fill.svg");
+  -webkit-mask-image: url("/static/img/icon/check-circle-fill.svg");
   background-color: var(--primary-color);
   mask-size: contain;
+  -webkit-mask-size: contain;
   mask-repeat: no-repeat;
+  -webkit-mask-repeat: no-repeat;
   mask-position: center;
+  -webkit-mask-position: center;
 }
 
 /* Remove the bottom line from the last <button> due to the container border */
