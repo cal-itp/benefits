@@ -12,6 +12,21 @@
   padding-top: 40px;
 }
 
+/* Language dropdown containment and positioning */
+#header-container .form-inline,
+#header-container .dropdown {
+  position: static !important; /* Escapes the container to anchor to the navbar */
+}
+
+.lang-selector-menu.dropdown-menu {
+  width: 100% !important;
+  margin-top: 0 !important; /* Place dropdown below header */
+}
+
+.lang-selector-menu .dropdown-item {
+  justify-content: flex-end; /* Pushes text and checkmark to the far right */
+}
+
 /* Desktop */
 @media (min-width: 992px) {
   .metro-branding img {
@@ -26,6 +41,23 @@
 
   .pt-cta {
     padding-top: 48px;
+  }
+
+  /* Language dropdown containment and positioning */
+  #header-container .form-inline,
+  #header-container .dropdown {
+    position: relative !important; /* Restores local containment */
+  }
+
+  .lang-selector-menu.dropdown-menu {
+    width: auto !important;
+    left: 0 !important; /* Aligns to left edge of button */
+    right: auto !important;
+    margin-top: calc(18rem / 16) !important; /* Place dropdown below header */
+  }
+
+  .lang-selector-menu .dropdown-item {
+    justify-content: flex-start; /* Restores left-aligned text and checkmark */
   }
 }
 
@@ -112,7 +144,6 @@
 .lang-selector-menu.dropdown-menu {
   background-color: var(--dsdl-cyan-10);
   border: 1px solid var(--dsdl-cyan-20);
-  margin-top: calc(18rem / 16) !important; /* place dropdown below header */
   border-top-left-radius: 0;
   border-top-right-radius: 0;
 }
