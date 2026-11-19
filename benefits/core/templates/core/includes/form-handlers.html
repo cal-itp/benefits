@@ -32,7 +32,7 @@
         });
 
         // on normal form submit, trigger the custom "submitting" event
-        form.addEventListener("submit", function(e) {
+        form.addEventListener("submit", form.submit_listener = function (e) {
           const event = new CustomEvent("submitting");
           form.dispatchEvent(event);
         });
