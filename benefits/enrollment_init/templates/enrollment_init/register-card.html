@@ -52,8 +52,8 @@
       variant: "inline",
       // fires when the <iframe>d inputs have finally rendered
       fieldsAvailableCallback: function() {
-        document.querySelectorAll('.placeholder').forEach((ph) => {
-          ph.classList.add('d-none')
+        document.querySelectorAll(".placeholder").forEach((ph) => {
+          ph.classList.add("d-none")
         })
       },
       invalidCss: {
@@ -76,7 +76,7 @@
       validationCallback: revalidateField,
       // Fires as soon as the card number is identified as valid
       lookUpCallback: function(response) {
-        revalidateField('ccnumber', isSupportedScheme(response.type));
+        revalidateField("ccnumber", isSupportedScheme(response.type));
       },
       timeoutCallback: function() {
         setLoadingVisibility(false);
@@ -87,7 +87,7 @@
       callback: function(response) {
         // if an unsupported scheme is encountered, do not attempt to register the tokenized card
         if (!isSupportedScheme(response.card.type)) {
-          revalidateField('ccnumber', false); // display the inline-error message
+          revalidateField("ccnumber", false); // display the inline-error message
           showErrorBanner(); // display the error summary
           setLoadingVisibility(false);
           return;
@@ -115,10 +115,10 @@
       },
     };
 
-    document.addEventListener("DOMContentLoaded", function () {
+    document.addEventListener("DOMContentLoaded", function() {
       CollectJS.configure(opts);
 
-      document.querySelector('#tokenizeButton').addEventListener('click', function() {
+      document.querySelector("#tokenizeButton").addEventListener("click", function() {
         // when invalid input(s) are detected, do not attempt tokenization
         if (formHasInvalidInput()) {
           revalidateField("ccnumber", validFields.ccnumber);
@@ -130,7 +130,6 @@
         }
       });
     });
-
   </script>
   <h1 class="mb-4">{% translate "Enter card details" %}</h1>
   <div class="my-4 p-3 cjs-error-banner" hidden>
