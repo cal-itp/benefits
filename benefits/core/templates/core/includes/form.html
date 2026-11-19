@@ -3,7 +3,9 @@
 
   {% url form.action_url as form_action %}
 
-  <form id="{{ form.id }}" action="{{ form_action }}" method="{{ form.method | default:"post" | upper }}">
+  <form id="{{ form.id }}"
+        action="{{ form_action }}"
+        method="{{ form.method | default:"post" | upper }}"{% if novalidate %} novalidate{% endif %}>
     {% csrf_token %}
 
     <div class="form-field-container {{ form.classes }}">

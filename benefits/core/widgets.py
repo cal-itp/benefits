@@ -13,7 +13,7 @@ class FormControlMixin:
     Applies class="form-control" always, and pattern and placeholder attributes, if passed.
     """
 
-    def __init__(self, pattern=None, placeholder=None, **kwargs):
+    def __init__(self, pattern=None, placeholder=None, novalidate=False, **kwargs):
         super().__init__(**kwargs)
 
         self.attrs.update({"class": "form-control"})
@@ -21,6 +21,8 @@ class FormControlMixin:
             self.attrs.update({"pattern": pattern})
         if placeholder:
             self.attrs.update({"placeholder": placeholder})
+        if novalidate:
+            self.attrs.update({"novalidate": True})
 
 
 class FormControlTextInput(FormControlMixin, widgets.TextInput):
