@@ -24,6 +24,10 @@
     const revalidateField = (field, valid) => {
       const errNode = document.querySelector(`#${field} + .cjs-error`);
       if (errNode) errNode.hidden = valid;
+
+      if (field == "ccnumber" && !valid) {
+        attemptedUnsupportedCard = false; // treat all invalid card numbers as "unknown" in terms of being supported or not.
+      }
     }
 
     const isInvalidSubmission = () => {
