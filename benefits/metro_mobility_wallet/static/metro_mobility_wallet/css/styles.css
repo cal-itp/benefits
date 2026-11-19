@@ -78,7 +78,6 @@
 
 /* Language selector component */
 .lang-selector {
-  appearance: none;
   background-color: transparent;
   color: #ffffff;
   border: var(--border-width) solid #ffffff;
