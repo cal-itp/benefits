@@ -19,30 +19,36 @@
     const cardSchemes = JSON.parse('{{ card_schemes|escapejs }}');
     const isSupportedScheme = (scheme) => cardSchemes.includes(scheme);
 
+    // we consider each input invalid prior to interaction
+    const validFields = {
+      ccnumber: false,
+      ccexp: false,
+    };
+
     const revalidateField = (field, valid) => {
+      validFields[field] = valid;
       const errNode = document.querySelector(`#${field} + .cjs-error`);
       if (errNode) errNode.hidden = valid;
     }
 
-    const isInvalidSubmission = () => {
+    const setLoadingVisibility = (visible) => {
+      const overlay = document.querySelector("#loading_registering");
+      visible
+        ? overlay.classList.remove("invisible")
+        : overlay.classList.add("invisible");
+    };
+
+    const formHasInvalidInput = () => !(validFields.ccnumber && validFields.ccexp);
+
+    const showErrorBanner = () => {
       const form = document.querySelector("form#form-cjs-tokenization");
-      const ccnumInvalid = form.querySelector(".cjs-error[data-field='ccnumber']:not([hidden])");
-      const ccexpInvalid = form.querySelector(".cjs-error[data-field='ccexp']:not([hidden])");
-
-      if (ccnumInvalid || ccexpInvalid) {
-        const banner = document.querySelector(".cjs-error-banner");
-        banner.querySelector('li[data-field="ccnumber"]').hidden = !ccnumInvalid;
-        banner.querySelector('li[data-field="ccexp"]').hidden = !ccexpInvalid;
-        banner.hidden = false;
-        // TODO: can we avoid the tokenization attempt entirely?
-
-        return true;
-      }
-      return false;
-    }
+      const banner = document.querySelector(".cjs-error-banner");
+      banner.querySelector('li[data-field="ccnumber"]').hidden = validFields.ccnumber;
+      banner.querySelector('li[data-field="ccexp"]').hidden = validFields.ccexp;
+      banner.hidden = !formHasInvalidInput();
+    };
 
     const opts = {
-      paymentSelector: "#tokenizeButton",
       variant: "inline",
       // fires when the <iframe>d inputs have finally rendered
       fieldsAvailableCallback: function() {
@@ -74,13 +80,7 @@
         revalidateField('ccnumber', isSupportedScheme(response.type));
       },
       timeoutCallback: function() {
-        const loadingOverlay = document.querySelector("#loading_registering")
-        loadingOverlay.classList.add("invisible");
-
-        // if an invalid field is detected, don't redirect on failure
-        const validationErr = isInvalidSubmission();
-        if (validationErr) return
-
+        setLoadingVisibility(false);
         const errForm = document.querySelector("form#{{ form_system_error }}");
         errForm.submit();
       },
@@ -89,11 +89,9 @@
         // if an unsupported scheme is encountered, do not attempt to register the tokenized card
         if (!isSupportedScheme(response.card.type)) {
           revalidateField('ccnumber', false); // display the inline-error message
-          isInvalidSubmission(); // display the error summary
-
-          const loadingOverlay = document.querySelector("#loading_registering");
-          loadingOverlay.classList.add("invisible");
-          return
+          showErrorBanner(); // display the error summary
+          setLoadingVisibility(false);
+          return;
         }
 
         // we don't hide the loadingOverlay on success because we still need to register the tokenized card
@@ -122,8 +120,15 @@
       CollectJS.configure(opts);
 
       document.querySelector('#tokenizeButton').addEventListener('click', function() {
-        const loadingOverlay = document.querySelector("#loading_registering");
-        loadingOverlay.classList.remove("invisible");
+        // when invalid input(s) are detected, do not attempt tokenization
+        if (formHasInvalidInput()) {
+          revalidateField("ccnumber", validFields.ccnumber);
+          revalidateField("ccexp", validFields.ccexp);
+          showErrorBanner();
+        } else {
+          CollectJS.startPaymentRequest();
+          setLoadingVisibility(true);
+        }
       });
     });
 
