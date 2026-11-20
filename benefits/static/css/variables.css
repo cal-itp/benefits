@@ -40,12 +40,13 @@
   --font-size-16px: calc(16rem / 16);
   --font-size-14px: calc(14rem / 16);
   --font-size-12px: calc(12rem / 16);
-  --border-width: calc(2rem / 16);
+  --border-width: calc(1rem / 16);
   --border-radius: calc(3rem / 16);
-  --focus-style-light: 3px solid var(--focus-color-light);
-  --focus-style-dark: 3px solid var(--focus-color-dark);
-  --focus-border-radius: calc(2rem / 16);
-  --focus-outline-offset: calc(3rem / 16); /* 3px */
+  --radio-check-border-width: calc(2rem / 16);
+  --focus-style-light: 2px solid var(--focus-color-light);
+  --focus-style-dark: 2px solid var(--focus-color-dark);
+  --focus-outline-offset: calc(2rem / 16);
+  --focus-outline-width: calc(2rem / 16);
   --grid-spacer: calc(1rem / 2); /* 8px */
 
   /* until we start importing DSDL in benefits  */

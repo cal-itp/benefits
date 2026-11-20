@@ -43,3 +43,9 @@
 .error-summary a {
   font-size: var(--font-size-16px) !important;
 }
+
+/* Other form styling */
+
+.required-label {
+  display: none;
+}

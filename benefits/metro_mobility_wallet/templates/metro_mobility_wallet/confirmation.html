@@ -1,1 +1,168 @@
-Confirmation
+{% extends "metro_mobility_wallet/base.html" %}
+{% load i18n %}
+
+{% block page-title %}
+  {% translate "Eligibility confirmation" %}
+{% endblock page-title %}
+
+{% block headline %}
+  <div class="mt-5 fs-5 fw-semibold">{{ first_name }} {{ last_name }}</div>
+  <h1 class="pt-0">{% translate "You are eligible to apply!" %}</h1>
+{% endblock headline %}
+
+{% block inner-content %}
+
+  <p class="my-4">{{ form.blurb }}</p>
+
+  <div id="error-summary"
+       class="alert-box alert-box--error error-summary mt-3 mb-lg-3 mb-2 p-3 border-start {% if not form.errors %}d-none{% endif %}"
+       tabindex="-1"
+       role="alert"
+       aria-atomic="true">
+    <h2 class="error-summary-heading fw-semibold mb-2 text-dark"
+        id="error-summary-heading">{% translate "There was a problem" %}</h2>
+    <ul class="mb-0 ps-3" id="error-summary-list">
+      {% for error in form.errors %}
+        <li>
+          {% if error == "email" %}
+            {% blocktranslate trimmed with field_id=form.email.id_for_label %}
+              Enter a valid <a href="#{{ field_id }}">email</a>.
+            {% endblocktranslate %}
+          {% elif error == "phone_number" %}
+            {% blocktranslate trimmed with field_id=form.phone.id_for_label %}
+              Enter a valid <a href="#{{ field_id }}">phone number</a>.
+            {% endblocktranslate %}
+          {% endif %}
+        </li>
+      {% endfor %}
+    </ul>
+  </div>
+
+  {% include "core/includes/form.html" with form=form novalidate=True %}
+
+  <script nonce="{{ request.csp_nonce }}">
+    ready(function() {
+      const form = document.querySelector("#form-confirm-info");
+      const emailInput = document.querySelector("#{{ form.email.id_for_label }}");
+      const phoneInput = document.querySelector("#{{ form.phone_number.id_for_label }}");
+      const errorSummary = document.querySelector("#error-summary");
+      const errorSummaryList = document.querySelector("#error-summary-list");
+      const errorLinks = document.querySelectorAll("#error-summary a");
+
+      function clear_inline_validity_email(clear_summary_item = false) {
+        emailInput.removeAttribute("aria-invalid");
+        if (emailInlineErrorElem = document.querySelector("#id_email_error")) {
+          emailInlineErrorElem.remove();
+        }
+        if (clear_summary_item) {
+          errorSummaryList.innerHTML = errorSummaryList.innerHTML.replace(emailErrorSummaryListItem, "");
+        }
+      }
+      function clear_inline_validity_phone(clear_summary_item = false) {
+        phoneInput.removeAttribute("aria-invalid");
+        if (phoneInlineErrorElem = document.querySelector("#id_phone_error")) {
+          phoneInlineErrorElem.remove();
+        }
+        if (clear_summary_item) {
+          errorSummaryList.innerHTML = errorSummaryList.innerHTML.replace(phoneErrorSummaryListItem, "");
+        }
+      }
+
+      // Auto-focus summary on page load if rendered by server-side validation
+      if (errorSummary && !errorSummary.classList.contains("d-none")) {
+        errorSummary.focus();
+      }
+
+      // Add invalid listeners to fields
+      emailErrorSummaryListItem = '<li>Enter a valid <a href="#{{ form.email.id_for_label }}">email</a>.</li>';
+      emailErrorInline = '<ul class="errorlist" id="id_email_error"><li>Please enter a valid email address. Example: name@example.com.</li></ul>';
+      emailInput.addEventListener("invalid", function () {
+        event.preventDefault();
+
+        // Style the field
+        this.setAttribute("aria-invalid", true);
+
+        // Add to summary, if necessary
+        if (!errorSummaryList.innerHTML.includes("#id_email")) {
+          errorSummaryList.innerHTML += emailErrorSummaryListItem;
+        }
+
+        // Display inline error below field, if necessary
+        if (!document.querySelector("#id_email_error")) {
+          this.insertAdjacentHTML("afterend", emailErrorInline);
+        }
+      });
+      phoneErrorSummaryListItem = '<li>Enter a valid <a href="#{{ form.phone_number.id_for_label }}">phone number</a>.</li>';
+      phoneErrorInline = '<ul class="errorlist" id="id_phone_error"><li>Please enter a valid U.S. phone number with 10 digits.</li></ul>';
+      phoneInput.addEventListener("invalid", function () {
+        event.preventDefault();
+
+        // Style the field
+        this.setAttribute("aria-invalid", true);
+
+        // Add to summary, if necessary
+        if (!errorSummaryList.innerHTML.includes("#id_phone_number")) {
+          errorSummaryList.innerHTML += phoneErrorSummaryListItem;
+        }
+
+        // Display inline error below field, if necessary
+        if (!document.querySelector("#id_phone_error")) {
+          this.insertAdjacentHTML("afterend", phoneErrorInline);
+        }
+      });
+
+      emailInput.addEventListener("blur", function(event) {
+        if (this.reportValidity()) {  // I believe calling reportValidity() in this way will fire the invalid event if it's not valid
+          clear_inline_validity_email();
+        } else {
+          // Display error summary and shift focus
+          errorSummary.classList.remove("d-none");
+        }
+      });
+      phoneInput.addEventListener("blur", function(event) {
+        if (this.reportValidity()) {  // I believe calling reportValidity() in this way will fire the invalid event if it's not valid
+          clear_inline_validity_phone();
+        } else {
+          // Display error summary and shift focus
+          errorSummary.classList.remove("d-none");
+        }
+      });
+
+      // Intercept submit for client-side validation
+      if (form) {
+        // Remove our existing submit event to prevent 'Please wait…' and spinner appearing
+        // TODO: Happy bus loading animation
+        form.removeEventListener("submit", form.submit_listener);
+
+        // Add the new event
+        form.addEventListener("submit", function(event) {
+          if (!this.reportValidity()) {
+            event.preventDefault();
+
+            // Remove error displays for fields that have been corrected
+            if (emailInput.checkValidity()) {
+              clear_inline_validity_email(true);
+            }
+            if (phoneInput.checkValidity()) {
+              clear_inline_validity_phone(true);
+            }
+
+            // Display error summary and shift focus
+            if (errorSummary) {
+              errorSummary.classList.remove("d-none");
+              errorSummary.focus();
+            }
+          }
+        });
+      }
+    });
+  </script>
+
+  {% if request.recaptcha %}
+    {% include "core/includes/recaptcha.html" %}
+  {% endif %}
+{% endblock inner-content %}
+
+{# Override with empty block to prevent rendering empty divs #}
+{% block call-to-action %}
+{% endblock call-to-action %}
