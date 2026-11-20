@@ -1,2 +1,2 @@
-# create test.tfvars and/or prod.tfvars to terraform plan in those envs
+# create test.tfvars and/or default.tfvars to plan against the test or prod environment
 sp_apply_object_id = "object-id"
