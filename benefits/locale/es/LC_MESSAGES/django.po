@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Report-Msgid-Bugs-To: https://github.com/cal-itp/benefits/issues \n"
-"POT-Creation-Date: 2026-11-19 11:54-0800\n"
+"POT-Creation-Date: 2026-11-20 11:14-0800\n"
 "Language: Español\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -993,6 +993,9 @@ msgstr "Fecha de vencimiento"
 
 msgid "Please enter an expiration date in a MM/YY format."
 msgstr "Ingrese la fecha de vencimiento en fomato MM/YY."
+
+msgid "Registering your card for reduced fares"
+msgstr "Registre su tarjeta para obtener tarifas reducidas"
 
 msgid "Service is down"
 msgstr "El servicio está inactivo"

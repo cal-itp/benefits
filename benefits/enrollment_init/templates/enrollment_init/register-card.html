@@ -176,8 +176,8 @@
       </div>
     </div>
     <button class="btn btn-lg btn-primary mt-5" id="tokenizeButton" type="button">{% translate "Register your card" %}</button>
-    {% comment %} TODO: translate the loading text below once we're happy with it {% endcomment %}
-    {% include "core/includes/loading-screen.html" with id="loading_registering" text="Registering your card for reduced fares" %}
+    {% translate "Registering your card for reduced fares" as registering %}
+    {% include "core/includes/loading-screen.html" with id="loading_registering" text=registering %}
   </form>
 
   {% for f in forms %}
