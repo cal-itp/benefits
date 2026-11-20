@@ -1,0 +1,32 @@
+
+{% load i18n static %}
+{% get_current_language as LANGUAGE_CODE %}
+{% get_available_languages as LANGUAGES %}
+
+<form id="lang-select-form" method="post" action="{% url "set_language" %}">
+  {% csrf_token %}
+  <input name="next" type="hidden" value="{{ redirect_to }}" />
+  <div class="dropdown">
+    <button class="lang-selector dropdown-toggle p-2 d-flex align-items-center gap-1"
+            type="button"
+            id="langDropdown"
+            data-bs-toggle="dropdown"
+            aria-expanded="false">
+      <span class="lang-icon" aria-hidden="true"></span>
+      {% get_language_info for LANGUAGE_CODE as current_lang %}
+      <span>{{ current_lang.name_local | capfirst }}</span>
+      <span class="lang-arrow" aria-hidden="true"></span>
+    </button>
+    <ul class="dropdown-menu lang-selector-menu" aria-labelledby="langDropdown">
+      {% for code, lang in LANGUAGES %}
+        {% get_language_info for code as langinfo %}
+        <li>
+          <button type="submit"
+                  name="language"
+                  value="{{ code }}"
+                  class="dropdown-item p-3 d-flex align-items-center gap-1 {% if code == LANGUAGE_CODE %}active{% endif %}">{{ langinfo.name_local | capfirst }}</button>
+        </li>
+      {% endfor %}
+    </ul>
+  </div>
+</form>
