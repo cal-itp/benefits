@@ -80,15 +80,11 @@
 .lang-selector {
   background-color: transparent;
   color: #ffffff;
+  font-size: var(--font-size-16px);
+  font-weight: var(--semi-bold-font-weight);
   border: var(--border-width) solid #ffffff;
   border-radius: var(--border-radius);
   cursor: pointer;
-}
-
-.lang-selector span {
-  color: #ffffff;
-  font-size: var(--font-size-16px);
-  font-weight: var(--semi-bold-font-weight);
 }
 
 .lang-selector:focus,
@@ -103,22 +99,10 @@
   color: var(--hover-color);
 }
 
-.lang-selector:hover span,
-.lang-selector[aria-expanded="true"] span {
-  color: var(--hover-color);
-}
-
-.lang-icon svg,
-.lang-arrow svg {
+.lang-selector svg {
+  display: block; /* Required for vertical centering */
   width: calc(18rem / 16);
   height: calc(18rem / 16);
-}
-
-.lang-icon,
-.lang-arrow {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
 }
 
 /* Hide Bootstrap's default caret */

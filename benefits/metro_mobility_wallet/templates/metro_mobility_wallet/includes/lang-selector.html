@@ -14,9 +14,9 @@
             aria-controls="language-options"
             data-bs-toggle="dropdown"
             aria-expanded="false">
-      <span class="lang-icon" aria-hidden="true">{% include "uswds-translate-icon.svg" %}</span>
+      <span aria-hidden="true">{% include "uswds-translate-icon.svg" %}</span>
       {% get_language_info for LANGUAGE_CODE as current_lang %}
-      <span>{{ current_lang.name_local | capfirst }}</span>
+      {{ current_lang.name_local | capfirst }}
       <span class="lang-arrow" aria-hidden="true">{% include "lang-selector-arrow.svg" %}</span>
     </button>
     <ul id="language-options" class="dropdown-menu lang-selector-menu" aria-labelledby="langDropdown">
