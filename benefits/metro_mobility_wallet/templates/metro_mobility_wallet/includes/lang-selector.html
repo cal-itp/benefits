@@ -32,7 +32,6 @@
             {{ langinfo.name_local | capfirst }}
             {% if code == LANGUAGE_CODE %}
               {% include "check-circle-fill.svg" %}
-              <span class="visually-hidden">{% translate "selected" %}</span>
             {% endif %}
           </button>
         </li>
