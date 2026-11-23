@@ -11,7 +11,7 @@ class EnrollmentInitConfig(TransitProcessorAppConfigMixin, AppConfig):
     system_name = "init"
     info_url = "https://www.initse.com/enus/solutions/fare-collection-revenue-management/"
     enrollment_index_route = routes.ENROLLMENT_INIT_INDEX
-    in_person_enrollment_index_route = None
+    in_person_enrollment_index_route = routes.IN_PERSON_ENROLLMENT_INIT_INDEX
 
     @property
     def system_name_for_display(self):

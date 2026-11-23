@@ -1,0 +1,56 @@
+{% extends "admin/flow-base.html" %}
+
+{% block title %}
+  {{ title }}
+{% endblock title %}
+
+{% block flow-content %}
+  {% include "core/includes/collect-js.html" %}
+  <div class="p-4">
+    <h1 class="mb-4">Enter card details</h1>
+    <div class="my-4 p-3 cjs-error-banner" hidden>
+      <p class="fw-semibold">There was a problem</p>
+      <ul class="d-flex flex-column gap-2 mt-2">
+        <li data-field="ccnumber" hidden>
+          Enter a <a href="#ccnumber">valid card number</a> from Visa, Discover, or Mastercard.
+        </li>
+        <li data-field="ccexp" hidden>
+          Enter a <a href="#ccexp">expiration date</a>.
+        </li>
+      </ul>
+    </div>
+    <form id="form-cjs-tokenization" method="post">
+      {% csrf_token %}
+      <div class="cjs-wrapper mt-3">
+        <span>Card number</span>
+        <div class="cjs-stack">
+          <div class="placeholder cjs-placeholder cjs-ccnum-placeholder"></div>
+          <div class="cjs-input">
+            <div id="ccnumber"></div>
+            <div class="cjs-error d-flex d-none gap-1" data-field="ccnumber">
+              {% include "includes/card-validation-error-icon.html" %}
+              Please enter a valid credit card number from Visa, Discover, or Mastercard.
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="cjs-wrapper mt-4">
+        <span>Expiration date</span>
+        <div class="cjs-stack">
+          <div class="placeholder cjs-placeholder cjs-ccexp-placeholder"></div>
+          <div class="cjs-input">
+            <div id="ccexp"></div>
+            <div class="cjs-error d-flex d-none gap-1" data-field="ccexp">
+              {% include "includes/card-validation-error-icon.html" %}
+              Please enter an expiration date in a MM/YY format.
+            </div>
+          </div>
+        </div>
+      </div>
+      <button class="btn btn-lg btn-primary mt-5" id="tokenizeButton" type="button">Register card</button>
+    </form>
+  </div>
+  {% for f in forms %}
+    {% include "core/includes/form.html" with form=f %}
+  {% endfor %}
+{% endblock flow-content %}

@@ -9,6 +9,7 @@ from benefits.core.mixins import AgencySessionRequiredMixin
 from benefits.core.models.transit import TransitAgency
 from benefits.core.views import AdditionalAgenciesView as SelfServiceAdditionalAgenciesView
 from benefits.eligibility import analytics as eligibility_analytics
+from benefits.enrollment import forms as enrollment_forms
 from benefits.enrollment.views import (
     IndexView as SelfServiceEnrollmentIndexView,
     ReenrollmentErrorView as SelfServiceReenrollmentErrorView,
@@ -16,6 +17,8 @@ from benefits.enrollment.views import (
     SuccessView as SelfServiceSuccessView,
     SystemErrorView as SelfServiceSystemErrorView,
 )
+from benefits.enrollment_init.routes import routes as init_routes
+from benefits.enrollment_init.views import RegisterView as InitRegisterView
 from benefits.enrollment_littlepay.routes import routes as littlepay_routes
 from benefits.enrollment_littlepay.session import Session as LittlepaySession
 from benefits.enrollment_littlepay.views import IndexView as LittlepayIndexView, TokenView
@@ -211,3 +214,17 @@ class SwitchioEnrollmentIndexView(mixins.CommonContextMixin, SwitchioIndexView):
             return redirect(routes.ADMIN_INDEX)
 
         return super().get(request, *args, **kwargs)
+
+
+class InitEnrollmentIndexView(mixins.CommonContextMixin, InitRegisterView, FormView):
+    enrollment_method = models.EnrollmentMethods.IN_PERSON
+    form_class = enrollment_forms.CardTokenizeSuccessForm
+
+    route_enrollment_success = routes.IN_PERSON_ENROLLMENT_SUCCESS
+    route_tokenize_success = init_routes.IN_PERSON_ENROLLMENT_INIT_INDEX
+    route_system_error = routes.IN_PERSON_ENROLLMENT_SYSTEM_ERROR
+
+    template_name = "in_person/enrollment/index_init.html"
+
+    def _get_verified_by(self):
+        return f"{self.request.user.first_name} {self.request.user.last_name}"

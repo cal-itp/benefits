@@ -1,6 +1,7 @@
 from django.contrib import admin
 from django.urls import path
 
+from benefits.enrollment_init.routes import routes as init_routes
 from benefits.enrollment_littlepay.routes import routes as littlepay_routes
 from benefits.enrollment_switchio.routes import routes as switchio_routes
 from benefits.routes import routes
@@ -27,6 +28,11 @@ urlpatterns = [
         "enrollment/error/reenrollment",
         admin.site.admin_view(views.ReenrollmentErrorView.as_view()),
         name=routes.name(routes.IN_PERSON_ENROLLMENT_REENROLLMENT_ERROR),
+    ),
+    path(
+        "enrollment/init",
+        admin.site.admin_view(views.InitEnrollmentIndexView.as_view()),
+        name=routes.name(init_routes.IN_PERSON_ENROLLMENT_INIT_INDEX),
     ),
     path(
         "enrollment/littlepay",
