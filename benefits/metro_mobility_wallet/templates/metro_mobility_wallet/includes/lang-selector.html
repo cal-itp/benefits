@@ -24,7 +24,7 @@
           <button type="submit"
                   name="language"
                   value="{{ code }}"
-                  class="dropdown-item p-3 d-flex align-items-center gap-1 {% if code == LANGUAGE_CODE %}active{% endif %}">{{ langinfo.name_local | capfirst }}</button>
+                  class="dropdown-item p-3 d-flex align-items-center gap-2 {% if code == LANGUAGE_CODE %}active{% endif %}">{{ langinfo.name_local | capfirst }}</button>
         </li>
       {% endfor %}
     </ul>

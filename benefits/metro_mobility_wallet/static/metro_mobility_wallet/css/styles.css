@@ -177,6 +177,16 @@
   -webkit-mask-position: center;
 }
 
+/* Full-width menu alignment adjustments */
+@media (max-width: 992px) {
+  .lang-selector-menu .dropdown-item {
+    padding-right: 2.625rem !important;
+  }
+  .lang-selector-menu .dropdown-item.active {
+    padding-right: 1.125rem !important;
+  }
+}
+
 /* Remove the bottom line from the last <button> due to the container border */
 .lang-selector-menu li:last-child .dropdown-item {
   border-bottom: none;
