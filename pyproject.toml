@@ -21,7 +21,7 @@ dependencies = [
     "django-google-sso==10.0.0",
     "django-modeltranslation==0.20.6",
     "django-multiselectfield==1.0.1",
-    "eligibility-api==2025.4.1",
+    "eligibility-api==2026.11.1",
     "pillow==13.0.0",
     "psycopg[binary,pool]==3.3.6",
     "requests==2.34.2",
