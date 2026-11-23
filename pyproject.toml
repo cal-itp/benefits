@@ -5,7 +5,7 @@ description = "Cal-ITP Benefits is an application that enables automated eligibi
 readme = "README.md"
 license-files = ["LICENSE"]
 classifiers = ["Programming Language :: Python :: 3 :: Only"]
-requires-python = ">=3.12"
+requires-python = ">=3.14"
 maintainers = [
   { name = "Compiler LLC", email = "dev@compiler.la" }
 ]
@@ -60,7 +60,7 @@ build-backend = "setuptools.build_meta"
 
 [tool.black]
 line-length = 127
-target-version = ['py312']
+target-version = ['py314']
 include = '\.pyi?$'
 
 [tool.coverage.run]
