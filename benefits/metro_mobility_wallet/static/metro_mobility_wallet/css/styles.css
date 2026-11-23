@@ -108,39 +108,22 @@
   color: var(--hover-color);
 }
 
-.lang-icon {
-  width: 18px;
-  height: 18px;
-  display: inline-block;
-  mask-image: url("/static/metro_mobility_wallet/img/language.svg");
-  -webkit-mask-image: url("/static/metro_mobility_wallet/img/language.svg");
-  background-color: currentColor;
-  mask-size: contain;
-  -webkit-mask-size: contain;
-  mask-repeat: no-repeat;
-  -webkit-mask-repeat: no-repeat;
-  mask-position: center;
-  -webkit-mask-position: center;
+.lang-icon svg,
+.lang-arrow svg {
+  width: calc(18rem / 16);
+  height: calc(18rem / 16);
+}
+
+.lang-icon,
+.lang-arrow {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
 }
 
 /* Hide Bootstrap's default caret */
 .lang-selector.dropdown-toggle::after {
   display: none !important;
-}
-
-.lang-arrow {
-  width: 18px;
-  height: 18px;
-  display: inline-block;
-  mask-image: url("/static/metro_mobility_wallet/img/language-arrow.svg");
-  -webkit-mask-image: url("/static/metro_mobility_wallet/img/language-arrow.svg");
-  background-color: currentColor;
-  mask-size: contain;
-  -webkit-mask-size: contain;
-  mask-repeat: no-repeat;
-  -webkit-mask-repeat: no-repeat;
-  mask-position: center;
-  -webkit-mask-position: center;
 }
 
 .lang-selector[aria-expanded="true"] .lang-arrow {
@@ -161,20 +144,9 @@
   color: var(--primary-color);
 }
 
-.lang-selector-menu .dropdown-item.active::after {
-  width: 16px;
-  height: 16px;
-  display: inline-block;
-  content: "";
-  mask-image: url("/static/img/icon/check-circle-fill.svg");
-  -webkit-mask-image: url("/static/img/icon/check-circle-fill.svg");
-  background-color: var(--primary-color);
-  mask-size: contain;
-  -webkit-mask-size: contain;
-  mask-repeat: no-repeat;
-  -webkit-mask-repeat: no-repeat;
-  mask-position: center;
-  -webkit-mask-position: center;
+.lang-selector-menu .dropdown-item svg {
+  width: calc(16rem / 16);
+  height: calc(16rem / 16);
 }
 
 /* Full-width menu alignment adjustments */

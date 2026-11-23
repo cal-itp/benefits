@@ -14,10 +14,10 @@
             aria-controls="language-options"
             data-bs-toggle="dropdown"
             aria-expanded="false">
-      <span class="lang-icon" aria-hidden="true"></span>
+      <span class="lang-icon" aria-hidden="true">{% include "uswds-translate-icon.svg" %}</span>
       {% get_language_info for LANGUAGE_CODE as current_lang %}
       <span>{{ current_lang.name_local | capfirst }}</span>
-      <span class="lang-arrow" aria-hidden="true"></span>
+      <span class="lang-arrow" aria-hidden="true">{% include "lang-selector-arrow.svg" %}</span>
     </button>
     <ul id="language-options" class="dropdown-menu lang-selector-menu" aria-labelledby="langDropdown">
       {% for code, lang in LANGUAGES %}
@@ -28,7 +28,13 @@
                   value="{{ code }}"
                   lang="{{ code }}"
                   {% if code == LANGUAGE_CODE %}aria-current="true"{% endif %}
-                  class="dropdown-item p-3 d-flex align-items-center gap-2 {% if code == LANGUAGE_CODE %}active{% endif %}">{{ langinfo.name_local | capfirst }}</button>
+                  class="dropdown-item p-3 d-flex align-items-center gap-2 {% if code == LANGUAGE_CODE %}active{% endif %}">
+            {{ langinfo.name_local | capfirst }}
+            {% if code == LANGUAGE_CODE %}
+              {% include "check-circle-fill.svg" %}
+              <span class="visually-hidden">{% translate "selected" %}</span>
+            {% endif %}
+          </button>
         </li>
       {% endfor %}
     </ul>
