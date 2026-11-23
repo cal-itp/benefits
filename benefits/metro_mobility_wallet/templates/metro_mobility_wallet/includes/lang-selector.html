@@ -10,6 +10,8 @@
     <button class="lang-selector dropdown-toggle p-2 d-flex align-items-center gap-1"
             type="button"
             id="langDropdown"
+            aria-label="{% translate "Translate" %}"
+            aria-controls="language-options"
             data-bs-toggle="dropdown"
             aria-expanded="false">
       <span class="lang-icon" aria-hidden="true"></span>
@@ -17,7 +19,7 @@
       <span>{{ current_lang.name_local | capfirst }}</span>
       <span class="lang-arrow" aria-hidden="true"></span>
     </button>
-    <ul class="dropdown-menu lang-selector-menu" aria-labelledby="langDropdown">
+    <ul id="language-options" class="dropdown-menu lang-selector-menu" aria-labelledby="langDropdown">
       {% for code, lang in LANGUAGES %}
         {% get_language_info for code as langinfo %}
         <li>
