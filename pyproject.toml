@@ -94,6 +94,8 @@ typeCheckingMode = "off"
 
 [tool.pytest.ini_options]
 DJANGO_SETTINGS_MODULE = "tests.pytest.settings"
+# TODO: Uncomment when the next version of pytest-socket (>0.8.1) is released to supress warnings in test output.
+# filterwarnings = ["ignore::pytest_socket.SocketBlockedWarning"]
 markers = [
     "request_path: use with session_request to initialize with the given path",
 ]
