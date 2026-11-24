@@ -1,0 +1,72 @@
+[data-md-color-scheme="default"] {
+  --md-primary-fg-color: #045b86;
+  --md-accent-fg-color: #044869;
+  --md-primary-fg-color--dark: #045b86;
+  --md-footer-fg-color: hsla(0, 0%, 100%, 1);
+  --md-footer-fg-color--light: hsla(0, 0%, 100%, 1);
+  --md-footer-fg-color--lighter: hsla(0, 0%, 100%, 1);
+  --md-footer-bg-color: hsla(0, 0%, 0%, 1);
+  --md-footer-bg-color--dark: hsla(0, 0%, 0%, 1);
+  --md-code-hl-string-color: #b8361f;
+  --md-code-hl-comment-color: #1c7d4d;
+  --md-mermaid-label-fg-color: #000000;
+}
+
+a {
+  text-decoration: underline dotted currentColor auto;
+}
+
+a.headerlink,
+a.md-nav__link,
+a.md-source,
+a.md-tabs__link {
+  text-decoration-line: none;
+}
+
+.md-tabs__link {
+  opacity: 1;
+}
+
+/* Newsletter archive — force single-column card layout
+   Targets each year's card container by ID so other .grid.cards
+   instances elsewhere in the docs are not affected. */
+#newsletter-cards-2026,
+#newsletter-cards-2025,
+#newsletter-cards-2024 {
+  grid-template-columns: 1fr;
+}
+
+#newsletter-cards-2026,
+#newsletter-cards-2025,
+#newsletter-cards-2024,
+.twemoji svg path {
+  fill: var(--md-primary-fg-color);
+}
+
+.newsletter-frame {
+  width: 100%;
+  height: calc(100vh - 300px);
+  border: 1px solid black;
+}
+
+@media (min-width: 1220px) {
+  .newsletter-frame {
+    height: calc(100vh - 345px);
+  }
+}
+
+@media (min-width: 1600px) {
+  .newsletter-frame {
+    height: calc(100vh - 380px);
+  }
+}
+
+@media (min-width: 2000px) {
+  .newsletter-frame {
+    height: calc(100vh - 415px);
+  }
+}
+
+.clear {
+  clear: both;
+}
