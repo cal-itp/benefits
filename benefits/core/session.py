@@ -177,17 +177,27 @@ def logout(request):
 
 
 def oauth_extra_claims(request):
-    """Get the extra oauth claims from the request's session, or None"""
-    claims = [claim for claim, value in OAuthSession(request).claims_result.verified.items() if value]
+    """Get the verified extra oauth claims from the request's session, or None"""
 
-    if claims:
-        f = flow(request)
-        if f and f.uses_claims_verification:
-            claims.remove(f.claims_request.eligibility_claim)
-            return claims or None
-        raise Exception("Oauth claims but no flow")
-    else:
-        return None
+    session = OAuthSession(request)
+    claims = [
+        claim
+        for claim, value in session.claims_result.verified.items()
+        if value and claim in session.claims_request.extra_claims_list
+    ]
+    return claims or None
+
+
+def oauth_extra_claims_dict(request):
+    """Get the verified extra oauth claims from the request's session, or None"""
+
+    session = OAuthSession(request)
+    claims = {
+        claim: value
+        for claim, value in session.claims_result.verified.items()
+        if value and claim in session.claims_request.extra_claims_list
+    }
+    return claims or None
 
 
 def origin(request):

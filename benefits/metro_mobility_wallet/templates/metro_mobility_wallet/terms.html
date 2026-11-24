@@ -29,7 +29,7 @@
 
   <h2 class="h3 pt-3 pb-4">{% translate "Signature" %}</h2>
 
-  <form id="form-accept-terms" action="{% url form.action_url_name %}" method="{{ form.method }}" novalidate>
+  <form id="form-accept-terms" action="{% url form.action_url %}" method="{{ form.method }}" novalidate>
     {% csrf_token %}
     <div class="form-field-container">
       <div class="form-group mb-0 d-flex align-items-start">
@@ -95,6 +95,6 @@
   {% endif %}
 {% endblock inner-content %}
 
-{% comment %} Override with empty block to prevent rendering empty divs {% endcomment %}
+{# Override with empty block to prevent rendering empty divs #}
 {% block call-to-action %}
 {% endblock call-to-action %}

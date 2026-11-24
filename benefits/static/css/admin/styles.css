@@ -144,7 +144,7 @@ iframe.card-collection {
   text-decoration: underline;
   text-decoration-style: solid;
   font-weight: var(--bold-font-weight);
-  border-radius: var(--focus-border-radius);
+  border-radius: var(--border-radius);
 }
 
 .login a:visited:not(.btn):not(.sso-login-btn) {

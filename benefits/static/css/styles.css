@@ -106,7 +106,7 @@ a:not(.btn):not(.card) {
   text-decoration: underline;
   text-decoration-style: solid;
   font-weight: var(--semi-bold-font-weight);
-  border-radius: var(--focus-border-radius);
+  border-radius: var(--border-radius);
 }
 
 a:hover:not(.btn) {
@@ -285,7 +285,7 @@ main {
   outline: var(--focus-style-dark) !important;
   outline-offset: var(--focus-outline-offset) !important;
   font-weight: var(--medium-font-weight);
-  border-radius: var(--focus-border-radius);
+  border-radius: var(--border-radius);
 }
 
 /* Footer */
@@ -545,8 +545,8 @@ input[type="checkbox"] {
   appearance: none;
   width: calc(24rem / 16);
   height: calc(24rem / 16);
-  border-radius: 3px;
-  border: 2px solid var(--standout-color);
+  border-radius: var(--border-radius);
+  border: var(--radio-check-border-width) solid var(--standout-color);
 }
 input[type="checkbox"]:checked {
   background-color: var(--standout-color);
@@ -555,8 +555,8 @@ input[type="checkbox"]:checked {
   background-position: center;
 }
 input[type="checkbox"]:focus {
-  outline: 2px solid var(--focus-color-dark);
-  outline-offset: 1px;
+  outline: var(--focus-outline-width) solid var(--focus-color-dark);
+  outline-offset: var(--focus-outline-offset);
 }
 
 /* Forms: Text Inputs */
@@ -564,10 +564,10 @@ input[type="checkbox"]:focus {
 
 .form-field-container .form-control-label,
 .form-field-container .required-label {
-  font-size: var(--font-size-16px);
+  font-size: var(--font-size-18px);
   font-weight: var(--semi-bold-font-weight);
   line-height: var(--form-field-text-line-height);
-  padding-bottom: calc(12rem / 16);
+  padding-bottom: var(--grid-spacer);
 }
 
 .form-field-container .form-control {
@@ -587,7 +587,7 @@ input[type="checkbox"]:focus {
   box-shadow: none !important;
 }
 
-.form-field-container.eligibility-verification-form {
+.form-field-container {
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
@@ -648,19 +648,44 @@ input[type="checkbox"]:focus {
   appearance: none;
   width: var(--radio-button-size);
   height: var(--radio-button-size);
-  border: var(--border-width) solid var(--radio-input-color);
+  border: var(--radio-check-border-width) solid var(--radio-input-color);
   margin: calc(3rem / 16) 0;
 }
 
 .radio-input:checked {
   background-color: var(--radio-input-color);
-  box-shadow: inset 0 0 0 var(--border-width) var(--bs-white);
+  box-shadow: inset 0 0 0 var(--radio-check-border-width) var(--bs-white);
 }
 
 .radio-input:focus,
 .radio-input:focus-visible {
-  outline: 2px solid var(--focus-color-dark) !important;
-  outline-offset: 1px !important;
+  outline: var(--focus-outline-width) solid var(--focus-color-dark) !important;
+  outline-offset: var(--focus-outline-offset) !important;
+}
+
+/* Forms: Errors */
+
+.errorlist {
+  /* Standard Django class */
+  list-style: none;
+  padding-left: 0;
+}
+.errorlist li {
+  display: flex;
+  align-items: center;
+  margin-top: var(--grid-spacer);
+  color: var(--dsdl-red-60);
+  font-size: var(--font-size-14px);
+  font-weight: var(--semi-bold-font-weight);
+}
+.errorlist li::before {
+  content: url("/static/img/icon/form-error.svg");
+  width: 1.25rem;
+  height: 1.25rem;
+  margin-right: var(--grid-spacer);
+}
+.form-control[aria-invalid="true"] {
+  border-color: var(--dsdl-red-60);
 }
 
 /* Modal Dialogs */
@@ -757,8 +782,8 @@ input[type="checkbox"]:focus {
   --alert-box-border-width: calc(8rem / 16);
   --alert-box-background-color--warning: #fff1d0;
   --alert-box-border-color--warning: #fdb714;
-  --alert-box-background-color--error: #fef5f5;
-  --alert-box-border-color--error: #de0e10;
+  --alert-box-background-color--error: var(--dsdl-red-10);
+  --alert-box-border-color--error: var(--dsdl-red-60);
 }
 
 .alert-box {

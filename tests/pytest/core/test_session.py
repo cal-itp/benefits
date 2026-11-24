@@ -520,7 +520,7 @@ def test_group_default(app_request):
 
 @pytest.mark.django_db
 def test_oauth_extra_claims(app_request, model_EnrollmentFlow_with_scope_and_claim):
-    model_EnrollmentFlow_with_scope_and_claim.claims_request.extra_claims = "extra_claim"
+    model_EnrollmentFlow_with_scope_and_claim.claims_request.extra_claims = "extra_claim extra_claim2"
     model_EnrollmentFlow_with_scope_and_claim.claims_request.save()
 
     session.update(app_request, flow=model_EnrollmentFlow_with_scope_and_claim)
@@ -544,7 +544,25 @@ def test_oauth_extra_claims_no_claims(app_request, model_EnrollmentFlow_with_sco
 
 
 @pytest.mark.django_db
-def test_oauth_extra_claims_claims_no_flow(app_request):
-    OAuthSession(app_request).claims_result = ClaimsResult(verified={"eligibility_claim": True, "extra_claim": True})
-    with pytest.raises(Exception, match="Oauth claims but no flow"):
-        session.oauth_extra_claims(app_request)
+def test_oauth_extra_claims_dict(app_request, model_EnrollmentFlow_with_scope_and_claim):
+    model_EnrollmentFlow_with_scope_and_claim.claims_request.extra_claims = "extra_claim extra_claim2"
+    model_EnrollmentFlow_with_scope_and_claim.claims_request.save()
+
+    session.update(app_request, flow=model_EnrollmentFlow_with_scope_and_claim)
+    oauth_session = OAuthSession(app_request)
+    oauth_session.claims_result = ClaimsResult(
+        verified={model_EnrollmentFlow_with_scope_and_claim.claims_request.eligibility_claim: True, "extra_claim": True}
+    )
+
+    assert session.oauth_extra_claims_dict(app_request) == {"extra_claim": True}
+
+
+@pytest.mark.django_db
+def test_oauth_extra_claims_dict_no_claims(app_request, model_EnrollmentFlow_with_scope_and_claim):
+    model_EnrollmentFlow_with_scope_and_claim.claims_request.extra_claims = "extra_claim"
+    model_EnrollmentFlow_with_scope_and_claim.claims_request.save()
+
+    session.update(app_request, flow=model_EnrollmentFlow_with_scope_and_claim)
+    OAuthSession(app_request).claims_result = ClaimsResult()
+
+    assert session.oauth_extra_claims_dict(app_request) is None

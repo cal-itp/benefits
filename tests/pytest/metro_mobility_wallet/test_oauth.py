@@ -1,6 +1,8 @@
 import pytest
 from cdt_identity.claims import ClaimsResult
+from cdt_identity.models import ClaimsVerificationRequest
 from cdt_identity.session import Session as OAuthSession
+from django.urls import reverse
 
 import benefits.eligibility
 import benefits.eligibility.views
@@ -42,3 +44,17 @@ def test_pre_logout(app_request, mocked_oauth_analytics_module):
     assert not session.logged_in(app_request)
     assert session.logged_in(app_request) is False
     assert OAuthSession(app_request).claims_result == ClaimsResult()
+
+
+@pytest.mark.django_db
+def test_claims_verified_eligible(app_request, mocked_oauth_analytics_module, mocked_session_update):
+    assert app_request.method == "GET"
+
+    response = OAuthHooks.claims_verified_eligible(app_request, ClaimsVerificationRequest(), ClaimsResult())
+
+    assert response.status_code == 302
+    assert response.url == reverse("metro_mobility_wallet:confirmation")
+
+    # mocked_oauth_analytics_module.finished_sign_in.assert_called_once_with(app_request)
+    mocked_session_update.assert_any_call(app_request, logged_in=True)
+    mocked_session_update.assert_any_call(app_request, eligible=True)

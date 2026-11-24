@@ -171,3 +171,9 @@
   outline: var(--focus-style-light);
   outline-offset: var(--focus-outline-offset);
 }
+
+/* Other form styling */
+
+.required-label {
+  display: none;
+}

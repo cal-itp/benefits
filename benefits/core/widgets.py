@@ -7,10 +7,13 @@ import copy
 from django.forms import widgets
 
 
-class FormControlTextInput(widgets.TextInput):
-    """A styled text input."""
+class FormControlMixin:
+    """Mixin to apply customizations to Django form widgets.
 
-    def __init__(self, pattern=None, placeholder=None, **kwargs):
+    Applies class="form-control" always, and pattern and placeholder attributes, if passed.
+    """
+
+    def __init__(self, pattern=None, placeholder=None, novalidate=False, **kwargs):
         super().__init__(**kwargs)
 
         self.attrs.update({"class": "form-control"})
@@ -18,6 +21,20 @@ class FormControlTextInput(widgets.TextInput):
             self.attrs.update({"pattern": pattern})
         if placeholder:
             self.attrs.update({"placeholder": placeholder})
+        if novalidate:
+            self.attrs.update({"novalidate": True})
+
+
+class FormControlTextInput(FormControlMixin, widgets.TextInput):
+    """Customized Django TextInput widget that renders as <input type="text" … >."""
+
+
+class FormControlEmailInput(FormControlMixin, widgets.EmailInput):
+    """Customized Django EmailInput widget that renders as <input type="email" … >."""
+
+
+class FormControlTelInput(FormControlMixin, widgets.TelInput):
+    """Customized Django TelInput widget that renders as <input type="tel" … >."""
 
 
 class FlowRadioSelect(widgets.RadioSelect):
