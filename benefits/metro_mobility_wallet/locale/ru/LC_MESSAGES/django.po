@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Report-Msgid-Bugs-To: https://github.com/cal-itp/benefits/issues \n"
-"POT-Creation-Date: 2026-11-23 23:00+0000\n"
+"POT-Creation-Date: 2026-11-24 23:22+0000\n"
 "Language: Russian\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -14,6 +14,21 @@ msgstr ""
 "Plural-Forms: nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
 "n%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || "
 "(n%100>=11 && n%100<=14)? 2 : 3);\n"
+
+msgid "Submit"
+msgstr ""
+
+msgid "Please wait…"
+msgstr ""
+
+msgid "Please make sure your email and phone number are correct."
+msgstr ""
+
+msgid "Please enter a valid email address. Example: name@example.com."
+msgstr ""
+
+msgid "Please enter a valid U.S. phone number with 10 digits."
+msgstr ""
 
 msgid "Applying with Login.gov"
 msgstr ""
@@ -91,6 +106,23 @@ msgstr ""
 msgid "Metro logo"
 msgstr ""
 
+msgid "Eligibility confirmation"
+msgstr ""
+
+msgid "You are eligible to apply!"
+msgstr ""
+
+msgid "There was a problem"
+msgstr ""
+
+#, python-format
+msgid "Enter a valid <a href=\"#%(field_id)s\">email</a>."
+msgstr ""
+
+#, python-format
+msgid "Enter a valid <a href=\"#%(field_id)s\">phone number</a>."
+msgstr ""
+
 msgid "Translate"
 msgstr ""
 
@@ -112,9 +144,6 @@ msgstr ""
 msgid "Review and accept program terms"
 msgstr ""
 
-msgid "There was a problem"
-msgstr ""
-
 #, python-format
 msgid "Add your <a href=\"#%(field_id)s\">signature</a>"
 msgstr ""
@@ -132,4 +161,7 @@ msgid "Next"
 msgstr ""
 
 msgid "Apply with"
+msgstr ""
+
+msgid "Recaptcha failed. Please try again."
 msgstr ""
