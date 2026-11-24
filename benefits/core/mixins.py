@@ -74,8 +74,8 @@ class PageViewMixin:
             analytics.send_event(event)
         except Exception:
             logger.warning(f"Failed to send event: {event}")
-        finally:
-            return super().dispatch(request, *args, **kwargs)
+
+        return super().dispatch(request, *args, **kwargs)
 
 
 class RecaptchaEnabledMixin:

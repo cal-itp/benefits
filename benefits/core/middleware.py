@@ -103,8 +103,8 @@ class ViewedPageEvent(MiddlewareMixin):
             analytics.send_event(event)
         except Exception:
             logger.warning(f"Failed to send event: {event}")
-        finally:
-            return response
+
+        return response
 
 
 pageview_decorator = decorator_from_middleware(ViewedPageEvent)
