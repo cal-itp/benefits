@@ -191,8 +191,9 @@ class GroupExpiry(BaseDataClass):
 
         For @dataclasses with a generated __init__ function, this function is called automatically.
 
-        https://docs.python.org/3.12/library/datetime.html#datetime.datetime.fromisoformat
+        https://docs.python.org/3/library/datetime.html#datetime.datetime.fromisoformat
         """
+
         if self.expiresAt:
             # per the spec, we expect expiresAt to be in ISO format UTC
             # make the resulting datetime "aware" by replacing tzinfo explicitly
