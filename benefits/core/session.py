@@ -152,7 +152,7 @@ def group(request) -> models.EnrollmentGroup | None:
 
         try:
             return group_model.by_id(request.session[_GROUP])
-        except (KeyError, group_model.DoesNotExist):
+        except KeyError, group_model.DoesNotExist:
             return None
 
     return None
