@@ -5,14 +5,14 @@ description = "Cal-ITP Benefits is an application that enables automated eligibi
 readme = "README.md"
 license-files = ["LICENSE"]
 classifiers = ["Programming Language :: Python :: 3 :: Only"]
-requires-python = ">=3.12"
+requires-python = ">=3.14"
 maintainers = [
   { name = "Compiler LLC", email = "dev@compiler.la" }
 ]
 dependencies = [
     "azure-keyvault-secrets==4.12.0",
     "azure-identity==1.27.0",
-    "calitp-littlepay==2025.4.1",
+    "calitp-littlepay==2026.11.1",
     "Django==5.2.17",
     "django-admin-sortable2==2.3.1",
     "django-azure-communication-email==1.6.0",
@@ -21,7 +21,7 @@ dependencies = [
     "django-google-sso==10.0.0",
     "django-modeltranslation==0.20.6",
     "django-multiselectfield==1.0.1",
-    "eligibility-api==2025.4.1",
+    "eligibility-api==2026.11.1",
     "pillow==13.0.0",
     "psycopg[binary,pool]==3.3.6",
     "requests==2.34.2",
@@ -60,7 +60,7 @@ build-backend = "setuptools.build_meta"
 
 [tool.black]
 line-length = 127
-target-version = ['py312']
+target-version = ['py314']
 include = '\.pyi?$'
 
 [tool.coverage.run]
@@ -94,6 +94,8 @@ typeCheckingMode = "off"
 
 [tool.pytest.ini_options]
 DJANGO_SETTINGS_MODULE = "tests.pytest.settings"
+# TODO: Uncomment when the next version of pytest-socket (>0.8.1) is released to supress warnings in test output.
+# filterwarnings = ["ignore::pytest_socket.SocketBlockedWarning"]
 markers = [
     "request_path: use with session_request to initialize with the given path",
 ]
