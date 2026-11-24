@@ -16,7 +16,7 @@ dependencies = [
     "Django==5.2.19",
     "django-admin-sortable2==2.4",
     "django-azure-communication-email==1.6.0",
-    "django-cdt-identity==2026.09.2",
+    "django-cdt-identity==2026.11.1",
     "django-csp==4.0",
     "django-google-sso==10.0.0",
     "django-modeltranslation==0.20.6",
