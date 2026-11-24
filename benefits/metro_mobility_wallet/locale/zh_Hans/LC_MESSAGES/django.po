@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Report-Msgid-Bugs-To: https://github.com/cal-itp/benefits/issues \n"
-"POT-Creation-Date: 2026-11-16 21:58+0000\n"
+"POT-Creation-Date: 2026-11-23 23:00+0000\n"
 "Language: Chinese simplified\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -87,6 +87,9 @@ msgid "Skip to main content"
 msgstr ""
 
 msgid "Metro logo"
+msgstr ""
+
+msgid "Translate"
 msgstr ""
 
 msgid "Apply with CalFresh"

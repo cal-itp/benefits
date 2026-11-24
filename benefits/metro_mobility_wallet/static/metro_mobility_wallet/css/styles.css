@@ -12,6 +12,21 @@
   padding-top: 40px;
 }
 
+/* Language dropdown containment and positioning */
+#header-container .form-inline,
+#header-container .dropdown {
+  position: static !important; /* Escapes the container to anchor to the navbar */
+}
+
+.lang-selector-menu.dropdown-menu {
+  width: 100% !important;
+  margin-top: 0 !important; /* Place dropdown below header */
+}
+
+.lang-selector-menu .dropdown-item {
+  justify-content: flex-end; /* Pushes text and checkmark to the far right */
+}
+
 /* Desktop */
 @media (min-width: 992px) {
   .metro-branding img {
@@ -26,6 +41,23 @@
 
   .pt-cta {
     padding-top: 48px;
+  }
+
+  /* Language dropdown containment and positioning */
+  #header-container .form-inline,
+  #header-container .dropdown {
+    position: relative !important; /* Restores local containment */
+  }
+
+  .lang-selector-menu.dropdown-menu {
+    width: auto !important;
+    left: 0 !important; /* Aligns to left edge of button */
+    right: auto !important;
+    margin-top: calc(18rem / 16) !important; /* Place dropdown below header */
+  }
+
+  .lang-selector-menu .dropdown-item {
+    justify-content: flex-start; /* Restores left-aligned text and checkmark */
   }
 }
 
@@ -42,4 +74,100 @@
 .error-summary li,
 .error-summary a {
   font-size: var(--font-size-16px) !important;
+}
+
+/* Language selector component */
+.lang-selector {
+  background-color: transparent;
+  color: #ffffff;
+  font-size: var(--font-size-16px);
+  font-weight: var(--semi-bold-font-weight);
+  border: var(--border-width) solid #ffffff;
+  border-radius: var(--border-radius);
+  cursor: pointer;
+}
+
+.lang-selector:focus,
+.lang-selector:focus-visible {
+  outline: var(--focus-style-light);
+  outline-offset: var(--focus-outline-offset);
+}
+
+.lang-selector:hover,
+.lang-selector[aria-expanded="true"] {
+  background-color: #ffffff;
+  color: var(--hover-color);
+}
+
+.lang-selector svg {
+  display: block; /* Required for vertical centering */
+  width: calc(18rem / 16);
+  height: calc(18rem / 16);
+}
+
+/* Hide Bootstrap's default caret */
+.lang-selector.dropdown-toggle::after {
+  display: none !important;
+}
+
+.lang-selector[aria-expanded="true"] .lang-arrow {
+  transform: rotate(180deg);
+}
+
+/* The dropdown <ul> */
+.lang-selector-menu.dropdown-menu {
+  background-color: var(--dsdl-cyan-10);
+  border: 1px solid var(--dsdl-cyan-20);
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+}
+
+/* The individual language <button>s */
+.lang-selector-menu .dropdown-item {
+  border-bottom: 1px solid var(--dsdl-cyan-20);
+  color: var(--primary-color);
+}
+
+.lang-selector-menu .dropdown-item svg {
+  width: calc(16rem / 16);
+  height: calc(16rem / 16);
+}
+
+/* Full-width menu alignment adjustments */
+@media (max-width: 992px) {
+  .lang-selector-menu .dropdown-item {
+    padding-right: 2.625rem !important;
+  }
+  .lang-selector-menu .dropdown-item.active {
+    padding-right: 1.125rem !important;
+  }
+}
+
+/* Remove the bottom line from the last <button> due to the container border */
+.lang-selector-menu li:last-child .dropdown-item {
+  border-bottom: none;
+}
+
+/* Override Bootstrap's default */
+.lang-selector-menu .dropdown-item:hover,
+.lang-selector-menu .dropdown-item:focus {
+  background-color: var(--dsdl-cyan-20);
+}
+
+/* Override Bootstrap's default */
+.lang-selector-menu .dropdown-item.active {
+  background-color: transparent;
+}
+
+/* Override Bootstrap's default */
+.lang-selector-menu .dropdown-item.active:hover,
+.lang-selector-menu .dropdown-item.active:focus {
+  background-color: var(--dsdl-cyan-20);
+}
+
+/* Override Bootstrap's default */
+.lang-selector-menu .dropdown-item:focus,
+.lang-selector-menu .dropdown-item:focus-visible {
+  outline: var(--focus-style-light);
+  outline-offset: var(--focus-outline-offset);
 }

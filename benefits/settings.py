@@ -190,7 +190,7 @@ if DEBUG:
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [os.path.join(BASE_DIR, "benefits", "templates")],
+        "DIRS": [os.path.join(BASE_DIR, "benefits", "templates"), os.path.join(BASE_DIR, "benefits", "static", "img", "icon")],
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": template_ctx_processors,
@@ -260,14 +260,14 @@ LANGUAGE_COOKIE_SECURE = True
 
 LANGUAGES_CORE = [("en", "English"), ("es", "Español")]
 LANGUAGES_METRO = [
-    ("zh-hans", "Chinese simplified"),
-    ("zh-hant", "Chinese traditional"),
-    ("ko", "Korean"),
-    ("ja", "Japanese"),
-    ("vi", "Vietnamese"),
-    ("th", "Thai"),
-    ("ru", "Russian"),
-    ("hy", "Armenian"),
+    ("zh-hans", "中文"),
+    ("zh-hant", "繁體中文"),
+    ("ko", "한국어"),
+    ("ja", "日本語"),
+    ("vi", "Tiếng Việt"),
+    ("th", "ภาษาไทย"),
+    ("ru", "Русский"),
+    ("hy", "Հայերեն"),
 ]
 
 LANGUAGES = LANGUAGES_CORE + LANGUAGES_METRO
