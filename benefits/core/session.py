@@ -197,7 +197,7 @@ def oauth_extra_claims_dict(request):
         for claim, value in session.claims_result.verified.items()
         if value and claim in session.claims_request.extra_claims_list
     }
-    return claims
+    return claims or None
 
 
 def origin(request):
