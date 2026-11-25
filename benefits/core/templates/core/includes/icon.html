@@ -1,5 +1,9 @@
 {% load static %}
-<img class="icon{% if pulse %} pulsing{% endif %}"
+{% comment %}
+  when an explicit size is provided. that takes precedence over the default
+  (110px on desktop, 90px on mobile)
+{% endcomment %}
+<img class="icon{% if pulse %} pulsing{% endif %}{% if not size %} responsive{% endif %}"
      width="{{ size|default:"110" }}"
      height="{{ size|default:"110" }}"
      src="{% get_static_prefix %}img/icon/{{ name }}.svg"
