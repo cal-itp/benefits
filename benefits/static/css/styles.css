@@ -1040,6 +1040,15 @@ summary:focus {
   font-weight: normal;
 }
 
+/* Icons (default size) */
+
+@media (max-width: 576px) {
+  .icon.responsive {
+    height: 90px;
+    width: 90px;
+  }
+}
+
 /* Pulsing icons */
 
 .icon.pulsing {
